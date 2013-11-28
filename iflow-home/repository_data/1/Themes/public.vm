@@ -34,7 +34,6 @@
 	<!-- locale stuff -->
 	<script type="text/javascript" src="javascript/messages.js"> </script><!-- default messages -->
 	<script type="text/javascript" src="javascript/messages_${lang}.js"> </script> <!-- localized version override -->
-	<script type="text/javascript" src="javascript/ibox.js"> </script>
 	<script type="text/javascript" src="javascript/calendar/calendar.js"></script>
 	<script type="text/javascript" src="javascript/calendar/lang/${cal_lang_file}"></script>
 	<script type="text/javascript" src="javascript/calendar/calendar-setup.js"></script>

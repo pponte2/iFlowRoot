@@ -568,7 +568,6 @@ label.subheader {
                 <script type="text/javascript" src="{$url_prefix}/javascript/yahoo/menu/menu-min.js"></script>
                 <script type="text/javascript" src="{$url_prefix}/javascript/yahoo/button/button-min.js"></script>
                 <script type="text/javascript" src="{$url_prefix}/javascript/yahoo/editor/editor.js"></script>
-                <script type="text/javascript">alert(123);</script>
   		
 		<!-- Carrega codigo javacript de interaccao com a applet e prepara o ambiente -->
 		<script type="text/javascript" src="{$url_prefix}/javascript/applet_functions.js"> </script>
