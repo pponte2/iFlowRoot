@@ -63,7 +63,9 @@
 </ul>
 <%
   }
-  boolean isClassic = StringUtils.equals("classic", BeanFactory.getOrganizationThemeBean().getOrganizationTheme(userInfo).getThemeName());
+String theme = BeanFactory.getOrganizationThemeBean().getOrganizationTheme(userInfo).getThemeName();
+boolean isClassic = StringUtils.equals("classic", theme);
+boolean isNewflow = StringUtils.equals("newflow", theme);
 %>
 
 
@@ -72,7 +74,7 @@
 %>
 <h2 onclick="javascript:toggleItemBox('admin', $('admin_section_users'))"><%=messages.getString("admin_nav.section.users.title")%><img
 	id="admin_section_users" class="item_title_show" src="images/minus.png"
-	<%if(isClassic){%>style="display: none;"<%}%>/></h2>
+	<%if(isClassic || isNewflow){%>style="display: none;"<%}%>/></h2>
 <ul id="admin_section_users_body"
 	class="<%= usersSelected?"selected":"" %>">
 	<li><a id="li_a_admin_<%=AdminNavConsts.USER_USERS%>"
@@ -93,7 +95,7 @@
 %>
 <h2 onclick="javascript:toggleItemBox('admin', $('admin_section_users'))"><%=messages.getString("admin_nav.section.users.title")%><img
 	id="admin_section_users" class="item_title_show" src="images/minus.png"
-	<%if(isClassic){%>style="display: none;"<%}%>/></h2>
+	<%if(isClassic || isNewflow){%>style="display: none;"<%}%>/></h2>
 <ul id="admin_section_users_body">
 	<li><a id="li_a_admin_<%=AdminNavConsts.USER_USERS%>"
 		title="<%=messages.getString("admin_nav.section.users.tooltip.organizations")%>"
@@ -109,7 +111,7 @@
 
 <h2 onclick="javascript:toggleItemBox('admin', $('admin_section_flows'))"><%=messages.getString("admin_nav.section.flows.title")%><img
 	id="admin_section_flows" class="item_title_show" src="images/minus.png"
-	<%if(isClassic){%>style="display: none;"<%}%>/></h2>
+	<%if(isClassic || isNewflow){%>style="display: none;"<%}%>/></h2>
 <ul id="admin_section_flows_body">
 	<li><a id="li_a_admin_<%=AdminNavConsts.FLOW_CREATE_AND_EDIT%>"
 		title="<%=messages.getString("admin_nav.section.flows.tooltip.createAndEdit")%>"
@@ -143,7 +145,7 @@
 
 <h2 onclick="javascript:toggleItemBox('admin', $('admin_section_processes'))"><%=messages.getString("admin_nav.section.processes.title")%><img
 	id="admin_section_processes" class="item_title_show"
-	src="images/minus.png" <%if(isClassic){%>style="display: none;"<%}%>/></h2>
+	src="images/minus.png" <%if(isClassic || isNewflow){%>style="display: none;"<%}%>/></h2>
 <ul id="admin_section_processes_body">
 	<li><a id="li_a_admin_<%=AdminNavConsts.PROCESS_UNDO%>"
 		title="<%=messages.getString("admin_nav.section.processes.tooltip.undo")%>"
@@ -176,7 +178,7 @@
 %>
 <h2 onclick="javascript:toggleItemBox('admin', $('admin_section_resources'))"><%=messages.getString("admin_nav.section.resources.title")%><img
 	id="admin_section_resources" class="item_title_show"
-	src="images/minus.png" <%if(isClassic){%>style="display: none;"<%}%>/></h2>
+	src="images/minus.png" <%if(isClassic || isNewflow){%>style="display: none;"<%}%>/></h2>
 <ul id="admin_section_resources_body">
 	<li><a id="li_a_admin_<%=AdminNavConsts.RESOURCES_STYLESHEETS%>"
 		title="<%=messages.getString("admin_nav.section.resources.tooltip.stylesheets")%>"
@@ -213,7 +215,7 @@
 %>
 <h2 onclick="javascript:toggleItemBox('admin', $('admin_section_organization'))"><%=messages.getString("admin_nav.section.organization.title")%><img
 	id="admin_section_organization" class="item_title_show"
-	src="images/minus.png" <%if(isClassic){%>style="display: none;"<%}%>/></h2>
+	src="images/minus.png" <%if(isClassic || isNewflow){%>style="display: none;"<%}%>/></h2>
 <ul id="admin_section_organization_body">
 	<li><a id="li_a_admin_<%=AdminNavConsts.ORGANIZATION_PROPERTIES%>"
 		title="<%=messages.getString("admin_nav.section.system.tooltip.properties")%>"

@@ -111,7 +111,7 @@
 			fgOpacity:10 // how transparent our overlay fg is
 		});
   
-        #if($orgTheme == "classic")
+        #if($orgTheme == "classic" || $orgTheme == "newflow")
 		function resizeDelay(delayMillisecs) {
 			if(!$('iframe_proc_detail')) {
 				setTimeout("resizeDelay()", delayMillisecs);
@@ -130,7 +130,7 @@
 		
 		function executeOnLoad() {
 			init("Themes/${orgTheme}/css/iflow_std.css");
-			#if($orgTheme == "classic")
+			#if($orgTheme == "classic" || $orgTheme == "newflow")
 			  mainResize();
 			#end
 

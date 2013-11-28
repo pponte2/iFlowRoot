@@ -15,14 +15,16 @@
 			nSel = DelegationNavConsts.APPROVE_REJECT_DELEGATIONS;
 		}
 
-		boolean isClassic = StringUtils.equals("classic", BeanFactory.getOrganizationThemeBean().getOrganizationTheme(userInfo).getThemeName());
+		String theme = BeanFactory.getOrganizationThemeBean().getOrganizationTheme(userInfo).getThemeName();
+		boolean isClassic = StringUtils.equals("classic", theme);
+		boolean isNewflow = StringUtils.equals("newflow", theme);
 		%>
 
 <h1 id="title_delegations"><if:message
 	string="gestao_tarefas_nav.title" /></h1>
 <h2 onclick="javascript:toggleItemBox('delegations', $('delegations_section_1'))"><if:message string="gestao_tarefas_nav.section.1.title" /><img
 	id="delegations_section_1" class="item_title_show" src="images/minus.png"
-	<%if(isClassic){%>style="display: none;"<%}%>/></h2>
+	<%if(isClassic || isNewflow){%>style="display: none;"<%}%>/></h2>
 <ul id="delegations_section_1_body">
 	<li><a id="li_a_delegations_<%=DelegationNavConsts.APPROVE_REJECT_DELEGATIONS%>"
 		title="<%=messages.getString("gestao_tarefas_nav.section.1.tooltip.1")%>"
@@ -37,7 +39,7 @@
 </ul>
 <h2 onclick="javascript:toggleItemBox('delegations', $('delegations_section_2'))"><if:message string="gestao_tarefas_nav.section.2.title" /><img
 	id="delegations_section_2" class="item_title_show" src="images/minus.png"
-	<%if(isClassic){%>style="display: none;"<%}%>/>
+	<%if(isClassic || isNewflow){%>style="display: none;"<%}%>/>
 </h2>
 <ul id="delegations_section_2_body">
 	<li><a id="li_a_delegations_<%=DelegationNavConsts.REQUEST_DELEGATIONS%>"
@@ -48,7 +50,7 @@
 </ul>
 <h2 onclick="javascript:toggleItemBox('delegations', $('delegations_section_3'))"><if:message string="gestao_tarefas_nav.section.3.title" /><img
 	id="delegations_section_3" class="item_title_show" src="images/minus.png"
-	<%if(isClassic){%>style="display: none;"<%}%>/></h2>
+	<%if(isClassic || isNewflow){%>style="display: none;"<%}%>/></h2>
 <ul id="delegations_section_3_body">
 	<li><a id="li_a_delegations_<%=DelegationNavConsts.REASSIGN_DELEGATIONS%>"
 		title="<%=messages.getString("gestao_tarefas_nav.section.3.tooltip.1")%>"

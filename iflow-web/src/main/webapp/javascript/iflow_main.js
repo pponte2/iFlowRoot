@@ -133,7 +133,7 @@
     doTooltip($$('#div_menu_link .menu_link'), 600, 'tab-tool');  // fetch all childs of div_menu_link with class menu_link
     tabber(1, mainContentJSP , 'data=procs', mainContentJSP, 'data=tasks');
     // set up processes tab
-    if(orgTheme() == "classic") {
+    if(orgTheme() == "classic" || orgTheme() == "newflow") {
       $('section3_content_div').style.height="100%";
     } else {
       $('section3_content_div').style.height=(getBrowserWindowHeight()-(GLOBAL_HEIGHT_OFFSET*1.5))+'px';
@@ -202,7 +202,7 @@
     document.getElementById('section3_header_div').style.height='0px';
     document.body.style.margin = '0px'; 
 
-    if(orgTheme() == "classic") {
+    if(orgTheme() == "classic" || orgTheme() == "newflow") {
       document.getElementById('section3_content_div').style.height="100%";
       document.getElementById('open_proc_frame').style.height=(getBrowserWindowHeight()-2)+'px';
     } else {
@@ -231,7 +231,7 @@
     document.getElementById('section3_div').className='tab_body';
     document.body.style.margin = '10px 20px 0 20px';
 
-    if(orgTheme() == "classic") {
+    if(orgTheme() == "classic" || orgTheme() == "newflow") {
       document.getElementById('section3_content_div').style.height="100%";
       document.getElementById('open_proc_frame').style.height="100%";
     } else {

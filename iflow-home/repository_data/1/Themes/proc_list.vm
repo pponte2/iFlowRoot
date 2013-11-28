@@ -96,7 +96,7 @@
 		#foreach( $appflow in $appflows )
     	  <h2 onclick="javascript:toggleItemBox('$tabnm', document.getElementById('flow_cat_${tabnm}_${appflow.get("appname")}'))">
     		${appflow.get("appname")}
-	    	<img id="flow_cat_${tabnm}_${appflow.get("appname")}" class="item_title_show" src="images/minus.png" #if($orgTheme == "classic") style="display: none;" #end/>
+	    	<img id="flow_cat_${tabnm}_${appflow.get("appname")}" class="item_title_show" src="images/minus.png" #if($orgTheme == "classic" || $orgTheme == "newflow") style="display: none;" #end/>
     	  </h2>
 	      <ul id="flow_cat_${tabnm}_${appflow.get("appname")}_body">
 			#foreach($flow in $appflow.get("flows"))
