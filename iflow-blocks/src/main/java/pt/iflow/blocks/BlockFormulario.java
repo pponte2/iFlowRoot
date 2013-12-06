@@ -1266,8 +1266,8 @@ public class BlockFormulario extends Block implements FormOperations {
       }
       else {
         // now the transformation
-
-        String xml = sbXml.toString();
+        
+        String xml = sbXml.toString();System.out.println(xml.toString());
         retObj = transformForm(userInfo, procData, sXsl, xml, noPrint, Const.bUSE_SCANNER, response);  // load upload applet if required
 
         retObj = StringEscapeUtils.unescapeHtml(retObj);

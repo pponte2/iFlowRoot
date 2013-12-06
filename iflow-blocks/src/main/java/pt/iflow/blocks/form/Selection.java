@@ -155,7 +155,7 @@ public class Selection implements FieldInterface {
       sb.append("<even_field>").append(prop.getProperty("even_field")).append("</even_field>");
 
       sb.append("</field>");
-
+      
       return sbHidden.toString() + sb.toString();
     } catch (Exception e) {
       e.printStackTrace();

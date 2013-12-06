@@ -48,11 +48,6 @@
         <link rel="stylesheet" type="text/css" href="{$url_prefix}/javascript/yahoo/container/assets/container-core.css"/>
         <link rel="stylesheet" type="text/css" href="{$url_prefix}/Themes/generic/iflow_form.css" media="all" title="iflow_form"/>
         <link rel="stylesheet" type="text/css" href="{$url_prefix}/javascript/calendar/calendar-iflow.css" media="all"/>
-        <link rel="stylesheet" type="text/css" href="{$url_prefix}/javascript/yahoo/menu/assets/skins/sam/menu.css"/>
-        <link rel="stylesheet" type="text/css" href="{$url_prefix}/javascript/yahoo/button/assets/skins/sam/button.css"/>
-        <link rel="stylesheet" type="text/css" href="{$url_prefix}/javascript/yahoo/container/assets/skins/sam/container.css"/>
-        <link rel="stylesheet" type="text/css" href="{$url_prefix}/javascript/yahoo/editor/assets/skins/sam/editor.css"/>
-
 	    <style type="text/css">
 		html {
 	font-family: Verdana, Arial, sans-serif;
@@ -549,25 +544,20 @@ label.subheader {
 	}
 
 </style>
-                <script type="text/javascript" src="{$url_prefix}/javascript/yahoo/yahoo-dom-event/yahoo-dom-event.js" />
-                <script type="text/javascript" src="{$url_prefix}/javascript/yahoo/dragdrop/dragdrop-min.js" />
-  				<script type="text/javascript" src="{$url_prefix}/javascript/yahoo/container/container-min.js"/>
-                <script type="text/javascript" src="{$url_prefix}/javascript/ajax_processing.js" />
-				<script type="text/javascript" src="{$url_prefix}/javascript/tabs.js" />
-				<script type="text/javascript" src="{$url_prefix}/javascript/iflow_main.js" />
-				<script type="text/javascript" src="{$url_prefix}/javascript/calendar/calendar.js" />
-				<script type="text/javascript" src="{$url_prefix}/javascript/calendar/lang/calendar-{$lang_string}.js" />
-				<script type="text/javascript" src="{$url_prefix}/javascript/calendar/calendar-setup.js" />
-				<script type="text/javascript" src="{$url_prefix}/javascript/mootools.js"/>
-				<script type="text/javascript" src="{$url_prefix}/javascript/FormFunctions.js"/>
-				<script type="text/javascript" src="{$url_prefix}/javascript/Stickman.MultiUpload.js"/>
-				<script type="text/javascript" src="{$url_prefix}/Themes/{$theme}/javascript/theme.js"></script>
-                <script type="text/javascript" src="{$url_prefix}/javascript/html/encoder.js"></script>
-                <script type="text/javascript" src="{$url_prefix}/javascript/yahoo/element/element-min.js"></script> 
-                <script type="text/javascript" src="{$url_prefix}/javascript/yahoo/container/container-min.js" />
-                <script type="text/javascript" src="{$url_prefix}/javascript/yahoo/menu/menu-min.js"></script>
-                <script type="text/javascript" src="{$url_prefix}/javascript/yahoo/button/button-min.js"></script>
-                <script type="text/javascript" src="{$url_prefix}/javascript/yahoo/editor/editor.js"></script>
+  		<script type="text/javascript" src="{$url_prefix}/javascript/yahoo/yahoo-dom-event/yahoo-dom-event.js"/>
+  		<script type="text/javascript" src="{$url_prefix}/javascript/yahoo/dragdrop/dragdrop-min.js"/>
+  		<script type="text/javascript" src="{$url_prefix}/javascript/yahoo/container/container-min.js"/>
+        <script type="text/javascript" src="{$url_prefix}/javascript/ajax_processing.js"/>
+        <script type="text/javascript" src="{$url_prefix}/javascript/tabs.js"/>
+  		<script type="text/javascript" src="{$url_prefix}/javascript/iflow_main.js"/>
+  		<script type="text/javascript" src="{$url_prefix}/javascript/calendar/calendar.js"/>
+  		<script type="text/javascript" src="{$url_prefix}/javascript/calendar/lang/calendar-{$lang_string}.js"/>
+  		<script type="text/javascript" src="{$url_prefix}/javascript/calendar/calendar-setup.js"/>
+  		<script type="text/javascript" src="{$url_prefix}/javascript/mootools.js"/>
+  		<script type="text/javascript" src="{$url_prefix}/javascript/FormFunctions.js"/>
+  		<script type="text/javascript" src="{$url_prefix}/javascript/Stickman.MultiUpload.js"/>
+        <script type="text/javascript" src="{$url_prefix}/javascript/livevalidation_standalone.js"> </script>
+        <script type="text/javascript" src="{$url_prefix}/Themes/{$theme}/javascript/theme.js"> </script>
   		
 		<!-- Carrega codigo javacript de interaccao com a applet e prepara o ambiente -->
 		<script type="text/javascript" src="{$url_prefix}/javascript/applet_functions.js"> </script>
@@ -747,7 +737,7 @@ label.subheader {
     </div>
     <!--  TODO obter o primeiro tab filho e chamar-lhe o tabber -->
     <script language="JavaScript" type="text/javascript">
-      <!-- Configuracao da nova tab. Estï¿½ propositadamente mal identado para aparecer correctamente no HTML resultante. -->
+      <!-- Configuracao da nova tab. Está propositadamente mal identado para aparecer correctamente no HTML resultante. -->
       <xsl:text>
 	var tmpArray = new Array();
 </xsl:text>
@@ -1633,11 +1623,11 @@ label.subheader {
                 </xsl:if>
                 <td>
                  <xsl:if test="asSignatures='true'">
-					<img class="toolTipImg" id="lock_{id}" border="0" width="16" height="16" src="{$url_prefix}/images/lock.png" alt="Assinado" title="Este documento jï¿½ foi assinado">
+					<img class="toolTipImg" id="lock_{id}" border="0" width="16" height="16" src="{$url_prefix}/images/lock.png" alt="Assinado" title="Este documento já foi assinado">
 					</img>
 				 </xsl:if>
 				 <xsl:if test="asSignatures!='true'">
-					<img class="toolTipImg" id="lock_{id}" border="0" width="16" style="display:none" height="16" src="{$url_prefix}/images/lock.png" alt="Assinado" title="Este documento jï¿½ foi assinado">
+					<img class="toolTipImg" id="lock_{id}" border="0" width="16" style="display:none" height="16" src="{$url_prefix}/images/lock.png" alt="Assinado" title="Este documento já foi assinado">
 					</img>
 				 </xsl:if>
                </td>
@@ -1999,7 +1989,7 @@ label.subheader {
     !"#$%&amp;'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
   </xsl:variable>
   <xsl:variable name="latin1">
-    ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+     ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ
   </xsl:variable>
   <!-- Characters that usually don't need to be escaped -->
   <xsl:variable name="safe">!'()*-.0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz~</xsl:variable>
