@@ -306,6 +306,14 @@ ul, ul ul {
 /*________  CSS  QUADRADOS COLOR CATEGORIA  ________________________________________________________________*/
 
 
+.cube {
+	color: #ffffff;
+	height: 40px;
+	width: 40px;
+	float: left;
+	padding: 5px;
+	font-size: 18px;
+}
 .cubegreen {
 	color: #ffffff;
 	height: 40px;

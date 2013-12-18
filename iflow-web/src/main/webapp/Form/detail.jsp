@@ -1,13 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/core" prefix="c"%>
-<%@ taglib uri="http://www.iknow.pt/jsp/jstl/iflow" prefix="if"%><%
+<%@ taglib uri="http://www.iknow.pt/jsp/jstl/iflow" prefix="if"%>
+<%
 request.setAttribute("inFrame", "true");
 %><%@ include file="../inc/defs.jsp"%>
 <%@ page import="pt.iflow.api.blocks.Block"%>
 <%@ page import="pt.iflow.api.blocks.Attribute"%>
 <%@ page import="pt.iflow.api.blocks.FormProps"%>
-<%@ page import="org.apache.commons.lang.StringUtils"%><%
-	String title = "Detail";
+<%@ page import="org.apache.commons.lang.StringUtils"%>
+<%
+String title = "Detail";
 
 int flowid = -1;
 int pid = -1;
@@ -20,9 +23,7 @@ if (StringUtils.isNotEmpty(status)) {
     processFlag = Const.nCLOSED_PROCS;
   else if (StringUtils.equals("0",status))
     processFlag = Const.nOPENED_PROCS;
-    
 }
-//if(null != status && "1".equals(status)) closedProcess=true;
 boolean frameworkSearch = StringUtils.equals("true", fdFormData.getParameter("fwSearch"));
 
 ProcessData procData = null;
@@ -40,18 +41,13 @@ try {
     subpid = Integer.parseInt(sSubPid);
   }
 
-  procData = pm.getProcessData(userInfo,new ProcessHeader(flowid,pid,subpid),processFlag);
+  procData = pm.getProcessData(userInfo, new ProcessHeader(flowid, pid, subpid), processFlag);
   if (procData == null) throw new Exception();
-
-}
-catch (Exception e) {
+} catch (Exception e) {
   Logger.errorJsp(login, "detail", "exception caught: " + e.getMessage());
   ServletUtils.sendEncodeRedirect(response, sURL_PREFIX+"flow_error.jsp");
   return;
 }
-
-
-
 
 // use of fdFormData defined in /inc/defs.jsp
 String sOp = fdFormData.getParameter("op");
@@ -76,6 +72,8 @@ Flow flowBean = BeanFactory.getFlowBean();
 IFlowData flow = BeanFactory.getFlowHolderBean().getFlow(userInfo, flowid);
 try {
 
+  if (op == 10) throw new Exception("just for jump");
+      
   if(procData == null) throw new Exception();
   
   bBlockJSP = flow.getDetailForm();
@@ -90,12 +88,11 @@ try {
   
   procData.setTempData(FormProps.FRAMEWORK_DETAIL, (frameworkSearch ? "true" : "false"));
 
-}
-catch (Exception e) {
+} catch (Exception e) {
   // this is the default, no block or could not fetch process data.
-  
+ 
   Map<String,String> processDetail = null;
-  if(flow != null && flow.hasDetail())
+  if (op != 10 && flow != null && flow.hasDetail())
     processDetail = ProcessPresentation.getProcessDetail(userInfo, procData);
   if(null == processDetail) processDetail = new HashMap<String,String>();
   Hashtable<String,Object> htSubst = new Hashtable<String, Object>();
@@ -112,20 +109,27 @@ catch (Exception e) {
   htSubst.put("isProcDetail", "true");
   htSubst.put("inDetail", "true");
   List<Map<String,String>> buttons = new ArrayList<Map<String,String>>(1);
-  Map<String,String> printButton = new HashMap<String,String>();
-  buttons.add(printButton);
-  printButton.put("type","_imprimir");
-  printButton.put("text","Imprimir");
+  if (op == 10) {
+    Block block = flowBean.getBlock(userInfo, procData); 
+    buttons = block.getPreviewButtons(userInfo, procData);
+  } else {
+	  Map<String,String> printButton = new HashMap<String,String>();
+	  buttons.add(printButton);
+	  printButton.put("type","_imprimir");
+	  printButton.put("text","Imprimir");
+  }
   htSubst.put("buttonList", buttons);
 
   //  messages.....
   htSubst.put("noDetail",userInfo.getMessages().getString("user_proc_detail.msg.noProcessDetail"));
   htSubst.put("variableLabel",userInfo.getMessages().getString("user_proc_detail.field.variable"));
   htSubst.put("valueLabel",userInfo.getMessages().getString("user_proc_detail.field.value"));
-  %><%=PresentationManager.buildPage(response, userInfo, htSubst, "proc_detail")%><%
+
+  String vm = (op == 10) ? "proc_preview" : "proc_detail";%>
+<%=PresentationManager.buildPage(response, userInfo, htSubst, vm)%>
+  <%
   return;
 }
-
 
 // OP: 0 - entering page/reload
 //     1 - unused
@@ -137,6 +141,7 @@ catch (Exception e) {
 //     7 - service export field
 //     8 - only process form
 //     9 - return to parent
+//    10 - preview process
 
 // check permissions 
 if(!pm.canViewProcess(userInfo, procData)) {
@@ -152,19 +157,19 @@ oa[0] = userInfo;
 oa[1] = procData;
 oa[2] = hmHidden;
 oa[3] = new ServletUtils(response);
+
 // 2: generateForm
 sHtml = (String)bBlockJSP.execute(2,oa);
 
-  // 7: var FORM_NAME
-  sFormName = (String)bBlockJSP.execute(7,null);
+// 7: var FORM_NAME
+sFormName = (String)bBlockJSP.execute(7,null);
 
-  // Adjust print and export JSPs a little bit...
-  request.setAttribute("printForm",Const.APP_URL_PREFIX+"/Form/print.jsp?inDetail=true&");
-  request.setAttribute("exportForm",Const.APP_URL_PREFIX+"/Form/export.jsp?inDetail=true&");
+// Adjust print and export JSPs a little bit...
+request.setAttribute("printForm",Const.APP_URL_PREFIX+"/Form/print.jsp?inDetail=true&");
+request.setAttribute("exportForm",Const.APP_URL_PREFIX+"/Form/export.jsp?inDetail=true&");
 %>
 <%@ include file="servicesjs.jspf"%>
 <%
-
 if (op == 5 || op == 6 || op == 7) {
   String sField = fdFormData.getParameter("_serv_field_");
 
@@ -172,7 +177,7 @@ if (op == 5 || op == 6 || op == 7) {
     // print
 %>
 <script language="JavaScript" type="text/javascript">
-      PrintServiceOpen();
+  PrintServiceOpen();
 </script>
 <%
   }
@@ -180,7 +185,9 @@ if (op == 5 || op == 6 || op == 7) {
     // printfield
 %>
 <script language="JavaScript" type="text/javascript">
-      PrintServiceOpen(<%=sField%>);
+  PrintServiceOpen(
+<%=sField%>
+  );
 </script>
 <%
   }
@@ -188,11 +195,12 @@ if (op == 5 || op == 6 || op == 7) {
     // exportfield
 %>
 <script language="JavaScript" type="text/javascript">
-      ExportServiceOpen(<%=sField%>);
+  ExportServiceOpen(
+<%=sField%>
+  );
 </script>
 <%
   }
 }
-
 
 %><%=sHtml%>

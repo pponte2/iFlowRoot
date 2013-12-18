@@ -30,7 +30,6 @@ import pt.iflow.api.flows.FlowSetting;
 import pt.iflow.api.utils.Const;
 import pt.iflow.api.utils.Logger;
 import pt.iflow.api.utils.ServletUtils;
-import pt.iflow.api.utils.UserInfoFactory;
 import pt.iflow.api.utils.UserInfoInterface;
 import pt.iflow.api.utils.Utils;
 import pt.iknow.utils.VelocityUtils;
@@ -114,7 +113,7 @@ public class PresentationManager {
     }
     return PresentationManager.buildPage(response, userInfo, htSubst, template);
   }
-  
+
   public static String buildMessageBoard(HttpServletResponse response, UserInfoInterface userInfo, Hashtable<String,Object> htSubst) {
     return PresentationManager.buildPage(response, userInfo, htSubst, "msgboard");
   }
@@ -127,23 +126,9 @@ public class PresentationManager {
     return PresentationManager.buildPage(response, userInfo, htSubst, "main_content");
   }
 
-//  public static String buildPageTop(HttpServletResponse response, UserInfoInterface userInfo, Hashtable<String,Object> htSubst) {
-//    if (userInfo.isSysAdmin()) {
-//      htSubst.put("user_can_admin", Boolean.TRUE);
-//    }
-//    else {
-//      htSubst.put("user_can_admin", Boolean.FALSE);
-//    }
-//    return PresentationManager.buildPage(response, userInfo, htSubst, "top");
-//  }
-
   public static String buildPageSimpleTop(HttpServletResponse response, UserInfoInterface userInfo, Hashtable<String,Object> htSubst) {
     return PresentationManager.buildPage(response, userInfo, htSubst, "simple_top");
   }
-
-//  public static String buildPageBottom(HttpServletResponse response, UserInfoInterface userInfo, Hashtable<String,Object> htSubst) {
-//    return PresentationManager.buildPage(response, userInfo, htSubst, "bottom");
-//  }
 
   public static String buildPageSimpleBottom(HttpServletResponse response, UserInfoInterface userInfo, Hashtable<String,Object> htSubst) {
     return PresentationManager.buildPage(response, userInfo, htSubst, "simple_bottom");
@@ -153,27 +138,27 @@ public class PresentationManager {
       String sTB) {
     return buildPage(response==null?null:new ServletUtils(response), userInfo, htSubst, sTB);
   }
-  
+
   public static String buildPage(ServletUtils response, UserInfoInterface userInfo, Hashtable<String,Object> htSubst,
       String sTB) {
 
-//--------------------------------------------INSERIR NA HASH TABS SEM PERMISSOES  
-if(userInfo.isLogged()){
-    int [] ID_Interface = new int[0];                    
-    String nome = "Tab";                                 
-    ID_Interface = tabsRejeitadas(userInfo);            //Array com as nao permissoes   
-    //Inserir na Tabela de Hash as chaves das tabs que n�o tem acesso Controlo feito no Main.vm
-    for(int i = 0 ; i< ID_Interface.length;i++)
-    {   
-    String chave = nome + ID_Interface[i];             //Prefixo para chave na BD ("Tab" + ID)
-    htSubst.put(chave, "no");
+    //INSERIR NA HASH TABS SEM PERMISSOES  
+    if(userInfo.isLogged()){
+      int [] ID_Interface = new int[0];                    
+      String nome = "Tab";                                 
+      ID_Interface = tabsRejeitadas(userInfo);            //Array com as nao permissoes   
+      //Inserir na Tabela de Hash as chaves das tabs que n�o tem acesso Controlo feito no Main.vm
+      for(int i = 0 ; i< ID_Interface.length;i++)
+      {   
+        String chave = nome + ID_Interface[i];             //Prefixo para chave na BD ("Tab" + ID)
+        htSubst.put(chave, "no");
+      }
     }
-}//-----------------------------------------FIM
 
     if(null == htSubst) htSubst = new Hashtable<String,Object>();
-    
+
     if(null != response) htSubst.put("response", response);
-    
+
     String sTheme = null;
 
     String sHtml = null;
@@ -238,7 +223,7 @@ if(userInfo.isLogged()){
     }
     return sHtml;
   }
-//------------------------------------------ TIRAR DA BD ARRAY IDs TABS SEM PERMISSAO
+
   public static int[] tabsRejeitadas( UserInfoInterface userInfo )
   {   
     int [] ids = new int [0];
@@ -251,14 +236,14 @@ if(userInfo.isLogged()){
     try {
       db = ds.getConnection();
       st = db.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-      
+
       String sqlQuery;
 
       //Tirar vector com nao permissoes da organiza�ao e dos perfis
       if (StringUtils.isNumeric(userInfo.getUserId())) {
         sqlQuery = "SELECT tabid FROM profiles_tabs " 
-          + "WHERE profileid in (SELECT profileid FROM userprofiles WHERE userid="+userInfo.getUserId()+") "
-          + "UNION SELECT tabid FROM organizations_tabs WHERE organizationid="+userInfo.getOrganization();
+            + "WHERE profileid in (SELECT profileid FROM userprofiles WHERE userid="+userInfo.getUserId()+") "
+            + "UNION SELECT tabid FROM organizations_tabs WHERE organizationid="+userInfo.getOrganization();
       } else {
         StringBuilder sbProfiles = new StringBuilder();
         String aux = "('";
@@ -269,21 +254,21 @@ if(userInfo.isLogged()){
         }
         sbProfiles.append("'))");
         sqlQuery = "SELECT tabid FROM profiles_tabs" 
-          + " WHERE profileid in (SELECT profileid FROM profiles WHERE name in " + sbProfiles.toString()
-          + " UNION SELECT tabid FROM organizations_tabs WHERE organizationid=" + userInfo.getOrganization();
+            + " WHERE profileid in (SELECT profileid FROM profiles WHERE name in " + sbProfiles.toString()
+            + " UNION SELECT tabid FROM organizations_tabs WHERE organizationid=" + userInfo.getOrganization();
       }
-      
+
       rs = st.executeQuery(sqlQuery);
 
-   //Inicializar array com numero de tabs
-   while (rs.next()) tam++;
-   rs.beforeFirst();  
-   ids = new int[tam];
-    
+      //Inicializar array com numero de tabs
+      while (rs.next()) tam++;
+      rs.beforeFirst();  
+      ids = new int[tam];
+
       //Preencher array com IDs das tabs
       while (rs.next()){
-      ids[i] = rs.getInt(1);
-      i++;
+        ids[i] = rs.getInt(1);
+        i++;
       }     
       rs.close();
     }
@@ -295,5 +280,5 @@ if(userInfo.isLogged()){
     }   
     return ids;
   }
-//------------------------------------------ FIM
+
 }

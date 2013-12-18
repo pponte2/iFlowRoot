@@ -107,7 +107,10 @@
     hsSubst.put("welcome_msg", messages.getString("main.msg.welcome"));
 	hsSubst.put("main_admin_title", messages.getString("main.admin.title"));
     hsSubst.put("http_auth_type", Const.AUTHENTICATION_TYPE);
-    
+	hsSubst.put("confirm", messages.getString("actividades.folder.confirm"));
+	hsSubst.put("cancel", messages.getString("main.labels.cancel"));
+	hsSubst.put("new_label", messages.getString("main.label.add.new"));
+
     // tutorial and help stuff
     
     boolean helpMode = userInfo.getUserSettings().isHelpMode();

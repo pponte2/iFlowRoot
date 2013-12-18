@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -720,5 +721,16 @@ public abstract class Block {
     
     public boolean isBlockRunningInPopup() {
       return !(getBlockRunningInPopup() == null);     
+    }
+
+    public List<Map<String,String>> getPreviewButtons(UserInfoInterface userInfo, ProcessData procData) {
+      List<Map<String,String>> buttons = new ArrayList<Map<String,String>>(1);
+      Map<String,String> forwardButton = new HashMap<String,String>();
+      buttons.add(forwardButton);
+      forwardButton.put("id", "bt_avancar");
+      forwardButton.put("name", "bt_avancar");
+      forwardButton.put("text", "Avançar");
+      forwardButton.put("operation", "disableForm(); document.dados.op.value='3';");
+      return buttons;
     }
 }

@@ -3196,5 +3196,120 @@ public class BlockFormulario extends Block implements FormOperations {
       return sJSP;
     }
   }
+
+  @Override
+  public List<Map<String,String>> getPreviewButtons(UserInfoInterface userInfo, ProcessData procData) {
+
+    final String sLogin = userInfo.getUtilizador();
+    List<FormButton> alButtons = FormCache.getButtons(this);
+    List<Map<String,String>> buttons = new ArrayList<Map<String,String>>();
+
+    for (FormButton formButton : alButtons) {
+      Map<String,String> buttonMap = new HashMap<String,String>();
+      if (formButton == null) continue;
+
+      // IE button fix
+      String sButtonFix = "document.getElementById('" + FormProps.sBUTTON_CLICKED + "').value='" + formButton.getId() + "'; ";
+      FormButtonType type = formButton.getType();
+      boolean useIt = true;
+      String text = formButton.getText(userInfo);
+      String operation = "";
+      String name = BlockFormulario.getButtonFormId(formButton);
+      String hiddenField = "";
+
+      String showCond = formButton.getAttribute(FormButton.ATTR_SHOW_IN_PREVIEW_COND);
+      if (StringUtils.isNotEmpty(showCond)) {
+        useIt = false;
+        try {
+          useIt = procData.query(userInfo, showCond);
+        }
+        catch (Exception ei) {
+          useIt = false;
+          Logger.error(sLogin, this, "generateForm", procData.getSignature() +
+              "caught exception evaluation beanshell condition for "
+              + "main and detailed processes <cond>"
+              + showCond + "</cond> (assuming false): "
+              + ei.getMessage());
+        }
+      }
+
+      switch (formButton.getType()) {
+      case CANCEL:
+        String procNotInCreator = procData.getAppData(DataSetVariables.PROCESS_NOT_IN_CREATOR);
+        if (StringUtils.isEmpty(procNotInCreator) && procData.isInDB()) {
+          operation = "if(confirm('Deseja cancelar/fechar o processo?')){disableForm();document."+sFORM_NAME+".op.value=4;}else{return false;}";
+        } else {
+          useIt = false;
+        }
+        break;
+      case RETURN_PARENT:
+        //TODO Não sei o que isto faz
+      case RESET:
+      case SAVE:
+      case PRINT:
+        useIt = false;
+        break;
+      case NEXT:
+        operation = "disableForm(); document." + sFORM_NAME + ".op.value='3'; " + sButtonFix;
+        break;
+      case CUSTOM:            
+        if (useIt) {
+          String image = formButton.getAttribute(FormButton.ATTR_IMAGE);
+          if (!StringUtils.isEmpty(image) || !StringUtils.isEmpty(text)) {
+            operation = "disableForm();document."+sFORM_NAME+".op.value='3';"+sButtonFix;
+
+            String customVar = formButton.getAttribute(FormButton.ATTR_CUSTOM_VAR);
+            if (StringUtils.isNotEmpty(customVar)) {
+              String customValue = formButton.getAttribute(FormButton.ATTR_CUSTOM_VALUE);
+              if (StringUtils.isNotEmpty(customValue)) {
+                operation += "document." + sFORM_NAME + "." + customVar + ".value='" + customValue + "';";
+                // add var to hidden field list
+                hiddenField = customVar;
+              }
+            }
+          }
+        }            
+        break;
+      default:
+      }
+  
+      if (formButton.confirmMessage()) {
+        String cnfMsg = formButton.getAttribute(FormButton.ATTR_CONFIRM_ACTION_MESSAGE);
+        try {
+          cnfMsg = procData.transform(userInfo, cnfMsg);
+        } catch (EvalException ex) {
+          // maintain as was
+        }
+        if (StringUtils.isBlank(cnfMsg)) {
+          cnfMsg = userInfo.getMessages().getString("blockmsg.default.confirmMessage");
+        }
+        operation = "if (confirm('" + cnfMsg + "')) { " + operation + " } else { return false; }";
+      }
+      
+      if (useIt) {
+        buttons.add(buttonMap);
+        buttonMap.put("id", ""+formButton.getId());
+        buttonMap.put("name", name);
+        buttonMap.put("text", text);
+        buttonMap.put("operation", operation);
+        String tooltip = formButton.getAttribute(FormButton.ATTR_TOOLTIP);
+        tooltip = StringUtils.isNotEmpty(tooltip) ? tooltip : text; 
+        buttonMap.put("tooltip", tooltip);
+        String image = formButton.getAttribute(FormButton.ATTR_IMAGE);
+        if (StringUtils.isNotEmpty(image)) {
+          if (image.indexOf("http://") == -1) {
+            image = Const.APP_PROTOCOL + "://" + Const.APP_HOST + (Const.APP_PORT==-1?"":":"+Const.APP_PORT) + "/" + Const.APP_URL_PREFIX + "/images/" + image;
+          }
+          buttonMap.put("buttonimagesrc", image);
+          buttonMap.put("buttonimagealt", tooltip);
+        }
+        buttonMap.put("hiddenfield", hiddenField);
+
+      }
+    }
+    
+    return buttons;
+  }
+
 }
 

@@ -114,6 +114,7 @@ public class FormProps {
   public final static String sBUTTON_ATTR_CUSTOM_VAR = "cvar"; //$NON-NLS-1$
   public final static String sBUTTON_ATTR_CUSTOM_VALUE = "cvalue"; //$NON-NLS-1$
   public final static String sBUTTON_ATTR_SHOW_COND = "showcond"; //$NON-NLS-1$
+  public final static String sBUTTON_ATTR_SHOW_IN_PREVIEW_COND = "showinpreviewcond"; //$NON-NLS-1$
   public final static String sBUTTON_ATTR_IGNORE_FORM_PROCESSING = "ignoreformprocessing"; //$NON-NLS-1$
   public final static String sBUTTON_ATTR_CONFIRM_ACTION = "confirmAction"; //$NON-NLS-1$
   public final static String sBUTTON_ATTR_CONFIRM_ACTION_MESSAGE = "confirmActionMessage"; //$NON-NLS-1$

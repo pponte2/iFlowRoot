@@ -20,6 +20,7 @@ public class FormButton {
   public static final String ATTR_CUSTOM_VAR = FormProps.sBUTTON_ATTR_CUSTOM_VAR;
   public static final String ATTR_CUSTOM_VALUE = FormProps.sBUTTON_ATTR_CUSTOM_VALUE;
   public static final String ATTR_SHOW_COND = FormProps.sBUTTON_ATTR_SHOW_COND;
+  public static final String ATTR_SHOW_IN_PREVIEW_COND = FormProps.sBUTTON_ATTR_SHOW_IN_PREVIEW_COND;
   public final static String ATTR_IGNORE_FORM_PROCESSING = FormProps.sBUTTON_ATTR_IGNORE_FORM_PROCESSING;
   public final static String ATTR_CONFIRM_ACTION = FormProps.sBUTTON_ATTR_CONFIRM_ACTION;
   public final static String ATTR_CONFIRM_ACTION_MESSAGE = FormProps.sBUTTON_ATTR_CONFIRM_ACTION_MESSAGE;

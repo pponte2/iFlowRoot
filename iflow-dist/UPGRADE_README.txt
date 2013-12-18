@@ -1,6 +1,11 @@
 ------------------------------------------------------------------------------
                            iFlow Upgrade How To                               
 
+V4.2.4 - [R20120618] - V4.2.4 - [R20130802]
+ - subtituir todos os ficheiros nas pastas: 
+ 	iflow-home\repository-data\1\Messages
+ 	iflow-home\repository-data\1\Themes
+ 
 V4.2.0 - [R20120618] - V4.2.0 - [R20130802]
  - Para definir uma língua de defeito para o iFlow adicionar DEFAULT_LOCALE=en-US ao iflow.properties.
 
