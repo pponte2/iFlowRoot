@@ -85,7 +85,9 @@
 				<script type="text/javascript" src="{$url_prefix}/Themes/{$theme}/javascript/theme.js" />
 				<script type="text/javascript" src="{$url_prefix}/javascript/html/encoder.js" />
 				<script type="text/javascript" src="{$url_prefix}/javascript/applet_functions.js" />
+				
 
+				
 				<!-- -->
 				<script type="text/javascript" src="{$url_prefix}/javascript/mootools.js"/>
 				<script type="text/javascript" src="{$url_prefix}/javascript/tabs.js" />
@@ -121,7 +123,7 @@
 					</div>
 				</div>
 				<script type="text/javascript">
-					window.parent.onresize = function(event) {initProcFrame();};
+					window.parent.onresize = function(event) {initProcFrame();};	 					 							 			        
 				</script>
 				
 			</body>
@@ -158,6 +160,8 @@
 			</div>
 		</form>
 	</xsl:template>
+	
+
 
 	<xsl:template match="blockdivision">
 		<div class="blockdivision">
@@ -298,8 +302,9 @@
 			<xsl:apply-templates select="blockdivision" />
 		</div>
 	</xsl:template>
-
-	<xsl:template match="field">
+    
+	<xsl:template match="field">		
+		<div id="{generate-id()}" class="fieldDiv">
 		<xsl:variable name="multicol" select="count(../../columndivision)" />
 		<xsl:variable name="type" select="type" />
 		<xsl:choose>
@@ -558,9 +563,9 @@
 						                <xsl:text>');this.onmouseover=null;</xsl:text>
 					           	  	</xsl:attribute>
 									<xsl:if test="string-length(onchange_submit) &gt; 0">
-										<xsl:attribute name="onChange">
-					                  	<xsl:apply-templates select="onchange_submit" />
-					                </xsl:attribute>
+										<xsl:attribute name="onChange">														
+												ajaxFormRefresh(this);
+										</xsl:attribute>
 									</xsl:if>
 								</input>
 							</xsl:otherwise>
@@ -774,8 +779,8 @@
 								<xsl:value-of select="variable/text()" />
           					</xsl:attribute>
 							<xsl:if test="string-length(onchange_submit) &gt; 0">
-								<xsl:attribute name="onChange">
-									<xsl:apply-templates select="onchange_submit" />
+								<xsl:attribute name="onChange">														
+										ajaxFormRefresh(this);
 								</xsl:attribute>
 							</xsl:if>
 							<xsl:for-each select="option">
@@ -1216,6 +1221,7 @@
 				</li>
 			</xsl:otherwise>
 		</xsl:choose>
+		</div>
 	</xsl:template>
 
 	<xsl:template match="button">

@@ -333,6 +333,16 @@ Disabled. Use servlet container defaults
     </init-param>
   </servlet>
    <!-- end of kaptcha -->
+   
+   <servlet>
+	    <servlet-name>AjaxFormServlet</servlet-name>
+	    <servlet-class>pt.iflow.servlets.AjaxFormServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+	    <servlet-name>AjaxFormServlet</servlet-name>
+	    <url-pattern>/AjaxFormServlet/*</url-pattern>
+	</servlet-mapping>
 
     <!-- Apache Axis -->
   <servlet-mapping>

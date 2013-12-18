@@ -1621,3 +1621,55 @@ function toggle_all_cb(cb,cba) {
       else
         document.getElementById(id).style.display='block';
     }
+    
+    function ajaxFormRefresh(component){
+    	var start = new Date();
+    	var $jQuery = jQuery.noConflict();
+			$jQuery.ajaxSetup ({cache: false});
+			$jQuery(component).after('<img src=\'/iFlow//images/loading.gif\'>');
+		var varNewValue=component.value;
+			var varName=component.name;
+			var flowid = document.getElementById('flowid').value;
+			var pid = document.getElementById('pid').value;
+			var subpid = document.getElementById('subpid').value;
+       	$jQuery.getJSON(  
+            '../AjaxFormServlet',
+            {varNewValue: varNewValue, varName: varName,
+             flowid: flowid, pid: pid, subpid:subpid}, 
+            function(response){  
+            	 var answer =new Date();
+            	var blockdivisions = $jQuery('.blockdivision');
+            	var main = $jQuery('#main');
+            	var numberOldBlockDivision = blockdivisions.length - 1;
+            	
+            	
+            	for (var i=0;i < response.length;i++){ 
+            		var txtBlock = '<div class=\'blockdivision\'>';
+            		var tmpBlock= response[i];
+            		var txtColumn = '';
+            		for (var j=0; j<tmpBlock.columns.length; j++){
+            			var tmpColumn= tmpBlock.columns[j];
+            			txtColumn += '<div class=\'columndivision\' style=\''+ tmpColumn.style +'\' >';            			
+            			for ( var l=0; l<tmpColumn.fields.length; l++){
+            				var tmpField = tmpColumn.fields[l];
+            				if(tmpField.ignore=='1')
+            					tmpField.content = $jQuery('#'+tmpField.id).html;
+            				$jQuery('#'+tmpField.id).remove();
+            				txtColumn += '<ol class="multicol"> <div id=\''+tmpField.id+'\' class=\'fieldDiv\'>' + tmpField.content + '</div> </ol>';
+            			}
+            			txtColumn += '</div>';            			
+            		}
+            		txtBlock += txtColumn + '</div>';
+            		main.append(txtBlock);
+            	} 
+            	try{
+            	main.append(blockdivisions[numberOldBlockDivision]);
+            	for (var i=0; i<numberOldBlockDivision; i++)
+            		blockdivisions[i].remove();   
+            	} catch(err){}
+            	
+            	var render = new Date();
+            	//alert(' start:' + start + '\n answer:'+ answer+'\n render:'+ render);
+        	}
+    	);       	
+    }    
