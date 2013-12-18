@@ -38,6 +38,7 @@
   var flowInfoServlet="FlowInfo";
   var msgHandlerJSP="msgHandler.jsp";
   var processAnnotationsJSP="ProcessAnnotation/process_annotations.jsp";
+  var divMain = 'div_main' 
   
   //tab links 
   var mainContentJSP="main_content.jsp";
@@ -58,21 +59,21 @@
   var reportsNavJSP="Reports/reports_nav.jsp";
   var reportsJSP="Reports/proc_perf.jsp";
   
-    var prev_item = new Array();
-    GLOBAL_session_config.sel = new Array();
-   
-    function selectedItem(tabnr, item) {    
-       cur_item = 'li_a_' + tabnr + "_"+ item;
-       if ($((prev_item[tabnr]))) $((prev_item[tabnr])).className = 'toolTipItemLink li_link';
-     if($(cur_item)) {
-       $(cur_item).className = 'toolTipItemLink li_link li_selected';
-       $(cur_item).blur();
-     }
-       GLOBAL_session_config.sel[tabnr] = item;
-       prev_item[tabnr] = cur_item;
+  var prev_item = new Array();
+  GLOBAL_session_config.sel = new Array();
+ 
+  function selectedItem(tabnr, item) {    
+     cur_item = 'li_a_' + tabnr + "_"+ item;
+     if ($((prev_item[tabnr]))) $((prev_item[tabnr])).className = 'toolTipItemLink li_link';
+   if($(cur_item)) {
+     $(cur_item).className = 'toolTipItemLink li_link li_selected';
+     $(cur_item).blur();
+   }
+     GLOBAL_session_config.sel[tabnr] = item;
+     prev_item[tabnr] = cur_item;
+     
+  }
        
-    }
-         
   
   function getBrowserWindowHeight() {
     var myHeight = 0;
@@ -131,9 +132,10 @@
     updateCSS(css);
     doTooltip($$('#div_tabs .tab_button'), 600, 'tab-tool');  // fetch all childs of div_tabs with class tab_button
     doTooltip($$('#div_menu_link .menu_link'), 600, 'tab-tool');  // fetch all childs of div_menu_link with class menu_link
-    tabber(1, mainContentJSP , 'data=procs', mainContentJSP, 'data=tasks');
     // set up processes tab
-    $('section3_content_div').style.height="100%";
+    if (orgTheme() == "newflow") {
+      $('section3_content_div').style.height="100%";
+    }
     updateMessageCount();
     GLOBAL_session_config.sel['admin'] = 13;
     GLOBAL_session_config.sel['delegations'] = 1;
@@ -182,7 +184,7 @@
     GLOBAL_showInfoDialog.show();
   }   
   
-  function expand () {
+  function expand() {
     document.getElementsByTagName('html')[0].style.width='99%';
     document.getElementsByTagName('body')[0].style.width='99%';
     document.getElementById('div_header').style.display='none';
@@ -198,8 +200,13 @@
     document.getElementById('section3_header_div').style.height='0px';
     document.body.style.margin = '0px'; 
 
-    document.getElementById('section3_content_div').style.height="100%";
-    document.getElementById('open_proc_frame').style.height=(getBrowserWindowHeight()-2)+'px';
+    if(orgTheme() == "classic" || orgTheme() == "newflow") {
+      document.getElementById('section3_content_div').style.height="100%";
+      document.getElementById('open_proc_frame').style.height=(getBrowserWindowHeight()-2)+'px';
+    } else {
+      document.getElementById('section3_content_div').style.height=(getBrowserWindowHeight()-2)+'px';
+      document.getElementById('open_proc_frame').style.height=(getBrowserWindowHeight()-2)+'px';
+    }
     document.getElementById('section3_content_div').className='content_div_expanded';
     $('footerwrapper').setStyle('display','none');
     GLOBAL_HEIGHT_OFFSET=2;
@@ -222,16 +229,33 @@
     document.getElementById('section3_div').className='tab_body';
     document.body.style.margin = '10px 20px 0 20px';
 
-    document.getElementById('section3_content_div').style.height="100%";
-    document.getElementById('open_proc_frame').style.height="100%";
+    if(orgTheme() == "classic" || orgTheme() == "newflow") {
+      document.getElementById('section3_content_div').style.height="100%";
+      document.getElementById('open_proc_frame').style.height="100%";
+    } else {
+          var h1;
+      if (window.frames[0].document.forms[0]) {
+        h1 = window.frames[0].document.forms[0].offsetHeight;
+      }
+      else {
+        h1 = 0;
+      }
+      
+      if (h1 > 0) {
+        document.getElementById('section3_content_div').style.height = (h1 + 40)+ 'px';
+        document.getElementById('open_proc_frame').style.height=(h1 + 40)+ 'px';
+      }
+
+      //document.getElementById('section3_content_div').style.height=(getBrowserWindowHeight()-(GLOBAL_HEIGHT_OFFSET*1.5))+'px';
+      //document.getElementById('open_proc_frame').style.height=(getBrowserWindowHeight()-(GLOBAL_HEIGHT_OFFSET*1.5))+'px';
+    }
     document.getElementById('section3_content_div').className='content_div';
     
     $('footerwrapper').setStyle('display','block');
       
   }
   
-  
-  function open_process (tabnr, flowid, contentpage, contentparam, runMax) {
+  function open_process(tabnr, flowid, contentpage, contentparam, runMax) {
     hidePopup();
     var scrollpos = layout.getScrollPosition().toString();
     // do the pinging...
@@ -246,11 +270,10 @@
       else { 
         gContentType = 'open-process-prep';
         gFlowId = flowid;
-        tabber(3,  mainContentJSP, 'data=procs&flowid=' + flowid+"&scroll="+scrollpos+"&" + contentparam , '', '');
+        //tabber(3,  mainContentJSP, 'data=procs&flowid=' + flowid+"&scroll="+scrollpos+"&" + contentparam , '', '');
         myframe = document.getElementById('open_proc_frame');
         myframe.style.display = "block";
         myframe.src = processLoadJSP+'?process_url=' + escape(contentpage + "?tabnr=" + tabnr + "&" + contentparam); 
-        //myframe.src = contentpage + "?tabnr=" + tabnr + "&" + contentparam;
         gContentPage = contentpage;
         gContentParam = contentparam;
   
@@ -269,7 +292,7 @@
     setScrollPosition(0);
   }
   
-  function open_process_search (tabnr, flowid, contentpage, contentparam, runMax) {
+  function open_process_search(tabnr, flowid, contentpage, contentparam, runMax) {
     // do the pinging...
     procCallBack = function(text, extra) {
       if (text.indexOf("session-expired") > 0) {
@@ -304,15 +327,14 @@
   }
   
   function open_process_report(tabnr, flowid, contentpage, contentparam, runMax) {
-    // do the pinging...
-	if(gTabNr != null) gOldTabNr = gTabNr;
-	gTabNr = tabnr;
+    if(gTabNr != null) gOldTabNr = gTabNr;
+    gTabNr = tabnr;
     gFlowId=flowid;
     gContentPage=contentpage;
     gContentParam=contentparam;
     gRunMax=runMax;
     setHistory(tabnr, '', '', '', '');
-    tabber(tabnr,  '', '', 'Reports/proc_report_exec.jsp', contentparam);
+    //tabber(tabnr,  '', '', 'Reports/proc_report_exec.jsp', contentparam);
   }
 
   function open_process_report_exec(contentpage, contentparam) {
@@ -335,60 +357,23 @@
     makeRequest(pingJSP, '', procCallBack, 'text', 10);
   }
   
-  function close_process (tabnr) {
+  function close_process(tabnr) {
 	if(gOldTabNr == 2 && gTabNr == 3){
 		this.blur();
-		tabber_load(2,actividadesFiltroJSP);
+		//tabber_load(2,actividadesFiltroJSP);
 	} else {
 		colapse();
 		myframe = document.getElementById('open_proc_frame');
 	    myframe.style.display = "none";
 	    myframe.src = '';
-	    tabber(1, mainContentJSP , 'data=procs', mainContentJSP, 'data=tasks');
+	    //tabber(1, mainContentJSP , 'data=procs', mainContentJSP, 'data=tasks');
 	}
-  }
-  
-  function tabber_right(tabnr, contentpage, contentparam) {
-    tabnr = convert_tabnr(tabnr);
-    var hist = page_history[tabnr];
-    tabber(tabnr, '', hist['navparam'], contentpage, contentparam); // preserve navparam
   }
   
   function showLoading(eid) {
     if (document.getElementById(eid).innerHTML == '') {
       document.getElementById(eid).innerHTML = '<div class="info_box">loading<br><img src="images/loading.gif"/></div>';
     }
-  }
-  
-  function convert_tabnr(tabnr) {
-    if (tabnr == 'dashboard') return 1;
-    else if (tabnr == 'tasks') return 2;
-    else if (tabnr == 'search') return 8;
-    else if (tabnr == 'processes') return 3;
-    else if (tabnr == 'delegations') return 5;
-    else if (tabnr == 'admin') return 4;
-    else if (tabnr == 'account') return 6;
-    else if (tabnr == 'help') return 7;
-    else if (tabnr == 'inbox') return 11;
-    else if (tabnr == 'rss') return 9;
-    else if (tabnr == 'reports') return 10;
-    else if (tabnr > 0 && tabnr <= GLOBAL_MAX_TABS) return tabnr;
-    return 1;
-  }
-  
-  function parse_tabnr(tabnr) {
-    if (tabnr == 1) return 'dashboard';
-    else if (tabnr == 2) return 'tasks';
-    else if (tabnr == 8) return 'search';
-    else if (tabnr == 3) return 'processes';
-    else if (tabnr == 5) return 'delegations';
-    else if (tabnr == 4) return 'admin';
-    else if (tabnr == 6) return 'account';
-    else if (tabnr == 7) return 'help';
-    else if (tabnr == 9) return 'rss';
-    else if (tabnr == 10) return 'reports';
-    else if (tabnr == 11) return 'inbox';
-    else return 'dashboard';
   }
   
   function tooltips(locId) {
@@ -448,14 +433,7 @@
     //  ' contentpage: '+contentpage+
     //  ' contentparam: '+contentparam);
   }
-  
-  function tabber_load(tabnr, navpage) {
-	tabnr = convert_tabnr(tabnr);
-    var hist = page_history[tabnr];
-    tabber(tabnr, navpage, hist['navparam'], hist['contentpage'], hist['contentparam']);
-    GLOBAL_session_config = hist['sessionconfig'];
-  }
-  
+    
   function updateSessionConfig(tabnr) {
   
     if (convert_tabnr('admin') == tabnr 
@@ -483,87 +461,6 @@
 
   }
   
-  function tabber_save(tabnr, navpage, navparam, contentpage, contentparam) {
-    setHistory(tabnr, navpage, navparam, contentpage, contentparam);
-    tabber(tabnr, navpage, navparam, contentpage, contentparam);
-  }
-  
-  function tabber(tabnr, navpage, navparam, contentpage, contentparam) {
-    var i=0;
-  
-    untooltips();
-  
-    tabnr = convert_tabnr(tabnr);
-  
-    // se o tab � o 3 : process mostra botoes
-    if (tabnr == 3) {
-      document.getElementById('div_proc_menu_colapsed').style.display = 'block';
-    }
-    else {
-      document.getElementById('div_proc_menu_colapsed').style.display = 'none';
-    }
-  
-    // se veio do open_process � open_process
-    if (gContentType == 'open-process-prep') gContentType = 'open-process';
-    else gContentType = null;
-  
-    if (navpage) {
-      document.getElementById('section' + tabnr + '_nav_div').innerHTML = '';
-      setTimeout("showLoading('section" + tabnr + "_nav_div')", 1000);
-      navparam = prepareParams('nav', tabnr, navparam);
-      registerNav (navpage, navparam, tabnr);
-      makeRequest(navpage, navparam, navdisplay, 'text', tabnr);
-    }
-    else {
-      clearNav();
-      if(gTabNr != null) gOldTabNr = gTabNr;
-      gTabNr = tabnr;
-    }
-  
-    while (i++ < GLOBAL_MAX_TABS) {
-      if (i != tabnr) {
-        if (document.getElementById('button' + i) || document.getElementById('section' + i + '_div')) {
-          mybutton = document.getElementById('button' + i);
-          mybuttonspan = document.getElementById('button' + i + "_span");
-          section = document.getElementById('section' + i + '_div');
-          if (mybutton) {
-              mybutton.className='tab_button_first';
-            if (mybuttonspan) {
-              mybuttonspan.className='tab_button_span'; 
-            }
-          }
-          if (section) {
-            section.style.display = 'none';
-          }
-        }
-      }
-    }
-    mybutton = document.getElementById('button' + tabnr);
-    mybuttonspan = document.getElementById('button' + tabnr + "_span");
-    section = document.getElementById('section' + tabnr + '_div');
-    if (mybutton) {
-      mybutton.className='tab_button_pressed_first';
-      if (mybuttonspan) {
-        mybuttonspan.className='tab_button_span_pressed';
-      }
-    }
-    section.style.display = 'block';
-  
-    if (contentpage) {
-      document.getElementById('section' + tabnr + '_content_div').innerHTML = '';
-      setTimeout("showLoading('section" + tabnr + "_content_div')", 1000);
-      contentparam = prepareParams('content', tabnr, contentparam);
-      registerContent (contentpage, contentparam, tabnr);
-      makeRequest(contentpage, contentparam, contentdisplay, 'text', tabnr);
-    }
-    else {
-      clearContent();
-      if(gTabNr != null) gOldTabNr = gTabNr;
-      gTabNr = tabnr;
-    }
-    //updateSize(GLOBAL_HEIGHT_OFFSET);
-  }
-
   function prepareParams(id, tabnr, params) {
     var ret = params;
     var tabnrparam = id + 'tabnr=' + tabnr;
@@ -750,7 +647,6 @@
       customize_span.style.display = "none";
     }
   }
-  
   
   function reloadSLAChart(paramflow, paramunit, paramtime, audittype , audituserperf , serverparamflowid, serverparamunit, serverparamtime, includeOpen,showOffline, ts) {
     var selobj = document.getElementById(paramflow); 
@@ -981,10 +877,6 @@
     }   
   }
   
-  
-  //Copied from: http://www.gamedev.net/community/forums/topic.asp?topic_id=281951
-  //Note: newer versions of mozilla/firefox do not allow access to clipboard.
-  
   function copy_clip(text) {
     if(do_copy_clip(text)) {
       alert(messages['copy_clip_error']);
@@ -1040,7 +932,6 @@
     return false;
   }
   
-  
   //Handle enter/return keys
   function getEnterKeyHandler(eventToCall) {
     var evt = eventToCall;
@@ -1064,7 +955,6 @@
     return handleEnterKey;
   }
   
-  
   function nextField(fieldId) {
     var fid = fieldId;
     var evt = function () {
@@ -1087,11 +977,9 @@
     return evt;
   }
   
-  
   function registerFormKey(url, key, hasPID) {
     gContentType = 'open-process';
       if(hasPID) {
-        // Override some things stored in javascript
         gContentPage=url;
         gContentParam=key;
       }
@@ -1133,7 +1021,6 @@
     makeRequest(msgHandlerJSP, 'id='+id+'&action='+action, markNotificationCallback, 'text', {id:id,action:action});
   }
   
-  
   function markNotificationCallback(text, params) {
     if (text.indexOf("session-expired") > 0) {
       openLoginIbox();
@@ -1159,7 +1046,6 @@
       }
     } catch(err) {}
   }
-  
   
   function getSearchQuery(selElem, jsp, div) {
     name = selElem.name;
@@ -1234,7 +1120,6 @@
   function doassynclogin() {
     assyncLogin('AuthenticationServlet', login_return);
   }
-  
 
   function loginReturn(text, id) {
     eval(text);
@@ -1297,12 +1182,11 @@
       }
   }
   
-    function process_detail (tabnr, thePage, flowid, pid, subpid, procStatus) {
-    var scrollpos = layout.getScrollPosition().toString();
-      var params = 'flowid='+flowid+'&pid='+pid+'&subpid='+subpid+'&procStatus='+procStatus+'&scroll='+scrollpos;
-      tabber_right(8, thePage, params);
+    function process_detail(thePage, ctrl, flowid, pid, subpid, procStatus) {
+      var scrollpos = layout.getScrollPosition().toString();
+      var params = '?flowid='+flowid+'&pid='+pid+'&subpid='+subpid+'&procStatus='+procStatus+'&scroll='+scrollpos;
+      getJSP(thePage + params, ctrl);
     }
-        
 
     function resizeProcDetail() {
       try {
@@ -1316,141 +1200,140 @@
       }
     }
 
-
     /**
      * Check if caps lock is ON and warn the user
      * @param e key event
      * @return
      */
-function isCapslock(e){
-    e = (e) ? e : window.event;
-    var charCode = false;
-    if (e.which) {
-        charCode = e.which;
-    } else if (e.keyCode) {
-        charCode = e.keyCode;
-    }
-    var shifton = false;
-    if (e.shiftKey) {
-        shifton = e.shiftKey;
-    } else if (e.modifiers) {
-        shifton = !!(e.modifiers & 4);
-    }
-    if (charCode >= 97 && charCode <= 122 && shifton) {
-        return true;
-    }
-    if (charCode >= 65 && charCode <= 90 && !shifton) {
-        return true;
-    }
-    return false;
-}
-
-function openReleaseNotes(type) {
-   var linkopenid = type + '_link_open';
-   var linkcloseid = type + '_link_close';
-     var rnid = type + '_release_notes';
-     var linkopen = document.getElementById(linkopenid);
-     var linkclose = document.getElementById(linkcloseid);
-     var rn = document.getElementById(rnid);
-
-     if (rn) {
-       rn.style.display='';
-       linkopen.style.display='none';
-       linkclose.style.display='';
-     }
-}
-function closeReleaseNotes(type) {
-   var linkopenid = type + '_link_open';
-   var linkcloseid = type + '_link_close';
-     var rnid = type + '_release_notes';
-     var linkopen = document.getElementById(linkopenid);
-     var linkclose = document.getElementById(linkcloseid);
-     var rn = document.getElementById(rnid);
-
-     if (rn) {
-       rn.style.display='none';
-       linkopen.style.display='';
-       linkclose.style.display='none';
-     }
-}
-function set_html( id, html ) {
-    // For the scripts to work in IE we need some changes
-    // create orphan element set HTML to
-    // We need one node do get the scripts
-    var getScriptsNode = document.createElement('div');
-    getScriptsNode.innerHTML = '<form/>' + html;
-    // ... and one to remove them
-    var orphNode = document.createElement('div');
-    orphNode.innerHTML = html;
-    
-    // get the script nodes, add them into an arrary
-    var scriptNodes = getScriptsNode.getElementsByTagName('script');
-    var scripts = [];
-    while(scriptNodes.length) {
-        // push into script array
-        var node = scriptNodes[0];
-        scripts.push(node.text);
-        // then remove it
-        node.parentNode.removeChild(node);
-    }
-
-    // remove the scripts from orphan node
-    var scriptNodes = orphNode.getElementsByTagName('script');
-    while(scriptNodes.length) {
-        // remove it
-        var node = scriptNodes[0];
-        node.parentNode.removeChild(node);
-    }
-
-    // add html to place holder element (note: we are adding the html before we execute the scripts)
-    document.getElementById(id).innerHTML = orphNode.innerHTML;
-
-    // execute stored scripts
-    var head = document.getElementsByTagName('head')[0];
-    while(scripts.length) {
-        // create script node
-        var scriptNode = document.createElement('script');
-        scriptNode.type = 'text/javascript';
-        scriptNode.text = scripts.shift(); // add the code to the script node
-        head.appendChild(scriptNode); // add it to the page
-        head.removeChild(scriptNode); // then remove it
-    }   
-}
-
-
-function proc_rpt_offline(checkbox, fn) {
-  var offline = checkbox.checked;
-  var flowid = $('flowid').options[$('flowid').selectedIndex].value;
-  var url = 'Reports/proc_flow_list.jsp';
-  var params = 'offline='+offline+'&flowid='+flowid;
-  makeRequest(url, params, proc_rpt_offline_callback, 'text', fn);  
-}
-
-function proc_rpt_offline_callback(txt, fn) {
-  $('flowid').innerHTML = txt;
-  fn(new Date().getTime());
-}
-
-function toggle_all_cb(cb,cba) {
-  if(!cb || !cba) return;
-  if(cba.length) {
-    for (i = 0; i < cba.length; i++) {
-      cba[i].checked = cb.checked;
-    }
-  } else {
-    cba.checked = cb.checked;
+  function isCapslock(e){
+      e = (e) ? e : window.event;
+      var charCode = false;
+      if (e.which) {
+          charCode = e.which;
+      } else if (e.keyCode) {
+          charCode = e.keyCode;
+      }
+      var shifton = false;
+      if (e.shiftKey) {
+          shifton = e.shiftKey;
+      } else if (e.modifiers) {
+          shifton = !!(e.modifiers & 4);
+      }
+      if (charCode >= 97 && charCode <= 122 && shifton) {
+          return true;
+      }
+      if (charCode >= 65 && charCode <= 90 && !shifton) {
+          return true;
+      }
+      return false;
   }
-}
-
-  // Javascript Scroll Position Persistence (C)2007
- 
- var layout = {
+  
+  function openReleaseNotes(type) {
+     var linkopenid = type + '_link_open';
+     var linkcloseid = type + '_link_close';
+       var rnid = type + '_release_notes';
+       var linkopen = document.getElementById(linkopenid);
+       var linkclose = document.getElementById(linkcloseid);
+       var rn = document.getElementById(rnid);
+  
+       if (rn) {
+         rn.style.display='';
+         linkopen.style.display='none';
+         linkclose.style.display='';
+       }
+  }
+  function closeReleaseNotes(type) {
+     var linkopenid = type + '_link_open';
+     var linkcloseid = type + '_link_close';
+       var rnid = type + '_release_notes';
+       var linkopen = document.getElementById(linkopenid);
+       var linkclose = document.getElementById(linkcloseid);
+       var rn = document.getElementById(rnid);
+  
+       if (rn) {
+         rn.style.display='none';
+         linkopen.style.display='';
+         linkclose.style.display='none';
+       }
+  }
+  function set_html( id, html ) {
+      // For the scripts to work in IE we need some changes
+      // create orphan element set HTML to
+      // We need one node do get the scripts
+      var getScriptsNode = document.createElement('div');
+      getScriptsNode.innerHTML = '<form/>' + html;
+      // ... and one to remove them
+      var orphNode = document.createElement('div');
+      orphNode.innerHTML = html;
+      
+      // get the script nodes, add them into an arrary
+      var scriptNodes = getScriptsNode.getElementsByTagName('script');
+      var scripts = [];
+      while(scriptNodes.length) {
+          // push into script array
+          var node = scriptNodes[0];
+          scripts.push(node.text);
+          // then remove it
+          node.parentNode.removeChild(node);
+      }
+  
+      // remove the scripts from orphan node
+      var scriptNodes = orphNode.getElementsByTagName('script');
+      while(scriptNodes.length) {
+          // remove it
+          var node = scriptNodes[0];
+          node.parentNode.removeChild(node);
+      }
+  
+      // add html to place holder element (note: we are adding the html before we execute the scripts)
+      document.getElementById(id).innerHTML = orphNode.innerHTML;
+  
+      // execute stored scripts
+      var head = document.getElementsByTagName('head')[0];
+      while(scripts.length) {
+          // create script node
+          var scriptNode = document.createElement('script');
+          scriptNode.type = 'text/javascript';
+          scriptNode.text = scripts.shift(); // add the code to the script node
+          head.appendChild(scriptNode); // add it to the page
+          head.removeChild(scriptNode); // then remove it
+      }   
+  }
+  
+  
+  function proc_rpt_offline(checkbox, fn) {
+    var offline = checkbox.checked;
+    var flowid = $('flowid').options[$('flowid').selectedIndex].value;
+    var url = 'Reports/proc_flow_list.jsp';
+    var params = 'offline='+offline+'&flowid='+flowid;
+    makeRequest(url, params, proc_rpt_offline_callback, 'text', fn);  
+  }
+  
+  function proc_rpt_offline_callback(txt, fn) {
+    $('flowid').innerHTML = txt;
+    fn(new Date().getTime());
+  }
+  
+  function toggle_all_cb(cb,cba) {
+    if(!cb || !cba) return;
+    if(cba.length) {
+      for (i = 0; i < cba.length; i++) {
+        cba[i].checked = cb.checked;
+      }
+    } else {
+      cba.checked = cb.checked;
+    }
+  }
+  
+    // Javascript Scroll Position Persistence (C)2007
+   
+  var layout = {
     getScrollPosition: function() {
-        if (document.documentElement && document.documentElement.scrollTop)
-            return document.documentElement.scrollTop; // IE6 +4.01
-        if (document.body && document.body.scrollTop)
-            return document.body.scrollTop; // IE5 or DTD 3.2
-        return 0;
+      if (document.documentElement && document.documentElement.scrollTop)
+        return document.documentElement.scrollTop; // IE6 +4.01
+      if (document.body && document.body.scrollTop)
+        return document.body.scrollTop; // IE5 or DTD 3.2
+      return 0;
     }  
   };
 
@@ -1458,191 +1341,156 @@ function toggle_all_cb(cb,cba) {
     scrollTo(0, yPosition);
   }
 
-    function InicializeRichTextField(elementName, richTextComponentTitle, richTextComponentWidth, richTextComponentHeight){
-        var isReadOnly = document.getElementById(elementName).readOnly;
-        var collapseToolbar = true;
+  function InicializeRichTextField(elementName, richTextComponentTitle, richTextComponentWidth, richTextComponentHeight){
+      var isReadOnly = document.getElementById(elementName).readOnly;
+      var collapseToolbar = true;
 
-        //Setup some private variables
-        var Dom = YAHOO.util.Dom;
-        var Event = YAHOO.util.Event;
-        var richTextEditorComponent = null;
+      //Setup some private variables
+      var Dom = YAHOO.util.Dom;
+      var Event = YAHOO.util.Event;
+      var richTextEditorComponent = null;
 
-        var timer = null;
+      var timer = null;
 
-        var update = function(ev) {
-            if (timer) {
-                clearTimeout(timer);
+      var update = function(ev) {
+          if (timer) {
+              clearTimeout(timer);
+          }
+          timer = setTimeout(function() {
+              Dom.get(elementName).innerHTML = richTextEditorComponent.cleanHTML();
+              richTextEditorComponent.saveHTML();
+          }, 100);
+      };
+
+      if (richTextComponentWidth == undefined){
+          richTextComponentWidth = '600px';
+      }
+      if (richTextComponentHeight == undefined){
+          richTextComponentHeight = '300px';
+      }
+      if (richTextComponentTitle == undefined || richTextComponentTitle == ''){
+          richTextComponentTitle = "Text Editing Tools";
+      }
+
+      //The SimpleEditor config
+      var richTextEditorComponentConfiguration = {
+              height: richTextComponentHeight,
+              width: richTextComponentWidth,
+              dompath: false, //Turns on the bar at the bottom
+              animate: true //Animates the opening, closing and moving of Editor windows
+      };
+
+      richTextEditorComponent = new YAHOO.widget.Editor(document.getElementById(elementName), richTextEditorComponentConfiguration);
+      richTextEditorComponent.on('afterNodeChange', update);
+      richTextEditorComponent.on('editorKeyDown', update);
+
+      richTextEditorComponent._defaultToolbar.titlebar = richTextComponentTitle;
+
+      
+      richTextEditorComponent.render();
+  }
+
+  function blockPopupCallerForm(){
+      var form = document.getElementById('dados');
+      form.innerHTML = form.innerHTML + '<div id=\'_formLoadingDiv\' style=\'width:95%;height:98%;position:absolute;left:0;top:0;z-index:99;background-color:white;display:block;opacity:0.5;\'></ div>';
+  }
+
+  function getPopupUrlParams() {
+    var url = 'op=';
+
+    var op=$('op');
+    if (op!=null) url += op.value;
+    else url += 3;
+    var _0_MAX_ROW=$('0_MAX_ROW');
+    if (_0_MAX_ROW!=null) url += '&0_MAX_ROW=' + _0_MAX_ROW.value;
+    var _1_MAX_ROW=$('1_MAX_ROW');
+    if (_1_MAX_ROW!=null) url += '&1_MAX_ROW=' + _1_MAX_ROW.value;
+    var subpid=$('subpid');
+    if (subpid!=null) url += '&subpid=' + subpid.value;
+    var flowExecType=$('flowExecType');
+    if (flowExecType!=null) url += '&flowExecType=' + flowExecType.value;
+    var _2_MAX_ROW=$('2_MAX_ROW');
+    if (_2_MAX_ROW!=null) url += '&2_MAX_ROW=' + _2_MAX_ROW.value;
+    var pid=$('pid');
+    if (pid!=null) url += '&pid=' + pid.value;
+    var flowid=$('flowid');
+    if (flowid!=null) url += '&flowid=' + flowid.value;
+    var _serv_field_=$('_serv_field_');
+    if (_serv_field_!=null) url += '&_serv_field_=' + _serv_field_.value;
+    var curmid=$('curmid');
+    if (curmid!=null) url += '&curmid=' + curmid.value;
+    var popupStartBlockId=$('popupStartBlockId');
+    if (popupStartBlockId!=null) url += '&popupStartBlockId=' + popupStartBlockId.value;
+    var _button_clicked_id=$('_button_clicked_id');
+    if (_button_clicked_id!=null) url += '&_button_clicked_id=' + _button_clicked_id.value;
+
+    return url;
+  }
+
+  function showPopup(params, popupWidth, popupHeight) {
+      var url = 'Form/form.jsp?openPopup=true&' + params;
+
+      $('popupdialog').innerHTML = "<div class=\"hd\" style=\"visibility: inherit; height: 5%; \">Popup</div><div class=\"bd\" style=\"visibility: inherit; height: 90%; \">" +
+      "<div class=\"dialogcontent\" style=\"visibility: inherit; height: 100%; \"><div id=\"helpwrapper\" class=\"help_box_wrapper\" style=\"visibility: inherit; height: 100%; \"><div id=\"helpsection\" class=\"help_box\" style=\"visibility: inherit; height: 100%; \">" +
+      "<iframe onload=\"parent.calcFrameHeight('open_proc_frame_popup');\" id=\"open_proc_frame_popup\" name=\"open_proc_frame_popup\" frameborder=\"0\" scrolling=\"auto\" " +
+      "marginheight=\"0\" marginwidth=\"0\" width=\"100%\" height=\"100%\" class=\"open_proc_frame\" style=\"display:block;\" src=\""+ url +"\">" +
+      "</iframe></div></div></div>";
+
+      if (popupWidth == undefined){
+          popupWidth = '800px';
+      }
+      if (popupHeight == undefined){
+          popupHeight = null;
+      }
+
+    GLOBAL_popupDialog = new YAHOO.widget.Dialog("popupdialog", {
+      fixedcenter : true,
+      width: popupWidth,
+      height: popupHeight,
+      visible : false, 
+      modal: false, 
+      constraintoviewport : false,
+      close : true,
+      draggable: true
+    } );
+
+    GLOBAL_popupDialog.cancelEvent.subscribe(
+            function () {
+                var urlClose = 'Form/closePopup.jsp?' + params;
+                var myframe = parent.document.getElementById('open_proc_frame_popup');
+                myframe.style.display = "block";
+                myframe.src = urlClose;
             }
-            timer = setTimeout(function() {
-                Dom.get(elementName).innerHTML = richTextEditorComponent.cleanHTML();
-                richTextEditorComponent.saveHTML();
-            }, 100);
-        };
+    );
+    GLOBAL_popupDialog.render();
+    GLOBAL_popupDialog.show();
+  }
 
-        if (richTextComponentWidth == undefined){
-            richTextComponentWidth = '600px';
-        }
-        if (richTextComponentHeight == undefined){
-            richTextComponentHeight = '300px';
-        }
-        if (richTextComponentTitle == undefined || richTextComponentTitle == ''){
-            richTextComponentTitle = "Text Editing Tools";
-        }
+  function hidePopup() {
+    if (GLOBAL_popupDialog != null)
+      GLOBAL_popupDialog.hide();
+  }   
+  
+  function menuonoff (id) {
+    if (document.getElementById(id).style.display=='block')
+      document.getElementById(id).style.display='none';
+    else
+      document.getElementById(id).style.display='block';
+  }
 
-        //The SimpleEditor config
-        var richTextEditorComponentConfiguration = {
-                height: richTextComponentHeight,
-                width: richTextComponentWidth,
-                dompath: false, //Turns on the bar at the bottom
-                animate: true //Animates the opening, closing and moving of Editor windows
-        };
-
-        richTextEditorComponent = new YAHOO.widget.Editor(document.getElementById(elementName), richTextEditorComponentConfiguration);
-        richTextEditorComponent.on('afterNodeChange', update);
-        richTextEditorComponent.on('editorKeyDown', update);
-
-        richTextEditorComponent._defaultToolbar.titlebar = richTextComponentTitle;
-
-        
-        richTextEditorComponent.render();
+  function getJSP(url, ctrl) {
+    if (ctrl == null) ctrl = divMain; 
+    makeRequest(url, '', getJSPCallBack, 'text', ctrl);
+  }
+  
+  function getJSPCallBack(htmltext, ctrl) {
+    if (htmltext.indexOf("session-expired") > 0) {
+      openLoginIbox();
+    } else if (htmltext.indexOf("session-reload") > 0) {
+      pageReload(gotoPersonalAccount);
+    } else {
+      document.getElementById(ctrl).innerHTML = htmltext;
     }
-
-    function blockPopupCallerForm(){
-        var form = document.getElementById('dados');
-        form.innerHTML = form.innerHTML + '<div id=\'_formLoadingDiv\' style=\'width:95%;height:98%;position:absolute;left:0;top:0;z-index:99;background-color:white;display:block;opacity:0.5;\'></ div>';
-    }
-
-    function getPopupUrlParams() {
-      var url = 'op=';
-
-      var op=$('op');
-      if (op!=null) url += op.value;
-      else url += 3;
-      var _0_MAX_ROW=$('0_MAX_ROW');
-      if (_0_MAX_ROW!=null) url += '&0_MAX_ROW=' + _0_MAX_ROW.value;
-      var _1_MAX_ROW=$('1_MAX_ROW');
-      if (_1_MAX_ROW!=null) url += '&1_MAX_ROW=' + _1_MAX_ROW.value;
-      var subpid=$('subpid');
-      if (subpid!=null) url += '&subpid=' + subpid.value;
-      var flowExecType=$('flowExecType');
-      if (flowExecType!=null) url += '&flowExecType=' + flowExecType.value;
-      var _2_MAX_ROW=$('2_MAX_ROW');
-      if (_2_MAX_ROW!=null) url += '&2_MAX_ROW=' + _2_MAX_ROW.value;
-      var pid=$('pid');
-      if (pid!=null) url += '&pid=' + pid.value;
-      var flowid=$('flowid');
-      if (flowid!=null) url += '&flowid=' + flowid.value;
-      var _serv_field_=$('_serv_field_');
-      if (_serv_field_!=null) url += '&_serv_field_=' + _serv_field_.value;
-      var curmid=$('curmid');
-      if (curmid!=null) url += '&curmid=' + curmid.value;
-      var popupStartBlockId=$('popupStartBlockId');
-      if (popupStartBlockId!=null) url += '&popupStartBlockId=' + popupStartBlockId.value;
-      var _button_clicked_id=$('_button_clicked_id');
-      if (_button_clicked_id!=null) url += '&_button_clicked_id=' + _button_clicked_id.value;
-
-      return url;
-    }
-
-    function showPopup(params, popupWidth, popupHeight) {
-        var url = 'Form/form.jsp?openPopup=true&' + params;
-
-        $('popupdialog').innerHTML = "<div class=\"hd\" style=\"visibility: inherit; height: 5%; \">Popup</div><div class=\"bd\" style=\"visibility: inherit; height: 90%; \">" +
-        "<div class=\"dialogcontent\" style=\"visibility: inherit; height: 100%; \"><div id=\"helpwrapper\" class=\"help_box_wrapper\" style=\"visibility: inherit; height: 100%; \"><div id=\"helpsection\" class=\"help_box\" style=\"visibility: inherit; height: 100%; \">" +
-        "<iframe onload=\"parent.calcFrameHeight('open_proc_frame_popup');\" id=\"open_proc_frame_popup\" name=\"open_proc_frame_popup\" frameborder=\"0\" scrolling=\"auto\" " +
-        "marginheight=\"0\" marginwidth=\"0\" width=\"100%\" height=\"100%\" class=\"open_proc_frame\" style=\"display:block;\" src=\""+ url +"\">" +
-        "</iframe></div></div></div>";
-
-        if (popupWidth == undefined){
-            popupWidth = '800px';
-        }
-        if (popupHeight == undefined){
-            popupHeight = null;
-        }
-
-      GLOBAL_popupDialog = new YAHOO.widget.Dialog("popupdialog", {
-        fixedcenter : true,
-        width: popupWidth,
-        height: popupHeight,
-        visible : false, 
-        modal: false, 
-        constraintoviewport : false,
-        close : true,
-        draggable: true
-      } );
-
-      GLOBAL_popupDialog.cancelEvent.subscribe(
-              function () {
-                  var urlClose = 'Form/closePopup.jsp?' + params;
-                  var myframe = parent.document.getElementById('open_proc_frame_popup');
-                  myframe.style.display = "block";
-                  myframe.src = urlClose;
-              }
-      );
-      GLOBAL_popupDialog.render();
-      GLOBAL_popupDialog.show();
-    }
-
-    function hidePopup() {
-      if (GLOBAL_popupDialog != null)
-        GLOBAL_popupDialog.hide();
-    }   
-    
-    function menuonoff (id) {
-      if (document.getElementById(id).style.display=='block')
-        document.getElementById(id).style.display='none';
-      else
-        document.getElementById(id).style.display='block';
-    }
-    
-    function ajaxFormRefresh(component){
-    	var start = new Date();
-    	var $jQuery = jQuery.noConflict();
-			$jQuery.ajaxSetup ({cache: false});
-			$jQuery(component).after('<img src=\'/iFlow//images/loading.gif\'>');
-		var varNewValue=component.value;
-			var varName=component.name;
-			var flowid = document.getElementById('flowid').value;
-			var pid = document.getElementById('pid').value;
-			var subpid = document.getElementById('subpid').value;
-       	$jQuery.getJSON(  
-            '../AjaxFormServlet',
-            {varNewValue: varNewValue, varName: varName,
-             flowid: flowid, pid: pid, subpid:subpid}, 
-            function(response){  
-            	 var answer =new Date();
-            	var blockdivisions = $jQuery('.blockdivision');
-            	var main = $jQuery('#main');
-            	var numberOldBlockDivision = blockdivisions.length - 1;
-            	
-            	
-            	for (var i=0;i < response.length;i++){ 
-            		var txtBlock = '<div class=\'blockdivision\'>';
-            		var tmpBlock= response[i];
-            		var txtColumn = '';
-            		for (var j=0; j<tmpBlock.columns.length; j++){
-            			var tmpColumn= tmpBlock.columns[j];
-            			txtColumn += '<div class=\'columndivision\' style=\''+ tmpColumn.style +'\' >';            			
-            			for ( var l=0; l<tmpColumn.fields.length; l++){
-            				var tmpField = tmpColumn.fields[l];
-            				if(tmpField.ignore=='1')
-            					tmpField.content = $jQuery('#'+tmpField.id).html;
-            				$jQuery('#'+tmpField.id).remove();
-            				txtColumn += '<ol class="multicol"> <div id=\''+tmpField.id+'\' class=\'fieldDiv\'>' + tmpField.content + '</div> </ol>';
-            			}
-            			txtColumn += '</div>';            			
-            		}
-            		txtBlock += txtColumn + '</div>';
-            		main.append(txtBlock);
-            	} 
-            	try{
-            	main.append(blockdivisions[numberOldBlockDivision]);
-            	for (var i=0; i<numberOldBlockDivision; i++)
-            		blockdivisions[i].remove();   
-            	} catch(err){}
-            	
-            	var render = new Date();
-            	//alert(' start:' + start + '\n answer:'+ answer+'\n render:'+ render);
-        	}
-    	);       	
-    }    
+  }
+  
+  

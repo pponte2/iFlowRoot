@@ -22,7 +22,8 @@ $(function() {
 	   active:2
 	}); 
 });
- 
+
+/*
 // Canvas arrow cores Categorias Menu slide 1
 var c=document.getElementById("gray");
 var ctx=c.getContext("2d");
@@ -80,7 +81,7 @@ ctx.moveTo(5,0);
 ctx.lineTo(12,15);
 ctx.lineTo(5,30);
 ctx.stroke();
-
+*/
 
 
 });

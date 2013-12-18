@@ -18,11 +18,9 @@ public class Button implements FieldInterface {
   private static final String BUTTON_TEXT = "text";
   private static final String BUTTON_SHOW_CONDITION = "button_show_condition";
   private static final String BUTTON_IMAGE = "button_image";
-  private static final String BUTTON_IGNORE_FROM_PROCESSING = "button_ignore_from_processing";
   private static final String BUTTON_CONFIRM_MESSAGE = "button_confirm_message";
   private static final String BUTTON_CUSTOM_VALUE = "button_custom_value";
   private static final String BUTTON_CUSTOM_VARIABLE = "button_custom_variable";
-  private static final String BUTTON_IGNORE_FROM_VALIDATION = "button_ignore_from_validation";
   private static final String BUTTON_CONFIRM_ACTION = "button_confirm_action";
   private static final String BUTTON_TYPE = "button_type";
   private static final String BUTTON_TOOLTIP = "button_tooltip";

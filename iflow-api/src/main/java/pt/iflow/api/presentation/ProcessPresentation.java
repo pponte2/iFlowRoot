@@ -181,11 +181,6 @@ public class ProcessPresentation {
       return null;
     }
 
-    if(null == procData) {
-      Logger.error(userInfo.getUtilizador(), "ProcessPresentation", "getProcessDetail", "Process data is not valid");
-      return null;
-    }
-    
     if(!BeanFactory.getProcessManagerBean().canViewProcess(userInfo, procData)) {
       Logger.warning(userInfo.getUtilizador(), "ProcessPresentation", "getProcessDetail", "User not authorized to access process detail");
       return null;
