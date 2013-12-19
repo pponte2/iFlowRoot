@@ -39,12 +39,12 @@ public class Selection implements FieldInterface {
 
   public String getXML(Properties prop) {
     try {
-      StringBuffer sb = new StringBuffer();
-      StringBuffer sbHidden = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
+      StringBuilder sbHidden = new StringBuilder();
       String sValue = StringEscapeUtils.unescapeXml(prop.getProperty("value"));
-      String sName = null;
-      String sValue2 = null;
-      String sVar = null;
+      StringBuilder sName = null;
+      StringBuilder sValue2 = null;
+      StringBuilder sVar = null;
 
       double dtmp = Double.NaN;
 
@@ -63,8 +63,8 @@ public class Selection implements FieldInterface {
         
         for (int i=0; prop.getProperty(TAG_OPTION_ORDER + i) != null; i++) {        
           String option = prop.getProperty(TAG_OPTION_ORDER + i);
-          sName = prop.getProperty(TAG_OPTION_TEXT + option);
-          sValue2 = option;
+          sName = new StringBuilder(prop.getProperty(TAG_OPTION_TEXT + option));
+          sValue2 = new StringBuilder(option);
         
           if (sName == null || sName.equals("") || 
               sValue2 == null || sValue2.equals("")) {
@@ -73,23 +73,23 @@ public class Selection implements FieldInterface {
 
           stmp = prop.getProperty("text_value");
           if (stmp != null && stmp.equalsIgnoreCase("true")) {
-            sName = sName + "(" + sValue + ")";
+            sName.append( "(").append( sValue).append(")");
           }
 
           if (sValue != null && sValue2 != null) {
             if (sValue.equals(sValue2)) {
               // override value property with text value.
-              prop.setProperty("value",sName);
+              prop.setProperty("value",""+sName);
               break;
             }
             else if (!Double.isNaN(dtmp)) {
               // check if values are both numeric ones
               // (it may happen that sValue is 1.0 and sValue2 is 1)
               try {
-                double dtmp2 = Double.parseDouble(sValue2);
+                double dtmp2 = Double.parseDouble(""+sValue2);
                 if (!Double.isNaN(dtmp2) && dtmp == dtmp2) {
                   // override value property with text value.
-                  prop.setProperty("value",sName);
+                  prop.setProperty("value",""+sName);
                   break;
                 }
               }
@@ -101,7 +101,7 @@ public class Selection implements FieldInterface {
         return tl.getXML(prop);
       }
 
-      sVar = prop.getProperty("variable");
+      sVar = new StringBuilder( prop.getProperty("variable"));
       sb.append("<field><type>selection</type>");
       sb.append("<obligatory>").append(prop.getProperty(FormProps.sOBLIGATORY_PROP)).append("</obligatory>");
       sb.append("<text>").append(prop.getProperty("text")).append("</text>");
@@ -112,8 +112,8 @@ public class Selection implements FieldInterface {
 
       for (int i=0; prop.getProperty(TAG_OPTION_ORDER + i) != null; i++) {        
         String option = prop.getProperty(TAG_OPTION_ORDER + i);
-        sName = prop.getProperty(TAG_OPTION_TEXT + option);
-        sValue2 = option;
+        sName = new StringBuilder(prop.getProperty(TAG_OPTION_TEXT + option));
+        sValue2 = new StringBuilder(option);
 
         if (sName == null || sName.equals("") || 
             sValue2 == null || sValue2.equals("")) {
@@ -122,23 +122,23 @@ public class Selection implements FieldInterface {
 
         stmp = prop.getProperty("text_value");
         if (stmp != null && stmp.equalsIgnoreCase("true")) {
-          sName = sName + "(" + sValue2 + ")";
+          sName.append("(").append(""+sValue2).append(")");
         }
 
         sb.append("<option>");
-        sb.append("<text>").append(StringEscapeUtils.escapeXml(sName)).append("</text>");
-        sb.append("<value>").append(StringEscapeUtils.escapeXml(sValue2)).append("</value>");
+        sb.append("<text>").append(StringEscapeUtils.escapeXml(""+sName)).append("</text>");
+        sb.append("<value>").append(StringEscapeUtils.escapeXml(""+sValue2)).append("</value>");
         sb.append("<selected>");
         stmp = "no";
         if (sValue != null && sValue2 != null) {
-          if (sValue.equals(sValue2)) {
+          if (sValue.equals(""+sValue2)) {
             stmp = "yes";	  
           }
           else if (!Double.isNaN(dtmp)) {
             // check if values are both numeric ones
             // (it may happen that sValue is 1.0 and sValue2 is 1)
             try {
-              double dtmp2 = Double.parseDouble(sValue2);
+              double dtmp2 = Double.parseDouble(""+sValue2);
               if (!Double.isNaN(dtmp2) && dtmp == dtmp2) {
                 stmp = "yes";	  
               }
