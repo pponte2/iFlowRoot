@@ -1,7 +1,7 @@
 #if ($orgTheme == "newflow")
 
 <div class="slide02">
-	<div style=" margin-left: 200px;">Preview</div>
+	<div style=" margin-left: 180px;">Preview</div>
 	<div style=" border-bottom: 1px Solid #cccccc; padding: 0 2px 5px 2px; text-align: center;">
 		<form>
 			<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">Ordenar</button>
@@ -49,20 +49,20 @@
 	#foreach($act in $newact)
 		#set($style_read="")
 		#if($act.get("read") == 0)
-			#set($style_read="style='font-weight:bold;'")
+			#set($style_read="font-weight:bold;")
 		#end
 
 		<div class="process" onclick='process_detail("user_proc_detail.jsp", "div_process_preview", $act.get("flowid"), $act.get("pid"), $act.get("subpid"), -4, "$act.get("uri")")'>
 			<div class="cube" title='$act.get("task_annotation_color_title")' style='background-color:$act.get("task_annotation_color_backgroundColor")'>
-				XX
+				$act.get("pinitials") 
 			</div>
-			<div class="left" $style_read>
-				TODO SENDER
+			<div class="left" style="$style_read">
+				$act.get("pnumber") 
 				<br />
 				$act.get("desc")
 			</div>
-			<div class="right" $style_read>
-				<div>$act.get("created")</div>
+			<div class="right" style="$style_read;">
+				<div>$act.get("createdDate")</div>
 				<div class="img">
 					<img src="images/V.png" width="25" height="12" alt="" />
 				</div>

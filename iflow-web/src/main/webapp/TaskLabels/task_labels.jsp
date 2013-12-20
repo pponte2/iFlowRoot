@@ -27,7 +27,7 @@
 	<%for (Folder folder: folders) { %>
 	<li>
 		<a href="javascript:getJSP('main_content.jsp?filterfolder=<%= folder.getFolderid()%>');" class="lmenu"><%=folder.getName()%></a> 
-		<canvas width="15" height="30" style="float: right; background:<%=folder.getColor()%>;">Your browser does not support the HTML5 canvas tag.</canvas>
+		<img width="15" height="30" src="Themes/newflow/images/img_categ.png" style="float: right; background:<%=folder.getColor()%>;"/>
 	</li>
 	<%}%>
 </ul>

@@ -350,8 +350,10 @@ function cleanFilter(){
 		String sFlowId = String.valueOf(fd.getId());
 		String sPid = String.valueOf(a.pid);
 		String sSubPid = String.valueOf(a.subpid);
-		String sDesc = a.description;
+		String sDesc = (a.description.length()>70)?a.description.substring(0,67)+"...":a.description;
 		String sCreated = DateUtility.formatTimestamp(userInfo, a.created);
+		String sCreatedDate = DateUtility.formatFormDate(userInfo, a.created);
+		
 		String sDuration = Utils.getDuration(new Timestamp(a.created.getTime()), tsNow);
 		String sUri = "";
 		if (a.url != null && StringUtilities.isNotEmpty(a.url)) {
@@ -386,6 +388,7 @@ function cleanFilter(){
         FolderManager fm = BeanFactory.getFolderManagerBean();
         List<Folder> folders = fm.getUserFolders(userInfo);
         String colorBackgroundColor = fm.getFolderColor(a.getFolderid(), folders);
+		if (colorBackgroundColor == null || colorBackgroundColor.equals("")) colorBackgroundColor = "#666";
         String colorTitle = fm.getFolderName(a.getFolderid(), folders);
 
 		hm.put("appname", sAppName);
@@ -395,9 +398,28 @@ function cleanFilter(){
 		hm.put("subpid", sSubPid);
 		hm.put("desc", sDesc);
 		hm.put("created", sCreated);
+		hm.put("createdDate", sCreatedDate);
 		hm.put("duration", sDuration);
 		hm.put("uri", sUri);
 		hm.put("pnumber", pnumber);
+		
+		String pinitials = "iF";
+		if (sFlow != null && sFlow.length()>2) {
+			String[] words = sFlow.split(" ");
+			if (words.length == 1) {
+				pinitials = sFlow.substring(0,2);
+			}
+			else {
+				if (words.length == 2 && words[1].length() > 3) {
+					pinitials = words[0].substring(0,1) + words[1].substring(0,1);
+				}
+				else if (words.length > 2) {
+					pinitials = words[0].substring(0,1) + words[2].substring(0,1);
+				}
+			}
+		}
+		
+		hm.put("pinitials", pinitials);
 		hm.put("delegated", a.delegated ? "1" : "0");
 		hm.put("delegated_alt", messages.getString("main_content.tasks.delegated.alt"));
 		hm.put("read", a.isRead() ? "1" : "0");

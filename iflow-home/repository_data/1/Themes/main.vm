@@ -204,16 +204,14 @@
 						<table width="390px" border="0" cellspacing="0" cellpadding="0">
 							<tr>
 								<td>
-									<textarea name="nl" class="form-control" id="nl" placeholder="NL" title="nl" style=" resize: none;font-size: 12px; padding: 0px; width: 315px; height: 50px;" >
-										Bem-vindo à NL.
-									</textarea>
+									<input type="text" class="form-control" id="nl" placeholder="Pesquisa" title="Pesquisa" onkeydown="if (event.keyCode == 13) { alert('aaaa'); return false; }">
+										
+									</input>
 								</td>
 								<td>
-									<div class="logo_nl">
-										<img src="images/nl.png" width="50" height="18" alt="" />
-									</div>
+									
 									<div class="div_BTNL">
-										<input style=" margin: 0px;" type="button" name="Send" id="Send" class="btn btn-default btn-sm" value="Enviar" />
+										<input style=" margin: 0px;" type="button" name="Send" id="Send" class="btn btn-default btn-sm" value="Pesquisar" onclick="alert('aaaa')"/>
 									</div>
 								</td>
 							</tr>
@@ -221,7 +219,7 @@
 					</div>
 				</div>
 				<div class="div_bannerright">
-					<table width="240" border="0" cellspacing="0" cellpadding="0" class="table_user">
+					<table width="240" border="0" cellspacing="0" cellpadding="2" class="table_user">
 						<tr>
 							<td height="20" colspan="4">$date</td>
 						</tr>
@@ -231,15 +229,19 @@
 								$user
 							#end
 							</td>
-							<td style="color: #009933">
+							<td style="color: #009933;padding:5px">
+							<a style="color: #009933;text-decoration:none;" href ="javascript:getJSP('personal_account.jsp')">
 							#if($sys_admin != "yes")
 								$username @ $unit
 							#end
+							</a>
 							</td>
+							<td style="padding:5px">
+								<a href ="javascript:getJSP('inbox.jsp')"><img src="images/envelope.png" width="20" height="13" alt=""/></a> (1)</td>
 							<td>
-								<img src="images/envelope.png" width="20" height="13" alt="" /> (1)</td>
-							<td>
-								<input type="button" class="btn btn-default btn-sm" style="margin: 0px;" name="Logout" id="Logout" value="Sair" />
+								<form action="$response.encodeURL($url_prefix,'logout.jsp')?ts=$ts">
+									<input type="submit" class="btn btn-default btn-sm" style="margin: 0px;" name="Logout" id="Logout" value="Sair"/>
+								</form>
 							</td>
 						</tr>
 					</table>
@@ -262,15 +264,15 @@
 						<div style="font-size: 10px; color: #666666;">
 							<a id="bt_edit_0" href="" onClick="editLabel('0','1'); return false;" class="lmenu">$new_label</a>
 							<!--table-->
-							<input id="bt_pickColor_0" class="color {valueElement:'myValue'}" style="display:none;width:8px;border: 1px solid #CCCCCC;" maxlength="0">
-							<input type="text" value="" id="edit_0" style="display:none;width:8em">
+							<input type="text" value="" id="edit_0" style="display:none;width:6em">
 							<a id="bt_confirm_0" style="display:none" href="javascript:editLabel('0','0');">
 								<img border="0" src="images/icon_ok.png" title="$confirm::$confirm" class="toolTipImg" href="javascript:editLabel('0','0');">
 							</a>
-							<a id="bt_cancel_0" style="display:none" href="javascript:editLabel('0','-1');">
-								<img border="0" src="images/icon_revert.png" title="$cancel::$cancel" class="toolTipImg" href="javascript:editLabel('0','-1');">
-							</a>
+							<input id="bt_pickColor_0" class="color {valueElement:'myValue'}" style="display:none;width:15px;height:15px;border: 1px solid #CCCCCC;" maxlength="0"></input>
 							<!--/table-->
+							<a id="bt_cancel_0_tmp" style="" href="javascript:editLabel('0','-1');">
+								<img id="bt_cancel_0_tmp" border="0" src="images/icon_delete.png" title="$cancel::$cancel" class="toolTipImg" onclick="javascript:editLabel('0','-1');"/>
+							</a>
 						</div>
 					</div>
 					#end
@@ -280,8 +282,7 @@
 						<img src="images/processos.png" width="24" height="24" alt=""/>$field_processes</a>
 					</h3>
 					<div class="Acor_02" style=" margin: 0 ; padding:20px 0 0 0 ;">
-						<div id="container_flow_list">
-						</div>
+						<div id="container_flow_list"></div>
 					</div>
 					#end
 					
@@ -430,7 +431,7 @@
 						</div>
 					</div>
 					<h3 class="Acor_01">
-						<a href="#">
+						<a href="javascript:getJSP('Admin/flow_settings.jsp')">
 						<img src="images/admin.png" width="24" height="24" alt="" /> Admin</a>
 					</h3>
 					<div class="Acor_02" style=" margin: 0 ; padding:20px 0 0 0 ;">
@@ -531,7 +532,8 @@
 						</div>
 					</div>
 				</div>
-				<div class="iflw-4">By IflowBPM</div>
+				<div class="iflw-4" style="position:relative;bottom:0px;">By IflowBPM</div>
+				
 			</div>
 
 			<!-- 
@@ -569,7 +571,8 @@
 						#end
 			 -->
 
-			<div id="div_main" class="main"></div>
+			 
+			<div id="div_main" class="main" style="margin-left: 220px;"></div>
 
 			<div class="yui-skin-sam">
 				<div id="userdialog">

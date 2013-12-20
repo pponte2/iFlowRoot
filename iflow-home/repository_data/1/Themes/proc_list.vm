@@ -9,9 +9,9 @@
 		#foreach($flow in $appflow.get("flows"))
 			<li>
 			#if ("${flowid}" == "${flow.id}")
-				<a< title="$appflow.get("tooltip_flow")" href="javascript: open_process(3, ${flow.id}, '$response.encodeURL($url_prefix,'inicio_flow.jsp')', 'flowid=${flow.id}&sel=${flow.id}',$flow.runMaximized())">${flow.name}</a>
+				<a title="$appflow.get("tooltip_flow")" href="javascript:getJSP('inicio_flow.jsp?flowid=${flow.id}&sel=${flow.id}')">${flow.name}</a>
 			#else
-    			<a  title="$appflow.get("tooltip_flow")" href="javascript: open_process(3, ${flow.id}, '$response.encodeURL($url_prefix,'inicio_flow.jsp')', 'flowid=${flow.id}',$flow.runMaximized())">${flow.name}</a>
+    			<a title="$appflow.get("tooltip_flow")" href="javascript:getJSP('inicio_flow.jsp?flowid=${flow.id}&sel=${flow.id}')">${flow.name}</a>
 			#end
 			</li>
 		#end

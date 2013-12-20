@@ -209,8 +209,8 @@ ul, ul ul {
 .menu > li > a {
 	text-decoration: none;
 	padding-left: 30px;
+	min-height: 25px;
 	padding-top: 5px;
-	height: 35px;
 	display: block;
 	color: #333;
 	background-image: url(../images/arrow_sbmenu.png);
@@ -218,14 +218,17 @@ ul, ul ul {
 }
 .menu ul li a {
 	text-decoration: none;
-	height: 35px;
-	color: #666666;
+	min-height: 25px;
 	padding-top: 5px;
+	color: #666666;
+	padding-right: 5px;
 	padding-left: 40px;
 	display: block;
+	font-size: 0.8em;
 }
 .menu > li > a:hover, .menu > li > a.active {
-	height: 35px;
+	min-height: 25px;
+	padding-top: 5px;
 	display: block;
 	color: #00ccff;
 }
@@ -233,13 +236,15 @@ ul, ul ul {
 	background-image: url(../images/arrow_sbmenu_open.png);
 	background-repeat: no-repeat;
 	color: #000000;
-	height: 35px;
+	min-height: 25px;
+	padding-top: 5px;
 	display: block;
 }
 .menu > li > ul li:hover a, .menu > li > ul li:hover a span, .menu > li > ul li:hover a:before {
 	color: #32373D;
 	background: #fff;
-	height: 35px;
+	min-height: 25px;
+	padding-top: 5px;
 	display: block;
 }
 .iflw-4 {
@@ -258,8 +263,12 @@ ul, ul ul {
  
 	float: left;
 	width: auto;
+	max-width: 342px;
+	width: 342px;
+	min-height: 100px;
 	height: 100%;
 	border-right: 1px #999999 solid;
+	border-bottom: 1px #999999 solid;
 	background-image: -webkit-linear-gradient(3deg, rgba(235,236,240,0.32) 0%, rgba(235,236,240,0.54) 100%);
 	background-image: -moz-linear-gradient(3deg, rgba(235,236,240,0.32) 0%, rgba(235,236,240,0.54) 100%);
 	background-image: -o-linear-gradient(3deg, rgba(235,236,240,0.32) 0%, rgba(235,236,240,0.54) 100%);
@@ -267,7 +276,7 @@ ul, ul ul {
 }
 .process {
 	font-size: 11px;
-	height: 50px;
+	height: 60px;	
 	padding: 5px;
 	border-bottom: 1px solid #cccccc;
 }
