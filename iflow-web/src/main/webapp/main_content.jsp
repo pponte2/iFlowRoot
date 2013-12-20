@@ -39,6 +39,7 @@ function filterActivity(id, op){
 function cleanFilter(){
 	tabber_right(1, '<%=response.encodeURL("main_content.jsp")%>?cleanFilter=1');
 }
+
 </script>
 <%
 
@@ -190,11 +191,7 @@ function cleanFilter(){
       pageContent = "deleg_list";
     }
   else if (data.equals("tasks")){
-      // FLOWS, ACTIVITIES AND NOTIFICATIONS
-
-
-
-
+    // FLOWS, ACTIVITIES AND NOTIFICATIONS
 	int nNEWEST_LIMIT = 10;
 	int nOLDEST_LIMIT = 5;
 	int nNOTIFICATION_LIMIT = 5;
@@ -202,7 +199,6 @@ function cleanFilter(){
 
 	// get online flows with app information
     FlowMenu appflows = appInfo.getAllApplicationOnlineFlows(userInfo, null);
-
 
 	// now build map with key flowid and value flowdata
 	Map<String, IFlowData> hmFlows = new HashMap<String, IFlowData>();
@@ -225,7 +221,17 @@ function cleanFilter(){
 	itera = null;
 	appflows = null;
 
-//FILTROS
+	//LAYOUT
+    String layout = fdFormData.getParameter("layout");
+    if (layout == null) {
+      layout = (String) session.getAttribute("layout");
+      if (layout == null) layout = "0";
+    } else {
+      session.setAttribute("layout", layout); // Utilizador actualizou valor
+    }
+  	hsSubstLocal.put("layout", layout);
+
+	//FILTROS
 	//CLEAN				
 	String cleanFilter = "0";
 	cleanFilter = fdFormData.getParameter("cleanFilter");

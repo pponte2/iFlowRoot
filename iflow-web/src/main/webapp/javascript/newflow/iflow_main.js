@@ -39,6 +39,8 @@
   var msgHandlerJSP="msgHandler.jsp";
   var processAnnotationsJSP="ProcessAnnotation/process_annotations.jsp";
   var divMain = 'div_main' 
+  var taskLabelsJSP = "TaskLabels/task_labels.jsp";
+  var idDivLabels = 'container_task_labels';
   
   //tab links 
   var mainContentJSP="main_content.jsp";
@@ -1466,8 +1468,9 @@
       if (aux == null) aux = parent.document.getElementById(ctrl);
       if (aux != null) aux.innerHTML = htmltext;
     }
+    fas();
   }
-  
+
   function ajaxFormRefresh(component){
     var start = new Date();
     var $jQuery = jQuery.noConflict();
@@ -1518,3 +1521,37 @@
         }
     );        
   }    
+
+  function openProcess(flowid, contentpage, contentparam, runMax) {
+    hidePopup();
+    var scrollpos = layout.getScrollPosition().toString();
+    var src = processLoadJSP;
+    var param = escape(contentpage + "?" + contentparam);
+    gContentPage = contentpage;
+    gContentParam = contentparam;
+    setScrollPosition(0);
+    var urlPrefix = null;
+    try {
+      urlPrefix = URL_PREFIX;
+    } catch (err) {}
+    try {
+      if (urlPrefix == null) urlPrefix = parent.URL_PREFIX;
+    } catch (err) {}
+    if (urlPrefix == null) urlPrefix = '/iFlow'
+    getJSP(urlPrefix+"/openprocess.jsp?src=" + src + "&param=" + param);
+  }
+  
+  function createLabel(labelid, editname, color) {
+    var url = taskLabelsJSP + '?editfolder='+labelid+'&editname='+editname+'&color='+color;
+    getJSP(url, idDivLabels);
+  }
+  
+  function fas(){
+    $(".draggable").draggable({revert: "invalid", opacity: 0.7, helper: "clone"});
+    $(".droppable").droppable({
+      hoverClass: "ui-state-active",
+      drop: function(event, ui) {
+        getJSP('main_content.jsp?setfolder='+event.target.attributes['valToAssign'].value+'&activities='+ui.draggable.attr('valToAssign'));
+      }
+    });
+  }

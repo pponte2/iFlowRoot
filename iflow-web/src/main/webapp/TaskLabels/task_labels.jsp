@@ -25,10 +25,9 @@
 
 <ul>
 	<%for (Folder folder: folders) { %>
-	<li>
+	<li class="droppable" valToAssign="<%= folder.getFolderid()%>">
 		<a href="javascript:getJSP('main_content.jsp?filterfolder=<%= folder.getFolderid()%>');" class="lmenu"><%=folder.getName()%></a> 
 		<img width="15" height="30" src="Themes/newflow/images/img_categ.png" style="float: right; background:<%=folder.getColor()%>;"/>
 	</li>
 	<%}%>
 </ul>
-	

@@ -104,8 +104,8 @@
 		</div>
 		<div class="Preview">
 			<button id="Aceder" style=" font-size: 24px; padding: 10px;" class="btn btn-default navbar-btn"
-				onclick="javascript:open_process(2, $procFlowid, '$response.encodeURL($url_prefix,$uri)', 'flowid=$procFlowid&pid=$procPid&subpid=$procSubpid', false);"> #*$act.get("runMax")*#
-				Aceder
+				onclick="javascript:openProcess($procFlowid, '$response.encodeURL($url_prefix,$uri)', 'flowid=$procFlowid&pid=$procPid&subpid=$procSubpid', false);"> #*$act.get("runMax")*#
+				Aceder 2
 			</button>
 		</div>
 		</body>
