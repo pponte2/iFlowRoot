@@ -231,7 +231,7 @@
   }
   
   
-  function open_process (tabnr, flowid, contentpage, contentparam, runMax) {
+  function open_process(tabnr, flowid, contentpage, contentparam, runMax) {
     hidePopup();
     var scrollpos = layout.getScrollPosition().toString();
     // do the pinging...

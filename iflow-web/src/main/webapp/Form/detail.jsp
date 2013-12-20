@@ -17,6 +17,7 @@ int pid = -1;
 int subpid = -1;
 //boolean closedProcess = false;
 String status = fdFormData.getParameter("procStatus");
+String uri = fdFormData.getParameter("uri");
 int processFlag = Const.nALL_PROCS;
 if (StringUtils.isNotEmpty(status)) {
   if (StringUtils.equals("1",status))
@@ -108,6 +109,7 @@ try {
   htSubst.put("procStatus", status);
   htSubst.put("isProcDetail", "true");
   htSubst.put("inDetail", "true");
+  htSubst.put("uri", uri);
   List<Map<String,String>> buttons = new ArrayList<Map<String,String>>(1);
   if (op == 10) {
     Block block = flowBean.getBlock(userInfo, procData); 
@@ -124,6 +126,7 @@ try {
   htSubst.put("noDetail",userInfo.getMessages().getString("user_proc_detail.msg.noProcessDetail"));
   htSubst.put("variableLabel",userInfo.getMessages().getString("user_proc_detail.field.variable"));
   htSubst.put("valueLabel",userInfo.getMessages().getString("user_proc_detail.field.value"));
+  htSubst.put("ts", java.lang.Long.toString(ts));
 
   String vm = (op == 10) ? "proc_preview" : "proc_detail";%>
 <%=PresentationManager.buildPage(response, userInfo, htSubst, vm)%>

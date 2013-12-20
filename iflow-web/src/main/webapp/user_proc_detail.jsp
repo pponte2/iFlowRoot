@@ -8,7 +8,8 @@ String sPid = fdFormData.getParameter("pid");
 String sSubPid = fdFormData.getParameter("subpid");
 String status = fdFormData.getParameter("procStatus");
 String opStr = ("-4".equals(status)) ? "&op=10" : "";
-String detailURL = response.encodeURL(sURL_PREFIX+"Form/detail.jsp?flowid="+sFlowId+"&pid="+sPid+"&subpid="+sSubPid+"&procStatus="+status+"&fwSearch=true"+opStr);
+String uri = fdFormData.getParameter("uri");
+String detailURL = response.encodeURL(sURL_PREFIX+"Form/detail.jsp?flowid="+sFlowId+"&pid="+sPid+"&subpid="+sSubPid+"&procStatus="+status+"&fwSearch=true&uri="+uri+opStr);
 if(sPid != null && sSubPid != null){
   session.setAttribute("filtro_pid",sPid);
   session.setAttribute("filtro_subpid",sSubPid);

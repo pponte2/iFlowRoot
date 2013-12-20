@@ -109,11 +109,6 @@
   
   
   function backgroundResize(locId) {  
-/*    imgWidth = Math.round(getBrowserWindowWidth()*0.615,0);
-    bg = "transparent url(rounded?c=white&bc=e9f1f5&w=" + imgWidth + "&h=3000&shadow=true&ah=10&aw=10&sw=2&o=.3) no-repeat right bottom";
-    
-    $(locId).style.background = bg;
-*/
   }
   
   
@@ -128,7 +123,6 @@
   }
   
   function init(css) {
-    //updateCSS('Themes/default/css/iflow_std.css');
     updateCSS(css);
     doTooltip($$('#div_tabs .tab_button'), 600, 'tab-tool');  // fetch all childs of div_tabs with class tab_button
     doTooltip($$('#div_menu_link .menu_link'), 600, 'tab-tool');  // fetch all childs of div_menu_link with class menu_link
@@ -168,7 +162,6 @@
   
   function showFlowInfoItemCallback(htmltext) {
     $('helpdialog').innerHTML = htmltext;
-    //$('helpdialog').className="testexpto";
     
     GLOBAL_showInfoDialog = new YAHOO.widget.Dialog("helpdialog", {
       fixedcenter : true,
@@ -246,8 +239,6 @@
         document.getElementById('open_proc_frame').style.height=(h1 + 40)+ 'px';
       }
 
-      //document.getElementById('section3_content_div').style.height=(getBrowserWindowHeight()-(GLOBAL_HEIGHT_OFFSET*1.5))+'px';
-      //document.getElementById('open_proc_frame').style.height=(getBrowserWindowHeight()-(GLOBAL_HEIGHT_OFFSET*1.5))+'px';
     }
     document.getElementById('section3_content_div').className='content_div';
     
@@ -258,38 +249,20 @@
   function open_process(tabnr, flowid, contentpage, contentparam, runMax) {
     hidePopup();
     var scrollpos = layout.getScrollPosition().toString();
-    // do the pinging...
-    procCallBack = function(text, extra) {
-      if (text.indexOf("session-expired") > 0) {
-        gContentType = 'open-process';
-        openLoginIbox();
-      } 
-      else if (text.indexOf("session-reload") > 0) {
-        pageReload(gotoPersonalAccount);
-      } 
-      else { 
-        gContentType = 'open-process-prep';
-        gFlowId = flowid;
-        //tabber(3,  mainContentJSP, 'data=procs&flowid=' + flowid+"&scroll="+scrollpos+"&" + contentparam , '', '');
-        myframe = document.getElementById('open_proc_frame');
-        myframe.style.display = "block";
-        myframe.src = processLoadJSP+'?process_url=' + escape(contentpage + "?tabnr=" + tabnr + "&" + contentparam); 
-        gContentPage = contentpage;
-        gContentParam = contentparam;
-  
-        if(runMax) {
-          expand();
-        }
-      }
-    };
-    if(gTabNr != null) gOldTabNr = gTabNr;
-    gTabNr = tabnr;
-    gFlowId=flowid;
-    gContentPage=contentpage;
-    gContentParam=contentparam;
-    gRunMax=runMax;
-    makeRequest(pingJSP, '', procCallBack, 'text', tabnr);
+    var src = processLoadJSP;
+    var param = escape(contentpage + "?" + contentparam);
+    gContentPage = contentpage;
+    gContentParam = contentparam;
     setScrollPosition(0);
+    var urlPrefix = null;
+    try {
+      urlPrefix = URL_PREFIX;
+    } catch (err) {}
+    try {
+      if (urlPrefix == null) urlPrefix = parent.URL_PREFIX;
+    } catch (err) {}
+    if (urlPrefix == null) urlPrefix = '/iFlow'
+    getJSP(urlPrefix+"/openprocess.jsp?src=" + src + "&param=" + param);
   }
   
   function open_process_search(tabnr, flowid, contentpage, contentparam, runMax) {
@@ -1182,9 +1155,9 @@
       }
   }
   
-    function process_detail(thePage, ctrl, flowid, pid, subpid, procStatus) {
+    function process_detail(thePage, ctrl, flowid, pid, subpid, procStatus, uri) {
       var scrollpos = layout.getScrollPosition().toString();
-      var params = '?flowid='+flowid+'&pid='+pid+'&subpid='+subpid+'&procStatus='+procStatus+'&scroll='+scrollpos;
+      var params = '?flowid='+flowid+'&pid='+pid+'&subpid='+subpid+'&procStatus='+procStatus+'&scroll='+scroll+'&uri='+uri;
       getJSP(thePage + params, ctrl);
     }
 
@@ -1489,8 +1462,59 @@
     } else if (htmltext.indexOf("session-reload") > 0) {
       pageReload(gotoPersonalAccount);
     } else {
-      document.getElementById(ctrl).innerHTML = htmltext;
+      var aux =  document.getElementById(ctrl);
+      if (aux == null) aux = parent.document.getElementById(ctrl);
+      if (aux != null) aux.innerHTML = htmltext;
     }
   }
   
-  
+  function ajaxFormRefresh(component){
+    var start = new Date();
+    var $jQuery = jQuery.noConflict();
+    $jQuery.ajaxSetup ({cache: false});
+    $jQuery(component).after('<img src=\'/iFlow//images/loading.gif\'>');
+  var varNewValue=component.value;
+    var varName=component.name;
+    var flowid = document.getElementById('flowid').value;
+    var pid = document.getElementById('pid').value;
+    var subpid = document.getElementById('subpid').value;
+      $jQuery.getJSON(  
+          '../AjaxFormServlet',
+          {varNewValue: varNewValue, varName: varName,
+           flowid: flowid, pid: pid, subpid:subpid}, 
+          function(response){  
+             var answer =new Date();
+            var blockdivisions = $jQuery('.blockdivision');
+            var main = $jQuery('#main');
+            var numberOldBlockDivision = blockdivisions.length - 1;
+            
+            
+            for (var i=0;i < response.length;i++){ 
+              var txtBlock = '<div class=\'blockdivision\'>';
+              var tmpBlock= response[i];
+              var txtColumn = '';
+              for (var j=0; j<tmpBlock.columns.length; j++){
+                var tmpColumn= tmpBlock.columns[j];
+                txtColumn += '<div class=\'columndivision\' style=\''+ tmpColumn.style +'\' >';                 
+                for ( var l=0; l<tmpColumn.fields.length; l++){
+                  var tmpField = tmpColumn.fields[l];
+                  if(tmpField.ignore=='1')
+                    tmpField.content = $jQuery('#'+tmpField.id).html;
+                  $jQuery('#'+tmpField.id).remove();
+                  txtColumn += '<ol class="multicol"> <div id=\''+tmpField.id+'\' class=\'fieldDiv\'>' + tmpField.content + '</div> </ol>';
+                }
+                txtColumn += '</div>';                  
+              }
+              txtBlock += txtColumn + '</div>';
+              main.append(txtBlock);
+            } 
+            try{
+            main.append(blockdivisions[numberOldBlockDivision]);
+            for (var i=0; i<numberOldBlockDivision; i++)
+              blockdivisions[i].remove();   
+            } catch(err){}
+            
+            var render = new Date();
+        }
+    );        
+  }    

@@ -6,7 +6,6 @@
 		<link rel="stylesheet" href="${url_prefix}/Themes/${orgTheme}/css/tips.css" type="text/css">
 		<link rel="stylesheet" type="text/css" media="all" href="${url_prefix}/javascript/calendar/calendar-iflow.css" title="cal-iflow" />
 		<link rel="stylesheet" type="text/css" href="${url_prefix}/javascript/yahoo/container/assets/skins/sam/container.css" />
-		<link rel="stylesheet" type="text/css" href="${url_prefix}/javascript/yahoo/assets/dpSyntaxHighlighter.css">
 		<link rel="stylesheet" type="text/css" href="${url_prefix}/javascript/yahoo/button/assets/skins/sam/button.css" />
 
 		<link rel="shortcut icon" href="images/favicon.ico" />
@@ -27,7 +26,7 @@
 		<link type="text/css" rel="stylesheet" href="${url_prefix}/PublicFiles/default.css" />
 		<script src="${url_prefix}/javascript/ajax_processing.js" type="text/javascript"></script>
 		<script src="${url_prefix}/javascript/tabs.js" type="text/javascript"></script>
-		<script src="${url_prefix}/javascript/iflow_main.js" type="text/javascript"></script>
+		<script src="${url_prefix}/javascript/newflow/iflow_main.js" type="text/javascript"></script>
 		<script src="${url_prefix}/javascript/calendar/calendar.js" type="text/javascript"></script>
 		<script src="${url_prefix}/javascript/calendar/lang/calendar-en_US.js" type="text/javascript"></script>
 		<script src="${url_prefix}/javascript/calendar/calendar-setup.js" type="text/javascript"></script>
@@ -37,70 +36,78 @@
 	</head>
 	
 	<body>
-		<form name="user_proc_print" method="POST" action="$response.encodeURL(${url_prefix},'UserProcPrint')" target="_blank">
-			<input type="hidden" name="flowid" value="$procFlowid">
-			<input type="hidden" name="pid" value="$procPid">
-			<input type="hidden" name="subpid" value="$procSubpid">
-		</form>
-		<form action="$sJSP" id="dados" name="dados" method="POST">
-		#foreach($varName in $hmHidden.keySet())
-			<input type="hidden" name="$varName" id="$varName" value="$hmHidden.get($varName)" />
-		#end
-			<div class="table_inc">
-		#if ($processDetail.isEmpty())
-				<div class="info_msg">
-					$noDetail
-				</div>
-		#else
-				<table class="item_list">
-					<tr class="tab_header">
-						<td>$variableLabel</td>
-						<td>$valueLabel</td>
-					</tr>
-			#set($odd=1)
-			#foreach($varName in $processDetail.keySet())
-			ddddd $varName   dscsdcf
-				#if($odd == 0)
-					#set($class_type="even")
-					#set($odd=1)
-				#else
-					#set($class_type="odd")
-					#set($odd=0)
+		<div class="header_processo">
+			<form name="user_proc_print" method="POST" action="$response.encodeURL(${url_prefix},'UserProcPrint')" target="_blank">
+				<input type="hidden" name="flowid" value="$procFlowid">
+				<input type="hidden" name="pid" value="$procPid">
+				<input type="hidden" name="subpid" value="$procSubpid">
+			</form>
+			<form action="$sJSP" id="dados" name="dados" method="POST">
+			#foreach($varName in $hmHidden.keySet())
+				<input type="hidden" name="$varName" id="$varName" value="$hmHidden.get($varName)" />
+			#end
+				<div class="table_inc">
+			#if ($processDetail.isEmpty())
+					<div class="info_msg">
+						$noDetail
+					</div>
+			#else
+					<table class="item_list">
+						<tr class="tab_header">
+							<td>$variableLabel</td>
+							<td>$valueLabel</td>
+						</tr>
+				#set($odd=1)
+				#foreach($varName in $processDetail.keySet())
+				ddddd $varName   dscsdcf
+					#if($odd == 0)
+						#set($class_type="even")
+						#set($odd=1)
+					#else
+						#set($class_type="odd")
+						#set($odd=0)
+					#end
+						<tr class="tab_row_${class_type}">
+							<td>${varName}</td>
+							<td>$!processDetail.get(${varName})</td>
+						</tr>
 				#end
-					<tr class="tab_row_${class_type}">
-						<td>${varName}</td>
-						<td>$!processDetail.get(${varName})</td>
-					</tr>
+					</table>
 			#end
-				</table>
-		#end
-			</div>
-	  
-			<fieldset class="submit">
-		#foreach($button in $buttonList)
-			#set($name=$button.get("name"))
-			#set($id=$button.get("id"))
-			#set($operation=$button.get("operation"))
-			#set($tooltip=$button.get("tooltip"))
-			#set($text=$button.get("text"))
-			#set($buttonimagesrc=$button.get("buttonimagesrc"))
-			#set($buttonimagealt=$button.get("buttonimagealt"))
-			#set($hiddenfield=$button.get("hiddenfield"))
-				&nbsp;
-				<button align="center" valign="center" class="button" type="submit" name="$name" id="$id" onClick="&operation" title="&tooltip">
-			#if ($buttonimagesrc != "")
-					<img src="$buttonimagesrc" alt="$buttonimagealt"></img>
-					<br />
+				</div>
+		  
+				<fieldset class="submit">
+			#foreach($button in $buttonList)
+				#set($name=$button.get("name"))
+				#set($id=$button.get("id"))
+				#set($operation=$button.get("operation"))
+				#set($tooltip=$button.get("tooltip"))
+				#set($text=$button.get("text"))
+				#set($buttonimagesrc=$button.get("buttonimagesrc"))
+				#set($buttonimagealt=$button.get("buttonimagealt"))
+				#set($hiddenfield=$button.get("hiddenfield"))
+					&nbsp;
+					<button align="center" valign="center" class="button" type="submit" name="$name" id="$id" onClick="&operation" title="&tooltip">
+				#if ($buttonimagesrc != "")
+						<img src="$buttonimagesrc" alt="$buttonimagealt"></img>
+						<br />
+				#end
+						$text
+					</button>
+				#if ($hiddenfield != "")
+					<input type="hidden" name="$hiddenfield" id="$hiddenfield" value=""></input>
+				#end
+					&nbsp;
 			#end
-					$text
-				</button>
-			#if ($hiddenfield != "")
-				<input type="hidden" name="$hiddenfield" id="$hiddenfield" value=""></input>
-			#end
-				&nbsp;
-		#end
-			</fieldset>
-		</form>
-	</body>
+				</fieldset>
+			</form>
+		</div>
+		<div class="Preview">
+			<button id="Aceder" style=" font-size: 24px; padding: 10px;" class="btn btn-default navbar-btn"
+				onclick="javascript:open_process(2, $procFlowid, '$response.encodeURL($url_prefix,$uri)', 'flowid=$procFlowid&pid=$procPid&subpid=$procSubpid', false);"> #*$act.get("runMax")*#
+				Aceder
+			</button>
+		</div>
+		</body>
 
 </html>

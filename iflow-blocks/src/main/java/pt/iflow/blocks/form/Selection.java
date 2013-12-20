@@ -132,7 +132,7 @@ public class Selection implements FieldInterface {
         stmp = "no";
         if (sValue != null && sValue2 != null) {
           if (sValue.equals(""+sValue2)) {
-            stmp = "yes";	  
+            stmp = "yes";
           }
           else if (!Double.isNaN(dtmp)) {
             // check if values are both numeric ones
@@ -140,7 +140,7 @@ public class Selection implements FieldInterface {
             try {
               double dtmp2 = Double.parseDouble(""+sValue2);
               if (!Double.isNaN(dtmp2) && dtmp == dtmp2) {
-                stmp = "yes";	  
+                stmp = "yes";
               }
             }
             catch (Exception e) {
