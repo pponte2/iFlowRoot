@@ -84,8 +84,8 @@
 		<script src="javascript/jQueryAssets/SpryDOMUtils.js" type="text/javascript"></script>
 		<script src="javascript/bootstrap/bootstrap.js"></script>
 		<!--script src="javascript/bootstrap/bootstrap.min.js"></script-->
-		<script src="javascript/newflow/iflow_main.js" type="text/javascript"></script>
-		<script src="javascript/newflow/scripts.js" type="text/javascript"></script>
+		<script src="javascript/iflow_main.js" type="text/javascript"></script>
+		<script src="javascript/scripts.js" type="text/javascript"></script>
 		
 		<script src="javascript/jQueryAssets/jquery-ui-1.10.3/ui/minified/jquery-ui.min.js" type="text/javascript"></script>
 
@@ -763,7 +763,7 @@
 			}
 		}
 
-		function process_detail (tabnr, thePage, flowid, pid, subpid, procStatus) {
+		function process_detail(tabnr, thePage, flowid, pid, subpid, procStatus) {
 			var params = 'flowid='+flowid+'&pid='+pid+'&subpid='+subpid+'&procStatus='+procStatus;
 			tabber_right(8, thePage, params);
 			resizeDelay(100);

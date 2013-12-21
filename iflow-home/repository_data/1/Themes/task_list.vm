@@ -53,7 +53,7 @@
 					#set($style_read="font-weight:bold;")
 				#end
 
-		<div class="process draggable" valToAssign='$act.get("flowid")_$act.get("pid")_$act.get("subpid")' onclick='javascript:process_detail("user_proc_detail.jsp", "div_process_preview", $act.get("flowid"), $act.get("pid"), $act.get("subpid"), -4, "$act.get("uri")");'>
+		<div class="process draggable" valToAssign='$act.get("flowid")_$act.get("pid")_$act.get("subpid")' onclick='javascript:process_detail_new("user_proc_detail.jsp", "div_process_preview", $act.get("flowid"), $act.get("pid"), $act.get("subpid"), -4, "$act.get("uri")");'>
 			<div class="cube" title='$act.get("task_annotation_color_title")' style='background-color:$act.get("task_annotation_color_backgroundColor")'>
 				$act.get("pinitials") 
 			</div>
@@ -150,7 +150,7 @@
 			<img src="images/V.png" width="25" height="12" alt=""/>
 		</div>
 		<div class="pr04"> $act.get("desc")</div>
-		<div  class="pr05">
+		<div  class="pr05"></div>
 			<div  class="pr06">
 				<canvas id="R" width="25" height="10" style="background: #FF0004;"> Your browser does not support the HTML5 canvas tag.</canvas>
 			</div>
@@ -159,9 +159,6 @@
 			</div>
 		</div>
 	</div>
-	
-	
-	
 	
 			#end
 
