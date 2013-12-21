@@ -173,15 +173,18 @@ var MultiUpload = new Class(
 
 		// Add element methods
 		$( input_element );
-
+		//var $jQuery2 = jQuery.noConflict();
+		//var inElem = $jQuery2("#dragandrophandler");
 		// Base name for input elements
 		this.name = input_element.name;
 
         // Set up element for multi-upload functionality
         if ($defined(validExtensionStr)){
             this.initializeElement( input_element, lang, validExtensionStr);
+            //this.initializeElement2( inElem, lang, validExtensionStr,input_element );
         } else {
             this.initializeElement( input_element, lang );
+            //this.initializeElement2( inElem, lang, validExtensionStr,input_element);
         }
 
 		// Files list
@@ -236,6 +239,7 @@ var MultiUpload = new Class(
 	/**
 	 * Called when a file is selected
 	 */
+    
     addRow:function(lang, validExtensions) {
 		if( this.max == 0 || this.elements.length <= this.max ){
 		
@@ -368,8 +372,66 @@ var MultiUpload = new Class(
 		this.elements.push( { 'uid':this.uid, 'element':element } );
 		this.uid++;
 	
+		
 	},
+
 	
+	/**
+   * Apply multi-upload functionality to an element dragable
+   *
+   * @param   HTTPFileInputElement    element   The element
+   *//*
+    initializeElementDrag:function( element, lang, validExtensions,inputElem ){
+	var $jQuery2 = jQuery.noConflict();
+  //alert("111");
+var obj = $jQuery2("#dragandrophandler");
+obj.on('dragenter', function (e) 
+{
+    var $jQuery2 = jQuery.noConflict();
+    e.stopPropagation();
+    e.preventDefault();
+    $jQuery2(this).css('border', '2px solid #0B85A1');
+    
+});
+obj.on('dragover', function (e) 
+{
+     e.stopPropagation();
+     e.preventDefault();
+});
+obj.on('drop', this.addRow/* function (e) 
+{
+  var $jQuery2 = jQuery.noConflict();
+     $jQuery2(this).css('border', '2px dotted #0B85A1');
+     e.preventDefault();
+     var files = e.originalEvent.dataTransfer.files;
+ 
+     //We need to send dropped files to Server
+     //handleFileUpload(files,obj);
+     var idElem = inputElem.getAttribute('id');
+     var inputObj = document.getElementById(idElem);
+     inputObj.addRow(lang, validExtensions);
+
+);
+$(document).on('dragenter', function (e) 
+{
+  //alert("222");
+    e.stopPropagation();
+    e.preventDefault();
+});
+$(document).on('dragover', function (e) 
+{
+  //alert("333");
+  e.stopPropagation();
+  e.preventDefault();
+  obj.css('border', '2px dotted #0B85A1');
+});
+$(document).on('drop', function (e) 
+{
+  //alert("444");
+    e.stopPropagation();
+    e.preventDefault();
+});
+},*/
 	getMessage:function(message, lang) {
 		var enUS = 'en_US';
 		var ptBR = 'pt_BR';

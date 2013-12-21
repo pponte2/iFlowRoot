@@ -4,6 +4,7 @@
       _create: function() {
         this.wrapper = $jQuery( "<span>" )
           .addClass( "custom-combobox" )
+          .addClass( "combobox" )
           .insertAfter( this.element );
         this.element.hide();
         this._createAutocomplete();
@@ -13,12 +14,39 @@
       _createAutocomplete: function() {
         var selected = this.element.children( ":selected" ),
           value = selected.val() ? selected.text() : "";
- 
+        var selectedName = this.element.attr('name');
         this.input = $jQuery( "<input>" )
           .appendTo( this.wrapper )
           .val( value )
           .attr( "title", "" )
+          .attr( "name", selectedName )
+          .attr('pattern',selected.context.value)
+          
+          .keypress(function( event ) {
+            if ( event.which == 13 ) {
+               event.preventDefault();
+               $jQuery(this).val($jQuery(this).val());
+               $jQuery(this).attr('value',$jQuery(this).attr('pattern'));
+               ajaxFormRefresh(this);
+               //alert('1111');
+            }
+          })
+          /*
+          .on('focus',    $jQuery.proxy(this.focus, this))
+          .on('blur',     $jQuery.proxy(this.blur, this))
+          .on('keypress', $jQuery.proxy(this.keypress, this))
+          .on('keyup',    $jQuery.proxy(this.keyup, this))
+          */
+          .change(function() {
+            //alert('aa1');
+            $jQuery(this).val($jQuery(this).val());
+            $jQuery(this).attr('value',$jQuery(this).attr('pattern'));
+            //alert('aaaaaccc');
+            ajaxFormRefresh(this);
+          })
+          
           .addClass( "custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left" )
+          .addClass( "combobox" )
           .autocomplete({
             delay: 0,
             minLength: 0,
@@ -128,8 +156,16 @@
     });
   })( jQuery );
  
-  $(function() {
+  var $jQuery = jQuery.noConflict();
+  $jQuery(function() {
     var $jQuery = jQuery.noConflict();
     $jQuery('.combobox').combobox();
   });
   
+  /*
+  //var $jQuery = jQuery.noConflict();
+  $(document).ready(function(){
+    //var $jQuery = jQuery.noConflict();
+    $('.combobox').combobox();
+  });
+*/

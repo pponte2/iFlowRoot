@@ -639,9 +639,9 @@ public abstract class Block {
 
     public String processText(UserInfoInterface userInfo, ProcessData procData, String text) {
       if (StringUtils.isNotEmpty(text)) {
-    	/*if (StringUtils.contains(text, "\"") || procData.getCatalogue().hasVar(text)
-        		|| StringUtils.contains(text.replace(" ", ""), "${")) {*/
-    	if (procData.isTransformable(text, true)) {
+        /*if (StringUtils.contains(text, "\"") || procData.getCatalogue().hasVar(text)
+                || StringUtils.contains(text.replace(" ", ""), "${")) {*/
+        if (procData.isTransformable(text, true)) {
           try {
             String transfText = procData.transform(userInfo, text);
             return transfText;

@@ -126,7 +126,7 @@
     updateCSS(css);
     doTooltip($$('#div_tabs .tab_button'), 600, 'tab-tool');  // fetch all childs of div_tabs with class tab_button
     doTooltip($$('#div_menu_link .menu_link'), 600, 'tab-tool');  // fetch all childs of div_menu_link with class menu_link
-    if (orgTheme() != "newflow") {
+    if ((orgTheme() == "classic") || (orgTheme() == "default")) {
       tabber(1, mainContentJSP , 'data=procs', mainContentJSP, 'data=tasks');
       $('section3_content_div').style.height="100%";
     }
@@ -196,7 +196,7 @@
     if(orgTheme() == "classic") {
       document.getElementById('section3_content_div').style.height="100%";
       document.getElementById('open_proc_frame').style.height=(getBrowserWindowHeight()-2)+'px';
-    } else if (orgTheme() == "newflow") {
+    } else if (orgTheme() == "default") {
       document.getElementById('section3_content_div').style.height=(getBrowserWindowHeight()-2)+'px';
       document.getElementById('open_proc_frame').style.height=(getBrowserWindowHeight()-2)+'px';
     }
@@ -1612,56 +1612,69 @@
     fas();
   }
 
-  function ajaxFormRefresh(component){
-    var start = new Date();
-    var $jQuery = jQuery.noConflict();
-    $jQuery.ajaxSetup ({cache: false});
-    $jQuery(component).after('<img src=\'/iFlow//images/loading.gif\'>');
-    var varNewValue=component.value;
-    var varName=component.name;
-    var flowid = document.getElementById('flowid').value;
-    var pid = document.getElementById('pid').value;
-    var subpid = document.getElementById('subpid').value;
-      $jQuery.getJSON(  
-          '../AjaxFormServlet',
-          {varNewValue: varNewValue, varName: varName,
-           flowid: flowid, pid: pid, subpid:subpid}, 
-          function(response){  
-             var answer =new Date();
-            var blockdivisions = $jQuery('.blockdivision');
-            var main = $jQuery('#main');
-            var numberOldBlockDivision = blockdivisions.length - 1;
-            
-            
-            for (var i=0;i < response.length;i++){ 
-              var txtBlock = '<div class=\'blockdivision\'>';
-              var tmpBlock= response[i];
-              var txtColumn = '';
-              for (var j=0; j<tmpBlock.columns.length; j++){
-                var tmpColumn= tmpBlock.columns[j];
-                txtColumn += '<div class=\'columndivision\' style=\''+ tmpColumn.style +'\' >';                 
-                for ( var l=0; l<tmpColumn.fields.length; l++){
-                  var tmpField = tmpColumn.fields[l];
-                  if(tmpField.ignore=='1')
-                    tmpField.content = $jQuery('#'+tmpField.id).html;
-                  $jQuery('#'+tmpField.id).remove();
-                  txtColumn += '<ol class="multicol"> <div id=\''+tmpField.id+'\' class=\'fieldDiv\'>' + tmpField.content + '</div> </ol>';
-                }
-                txtColumn += '</div>';                  
-              }
-              txtBlock += txtColumn + '</div>';
-              main.append(txtBlock);
-            } 
-            try{
-            main.append(blockdivisions[numberOldBlockDivision]);
-            for (var i=0; i<numberOldBlockDivision; i++)
-              blockdivisions[i].remove();   
-            } catch(err){}
-            
-            var render = new Date();
+    function ajaxFormRefresh(component){
+    	var $jQuery = jQuery.noConflict();
+			$jQuery.ajaxSetup ({cache: false});
+			$jQuery(component).after('<img src=\'/iFlow//images/loading.gif\'>');
+		var varNewValue=component.value;
+			var varName=component.name;
+			var flowid = document.getElementById('flowid').value;
+			var pid = document.getElementById('pid').value;
+			var subpid = document.getElementById('subpid').value;
+       	$jQuery.getJSON(  
+            '../AjaxFormServlet',
+            {varNewValue: varNewValue, varName: varName,
+             flowid: flowid, pid: pid, subpid:subpid}, 
+            function(response){  
+            	try{
+            	var main = $jQuery('#main');
+            	main.html(response);
+            	} catch (err){}
+            	finally{
+            		reloadBootstrapElements();
+            	}
+            	
+            }
+    	);       	
+    }    
+    
+    function reloadBootstrapElements(){
+    	var $jQuery = jQuery.noConflict();
+    	
+    	
+    	//combobox
+    	$jQuery('.combobox').combobox();
+    	
+    	//accordion
+    	$jQuery( ".PanelCollapse" ).accordion({
+    	    collapsible:true,
+    	    animate:{easing: "swing"}
+    	  }); 
+    
+    	  //Quickserch
+    	  var j = 0;
+    	$jQuery('.sortable').each(function(e){
+    	    var tbId= "tb_"+j;
+    	    $jQuery(this).attr('id', tbId);
+    	    j++;
+    	  var currTb = "#"+tbId;
+    	  var inputId = "input_"+tbId;
+    	  var inputTot = '<input type="text" placeholder="Search" autofocus="" name="search" value="" id="'+inputId+'" />'
+    	  var qs = "table"+currTb+" tbody tr";
+    	  var inputCal = "input#"+inputId;
+    	  $jQuery(inputTot).insertBefore(currTb);
+    	  $jQuery(inputCal).quicksearch(qs);
+    
+    	});
+    	
+    	//sortable
+      forEach(document.getElementsByTagName('table'), function(table) {
+        if (table.className.search(/\bsortable\b/) != -1) {
+          sorttable.makeSortable(table);
         }
-    );        
-  }    
+      });
+    	
+    }
 
   function openProcess(flowid, contentpage, contentparam, runMax) {
     hidePopup();
@@ -1702,3 +1715,4 @@
     var params = '?flowid='+flowid+'&pid='+pid+'&subpid='+subpid+'&procStatus='+procStatus+'&scroll='+scroll+'&uri='+uri;
     getJSP(thePage + params, ctrl);
   }
+    

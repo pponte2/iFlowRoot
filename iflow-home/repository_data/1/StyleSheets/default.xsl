@@ -61,34 +61,67 @@
         		<link rel="stylesheet" type="text/css" href="{$url_prefix}/Themes/generic/iflow_form.css" media="all" title="iflow_form"/>
 	        	<link rel="stylesheet" type="text/css" href="{$url_prefix}/javascript/calendar/calendar-iflow.css" media="all"/>
 
-				<link href="{$url_prefix}/javascript/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+				<!-- <link href="{$url_prefix}/javascript/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />-->
 				<link href="{$url_prefix}/javascript/jQueryAssets/jquery.ui.core.min.css" rel="stylesheet" type="text/css" />
 				<link href="{$url_prefix}/javascript/jQueryAssets/jquery.ui.theme.min.css" rel="stylesheet" type="text/css" />
 				<link href="{$url_prefix}/javascript/jQueryAssets/jquery.ui.accordion.min.css" rel="stylesheet" type="text/css" />
 
-				<script src="{$url_prefix}/javascript/bootstrap/bootstrap.min.js"></script>
+				
+				<link href="{$url_prefix}/javascript/bootstrap/css/bootstrap-combobox.css" rel="stylesheet" type="text/css" />
+				
+				
+		 	    <script src="{$url_prefix}/javascript/jquery-1.10.2.js"></script>
+		 	    <script src="{$url_prefix}/javascript/jquery-ui.js"></script>
+		 	    
+
+		 	    
+		 	    <script type="text/javascript" src="{$url_prefix}/javascript/accordion.js"/>
+		 	    
+		 	    	 	     
+		 	    <!-- <script src="{$url_prefix}/javascript/bootstrap/bootstrap-combobox.js"></script>--> 
+		 	    
+		        <script type="text/javascript" src="{$url_prefix}/javascript/sorttable.js"/> 
+		        
+		 	    <script type="text/javascript" src="{$url_prefix}/javascript/quicksearch.js"/>
+		 	    
+		 	    <script type="text/javascript" src="{$url_prefix}/javascript/combobox.js"/>
+		 	            
+
+				<script src="{$url_prefix}/javascript/bootstrap/bootstrap.min.js"></script> 
+				 
+				<!-- entra em conflito com o mecanismo da combobox
 				<script src="{$url_prefix}/javascript/jQueryAssets/jquery-1.8.3.min.js" type="text/javascript"></script>
+				-->
+				
+				<script type="text/javascript" src="{$url_prefix}/javascript/iflow_main.js" />
+				
 				<script src="{$url_prefix}/javascript/jQueryAssets/jquery-ui-1.9.2.accordion.custom.min.js" type="text/javascript"></script>
 				<script src="{$url_prefix}/javascript/jQueryAssets/jquery-ui-1.9.2.button.custom.min.js" type="text/javascript"></script>
 				<script src="{$url_prefix}/javascript/jQueryAssets/SpryDOMUtils.js" type="text/javascript"></script>
+				 
 				
-				<!--
 				<script src="{$url_prefix}/javascript/scripts.js" type="text/javascript"></script>
-				-->
+				
+				
 				<script type="text/javascript" src="{$url_prefix}/javascript/ajax_processing.js" />
-				<script type="text/javascript" src="{$url_prefix}/javascript/iflow_main.js" />
+				
 				<script type="text/javascript" src="{$url_prefix}/javascript/calendar/calendar.js" />
 				<script type="text/javascript" src="{$url_prefix}/javascript/calendar/lang/calendar-{$lang_string}.js" />
 				<script type="text/javascript" src="{$url_prefix}/javascript/calendar/calendar-setup.js" />
 				<script type="text/javascript" src="{$url_prefix}/javascript/FormFunctions.js" />
-				<script type="text/javascript" src="{$url_prefix}/javascript/Stickman.MultiUpload.js" />
+				
 				<script type="text/javascript" src="{$url_prefix}/Themes/{$theme}/javascript/theme.js" />
 				<script type="text/javascript" src="{$url_prefix}/javascript/html/encoder.js" />
 				<script type="text/javascript" src="{$url_prefix}/javascript/applet_functions.js" />
 
-				<!-- -->
-				<script type="text/javascript" src="{$url_prefix}/javascript/mootools.js"/>
-				<script type="text/javascript" src="{$url_prefix}/javascript/tabs.js" />
+ 				<!-- <script type="text/javascript" src="{$url_prefix}/javascript/mootools.js"/>-->
+				
+				<!-- NAO APAGAR -  Descomentando fica a funcionar com tabs. assim esta com acordeon-->
+				
+				<!--
+				 <script type="text/javascript" src="{$url_prefix}/javascript/tabs.js" />
+				-->
+				
 				<script type="text/javascript" src="{$url_prefix}/javascript/yahoo/yahoo-dom-event/yahoo-dom-event.js"/>
 				<script type="text/javascript" src="{$url_prefix}/javascript/yahoo/dragdrop/dragdrop-min.js" />
 				<script type="text/javascript" src="{$url_prefix}/javascript/yahoo/container/container-min.js"/> 
@@ -96,10 +129,19 @@
 				<script type="text/javascript" src="{$url_prefix}/javascript/yahoo/container/container-min.js" /> <script type="text/javascript" src="{$url_prefix}/javascript/yahoo/menu/menu-min.js" /> 
 				<script type="text/javascript" src="{$url_prefix}/javascript/yahoo/button/button-min.js" /> 
 				<script type="text/javascript" src="{$url_prefix}/javascript/yahoo/editor/editor.js" /> 
+				<script type="text/javascript" src="{$url_prefix}/javascript/Stickman.MultiUpload.js" />
 				<!-- -->
+				 
 
 				<script type="text/javascript">
+				function xpto(){
+				}
+				
 					window.addEvent('domready', getAppletElem);
+					document.addEvent('domready', xpto);
+				
+					<!-- $jQuery(document).ready();-->
+					
 				</script>
 
 				<xsl:text disable-output-escaping="yes"></xsl:text>
@@ -243,6 +285,7 @@
   		  		<xsl:text>tabholder</xsl:text>
   		  		<xsl:apply-templates select="id" />
   	   		</xsl:attribute>
+  	   		<!-- NAO APAGAR -  Descomentando fica a funcionar com tabs. assim esta com acordeon
 			<xsl:for-each select="tab">
 				<td class="tabspacer">
 					<xsl:attribute name="id">
@@ -270,7 +313,7 @@
 		  				</xsl:attribute>
 					</input>
 				</td>
-			</xsl:for-each>
+			</xsl:for-each>-->
 			<xsl:apply-templates select="tab" />
 		</div>
 		<!-- TODO obter o primeiro tab filho e chamar-lhe o tabber -->
@@ -290,21 +333,33 @@
 	</xsl:template>
 
 	<xsl:template match="tab">
+	    <!-- NAO APAGAR -  Comentando fica a funcionar com tabs. assim esta com acordeon-->
+		<div class="PanelCollapse">
+			<div class="PanelCollapse_title">
+				<xsl:apply-templates select="name" />
+			</div>
+			<div class="form-horizontal" role="form">
+				<xsl:apply-templates select="blockdivision" />
+			</div>
+		</div>
+		
+		<!-- NAO APAGAR -  Descomentando fica a funcionar com tabs. assim esta com acordeon
 		<div class="tab_panel">
 			<xsl:attribute name="id">
 				<xsl:text>tabsection</xsl:text><xsl:apply-templates select="id" />
 				<xsl:text>_div</xsl:text>
 			</xsl:attribute>
 			<xsl:apply-templates select="blockdivision" />
-		</div>
+		</div>-->
 	</xsl:template>
 
 	<xsl:template match="field">
-		<div id="{generate-id()}" class="fieldDiv">
+		
 		<xsl:variable name="multicol" select="count(../../columndivision)" />
 		<xsl:variable name="type" select="type" />
 		<xsl:choose>
 			<xsl:when test="type = 'textmessage' or type = 'textlabel' or type = 'textbox' or type = 'textlabel' or type = 'password' or type = 'datecal' or type = 'textarea' or type = 'rich_textarea' or type = 'button' or type = 'popup_field'">
+				<div id="{generate-id()}" class="fieldDiv">
 				<li>
 					<xsl:attribute name="class">
 						<xsl:value-of select="type" />
@@ -560,8 +615,8 @@
 					           	  	</xsl:attribute>
 									<xsl:if test="string-length(onchange_submit) &gt; 0">
 										<xsl:attribute name="onChange">
-												ajaxFormRefresh(this);
-					                </xsl:attribute>
+					                  			ajaxFormRefresh(this);
+					                	</xsl:attribute>
 									</xsl:if>
 								</input>
 							</xsl:otherwise>
@@ -702,8 +757,10 @@
 						<xsl:apply-templates select="suffix" />
 					</xsl:if>
 				</li>
+				</div>
 			</xsl:when>
 			<xsl:otherwise>
+				<div id="{generate-id()}" class="fieldDiv">
 				<li>
 					<xsl:attribute name="class">
 						<xsl:value-of select="type" />
@@ -722,6 +779,7 @@
 					</xsl:attribute>
 					
 					<xsl:if test="type = 'header'">
+									
 						<label>
 							<xsl:attribute name="class">
 								<xsl:value-of select="type" />
@@ -732,10 +790,11 @@
 							</xsl:attribute>
 							<xsl:apply-templates select="text" />
 						</label>
+						
 					</xsl:if>
 					
 					<xsl:if test="type = 'subheader'">
-						<label>
+					
 							<xsl:attribute name="class">
 								<xsl:value-of select="type" />
 								<xsl:text> field</xsl:text>
@@ -744,17 +803,23 @@
 								</xsl:if>
 							</xsl:attribute>
 							<xsl:apply-templates select="text" />
-						</label>
+					
+					
 					</xsl:if>
 
-					<xsl:if test="type = 'filler'" />
-
+					<xsl:if test="type = 'filler'" >
+					
+					</xsl:if>
 					<xsl:if test="type = 'separator'">
+						
 						<hr />
+						
 					</xsl:if>
 
 					<xsl:if test="type = 'selection'">
+						
 						<label>
+						
 							<xsl:attribute name="class">
 								<xsl:value-of select="type" />
 								<xsl:text> field</xsl:text>
@@ -776,7 +841,7 @@
           					</xsl:attribute>
 							<xsl:if test="string-length(onchange_submit) &gt; 0">
 								<xsl:attribute name="onChange">
-										ajaxFormRefresh(this);
+									ajaxFormRefresh(this);
 								</xsl:attribute>
 							</xsl:if>
 							<xsl:for-each select="option">
@@ -796,6 +861,7 @@
 					</xsl:if>
 
 					<xsl:if test="type = 'arraytable'">
+					
 						<label>
 							<xsl:attribute name="class">
 								<xsl:value-of select="type" />
@@ -942,10 +1008,13 @@
 									</tr>
 								</xsl:if>
 							</table>
+							
 						</xsl:if>
+						
 					</xsl:if>
 
 					<xsl:if test="type = 'link'">
+					
 						<xsl:attribute name="style">
 							text-align:<xsl:apply-templates select="align" />
 				  		</xsl:attribute>
@@ -1000,9 +1069,11 @@
 							</xsl:if>
 							<xsl:apply-templates select="text" />
 						</a>
+						
 					</xsl:if>
 
 					<xsl:if test="type = 'image'">
+					
 						<xsl:attribute name="valign">
               				<xsl:text>top</xsl:text>
            				</xsl:attribute>
@@ -1021,9 +1092,11 @@
                					</xsl:attribute>
 							</xsl:if>
 						</img>
+						
 					</xsl:if>
 
 					<xsl:if test="type='file'"> <!-- FILE -->
+					
 						<table align="center" border="0" width="100%">
 							<tr align="center">
 								<td>
@@ -1203,7 +1276,7 @@
 																		}
 																	});
 																</script>
-															</div>
+															</div>	
 														</xsl:otherwise>
 													</xsl:choose>
 												</td>
@@ -1214,10 +1287,10 @@
 							</tr>
 						</table>
 					</xsl:if>
-				</li>
+					</li>
+					</div>
 			</xsl:otherwise>
 		</xsl:choose>
-		</div>
 	</xsl:template>
 
 	<xsl:template match="button">

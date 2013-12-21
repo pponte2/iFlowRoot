@@ -1,23 +1,21 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/core" prefix="c"%>
-<%@ taglib uri="http://www.iknow.pt/jsp/jstl/iflow" prefix="if"%>
-<%
-  request.setAttribute("inFrame", "true");
+<%@ taglib uri="http://www.iknow.pt/jsp/jstl/iflow" prefix="if"%><%
+request.setAttribute("inFrame", "true");
 %><%@ include file="../inc/defs.jsp"%>
 <%@ page import="pt.iflow.api.blocks.Block"%>
 <%@ page import="pt.iflow.api.blocks.FormOperations"%>
 <%@ include file="../inc/initProcInfo.jspf"%>
-<%@ include file="../inc/checkProcAccess.jspf"%>
-<%
-  //TODO
+<%@ include file="../inc/checkProcAccess.jspf"%><%
+
+//TODO
 String popupReturnBlockId = null;
 
     String title = "Formul&aacute;rio";
     // use of fdFormData defined in /inc/defs.jsp
     String sOp = fdFormData.getParameter("op");
     if (sOp == null) {
-    sOp = "0";
+        sOp = "0";
     }
     int op = Integer.parseInt(sOp);
     
@@ -37,24 +35,24 @@ String popupReturnBlockId = null;
     
     Flow flow = BeanFactory.getFlowBean();
     try {
-    
-    bBlockJSP = flow.getBlock(userInfo, procData);
-    
-    // To appear blockId in title
-    title = bBlockJSP.getDescription(userInfo, procData);
-    if (Const.nMODE == Const.nDEVELOPMENT) {
-    title = title + " block" + bBlockJSP.getId();
-    }
-    
-    if (bBlockJSP.getClass().getName().indexOf("BlockFormulario") == -1) {
-    throw new Exception("Not BlockFormulario!");
-    }
+        
+        bBlockJSP = flow.getBlock(userInfo, procData);
+        
+        // To appear blockId in title
+        title = bBlockJSP.getDescription(userInfo, procData);
+        if (Const.nMODE == Const.nDEVELOPMENT) {
+            title = title + " block" + bBlockJSP.getId();
+        }
+        
+        if (bBlockJSP.getClass().getName().indexOf("BlockFormulario") == -1) {
+            throw new Exception("Not BlockFormulario!");
+        }
     } catch (Exception e) {
-    // send to main page...
-    // not able to get flow or process is not in jsp state (if
-    // a casting exception occurs..)
-    ServletUtils.sendEncodeRedirect(response, "../flow_error.jsp");
-    return;
+        // send to main page...
+        // not able to get flow or process is not in jsp state (if
+        // a casting exception occurs..)
+        ServletUtils.sendEncodeRedirect(response, "../flow_error.jsp");
+        return;
     }
     
 
@@ -71,9 +69,9 @@ String popupReturnBlockId = null;
     
     // check write permissions...
   if (!flow.checkUserFlowRoles(userInfo, flowid, "" + FlowRolesTO.WRITE_PRIV) &&
-  !flow.checkUserFlowRoles(userInfo, flowid, "" + FlowRolesTO.SUPERUSER_PRIV)) {
+      !flow.checkUserFlowRoles(userInfo, flowid, "" + FlowRolesTO.SUPERUSER_PRIV)) {
     ServletUtils.sendEncodeRedirect(response, "../nopriv.jsp?flowid="+flowid);
-    return;
+        return;
     }
     
 	if (bBlockJSP != null && op == 0) {
@@ -104,65 +102,65 @@ String popupReturnBlockId = null;
 	}
 	
     if (bBlockJSP != null && op == 9) {
-    // return to parent 
+        // return to parent 
   		ProcessData pdReturn = (ProcessData)session.getAttribute(Const.sSWITCH_PROC_SESSION_ATTRIBUTE);
-    session.setAttribute(Const.SESSION_PROCESS + flowExecType, pdReturn);
-    String next_page = flow.nextBlock(userInfo, pdReturn);
-    
-    if (next_page == null) {
-    next_page = sURL_PREFIX + "flow_error.jsp" + "?"+ Const.FLOWEXECTYPE +"=" + flowExecType + "&ts=" + ts;
-    } else {
-    next_page = sURL_PREFIX + next_page + "&"+ Const.FLOWEXECTYPE +"=" + flowExecType + "&ts=" + ts;
-    }
+        session.setAttribute(Const.SESSION_PROCESS + flowExecType, pdReturn);
+        String next_page = flow.nextBlock(userInfo, pdReturn);
+        
+        if (next_page == null) {
+            next_page = sURL_PREFIX + "flow_error.jsp" + "?"+ Const.FLOWEXECTYPE +"=" + flowExecType + "&ts=" + ts;
+        } else {
+            next_page = sURL_PREFIX + next_page + "&"+ Const.FLOWEXECTYPE +"=" + flowExecType + "&ts=" + ts;
+        }
 
-    ServletUtils.sendEncodeRedirect(response, next_page);
-    return;
-    
+        ServletUtils.sendEncodeRedirect(response, next_page);
+        return;
+        
     }
     
     Object[] oa = null;
     if (bBlockJSP != null && (op == 2 || op == 3 || op == 5 || op == 6 || op == 7 || op == FormOperations.OP_ONCHANGE_SUBMIT)) {
-    
-  String formMid = fdFormData.getParameter(Const.sMID_ATTRIBUTE);
-  request.setAttribute(Const.sMID_ATTRIBUTE, formMid);
-  boolean procAccessOk = StringUtils.isBlank(formMid) || StringUtils.equals(currMid, formMid);
-  
-  if (procAccessOk) {
-    oa = new Object[5];
-    oa[0] = userInfo;
-    oa[1] = procData;
-    oa[2] = fdFormData;
-    oa[3] = new ServletUtils(request, response);
-    oa[4] = (op == FormOperations.OP_GENERATE_FORM || op == FormOperations.OP_ONCHANGE_SUBMIT);
-
-    
-    // 3: processForm
-    procData = (ProcessData) bBlockJSP.execute(3, oa);
-    
-    oa = new Object[1];
-    oa[0] = procData;
-    // 4: hasError
-    if (!((Boolean) bBlockJSP.execute(4, oa)).booleanValue()) {
         
+      String formMid = fdFormData.getParameter(Const.sMID_ATTRIBUTE);
+      request.setAttribute(Const.sMID_ATTRIBUTE, formMid);
+      boolean procAccessOk = StringUtils.isBlank(formMid) || StringUtils.equals(currMid, formMid);
+      
+      if (procAccessOk) {
+            oa = new Object[5];
+            oa[0] = userInfo;
+            oa[1] = procData;
+            oa[2] = fdFormData;
+            oa[3] = new ServletUtils(request, response);
+            oa[4] = (op == FormOperations.OP_GENERATE_FORM || op == FormOperations.OP_ONCHANGE_SUBMIT);
+
+            
+            // 3: processForm
+            procData = (ProcessData) bBlockJSP.execute(3, oa);
+            
+            oa = new Object[1];
+            oa[0] = procData;
+            // 4: hasError
+            if (!((Boolean) bBlockJSP.execute(4, oa)).booleanValue()) {
+                
 				if (op == 2 || (pid != Const.nSESSION_PID && (op == 5 || op == 6 || op == 7 /*|| op == 8*/))) {
-            // save dataset if op = 2 (save) or refresh(8)/print(5,6)/export(7) and process is in DB
-            // don't save it if op = 3 because nextBlock does it!
+                    // save dataset if op = 2 (save) or refresh(8)/print(5,6)/export(7) and process is in DB
+                    // don't save it if op = 3 because nextBlock does it!
 					int mid = flow.saveDataSet(userInfo, procData, request);
 					currMid = String.valueOf(mid);
-            // now don't forget to update flowid and pid and subpid
-            flowid = procData.getFlowId();
-            pid = procData.getPid();
-            subpid = procData.getSubPid();
-            hmHidden.put("subpid", String.valueOf(subpid));
-            hmHidden.put("pid", String.valueOf(pid));
-            hmHidden.put("flowid", String.valueOf(flowid));
-            hmHidden.put(Const.FLOWEXECTYPE, flowExecType);
-        	hmHidden.put(Const.sMID_ATTRIBUTE, currMid);
-        	request.setAttribute(Const.sMID_ATTRIBUTE, currMid);
-        }
-        
-    			boolean autoAdvance = (op==FormOperations.OP_ONCHANGE_SUBMIT?((Boolean)bBlockJSP.execute(14, oa)).booleanValue():false);
-            if (op == 3 || autoAdvance) {
+                    // now don't forget to update flowid and pid and subpid
+                    flowid = procData.getFlowId();
+                    pid = procData.getPid();
+                    subpid = procData.getSubPid();
+                    hmHidden.put("subpid", String.valueOf(subpid));
+                    hmHidden.put("pid", String.valueOf(pid));
+                    hmHidden.put("flowid", String.valueOf(flowid));
+                    hmHidden.put(Const.FLOWEXECTYPE, flowExecType);
+                	hmHidden.put(Const.sMID_ATTRIBUTE, currMid);
+                	request.setAttribute(Const.sMID_ATTRIBUTE, currMid);
+                }
+                
+        			boolean autoAdvance = (op==FormOperations.OP_ONCHANGE_SUBMIT?((Boolean)bBlockJSP.execute(14, oa)).booleanValue():false);
+                    if (op == 3 || autoAdvance) {
 						String next_page = flow.nextBlock(userInfo, procData);
 
 					    //Caso esteja a correr em popup e o bloco não seja de popup, sair no erro
@@ -188,86 +186,86 @@ String popupReturnBlockId = null;
 	                            return;
 	                        }
 					    }
+                    }
             }
-    }
-    } else {
-    oa = new Object[2];
-    oa[0] = procData;
-    oa[1] = messages.getString("form.proc_change_error");
-    // 5: setError
-    bBlockJSP.execute(5, oa);
-    }
+        } else {
+            oa = new Object[2];
+            oa[0] = procData;
+            oa[1] = messages.getString("form.proc_change_error");
+            // 5: setError
+            bBlockJSP.execute(5, oa);
+        }
     } // op == 2 || op == 3 || op == 5 || op == 6 || op == 7 || op == 8
     else if (bBlockJSP != null && op == 4) {
-    // cancel proc
-    String next_page = flow.endProc(userInfo, procData);
-    if (next_page == null) {
-    next_page = sURL_PREFIX + "flow_error.jsp" + "?"+ Const.FLOWEXECTYPE +"=" + flowExecType + "&ts=" + ts;
-    } else {
-    next_page = sURL_PREFIX + next_page + "&"+ Const.FLOWEXECTYPE +"=" + flowExecType + "&ts=" + ts;
-    }
-    ServletUtils.sendEncodeRedirect(response, next_page);
-    return;
+        // cancel proc
+        String next_page = flow.endProc(userInfo, procData);
+        if (next_page == null) {
+            next_page = sURL_PREFIX + "flow_error.jsp" + "?"+ Const.FLOWEXECTYPE +"=" + flowExecType + "&ts=" + ts;
+        } else {
+            next_page = sURL_PREFIX + next_page + "&"+ Const.FLOWEXECTYPE +"=" + flowExecType + "&ts=" + ts;
+        }
+        ServletUtils.sendEncodeRedirect(response, next_page);
+        return;
     } // op == 4
     
     String sHtml = "";
     String sFormName = "";
     
     if (bBlockJSP != null) {
-    // return to parent additional stuff
-    boolean bRemoveParentProc = false;
-    ProcessData pdReturn = (ProcessData) session.getAttribute(Const.sSWITCH_PROC_SESSION_ATTRIBUTE);
-    if (pdReturn != null) {
+        // return to parent additional stuff
+        boolean bRemoveParentProc = false;
+        ProcessData pdReturn = (ProcessData) session.getAttribute(Const.sSWITCH_PROC_SESSION_ATTRIBUTE);
+        if (pdReturn != null) {
 	    	String sSwitchFlag = pdReturn.getTempData(Const.sSWITCH_PROC_FLAG);
 			String sRetProcFid = pdReturn.getTempData(Const.sSWITCH_PROC_TEMP_FID);
 			String sRetProcPid = pdReturn.getTempData(Const.sSWITCH_PROC_TEMP_PID);
 			String sRetProcSubPid = pdReturn.getTempData(Const.sSWITCH_PROC_TEMP_SUBPID);
-    
-    if (sSwitchFlag == null || !sSwitchFlag.equals("true")
-            || sRetProcFid == null || sRetProcPid == null
-            || sRetProcSubPid == null) {
-        bRemoveParentProc = true;
-    } else {
-        if (!sRetProcFid.equals(String.valueOf(flowid))
-                || !sRetProcPid.equals(String.valueOf(pid))
-                || !sRetProcSubPid.equals(String.valueOf(subpid))) {
-            bRemoveParentProc = true;
+            
+            if (sSwitchFlag == null || !sSwitchFlag.equals("true")
+                    || sRetProcFid == null || sRetProcPid == null
+                    || sRetProcSubPid == null) {
+                bRemoveParentProc = true;
+            } else {
+                if (!sRetProcFid.equals(String.valueOf(flowid))
+                        || !sRetProcPid.equals(String.valueOf(pid))
+                        || !sRetProcSubPid.equals(String.valueOf(subpid))) {
+                    bRemoveParentProc = true;
+                } else {
+                    // enable switch proc return to parent
+                    procData.setTempData(
+                            Const.sSWITCH_PROC_RETURN_PARENT, "true");
+                }
+            }
         } else {
-            // enable switch proc return to parent
-            procData.setTempData(
-                    Const.sSWITCH_PROC_RETURN_PARENT, "true");
+            bRemoveParentProc = true;
         }
-    }
-    } else {
-    bRemoveParentProc = true;
-    }
-    
-    if (bRemoveParentProc) {
-    procData.setTempData(Const.sSWITCH_PROC_RETURN_PARENT, null);
-    session.removeAttribute(Const.sSWITCH_PROC_SESSION_ATTRIBUTE);
-    }
-    
-    oa = new Object[4];
-    oa[0] = userInfo;
-    oa[1] = procData;
-    oa[2] = hmHidden;
-    oa[3] = new ServletUtils(response);
-    // 2: generateForm
-    sHtml = (String) bBlockJSP.execute(2, oa);
-    
-    // 7: var FORM_NAME
-    sFormName = (String) bBlockJSP.execute(7, null);
+        
+        if (bRemoveParentProc) {
+            procData.setTempData(Const.sSWITCH_PROC_RETURN_PARENT, null);
+            session.removeAttribute(Const.sSWITCH_PROC_SESSION_ATTRIBUTE);
+        }
+        
+        oa = new Object[4];
+        oa[0] = userInfo;
+        oa[1] = procData;
+        oa[2] = hmHidden;
+        oa[3] = new ServletUtils(response);
+        // 2: generateForm
+        sHtml = (String) bBlockJSP.execute(2, oa);
+        
+        // 7: var FORM_NAME
+        sFormName = (String) bBlockJSP.execute(7, null);
     }
 %>
 
 <%@ include file="servicesjs.jspf"%>
 
 <%
-  if (op == 5 || op == 6 || op == 7) {
-    String sField = fdFormData.getParameter("_serv_field_");
-    
-    if (op == 5) {
-    // print
+    if (op == 5 || op == 6 || op == 7) {
+        String sField = fdFormData.getParameter("_serv_field_");
+        
+        if (op == 5) {
+            // print
 %>
 
 <script language="JavaScript" type="text/javascript">
@@ -276,8 +274,8 @@ String popupReturnBlockId = null;
     //-->
 </script>
 <%
-  } else if (op == 6) {
-    // printfield
+    } else if (op == 6) {
+            // printfield
 %>
 <script language="JavaScript" type="text/javascript">
     <!--
@@ -285,8 +283,8 @@ String popupReturnBlockId = null;
     //-->
 </script>
 <%
-  } else if (op == 7) {
-    // exportfield
+    } else if (op == 7) {
+            // exportfield
 %>
 <script language="JavaScript" type="text/javascript">
     <!--
@@ -294,23 +292,18 @@ String popupReturnBlockId = null;
     //-->
 </script>
 <%
-  }
+    }
     }
 %>
 <%
-  if (pid > 0) {
+if (pid > 0) {
 %>
 <script language="JavaScript" type="text/javascript">
-  parent.showAnnotations(<%=flowid%>,<%=pid%>,<%=subpid%>,'<%=from%>
-  ');
+  parent.showAnnotations(<%=flowid%>,<%=pid%>,<%=subpid%>,'<%=from%>');
 </script>
-<%
-  } else {
-%>
+<%} else {%>
 <script language="JavaScript" type="text/javascript">
   parent.hideAnnotations();
 </script>
-<%
-  }
-%><%=sHtml%>
+<%}%><%=sHtml%>
 <%@ include file="../inc/initProcInfoEndPage.jspf"%>

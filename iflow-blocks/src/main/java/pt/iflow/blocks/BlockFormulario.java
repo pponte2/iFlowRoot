@@ -291,11 +291,11 @@ public class BlockFormulario extends Block implements FormOperations {
   }
 
   public static String generateForm(final BlockFormulario abBlock, final UserInfoInterface userInfo, final ProcessData procData,
-	      final Map<String, String> ahmHiddenFields, final boolean abForceDisabled, final FormService anService, final int anTargetField,
-	      final ServletUtils response, boolean showButton) {
-	    return generateForm(abBlock, userInfo, procData, ahmHiddenFields, abForceDisabled, anService, anTargetField, null, response,
-	        null, null, showButton);
-	  }
+          final Map<String, String> ahmHiddenFields, final boolean abForceDisabled, final FormService anService, final int anTargetField,
+          final ServletUtils response, boolean showButton) {
+        return generateForm(abBlock, userInfo, procData, ahmHiddenFields, abForceDisabled, anService, anTargetField, null, response,
+            null, null, showButton);
+      }
   
   private static String generateForm(final BlockFormulario abBlock, final UserInfoInterface userInfo, final ProcessData procData,
       final Map<String, String> ahmHiddenFields, final boolean abForceDisabled, final FormService anService, final int anTargetField,
@@ -422,11 +422,11 @@ public class BlockFormulario extends Block implements FormOperations {
         disableButtons = Boolean.valueOf(String.valueOf(procData.eval(userInfo, abBlock.getAttribute(FormProps.DISABLE_BUTTONS))));
       }
       if (inFrameworkDetail) {
-    	List<FormButton> alButtons2 = new ArrayList<FormButton>();	  
+        List<FormButton> alButtons2 = new ArrayList<FormButton>();    
         for(int i = 0 ; i < alButtons.size(); i++){
-        	FormButton fb = alButtons.get(i);
+            FormButton fb = alButtons.get(i);
             if (fb.getType() == FormButtonType.PRINT) {
-            	alButtons2.add(fb);
+                alButtons2.add(fb);
                 break;
               }
         }

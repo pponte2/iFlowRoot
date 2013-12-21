@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-int sss = 0;
+
 // CHECK IF NEED TO INCLUDE ALSO initProcInfoEndPage.jspf at page end (if dataset might change).
 // CHECK IF NEED TO INCLUDE ALSO checkProcAccess.jspf after include this jsp
 
@@ -11,14 +11,11 @@ ProcessData procData = null;
 try {
 	// use of fdFormData defined in /inc/defs.jsp
   flowid = Integer.parseInt(fdFormData.getParameter("flowid"));
-	sss=11;
   pid = Integer.parseInt(fdFormData.getParameter("pid"));
-	sss=22;
   String sSubPid = fdFormData.getParameter("subpid");
   String inDetail = fdFormData.getParameter("inDetail");
   boolean isInDetail = StringUtils.equals(inDetail, "true");
   ProcessHeader procHeader = null;
-	sss=2;
 
   String openPopUp = fdFormData.getParameter("openPopup");
   boolean isOpenPopUp = StringUtils.equals(openPopUp, "true");
@@ -31,7 +28,6 @@ try {
     subpid = Integer.parseInt(sSubPid);
   }
 
-	sss=3;
   if (pid == Const.nSESSION_PID) {
     subpid = Const.nSESSION_SUBPID; // reset subpid to session subpid
     procData = (ProcessData)session.getAttribute(Const.SESSION_PROCESS + flowExecType);
@@ -43,13 +39,11 @@ try {
     // clean session dataset just in case...
     session.removeAttribute(Const.SESSION_PROCESS + flowExecType);
   }
-	sss=4;
 
   if (procData == null) {
 	Logger.errorJsp(login, "initProcInfo.jsp", "Unable to get process(flowid="+flowid+", pid="+pid+", subpid="+subpid+")");
 	String msgKey = "initProcInfo.error.noProcess";
 	// process not found
-	sss=5;
 	if (procHeader != null && !isInDetail) {
 	  if(pm.isProcessClosed(userInfo, procHeader)) {
 	    msgKey = "initProcInfo.error.closedProcess";
@@ -64,7 +58,7 @@ try {
   }
 }
 catch (Exception e) {
-  Logger.errorJsp(login, "initProcInfo", "exception caught"+sss+": " + e.getMessage(), e);
+  Logger.errorJsp(login, "initProcInfo", "exception caught: " + e.getMessage(), e);
   ServletUtils.sendEncodeRedirect(response, sURL_PREFIX+"flow_error.jsp");
   return;
 }
