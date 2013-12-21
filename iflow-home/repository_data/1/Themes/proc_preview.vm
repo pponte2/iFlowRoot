@@ -87,7 +87,7 @@
 				#set($buttonimagealt=$button.get("buttonimagealt"))
 				#set($hiddenfield=$button.get("hiddenfield"))
 					&nbsp;
-					<button align="center" valign="center" class="button" type="submit" name="$name" id="$id" onClick="&operation" title="&tooltip">
+					<button align="center" valign="center" class="button" type="submit" name="$name" id="$id" onClick="$operation" title="&tooltip">
 				#if ($buttonimagesrc != "")
 						<img src="$buttonimagesrc" alt="$buttonimagealt"></img>
 						<br />
@@ -105,7 +105,7 @@
 		<div class="Preview">
 			<button id="Aceder" style=" font-size: 24px; padding: 10px;" class="btn btn-default navbar-btn"
 				onclick="javascript:openProcess($procFlowid, '$response.encodeURL($url_prefix,$uri)', 'flowid=$procFlowid&pid=$procPid&subpid=$procSubpid', false);"> #*$act.get("runMax")*#
-				Aceder 2
+				Aceder
 			</button>
 		</div>
 		</body>

@@ -59,11 +59,19 @@
 			</div>
 			<div class="left" style="$style_read">
 				$act.get("pnumber")&nbsp;$act.get("previousUserid")
+				<a href="javascript:getJSP('main_content.jsp?filterPreviousUserid=$act.get("previousUserid")')">
+					<img src="images/filter.png" width="15" height="15" alt=""/>
+				</a>
 				<br/>
 				$act.get("desc")
 			</div>
 			<div class="right" style="$style_read;">
-				<div>$act.get("createdDate")</div>
+				<div>
+					$act.get("createdDate")
+					<a href="javascript:getJSP('main_content.jsp?filterdate=$act.get("createdDate")')">
+						<img src="images/filter.png" width="15" height="15" alt=""/>
+					</a>
+				</div>
 				<div class="img">
 					<img src="images/V.png" width="25" height="12" alt="" />
 				</div>
@@ -145,7 +153,12 @@
 			$act.get("pinitials") 
 		</div>
 		<div class="pr01">$act.get("pnumber") </div>
-		<div class="pr02">$act.get("previousUserid")</div>
+		<div class="pr02">
+			$act.get("previousUserid")
+			<a href="javascript:getJSP('main_content.jsp?filterPreviousUserid=$act.get("previousUserid")')">
+				<img src="images/filter.png" width="15" height="15" alt=""/>
+			</a>
+	</div>
 		<div class="pr03">
 			<img src="images/V.png" width="25" height="12" alt=""/>
 		</div>
@@ -154,7 +167,12 @@
 		<div  class="pr06">
 			<canvas id="R" width="25" height="10" style="background: #FF0004;"> Your browser does not support the HTML5 canvas tag.</canvas>
 		</div>
-		<div class="pr07">$act.get("createdDate")<br>
+		<div class="pr07">
+			$act.get("createdDate")
+			<a href="javascript:getJSP('main_content.jsp?filterdate=$act.get("createdDate")')">
+				<img src="images/filter.png" width="15" height="15" alt=""/>
+			</a>
+			<br>
 			<img src="images/flag.png" width="12" height="14" alt=""/>
 		</div>
 	</div>

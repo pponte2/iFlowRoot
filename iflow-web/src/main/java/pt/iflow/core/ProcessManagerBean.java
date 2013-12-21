@@ -5733,6 +5733,9 @@ public class ProcessManagerBean implements ProcessManager {
 
 	      StringBuilder sQuery = new StringBuilder(DBQueryManager.processQuery("ProcessManager.get_activity_filters_user", new Object[]{ userid }));
 	      
+          if(filter.getPreviousUserid() != null)
+            sQuery.append(" and previoususerid='"+ filter.getPreviousUserid() + "'");
+        
 	      if(!filter.getFolderid().equals("0"))
 	    	  sQuery.append(" and folderid="+filter.getFolderid());
 	      

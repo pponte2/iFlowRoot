@@ -1,3 +1,5 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/core" prefix="c" %>
 <%@ taglib uri="http://www.iknow.pt/jsp/jstl/iflow" prefix="if" %>
@@ -237,8 +239,10 @@ function cleanFilter(){
 	cleanFilter = fdFormData.getParameter("cleanFilter");
 	  if ("1".equals(cleanFilter)) {
 	    session.removeAttribute("filterlabel");
+	    session.removeAttribute("filterdate");
 	    session.removeAttribute("filterdays");
 	    session.removeAttribute("filterfolder");
+	    session.removeAttribute("filterPreviousUserid");
 	  }
 	  //FILTER BY FOLDER
 	  int selectedFolder = 0;
@@ -258,9 +262,25 @@ function cleanFilter(){
 	  }
 	  //FILTER BY LABEL
 	  int selectedLabel = 0;
+
+	  String filterPreviousUserid = fdFormData.getParameter("filterPreviousUserid");
+	  if(filterPreviousUserid!=null){
+	    session.setAttribute("filterPreviousUserid", filterPreviousUserid); // Utilizador actualizou valor
+	  }
+
+	  String filterdate = fdFormData.getParameter("filterdate");
+	  if(filterdate!=null){
+	    session.setAttribute("filterdate",filterdate); // Utilizador actualizou valor
+	  }
 	  String filterlabel = fdFormData.getParameter("filterlabel");
 	  if(filterlabel!=null){
 	    session.setAttribute("filterlabel",filterlabel); // Utilizador actualizou valor
+	  }
+	  if (filterPreviousUserid == null){
+	    filterPreviousUserid = (String) session.getAttribute("filterPreviousUserid");
+	  }
+	  if (filterdate == null){
+	    filterdate = (String) session.getAttribute("filterdate");
 	  }
 	  if (filterlabel == null){
 	    filterlabel = (String) session.getAttribute("filterlabel");
@@ -274,6 +294,7 @@ function cleanFilter(){
 	  }
 	  //FILTER BY DAYS
 	  int selectedDays = 0;
+
 	  String filterdays = fdFormData.getParameter("filterdays");
 	  if(filterdays!=null){
 	    session.setAttribute("filterdays",filterdays); // Utilizador actualizou valor
@@ -295,8 +316,20 @@ function cleanFilter(){
 	  filter.setLabelid(""+selectedLabel);
 	  filter.setDeadline(""+selectedDays);
 	  filter.setOrderType("desc");
-	  ListIterator<Activity> it = pm.getUserActivitiesOrderFilters(userInfo, -1, filter);
+	  filter.setPreviousUserid(filterPreviousUserid);
+	  if (filterdate != null) {
+		try{
+		  Calendar cal = Calendar.getInstance();
+		  SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		  Date dt = dateFormat.parse(filterdate);
+		  cal.setTime(dt);
+		  filter.setDateBefore(cal.getTime());
+		  filter.setDateAfter(cal.getTime());
+		} catch(Exception e) {
+		}
+	  }
 
+	  ListIterator<Activity> it = pm.getUserActivitiesOrderFilters(userInfo, -1, filter);
 	  //PUT TO VM
 	  hsSubstLocal.put("selectedLabel", selectedLabel);
 	  hsSubstLocal.put("selectedDays", selectedDays);

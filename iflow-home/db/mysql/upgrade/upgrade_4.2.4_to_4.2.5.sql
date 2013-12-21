@@ -14,7 +14,6 @@ CREATE VIEW activity_delegated
     where ((A.userid = H.ownerid and H.slave=1) or (A.userid = H.userid and slave=0)) 
     and A.flowid = H.flowid and H.pending=0 and A.delegated <> 0;
 
-DROP TRIGGER trigger_activity_previoususer;
 DELIMITER //
 CREATE TRIGGER trigger_activity_previoususer
 BEFORE INSERT ON `activity` FOR EACH ROW

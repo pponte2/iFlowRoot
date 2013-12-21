@@ -93,7 +93,7 @@ try {
   // this is the default, no block or could not fetch process data.
  
   Map<String,String> processDetail = null;
-  if (op != 10 && flow != null && flow.hasDetail())
+  if (flow != null && flow.hasDetail())
     processDetail = ProcessPresentation.getProcessDetail(userInfo, procData);
   if(null == processDetail) processDetail = new HashMap<String,String>();
   Hashtable<String,Object> htSubst = new Hashtable<String, Object>();
