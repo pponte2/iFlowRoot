@@ -124,7 +124,7 @@ public class BlockSubFlowIn extends Block {
           // create the activity for the subflow path
           ProcessManager pm = BeanFactory.getProcessManagerBean();
 
-          Activity a = new Activity(userid, procData.getFlowId(), 
+          Activity a = new Activity(userid, userid, procData.getFlowId(), 
               procData.getPid(), procData.getSubPid(), 0, 0, 
               this.getDescription(userInfo, procData),
               Block.getDefaultUrl(userInfo, procData));

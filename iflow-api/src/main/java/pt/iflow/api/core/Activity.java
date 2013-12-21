@@ -5,6 +5,7 @@ import java.util.Date;
 
 public class Activity {
   public String userid;
+  public String previousUserid;
   public int flowid;
   public int pid;
   public int subpid;
@@ -34,6 +35,7 @@ public class Activity {
   public Activity(Activity orig) {
     this();
     userid = orig.userid;
+    previousUserid = orig.previousUserid;
     flowid = orig.flowid;
     pid = orig.pid;
     subpid = orig.subpid;
@@ -53,9 +55,10 @@ public class Activity {
     mid = orig.mid;
   }
   
-  public Activity(String u, int f, int p, int sp, Timestamp c, String descr, String ur) {
+  public Activity(String u, String pu, int f, int p, int sp, Timestamp c, String descr, String ur) {
     this();
     userid = u;
+    previousUserid = pu;
     flowid = f;
     pid = p;
     subpid = sp;
@@ -66,9 +69,10 @@ public class Activity {
     delegated = true;
   }
 
-  public Activity(String u, int f, int p, int sp, int t, int pri, String descr, String ur) {
+  public Activity(String u, String pu, int f, int p, int sp, int t, int pri, String descr, String ur) {
     this();
     userid = u;
+    previousUserid = pu;
     flowid = f;
     pid = p;
     subpid = sp;
@@ -80,9 +84,10 @@ public class Activity {
     delegated = false;
   }
 
-  public Activity(String u, int f, int p, int sp, int t, int pri, String descr, String ur, int notif) {
+  public Activity(String u, String pu, int f, int p, int sp, int t, int pri, String descr, String ur, int notif) {
     this();
     userid = u;
+    previousUserid = pu;
     flowid = f;
     pid = p;
     subpid = sp;
@@ -99,10 +104,11 @@ public class Activity {
 	 delegated = false;
   }
 
-  public Activity(String u, int f, int p, int sp, int t, int pri,
+  public Activity(String u, String pu, int f, int p, int sp, int t, int pri,
     Timestamp s, Timestamp d, Timestamp a, String descr, String ur, int stat, int notif) {
     this();
     userid = u;
+    previousUserid = pu;
     flowid = f;
     pid = p;
     subpid = sp;
@@ -123,10 +129,11 @@ public class Activity {
 	 delegated = false;
   }
 
-  public Activity(String u, int f, int p, int sp, int t, int pri,
+  public Activity(String u, String pu, int f, int p, int sp, int t, int pri,
 		  Timestamp s, Timestamp d, Timestamp a, String descr, String ur, int stat, int notif, String profName) {
 	  this();
 	  userid = u;
+	  previousUserid = pu;
 	  flowid = f;
 	  pid = p;
 	  subpid = sp;
@@ -288,6 +295,10 @@ public class Activity {
     return userid;
   }
 
+  public String getPreviousUserid() {
+    return previousUserid;
+  }
+
   public int getFolderid() {
 	  return this.folderid;
   }
@@ -325,4 +336,6 @@ public class Activity {
   public void setAnnotationIcon(String annotationIcon) {
     this.annotationIcon = annotationIcon;
   }
+
+
 }

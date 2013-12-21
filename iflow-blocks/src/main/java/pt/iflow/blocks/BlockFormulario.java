@@ -178,7 +178,7 @@ public class BlockFormulario extends Block implements FormOperations {
     try {
       // Get the ProcessManager EJB
 
-      activity = new Activity(login, flowid, pid, subpid, 0, 0, description, Block.getDefaultUrl(userInfo, procData), 1);
+    activity = new Activity(login, login, flowid, pid, subpid, 0, 0, description, Block.getDefaultUrl(userInfo, procData), 1);
       //activity.setRead();
       activity.mid = procData.getMid();
       pm.updateActivity(userInfo, activity);
@@ -1267,7 +1267,7 @@ public class BlockFormulario extends Block implements FormOperations {
       else {
         // now the transformation
         
-        String xml = sbXml.toString();System.out.println(xml.toString());
+        String xml = sbXml.toString();
         retObj = transformForm(userInfo, procData, sXsl, xml, noPrint, Const.bUSE_SCANNER, response);  // load upload applet if required
 
         retObj = StringEscapeUtils.unescapeHtml(retObj);

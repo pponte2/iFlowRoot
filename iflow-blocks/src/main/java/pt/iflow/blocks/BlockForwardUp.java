@@ -140,7 +140,7 @@ public class BlockForwardUp extends Block implements MessageBlock {
       String userid = userInfo.getUtilizador();
       
       String[] activityOwners = pm.getActivityOwners(userInfo,
-          new Activity(userid, flowid, pid, subpid, null, null, null));
+          new Activity(userid, userid, flowid, pid, subpid, null, null, null));
       boolean isActivityOwner = false;
       
       for (String actOwn : activityOwners) {

@@ -58,8 +58,8 @@
 				$act.get("pinitials") 
 			</div>
 			<div class="left" style="$style_read">
-				$act.get("pnumber") 
-				<br />
+				$act.get("pnumber")&nbsp;$act.get("previousUserid")
+				<br/>
 				$act.get("desc")
 			</div>
 			<div class="right" style="$style_read;">
@@ -145,18 +145,17 @@
 			$act.get("pinitials") 
 		</div>
 		<div class="pr01">$act.get("pnumber") </div>
-		<div class="pr02"></div>
+		<div class="pr02">$act.get("previousUserid")</div>
 		<div class="pr03">
 			<img src="images/V.png" width="25" height="12" alt=""/>
 		</div>
 		<div class="pr04"> $act.get("desc")</div>
 		<div  class="pr05"></div>
-			<div  class="pr06">
-				<canvas id="R" width="25" height="10" style="background: #FF0004;"> Your browser does not support the HTML5 canvas tag.</canvas>
-			</div>
-			<div  class="pr07">$act.get("createdDate")<br>
-				<img src="images/flag.png" width="12" height="14" alt=""/>
-			</div>
+		<div  class="pr06">
+			<canvas id="R" width="25" height="10" style="background: #FF0004;"> Your browser does not support the HTML5 canvas tag.</canvas>
+		</div>
+		<div class="pr07">$act.get("createdDate")<br>
+			<img src="images/flag.png" width="12" height="14" alt=""/>
 		</div>
 	</div>
 	

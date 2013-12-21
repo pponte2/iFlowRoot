@@ -719,7 +719,7 @@ public class BlockData extends Block {
       // Get the ProcessManager EJB
       ProcessManager pm = BeanFactory.getProcessManagerBean();
 
-      Activity activity = new Activity(login,flowid,pid,subpid,0,0,description,Block.getDefaultUrl(userInfo, procData),1);
+      Activity activity = new Activity(login,login,flowid,pid,subpid,0,0,description,Block.getDefaultUrl(userInfo, procData),1);
       activity.mid = procData.getMid();
       pm.updateActivity(userInfo,activity);
 

@@ -359,6 +359,7 @@ function cleanFilter(){
 		String sDesc = (a.description.length()>70)?a.description.substring(0,67)+"...":a.description;
 		String sCreated = DateUtility.formatTimestamp(userInfo, a.created);
 		String sCreatedDate = DateUtility.formatFormDate(userInfo, a.created);
+		String sPreviousUserid = a.previousUserid;
 		
 		String sDuration = Utils.getDuration(new Timestamp(a.created.getTime()), tsNow);
 		String sUri = "";
@@ -408,6 +409,7 @@ function cleanFilter(){
 		hm.put("duration", sDuration);
 		hm.put("uri", sUri);
 		hm.put("pnumber", pnumber);
+		hm.put("previousUserid", sPreviousUserid);
 		
 		String pinitials = "iF";
 		if (sFlow != null && sFlow.length()>2) {

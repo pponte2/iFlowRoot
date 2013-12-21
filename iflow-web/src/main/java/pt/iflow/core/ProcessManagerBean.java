@@ -1846,7 +1846,7 @@ public class ProcessManagerBean implements ProcessManager {
       rs = st.executeQuery(activityDelegationsQuery);
 
       if (rs.next()) {
-        result = new Activity(userid, rs.getInt("flowid"), rs.getInt("pid"), rs.getInt("subpid"), rs.getInt("type"), 
+        result = new Activity(userid, rs.getString("previoususerid"), rs.getInt("flowid"), rs.getInt("pid"), rs.getInt("subpid"), rs.getInt("type"), 
             rs.getInt("priority"), rs.getTimestamp("created"), rs.getTimestamp("started"), rs.getTimestamp("archived"), 
             rs.getString("description"), rs.getString("url"), rs.getInt("status"), rs.getInt("notify"));
         if (rs.getInt("read_flag") == 1) {
@@ -1864,7 +1864,7 @@ public class ProcessManagerBean implements ProcessManager {
         rs = st.executeQuery(activityiesQuery);
 
         if (rs.next()) {
-          result = new Activity(userid, rs.getInt("flowid"), rs.getInt("pid"), rs.getInt("subpid"), rs.getInt("type"), 
+          result = new Activity(userid, rs.getString("previoususerid"), rs.getInt("flowid"), rs.getInt("pid"), rs.getInt("subpid"), rs.getInt("type"), 
               rs.getInt("priority"), rs.getTimestamp("created"), rs.getTimestamp("started"), rs.getTimestamp("archived"), 
               rs.getString("description"), rs.getString("url"), rs.getInt("status"), rs.getInt("notify"));
           result.profilename = rs.getString("profilename");
@@ -2366,7 +2366,7 @@ public class ProcessManagerBean implements ProcessManager {
 
       rs = st.executeQuery(sbQuery.toString());
       while (rs.next()) {
-        Activity wle = new Activity(rs.getString("userid"), rs.getInt("flowid"), rs.getInt("pid"), rs.getInt("subpid"), rs.getInt("type"), rs.getInt("priority"), rs.getTimestamp("created"), rs.getTimestamp("started"), rs.getTimestamp("archived"), rs.getString("description"), rs.getString("url"), rs.getInt("status"), rs.getInt("notify"));
+        Activity wle = new Activity(rs.getString("userid"), rs.getString("previoususerid"), rs.getInt("flowid"), rs.getInt("pid"), rs.getInt("subpid"), rs.getInt("type"), rs.getInt("priority"), rs.getTimestamp("created"), rs.getTimestamp("started"), rs.getTimestamp("archived"), rs.getString("description"), rs.getString("url"), rs.getInt("status"), rs.getInt("notify"));
         wle.profilename = rs.getString("profilename");
         if (rs.getInt("read_flag") == 1) {
           wle.setRead();
@@ -2412,7 +2412,7 @@ public class ProcessManagerBean implements ProcessManager {
           resultSet = prepStatement.executeQuery();
 
           while(resultSet.next()) {
-              Activity activity = new Activity(resultSet.getString("userid"), resultSet.getInt("flowid"),
+              Activity activity = new Activity(resultSet.getString("userid"), resultSet.getString("previoususerid"), resultSet.getInt("flowid"),
                       resultSet.getInt("pid"), resultSet.getInt("subpid"), resultSet.getInt("type"),
                       resultSet.getInt("priority"), resultSet.getTimestamp("created"), resultSet.getTimestamp("started"), 
                       resultSet.getTimestamp("archived"), resultSet.getString("description"), resultSet.getString("url"),
@@ -2515,7 +2515,7 @@ public class ProcessManagerBean implements ProcessManager {
       rs = st.executeQuery();
 
       while (rs.next()) {
-        Activity wle = new Activity(rs.getString("userid"), rs.getInt("flowid"), rs.getInt("pid"), rs.getInt("subpid"), 
+        Activity wle = new Activity(rs.getString("userid"), rs.getString("previoususerid"), rs.getInt("flowid"), rs.getInt("pid"), rs.getInt("subpid"), 
             rs.getInt("type"), rs.getInt("priority"), rs.getTimestamp("created"), rs.getTimestamp("started"), 
             rs.getTimestamp("archived"), rs.getString("description"), rs.getString("url"), rs.getInt("status"), rs.getInt("notify"));
         wle.profilename = rs.getString("profilename");
@@ -2562,7 +2562,7 @@ public class ProcessManagerBean implements ProcessManager {
       rs = st.executeQuery();
 
       while (rs.next()) {
-        Activity wle = new Activity(rs.getString("userid"), rs.getInt("flowid"), rs.getInt("pid"), rs.getInt("subpid"), 
+        Activity wle = new Activity(rs.getString("userid"), rs.getString("previoususerid"), rs.getInt("flowid"), rs.getInt("pid"), rs.getInt("subpid"), 
             rs.getTimestamp("created"), rs.getString("description"), rs.getString("url"));
         if (rs.getInt("read_flag") == 1) {
           wle.setRead();
@@ -2701,7 +2701,7 @@ public class ProcessManagerBean implements ProcessManager {
             continue;
           }
         }
-        Activity wle = new Activity(userid, flowid, rs.getInt("pid"), rs.getInt("subpid"), rs.getInt("type"), 
+        Activity wle = new Activity(userid, rs.getString("previoususerid"), flowid, rs.getInt("pid"), rs.getInt("subpid"), rs.getInt("type"), 
             rs.getInt("priority"), rs.getTimestamp("created"), rs.getTimestamp("started"), rs.getTimestamp("archived"), 
             rs.getString("description"), rs.getString("url"), rs.getInt("status"), rs.getInt("notify"));
         wle.profilename = rs.getString("profilename");
@@ -2750,7 +2750,7 @@ public class ProcessManagerBean implements ProcessManager {
               continue;
             }
           }
-          Activity wle = new Activity(userid, flowid, rs.getInt("pid"), rs.getInt("subpid"), rs.getTimestamp("created"),
+          Activity wle = new Activity(userid, rs.getString("previoususerid"), flowid, rs.getInt("pid"), rs.getInt("subpid"), rs.getTimestamp("created"),
               rs.getString("description"), rs.getString("url"));
           wle.profilename = rs.getString("profilename");
           wle.pnumber = rs.getString("pnumber");
@@ -2811,7 +2811,7 @@ public class ProcessManagerBean implements ProcessManager {
       rs = st.executeQuery(query.toString());
 
       while (rs.next()) {
-        Activity wle = new Activity(userid, rs.getInt("flowid"), rs.getInt("pid"), rs.getInt("subpid"), rs.getInt("type"), 
+        Activity wle = new Activity(userid, rs.getString("previoususerid"), rs.getInt("flowid"), rs.getInt("pid"), rs.getInt("subpid"), rs.getInt("type"), 
             rs.getInt("priority"), rs.getTimestamp("created"), rs.getTimestamp("started"), rs.getTimestamp("archived"), 
             rs.getString("description"), rs.getString("url"), 1, rs.getInt("notify"));
         wle.profilename = rs.getString("profilename");
@@ -2992,7 +2992,7 @@ public class ProcessManagerBean implements ProcessManager {
       rs = st.executeQuery(theQuery);
 
       while (rs.next()) {
-        Activity wle = new Activity(rs.getString("userid"), flowid, pid, subpid, rs.getInt("type"), rs.getInt("priority"), 
+        Activity wle = new Activity(rs.getString("userid"), rs.getString("previoususerid"), flowid, pid, subpid, rs.getInt("type"), rs.getInt("priority"), 
             rs.getTimestamp("created"), rs.getTimestamp("started"), rs.getTimestamp("archived"), rs.getString("description"),
             rs.getString("url"), 1, rs.getInt("notify"));
         wle.profilename = rs.getString("profilename");
@@ -3343,39 +3343,6 @@ public class ProcessManagerBean implements ProcessManager {
           // throw exception to avoid unexpected behaviour!
           throw new UnsupportedOperationException();
           
-//          // check if other procs exist in same state and same user
-//          final StringBuilder sbActivityCountQuery = new StringBuilder("select count(1) from activity where flowid=");
-//          sbActivityCountQuery.append(activity.flowid);
-//          if (aalGroupProcs.size() > 0) {
-//            sbActivityCountQuery.append(" and pid in (");
-//            for (int ii = 0; ii < aalGroupProcs.size(); ii++) {
-//              if (ii > 0) {
-//                sbActivityCountQuery.append(",");
-//              }
-//              sbActivityCountQuery.append((String) aalGroupProcs.get(ii));
-//            }
-//            sbActivityCountQuery.append(")");
-//          }
-//          sbActivityCountQuery.append(" and pid<>").append(activity.pid);
-//          sbActivityCountQuery.append(" and description='").append(escapeSQL(activity.description)).append("'");
-//
-//          Logger.debug(userid, this, "updateActivity", "Query(GROUP)=" + sbActivityCountQuery);
-//
-//          ntmp = -1;
-//          rs = st.executeQuery(sbActivityCountQuery.toString());
-//          if (rs.next()) {
-//            ntmp = rs.getInt(1);
-//          }
-//          rs.close();
-//          rs = null;
-//
-//          Logger.debug(userid, this, "updateActivity", "Query(GROUP) COUNT=" + ntmp);
-//
-//          if (ntmp > 0) {
-//            // found at least one activity for group with same
-//            // description.. abort this activity
-//            bUpdate = false;
-//          }
         }
 
         if (bUpdate) {
@@ -3441,7 +3408,7 @@ public class ProcessManagerBean implements ProcessManager {
         if (bUpdate && activity.notify && alNotify != null && alNotify.size() > 0) {
           HashMap<String,String> cache = new HashMap<String, String>();
           for (String user : alNotify) {
-            Activity a = new Activity(user, activity.flowid, activity.pid, activity.subpid, activity.type, activity.priority,
+            Activity a = new Activity(user, user, activity.flowid, activity.pid, activity.subpid, activity.type, activity.priority,
                 activity.description, activity.url, 1);
             String pnum = getActivityPNumber(userInfo, cache, a);
             this.notifyUserActivity(userInfo, a, pnum);
@@ -3649,7 +3616,7 @@ public class ProcessManagerBean implements ProcessManager {
           rs.close();
           rs = null;
 
-          activity = new Activity((String) alUsers.get(i), flowid, pid, subpid, 0, 0, asDescription, 
+          activity = new Activity((String) alUsers.get(i), "", flowid, pid, subpid, 0, 0, asDescription, 
             "Forward/forward.jsp?flowid=" + flowid + "&pid=" + pid + "&subpid=" + subpid);
           activity.profilename = sProfileName;
           activity.mid = mid;
@@ -3901,7 +3868,7 @@ public class ProcessManagerBean implements ProcessManager {
             + " and mid=" + actMid + " and undoflag=0");
         
         while(rs.next()) {
-          Activity a = new Activity(rs.getString("userid"), flowid, pid, subpid, rs.getInt("type"), 
+          Activity a = new Activity(rs.getString("userid"), rs.getString("previoususerid"), flowid, pid, subpid, rs.getInt("type"), 
               rs.getInt("priority"), rs.getTimestamp("created"), rs.getTimestamp("started"), null, 
               desc,defUrl, rs.getInt("status"), rs.getInt("notify"));
           a.profilename = rs.getString("profilename");
@@ -3933,7 +3900,7 @@ public class ProcessManagerBean implements ProcessManager {
       rs = st.executeQuery("select * from activity where flowid=" + flowid 
           + " and pid=" + pid + " and subpid=" + subpid);
       if (!rs.next()) {
-        Activity a = new Activity(modUser, flowid, pid, subpid, 0, 0, desc, defUrl);
+        Activity a = new Activity(modUser, modUser, flowid, pid, subpid, 0, 0, desc, defUrl);
         a.setUnread();
         a.mid = targetMid;
         a.profilename = modUser;
@@ -5180,7 +5147,7 @@ public class ProcessManagerBean implements ProcessManager {
 
   private void historifyActivities(UserInfoInterface userInfo, Connection db, ProcessHeader procHeader, String userid) 
   throws Exception {
-    Activity target = new Activity(userid, procHeader.getFlowId(), procHeader.getPid(), procHeader.getSubPid(), null, null, null);
+    Activity target = new Activity(userid, userid, procHeader.getFlowId(), procHeader.getPid(), procHeader.getSubPid(), null, null, null);
     String[] activityUsers = this.getActivityOwners(userInfo, target);
     historifyActivities(userInfo, db, procHeader, userid, activityUsers);
   }  
@@ -5488,7 +5455,8 @@ public class ProcessManagerBean implements ProcessManager {
         acts = new ArrayList<Activity>();
         while (rs.next()) {
           Activity a = new Activity(
-              rs.getString("userid"), 
+              rs.getString("userid"),
+              rs.getString("previoususerid"), 
               rs.getInt("flowid"), 
               rs.getInt("pid"), 
               rs.getInt("subpid"), 
@@ -5619,10 +5587,10 @@ public class ProcessManagerBean implements ProcessManager {
 	      db.setAutoCommit(true);
 	
 	      final StringBuilder sQuery = new StringBuilder(
-              "select a.flowid , a.pid, a.mid, a.subpid, a.type, a.priority, a.created, a.started, a.archived, a.description, a.url, a.status, a.notify, a.profilename, a.read_flag, a.delegated, p.pnumber, PAI.icon, a.folderid from activity a,process p LEFT JOIN process_annotation_icon PAI ON (p.flowid=PAI.flowid AND p.pid=PAI.pid AND p.subpid=PAI.subpid) where p.flowid=a.flowid and p.pid=a.pid and p.subpid=a.subpid and status=0 and userid='"+userid+"' ");
+              "select a.flowid, a.previoususerid, a.pid, a.mid, a.subpid, a.type, a.priority, a.created, a.started, a.archived, a.description, a.url, a.status, a.notify, a.profilename, a.read_flag, a.delegated, p.pnumber, PAI.icon, a.folderid from activity a,process p LEFT JOIN process_annotation_icon PAI ON (p.flowid=PAI.flowid AND p.pid=PAI.pid AND p.subpid=PAI.subpid) where p.flowid=a.flowid and p.pid=a.pid and p.subpid=a.subpid and status=0 and userid='"+userid+"' ");
 
           final StringBuilder sQueryDelegated = new StringBuilder(
-              "select a.flowid , a.pid, a.mid, a.subpid, a.type, a.priority, a.created, a.started, a.archived, a.description, a.url, a.status, a.notify, a.profilename, a.read_flag, 1 as delegated, p.pnumber, PAI.icon, -1 as folderid from activity_delegated a,process p LEFT JOIN process_annotation_icon PAI ON (p.flowid=PAI.flowid AND p.pid=PAI.pid AND p.subpid=PAI.subpid) where p.flowid=a.flowid and p.pid=a.pid and p.subpid=a.subpid and status=0 and userid='"+userid+"' ");
+              "select a.flowid, a.previoususerid, a.pid, a.mid, a.subpid, a.type, a.priority, a.created, a.started, a.archived, a.description, a.url, a.status, a.notify, a.profilename, a.read_flag, 1 as delegated, p.pnumber, PAI.icon, -1 as folderid from activity_delegated a,process p LEFT JOIN process_annotation_icon PAI ON (p.flowid=PAI.flowid AND p.pid=PAI.pid AND p.subpid=PAI.subpid) where p.flowid=a.flowid and p.pid=a.pid and p.subpid=a.subpid and status=0 and userid='"+userid+"' ");
               
          
 
@@ -5634,7 +5602,7 @@ public class ProcessManagerBean implements ProcessManager {
 
 	      while (rs.next()) {
 	    	  
-	        Activity wle = new Activity(userid, rs.getInt("flowid"), rs.getInt("pid"), rs.getInt("subpid"), rs.getInt("type"), 
+	        Activity wle = new Activity(userid, rs.getString("previoususerid"), rs.getInt("flowid"), rs.getInt("pid"), rs.getInt("subpid"), rs.getInt("type"), 
 	            rs.getInt("priority"), rs.getTimestamp("created"), rs.getTimestamp("started"), rs.getTimestamp("archived"), 
 	            rs.getString("description"), rs.getString("url"), rs.getInt("status"), rs.getInt("notify"));
 	        wle.profilename = rs.getString("profilename");
@@ -5857,7 +5825,7 @@ public class ProcessManagerBean implements ProcessManager {
 	              continue;
 	            }
 	          }
-		        Activity wle = new Activity(userid, rs.getInt("flowid"), rs.getInt("pid"), rs.getInt("subpid"), rs.getInt("type"), 
+		        Activity wle = new Activity(userid, rs.getString("previoususerid"), rs.getInt("flowid"), rs.getInt("pid"), rs.getInt("subpid"), rs.getInt("type"), 
 			            rs.getInt("priority"), rs.getTimestamp("created"), rs.getTimestamp("started"), rs.getTimestamp("archived"), 
 			            rs.getString("description"), rs.getString("url"), rs.getInt("status"), rs.getInt("notify"));
 			        wle.profilename = rs.getString("profilename");
@@ -5939,7 +5907,7 @@ public class ProcessManagerBean implements ProcessManager {
 	      while (rs.next()) {
 	        int flowid = rs.getInt("flowid");
 
-	        Activity wle = new Activity(userid, flowid, rs.getInt("pid"), rs.getInt("subpid"), rs.getInt("type"),
+	        Activity wle = new Activity(userid, rs.getString("previoususerid"), flowid, rs.getInt("pid"), rs.getInt("subpid"), rs.getInt("type"),
 	            rs.getInt("priority"), rs.getTimestamp("created"), rs.getTimestamp("started"), rs.getTimestamp("archived"), rs
 	                .getString("description"), rs.getString("url"), rs.getInt("status"), rs.getInt("notify"));
 	        wle.profilename = rs.getString("profilename");

@@ -93,7 +93,7 @@ public class BlockWebForm extends Block implements FormOperations {
 
     ProcessManager pm = BeanFactory.getProcessManagerBean();
     try {
-      Activity activity = new Activity(login,flowid,pid,subpid,0,0,description,url,1);
+      Activity activity = new Activity(login,login,flowid,pid,subpid,0,0,description,url,1);
       activity.mid = procData.getMid();
       activity.setRead();
       pm.updateActivity(userInfo,activity);

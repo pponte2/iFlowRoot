@@ -90,7 +90,7 @@ String popupReturnBlockId = null;
 	    try {
 	      // Get the ProcessManager EJB
 
-	      activity = new Activity(login, flowid, pid, subpid, 0, 0, description, Block.getDefaultUrl(userInfo, procData), 1);
+	      activity = new Activity(login, login, flowid, pid, subpid, 0, 0, description, Block.getDefaultUrl(userInfo, procData), 1);
 	      activity.setRead();
 	      activity.mid = procData.getMid();
 	      pm.updateActivity(userInfo, activity);
@@ -296,6 +296,8 @@ String popupReturnBlockId = null;
     }
 %>
 <%
+//TODO: Neste momento no newflow não há anotações
+//Corrigir logo que possível
 if (pid > 0) {
 %>
 <script language="JavaScript" type="text/javascript">

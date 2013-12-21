@@ -218,7 +218,7 @@ public class FlowBean implements Flow {
           // process creation and dataset in db => force creator
           // activity creation
 
-          activity = new Activity(login, flowId, pid, procData.getSubPid(), 0, 0, block.getDescription(userInfo, procData), Block
+          activity = new Activity(login, login, flowId, pid, procData.getSubPid(), 0, 0, block.getDescription(userInfo, procData), Block
               .getDefaultUrl(userInfo, procData));
           activity.mid = procData.getMid();
 
@@ -366,7 +366,7 @@ public class FlowBean implements Flow {
             mid = procData.getMid();
 
             if (!userInfo.isGuest()) {
-              activity = new Activity(login, flowId, pid, procData.getSubPid(), 0, 0, block.getDescription(userInfo, procData),
+              activity = new Activity(login, login, flowId, pid, procData.getSubPid(), 0, 0, block.getDescription(userInfo, procData),
                   Block.getDefaultUrl(userInfo, procData));
               activity.mid = procData.getMid();
 
@@ -682,7 +682,7 @@ public class FlowBean implements Flow {
       }
 
       if (!userInfo.isGuest()) {
-        Activity activity = new Activity(login, procData.getFlowId(), pid, procData.getSubPid(), 0, 0, block.getDescription(
+        Activity activity = new Activity(login, login, procData.getFlowId(), pid, procData.getSubPid(), 0, 0, block.getDescription(
             userInfo, procData), Block.getDefaultUrl(userInfo, procData));
         activity.mid = procData.getMid();
 
@@ -807,7 +807,7 @@ public class FlowBean implements Flow {
                   + ", desc=" + block.getDescription(userInfo, procData) + ", url=" + Block.getDefaultUrl(userInfo, procData));
             }
 
-            activity = new Activity(login, flowId, pid, subpid, 0, 0, block.getDescription(userInfo, procData), Block
+            activity = new Activity(login, login, flowId, pid, subpid, 0, 0, block.getDescription(userInfo, procData), Block
                 .getDefaultUrl(userInfo, procData));
             activity.mid = procData.getMid();
 
@@ -2241,7 +2241,7 @@ public class FlowBean implements Flow {
                       // description)
                       // (everything should be ok, but is
                       // better to ensure)
-                      Activity activity = new Activity(login, anFlowId, pid, subpid, 0, 0, block.getDescription(userInfo, pdProc),
+                      Activity activity = new Activity(login, login, anFlowId, pid, subpid, 0, 0, block.getDescription(userInfo, pdProc),
                           Block.getDefaultUrl(userInfo, pdProc), 1);
                       activity.mid = mid;
                       pm.updateActivity(userInfo, activity);
@@ -2579,7 +2579,7 @@ public class FlowBean implements Flow {
                       // description)
                       // (everything should be ok, but is
                       // better to ensure)
-                      Activity activity = new Activity(login, anFlowId, pid, subpid, 0, 0, block.getDescription(userInfo, pdProc),
+                      Activity activity = new Activity(login, login, anFlowId, pid, subpid, 0, 0, block.getDescription(userInfo, pdProc),
                           Block.getDefaultUrl(userInfo, pdProc), 1);
                       activity.mid = mid;
                       pm.updateActivity(userInfo, activity);

@@ -146,7 +146,7 @@ public class BlockVFSRunFile extends Block {
 
     String url = Block.getDefaultUrl(newUserInfo, newProcData);
 
-    Activity activity = new Activity(newUserInfo.getUtilizador(), Integer.parseInt(callback), newPid, newSubPid, 0, 0, block
+    Activity activity = new Activity(newUserInfo.getUtilizador(), newUserInfo.getUtilizador(), Integer.parseInt(callback), newPid, newSubPid, 0, 0, block
         .getDescription(newUserInfo, newProcData), url);
     activity.mid = newProcData.getMid();
     pm.updateActivity(newUserInfo, activity);

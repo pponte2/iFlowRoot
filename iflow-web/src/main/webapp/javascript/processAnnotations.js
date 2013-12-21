@@ -108,7 +108,9 @@ function showAnnotationsCallBack(htmltext) {
       obj.innerHTML = htmltext;
     }
   }
-  initialDeadline = document.getElementById('deadline').value;
+  var d = document.getElementById('deadline');
+  if (d != null)
+    initialDeadline = d.value;
 }
 
 function showEndOfProcessAnnotationsCallBack(htmltext) {

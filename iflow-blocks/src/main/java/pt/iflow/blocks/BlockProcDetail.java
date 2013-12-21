@@ -65,7 +65,7 @@ public class BlockProcDetail extends BlockFormulario {
     Activity activity = null;
 
     try {
-      activity = new Activity(login,flowid,pid,subpid,0,0,description,Block.getDefaultUrl(userInfo, procData),1);
+      activity = new Activity(login,login,flowid,pid,subpid,0,0,description,Block.getDefaultUrl(userInfo, procData),1);
       activity.mid = procData.getMid();
       activity.setRead();
       pm.updateActivity(userInfo,activity);

@@ -529,7 +529,8 @@ public class BlockOpenProc extends Block implements OpenProc {
 
                               String url = Block.getDefaultUrl(newUserInfo, newProcData);
 
-                              Activity activity = new Activity(newUserInfo.getUtilizador(), 
+                              Activity activity = new Activity(newUserInfo.getUtilizador(),
+                                  newUserInfo.getUtilizador(),
                                   nFid,
                                   newPid,
                                   newSubPid,
@@ -549,7 +550,8 @@ public class BlockOpenProc extends Block implements OpenProc {
 
                                   if (u.equals(sCreator)) continue;
 
-                                  activity = new Activity(u, 
+                                  activity = new Activity(u,
+                                      u,
                                       nFid,
                                       newPid,
                                       newSubPid,

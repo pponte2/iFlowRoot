@@ -280,7 +280,7 @@ public class IFlowRemote {
       try {
         // Get the ProcessManager EJB
 
-        activity = new Activity(user, flowid, pid, subpid, 0, 0, description, Block.getDefaultUrl(userInfo, procData), 1);
+        activity = new Activity(user, user, flowid, pid, subpid, 0, 0, description, Block.getDefaultUrl(userInfo, procData), 1);
         activity.setRead();
         activity.mid = procData.getMid();
         pm.updateActivity(userInfo, activity);

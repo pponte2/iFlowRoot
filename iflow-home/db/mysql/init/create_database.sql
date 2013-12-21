@@ -283,6 +283,7 @@ ENGINE = INNODB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `activity` (
   `userid` VARCHAR(100)  NOT NULL,
+  `previoususerid` VARCHAR(100),
   `flowid` INT NOT NULL,
   `pid` INT NOT NULL,
   `subpid` INT NOT NULL DEFAULT 1,
@@ -351,6 +352,7 @@ ENGINE = INNODB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `activity_history` (
   `userid` VARCHAR(100)  NULL,
+  `previoususerid` VARCHAR(100),
   `flowid` INT NOT NULL,
   `pid` INT NOT NULL,
   `subpid` INT NULL DEFAULT 1,
@@ -954,6 +956,7 @@ ENGINE = INNODB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `activity_archive` (
   `userid` VARCHAR(100)  NULL,
+  `previoususerid` VARCHAR(100),
   `flowid` INT NOT NULL,
   `pid` INT NOT NULL,
   `subpid` INT NULL DEFAULT 1,
@@ -1099,10 +1102,10 @@ SET NEW.`eid` = sequence('email');
 -- @field pid identificador numerico do processo
 -- @field ownerid identificador alfanumerico do utilizador a quem a actividade pertence
 -- @field flowid identificador numerico do fluxo
-create view activity_delegated
-    (hierarchyid, userid, pid, subpid, ownerid, flowid, created, type, started, archived, 
+CREATE VIEW activity_delegated
+    (hierarchyid, userid, previoususerid, pid, subpid, ownerid, flowid, created, type, started, archived, 
     status, notify, priority, description, url,profilename, requested, responded, read_flag,mid) as
-    select H.hierarchyid, H.userid, A.pid, A.subpid, A.userid as ownerid, A.flowid, A.created, 
+    select H.hierarchyid, H.userid, A.previoususerid, A.pid, A.subpid, A.userid as ownerid, A.flowid, A.created, 
     A.type, A.started, A.archived, A.status, A.notify, A.priority, A.description, A.url, A.profilename,
     H.requested, H.responded, A.read_flag, A.mid
     from activity A, activity_hierarchy H
@@ -1906,3 +1909,17 @@ CREATE TABLE `serial_code_templates` (
 );
 
 ALTER TABLE `iflow`.`reporting` ADD INDEX `IDX_REPORTING`(`flowid`, `pid`, `subpid`);
+
+DELIMITER //
+CREATE TRIGGER trigger_activity_previoususer
+BEFORE INSERT ON `activity` FOR EACH ROW
+BEGIN
+DECLARE previoususerid varchar(100);
+SELECT currentuser into previoususerid from process WHERE flowid=NEW.flowid and pid = NEW.pid;
+if (previoususerid = NEW.userid) then
+    SET NEW.previoususerid = '';
+else
+    SET NEW.previoususerid = previoususerid;
+end if;
+END;
+//

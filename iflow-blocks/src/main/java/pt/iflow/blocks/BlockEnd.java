@@ -74,7 +74,7 @@ public class BlockEnd extends Block implements MessageBlock {
 
             try {
               // update activities
-              Activity activity = new Activity(login, 
+              Activity activity = new Activity(login,login, 
                   procData.getFlowId(), procData.getPid(), procData.getSubPid(), 
                   0, 0, this.getDescription(userInfo, procData), url, 1);
               activity.setRead();

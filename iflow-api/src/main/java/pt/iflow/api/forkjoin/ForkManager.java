@@ -79,6 +79,7 @@ public class ForkManager extends Thread {
 
           // build an activity in that block
           Activity a = new Activity(userid, 
+              userid,
               this._procData.getFlowId(),
               this._procData.getPid(),
               this._procData.getSubPid(),
