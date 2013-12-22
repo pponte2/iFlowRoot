@@ -12,7 +12,7 @@
 		<link rel="stylesheet" type="text/css" href="javascript/yahoo/container/assets/skins/sam/container.css" />
 		<link rel="stylesheet" type="text/css" href="javascript/yahoo/button/assets/skins/sam/button.css" />
 		<link rel="stylesheet" href="Themes/${orgTheme}/css/tips.css" type="text/css" />
-		<!-- link rel="stylesheet" href="Themes/${orgTheme}/css/iflow_main.css" type="text/css" / -->
+		<link rel="stylesheet" href="Themes/${orgTheme}/css/iflow_main.css" type="text/css" />
 		<link rel="stylesheet" href="Themes/${orgTheme}/css/tutorial.css" type="text/css" />
 		<link rel="stylesheet" href="Themes/${orgTheme}/css/tree.css" type="text/css" />
 		<link rel="stylesheet" type="text/css" href="javascript/yahoo/assets/skins/sam/skin.css" />
@@ -125,6 +125,7 @@
 				getJSP(taskLabelsJSP, idDivLabels);
 				getJSP(mainContentJSP);
 				getJSP(mainContentJSP + '?data=procs', 'container_flow_list');
+				getJSP(adminNavJSPNew, 'container_admin');
 				jscolor.bind();
 				init("Themes/${orgTheme}/css/iflow_std.css");
 				mainResize();
@@ -189,6 +190,9 @@
 				}
 			}
 			
+			function tabber_right(tabnr, contentpage, contentparam) {
+				getJSP(contentpage + '?' +contentparam);
+			}
 		</script>
 
 		</head>
@@ -432,148 +436,26 @@
 							</ul>
 						</div>
 					</div>
+
+					#if($org_admin == "yes")
 					<h3 class="Acor_01">
-						<a href="javascript:getJSP('Admin/flow_settings.jsp')">
+						<a href="">
 						<img src="images/admin.png" width="24" height="24" alt="" /> Admin</a>
 					</h3>
 					<div class="Acor_02" style=" margin: 0 ; padding:20px 0 0 0 ;">
-						<div id="container_XXX">
-							<ul class="menu">
-								<li>
-									<a href="#">Utilizadores</a>
-									<ul>
-										<li>
-											<a href="#">Utilizadores</a>
-										</li>
-										<li>
-											<a href="#">Perfis</a>
-										</li>
-										<li>
-											<a href="#">Unidades Orgânicas</a>
-										</li>
-									</ul>
-								</li>
-								<li>
-									<a href="#">Fluxos</a>
-									<ul>
-										<li>
-											<a href="#">Criar / Editar</a>
-										</li>
-										<li>
-											<a href="#">Fluxos</a>
-										</li>
-										<li>
-											<a href="#">Menus</a>
-										</li>
-										<li>
-											<a href="#">Séries</a>
-										</li>
-										<li>
-											<a href="#">Agendamentos</a>
-										</li>
-									</ul>
-								</li>
-								<li>
-									<a href="#">Processos</a>
-									<ul>
-										<li>
-											<a href="#">Anular</a>
-										</li>
-										<li>
-											<a href="#">Estado</a>
-										</li>
-										<li>
-											<a href="#">Histórico Processo</a>
-										</li>
-										<li>
-											<a href="#">Cancelar Processo</a>
-										</li>
-										<li>
-											<a href="#">Ocultar Processo</a>
-										</li>
-										<li>
-											<a href="#">Gestão de Tarefas</a>
-										</li>
-									</ul>
-								</li>
-								<li>
-									<a href="#">Recusros</a>
-									<ul>
-										<li>
-											<a href="#">Style Sheets</a>
-										</li>
-										<li>
-											<a href="#">Templates Impressão</a>
-										</li>
-										<li>
-											<a href="#">Templates E-mail</a>
-										</li>
-										<li>
-											<a href="#">Ficheiros Publicos</a>
-										</li>
-									</ul>
-								</li>
-								<li>
-									<a href="#">Organização</a>
-									<ul>
-										<li>
-											<a href="#">Propriedades</a>
-										</li>
-										<li>
-											<a href="#">Licenciamento</a>
-										</li>
-										<li>
-											<a href="#">Interfaces</a>
-										</li>
-										<li>
-											<a href="#">Perfis</a>
-										</li>
-									</ul>
-								</li>
-							</ul>
+						<div id="container_admin">
+						
+
+						
 						</div>
 					</div>
+					#end
+					
 				</div>
 				<div class="iflw-4" style="position:relative;bottom:0px;">By IflowBPM</div>
 				
 			</div>
-
-			<!-- 
-					#if($sys_admin == "yes")
-							#if("$Tab1" != "no")
-						<div id="button1_span" class="tab_button_span">
-							<input type="button" id="button1" value="$field_dashboard" class="tab_button"
-								onClick="this.blur();tabber_load(1, mainContentJSP);" title="$tooltip_dashboard" />
-						</div>
-							#end	
-							#if("$Tab8" != "no")
-						<div id="button8_span" class="tab_button_span">
-							<input type="button" id="button8" value="$field_myprocesses" class="tab_button" onClick="this.blur();tabber_load(8,userProcsFiltroJSP)" title="$tooltip_myprocesses" />
-						</div>
-							#end
-							#if("$Tab5" != "no")	
-						<div id="button5_span" class="tab_button_span">
-							<input type="button" id="button5" value="$field_delegations" class="tab_button" onClick="this.blur();tabber_load(5,gestaoTarefasNavJSP)" title="$tooltip_delegations" />
-						</div>
-							#end
-							#if($org_admin == "yes")
-						<div id="button10_span" class="tab_button_span">
-							<input type="button" id="button10" value="$field_reports" class="tab_button" onClick="this.blur();tabber_load(10,reportsNavJSP)" title="$tooltip_reports" />
-						</div>
-						<div id="button4_span" class="tab_button_span">
-							<input type="button" id="button4" value="$field_admin" class="tab_button" onClick="this.blur();tabber_load(4,adminNavJSP)" title="$tooltip_orgadmin" />
-						</div>
-							#else
-								#if($supervisor == "yes")
-						<div id="button10_span" class="tab_button_span">
-							<input type="button" id="button10" value="$field_reports" class="tab_button" onClick="this.blur();tabber_load(10,reportsNavJSP)" title="$tooltip_reports" />
-						</div>
-								#end
-							#end
-						#end
-			 -->
-
-			 
+	 
 			<div id="div_main" class="main" style="margin-left: 220px;"></div>
 
 			<div class="yui-skin-sam">

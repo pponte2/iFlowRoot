@@ -66,7 +66,7 @@
 				<link href="{$url_prefix}/javascript/jQueryAssets/jquery.ui.theme.min.css" rel="stylesheet" type="text/css" />
 				<link href="{$url_prefix}/javascript/jQueryAssets/jquery.ui.accordion.min.css" rel="stylesheet" type="text/css" />
 
-				
+				<link href="{$url_prefix}/javascript/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>
 				<link href="{$url_prefix}/javascript/bootstrap/css/bootstrap-combobox.css" rel="stylesheet" type="text/css" />
 				
 				
@@ -143,11 +143,24 @@
 					<!-- $jQuery(document).ready();-->
 					
 				</script>
-
 				<xsl:text disable-output-escaping="yes"></xsl:text>
 
 			</head>
-			<body onload="initProcFrame();">
+			<body onload="initProcFrame();" style="background:none;">
+			
+<style type="text/css">
+			/* jcosta 2013-12-21 */
+.page-header {
+padding-bottom: 5px;
+margin: 20px 0 20px;
+border-bottom: 1px solid #ddd;
+background-color: #eee;	
+}
+
+.subheader {
+background-color: #eee;	
+}
+</style>
 			
 				<div style="margin:auto;">
 					<xsl:apply-templates select="form" />
@@ -171,7 +184,7 @@
 	</xsl:template>
 
 	<xsl:template match="form">
-		<form method="post" enctype="multipart/form-data">
+		<form method="post" enctype="multipart/form-data" role="form">
 			<xsl:attribute name="name">
 	        	<xsl:value-of select="name/text()" />
 	      	</xsl:attribute>
@@ -236,7 +249,7 @@
 			              	<xsl:value-of select="$colWidth" />
 			              	<xsl:text>%; float: left;</xsl:text>
 			            </xsl:attribute>
-						<ol>
+						<div class="ol">
 							<xsl:attribute name="class">
 								<xsl:choose>
 								  	<xsl:when test="position() = '1'">
@@ -248,7 +261,7 @@
 				                </xsl:choose>
 							</xsl:attribute>
 							<xsl:apply-templates select="field" /><!-- then the others -->
-						</ol>
+						</div>
 					</div>
 				</xsl:when>
 				<xsl:otherwise>
@@ -260,14 +273,14 @@
 					                	<xsl:text>innertab</xsl:text>
 					                </xsl:attribute>
 								</xsl:if>
-								<ol class="fieldlist">
+								<div class="fieldlist">
 									<xsl:if test="name(../..) = 'tab'">
 										<xsl:attribute name="class">
 					                      	<xsl:text>innertab</xsl:text>
 					                   	</xsl:attribute>
 									</xsl:if>
 									<xsl:apply-templates select="field" /><!-- then the others -->
-								</ol>
+								</div>
 							</xsl:when>
 							<xsl:otherwise>
 								<xsl:apply-templates select="tabdivision" /><!-- then the others -->
@@ -359,11 +372,10 @@
 		<xsl:variable name="type" select="type" />
 		<xsl:choose>
 			<xsl:when test="type = 'textmessage' or type = 'textlabel' or type = 'textbox' or type = 'textlabel' or type = 'password' or type = 'datecal' or type = 'textarea' or type = 'rich_textarea' or type = 'button' or type = 'popup_field'">
-				<div id="{generate-id()}" class="fieldDiv">
-				<li>
+				<div id="{generate-id()}" class="fieldDiv form-group">
 					<xsl:attribute name="class">
 						<xsl:value-of select="type" />
-						<xsl:text> </xsl:text>
+						<xsl:text> form-group</xsl:text>
 						<xsl:if test="name(../../..) = 'tab'">
 							<xsl:text> innertab</xsl:text>
 						</xsl:if>
@@ -387,18 +399,25 @@
 				              	<xsl:text>;</xsl:text>
 				            </xsl:attribute>
 						</xsl:if>
-						<xsl:if test="string-length(cssclass) &gt; 0">
-							<xsl:attribute name="class">
-				              	<xsl:apply-templates select="cssclass" />
-				            </xsl:attribute>
-						</xsl:if>
+						<xsl:choose>
+							<xsl:when test="string-length(cssclass) &gt; 0">
+								<xsl:attribute name="class">
+									<xsl:apply-templates select="cssclass" />
+								</xsl:attribute>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:attribute name="class">
+									<xsl:text> alert alert-info </xsl:text>
+								</xsl:attribute>
+							</xsl:otherwise>
+						</xsl:choose>
 						<xsl:apply-templates select="text" />
 					</xsl:if>
 					<xsl:if test="type = 'textlabel'">
 						<label>
 							<xsl:attribute name="class">
 								<xsl:value-of select="type" />
-								<xsl:text> field</xsl:text>
+								<xsl:text> field col-sm-2 control-label</xsl:text>
 								<xsl:if test="$multicol &gt; 1">
 									<xsl:text> multicol</xsl:text>
 								</xsl:if>
@@ -420,7 +439,7 @@
 						<label>
 							<xsl:attribute name="class">
 								<xsl:value-of select="type" />
-								<xsl:text> field</xsl:text>
+								<xsl:text> field col-sm-2 control-label</xsl:text>
 								<xsl:if test="$multicol &gt; 1">
 									<xsl:text> multicol</xsl:text>
 								</xsl:if>
@@ -443,11 +462,17 @@
 							<xsl:otherwise>
 								<input type="text">
 									<xsl:attribute name="class">
-										<xsl:text>txt</xsl:text>
+										<xsl:text> form-control</xsl:text>
 										<xsl:if test="disabled='true'">
 											<xsl:text> readonly</xsl:text>			
 										</xsl:if>
 									</xsl:attribute>
+									<xsl:attribute name="placeholder">
+						              	
+						            </xsl:attribute>
+									<xsl:attribute name="style">
+						              	<xsl:text>max-width:</xsl:text><xsl:value-of select="size/text()*8" />
+						            </xsl:attribute>
 									<xsl:attribute name="id">
 						              	<xsl:value-of select="variable/text()" />
 						            </xsl:attribute>
@@ -633,7 +658,7 @@
 						<label>
 							<xsl:attribute name="class">
 								<xsl:value-of select="type" />
-								<xsl:text> field</xsl:text>
+								<xsl:text> field col-sm-2 control-label</xsl:text>
 								<xsl:if test="$multicol &gt; 1">
 									<xsl:text> multicol</xsl:text>
 								</xsl:if>
@@ -756,15 +781,14 @@
 						</xsl:if>
 						<xsl:apply-templates select="suffix" />
 					</xsl:if>
-				</li>
-				</div>
+				</div>				
 			</xsl:when>
 			<xsl:otherwise>
 				<div id="{generate-id()}" class="fieldDiv">
-				<li>
+				<div>
 					<xsl:attribute name="class">
-						<xsl:value-of select="type" />
-						<xsl:text> </xsl:text>
+						<!--xsl:value-of select="type" /-->
+						<xsl:text> form-group </xsl:text>
 						<xsl:if test="name(../../..) = 'tab'">
 							<xsl:text> innertab</xsl:text>
 						</xsl:if>
@@ -779,16 +803,18 @@
 					</xsl:attribute>
 					
 					<xsl:if test="type = 'header'">
-									
+								
 						<label>
 							<xsl:attribute name="class">
-								<xsl:value-of select="type" />
-								<xsl:text> field</xsl:text>
+								<!--xsl:value-of select="type" /-->
+								<xsl:text> col-sm-12 page-header</xsl:text>
 								<xsl:if test="$multicol &gt; 1">
 									<xsl:text> multicol</xsl:text>
 								</xsl:if>
 							</xsl:attribute>
+							<h3>
 							<xsl:apply-templates select="text" />
+							</h3>
 						</label>
 						
 					</xsl:if>
@@ -797,13 +823,14 @@
 					
 							<xsl:attribute name="class">
 								<xsl:value-of select="type" />
-								<xsl:text> field</xsl:text>
+								<xsl:text> col-sm-12</xsl:text>
 								<xsl:if test="$multicol &gt; 1">
 									<xsl:text> multicol</xsl:text>
 								</xsl:if>
 							</xsl:attribute>
+							<h4>
 							<xsl:apply-templates select="text" />
-					
+							</h4>
 					
 					</xsl:if>
 
@@ -1287,7 +1314,7 @@
 							</tr>
 						</table>
 					</xsl:if>
-					</li>
+					</div>
 					</div>
 			</xsl:otherwise>
 		</xsl:choose>
@@ -1295,7 +1322,7 @@
 
 	<xsl:template match="button">
 		<xsl:text>&nbsp;</xsl:text>
-		<button align="center" valign="center" class="button" type="submit">
+		<button align="center" valign="center" class="button btn btn-default navbar-btn" type="submit">
 			<xsl:attribute name="name">
       			<xsl:value-of select="name/text()" />
     		</xsl:attribute>

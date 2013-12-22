@@ -60,6 +60,7 @@
   var helpJSP="help.jsp";
   var reportsNavJSP="Reports/reports_nav.jsp";
   var reportsJSP="Reports/proc_perf.jsp";
+  var adminNavJSPNew = "Admin/admin_nav_new.jsp";
   
   var prev_item = new Array();
   GLOBAL_session_config.sel = new Array();
