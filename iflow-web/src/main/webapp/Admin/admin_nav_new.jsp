@@ -31,7 +31,7 @@
 <ul class="menu">
 <% if (canUserAdmin && userInfo.isOrgAdmin() && userInfo.isOrgAdminUsers()) { %>
 	<li>
-		<a href="javascript:return false;"><%=messages.getString("admin_nav.section.users.title")%></a>
+		<a href="#"><%=messages.getString("admin_nav.section.users.title")%></a>
 		<ul>
 			<li>
 				<a title="<%=messages.getString("admin_nav.section.users.tooltip.users")%>" href="javascript:getJSP('Admin/UserManagement/useradm.jsp');">
@@ -52,7 +52,7 @@
 	</li>
 <% } else if (canUserAdmin && userInfo.isSysAdmin()) { %>
 	<li>
-		<a href="javascript:return false;"><%=messages.getString("admin_nav.section.users.title")%></a>
+		<a href="#"><%=messages.getString("admin_nav.section.users.title")%></a>
 		<ul>
 			<li>
 				<a title="<%=messages.getString("admin_nav.section.users.tooltip.organizations")%>" href="'Admin/UserManagement/organizationadm.jsp');">
@@ -64,7 +64,7 @@
 <% } %>
 <% if (userInfo.isOrgAdmin() && userInfo.isOrgAdminFlows()) { %>
 	<li>
-		<a href="javascript:return false;"><%=messages.getString("admin_nav.section.flows.title")%></a>
+		<a href="#"><%=messages.getString("admin_nav.section.flows.title")%></a>
 		<ul>
 			<li>
 				<a title="<%=messages.getString("admin_nav.section.flows.tooltip.createAndEdit")%>" href="javascript:getJSP('Admin/flow_editor.jsp');">
@@ -100,7 +100,7 @@
   if (userInfo.isOrgAdmin() && userInfo.isOrgAdminProcesses()) {
 %>
 	<li>
-		<a href="javascript:return false;"><%=messages.getString("admin_nav.section.processes.title")%></a>
+		<a href="#"><%=messages.getString("admin_nav.section.processes.title")%></a>
 		<ul>
 			<li>
 				<a title="<%=messages.getString("admin_nav.section.processes.tooltip.undo")%>" href="javascript:getJSP('Admin/ProcManagement/proc_undo_select.jsp');">
@@ -132,7 +132,7 @@
 <% } %>
 <% if (userInfo.isOrgAdmin() && userInfo.isOrgAdminResources()) { %>
 	<li>
-		<a href="javascript:return false;"><%=messages.getString("admin_nav.section.resources.title")%></a>
+		<a href="#"><%=messages.getString("admin_nav.section.resources.title")%></a>
 		<ul>
 			<li>
 				<a title="<%=messages.getString("admin_nav.section.resources.tooltip.stylesheets")%>" href="javascript:getJSP('Admin/Resources/dolist.jsp');">
@@ -160,7 +160,7 @@
 
 <% if (userInfo.isOrgAdmin() && userInfo.isOrgAdminOrg()) { %>
 	<li>
-		<a href="javascript:return false;"><%=messages.getString("admin_nav.section.organization.title")%></a>
+		<a href="#"><%=messages.getString("admin_nav.section.organization.title")%></a>
 		<ul>
 			<li>
 				<a title="<%=messages.getString("admin_nav.section.system.tooltip.properties")%>" href="javascript:getJSP('Admin/Organization/organization.jsp');">

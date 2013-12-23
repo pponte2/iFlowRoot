@@ -255,7 +255,7 @@
 			</div>
 
 			#if($sys_admin == "no")
-
+	
 			<div class="sidebar1">
 				<div id="Accordion1">
 					#if("$Tab2" != "no")	
