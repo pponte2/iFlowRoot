@@ -41,6 +41,7 @@
   var divMain = 'div_main' 
   var taskLabelsJSP = "TaskLabels/task_labels.jsp";
   var idDivLabels = 'container_task_labels';
+  var idMain = 'container_admin'
   
   //tab links 
   var mainContentJSP="main_content.jsp";
@@ -1643,69 +1644,77 @@
     getJSP(thePage + params, ctrl);
   }
 
-  function ajaxFormRefresh(component){
-    var $jQuery = jQuery.noConflict();
-    $jQuery.ajaxSetup ({cache: false});
-    $jQuery(component).after('<img src=\'/iFlow//images/loading.gif\'>');
-    var varNewValue=component.value;
-    var varName=component.name;
-    var flowid = document.getElementById('flowid').value;
-    var pid = document.getElementById('pid').value;
-    var subpid = document.getElementById('subpid').value;
-    $jQuery.getJSON(  
-      '../AjaxFormServlet',
-      {varNewValue: varNewValue, varName: varName,
-        flowid: flowid, pid: pid, subpid:subpid}, 
-      function(response) {  
-        try{
-          var main = $jQuery('#main');
-          main.html(response);
-        } catch (err){
-        } finally {
-          reloadBootstrapElements();
-        }
-      });         
-  }    
+    function ajaxFormRefresh(component){
+    	var $jQuery = jQuery.noConflict();
+			$jQuery.ajaxSetup ({cache: false});
+			$jQuery(component).after('<img src=\'/iFlow//images/loading.gif\'>');
+		var varNewValue=component.value;
+			var varName=component.name;
+			var flowid = document.getElementById('flowid').value;
+			var pid = document.getElementById('pid').value;
+			var subpid = document.getElementById('subpid').value;
+       	$jQuery.getJSON(  
+            '../AjaxFormServlet',
+            {varNewValue: varNewValue, varName: varName,
+             flowid: flowid, pid: pid, subpid:subpid}, 
+            function(response){  
+            	try{
+            	var main = $jQuery('#main');
+            	main.html(response);
+            	} catch (err){}
+            	finally{
+            		reloadBootstrapElements();
+            	}
+            	
+            }
+    	);       	
+    }    
     
-  function reloadBootstrapElements(){
-    var $jQuery = jQuery.noConflict();
-      
-    //combobox
-    jQuery('.combobox').combobox();
-      
-    //accordion
-    $jQuery( ".PanelCollapse" ).accordion({
-      collapsible:true,
-      animate:{easing: "swing"}
-    }); 
+    function reloadBootstrapElements(){
+    	var $jQuery = jQuery.noConflict();
+    	
+    	
+    	//combobox
+    	try {
+			$jQuery('.combobox').combobox();
+		} catch (err) {}
+    	
+    	//accordion
+		try {
+		  $jQuery( ".PanelCollapse" ).accordion({
+    	    collapsible:true,
+    	    animate:{easing: "swing"}
+    	  }); 
+		} catch (err) {}
     
-    //Quickserch
-    var j = 0;
-    $jQuery('.sortable').each(
-      function(e) {
-        var tbId= "tb_"+j;
-        $jQuery(this).attr('id', tbId);
-        j++;
-        var currTb = "#"+tbId;
-        var inputId = "input_"+tbId;
-        var inputTot = '<input type="text" placeholder="Search" autofocus="" name="search" value="" id="'+inputId+'" />'
-        var qs = "table"+currTb+" tbody tr";
-        var inputCal = "input#"+inputId;
-        $jQuery(inputTot).insertBefore(currTb);
-        $jQuery(inputCal).quicksearch(qs);
-    
-      });
-      
-      //sortable
+    	  //Quickserch
+		try {
+    	  var j = 0;
+    	  $jQuery('.sortable').each(function(e){
+    	    var tbId= "tb_"+j;
+    	    $jQuery(this).attr('id', tbId);
+    	    j++;
+    	    var currTb = "#"+tbId;
+    	    var inputId = "input_"+tbId;
+    	    var inputTot = '<input type="text" placeholder="Pesquisar" autofocus="" name="search" value="" id="'+inputId+'" />'
+    	    var qs = "table"+currTb+" tbody tr";
+    	    var inputCal = "input#"+inputId;
+    	    $jQuery(inputTot).insertBefore(currTb);
+    	    $jQuery(inputCal).quicksearch(qs);    
+		  });
+		} catch (err) {}
+		
+    	
+    	//sortable
       forEach(document.getElementsByTagName('table'), function(table) {
         if (table.className.search(/\bsortable\b/) != -1) {
           sorttable.makeSortable(table);
         }
       });
-  }
+    	
+    }
 
   function reloadJS(){
-    //if (!finalCall) return;
     $(".draggable").draggable({revert: "invalid", opacity: 0.7, helper: "clone"});
     $(".droppable").droppable({
       hoverClass: "ui-state-active",
@@ -1713,12 +1722,14 @@
         getJSP('main_content.jsp?setfolder='+event.target.attributes['valToAssign'].value+'&activities='+ui.draggable.attr('valToAssign'));
       }
     });
-  
-    $(function() {
-      var menu_ul = $('.menu > li > ul'),
-             menu_a  = $('.menu > li > a');
-      menu_ul.hide();
-      menu_a.click(function(e) {
+
+	  try {
+      $(function() {
+        var menu_ul = $('.menu > li > ul'),
+            menu_a  = $('.menu > li > a');
+        menu_ul.hide();
+        menu_a.unbind('click');
+        menu_a.click(function(e) {
           e.preventDefault();
           if(!$(this).hasClass('active')) {
             menu_a.removeClass('active');
@@ -1728,9 +1739,31 @@
             $(this).removeClass('active');
             $(this).next().stop(true,true).slideUp('normal');
           }
-      });
+        });
   
-    });
+      });
+	  } catch (err) {}
+	
+    try {
+	    $( "#Accordion1" ).accordion({ // Accordion template1
+		    heightStyle:"content",
+	      active:0
+	    }); 
+	  } catch (err) {}
+
+	  try {
+	    $( "#Accordion2" ).accordion({ // Accordion template1
+		    heightStyle:"content",
+	      active:1
+	    });
+	  } catch (err) {}
+	
+	  try {
+	    $( "#Accordion3" ).accordion({ // Accordion template1
+		    heightStyle:"content",
+	      active:2
+	    }); 
+	  } catch (err) {}
   }
 
-  
+    

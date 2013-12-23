@@ -78,13 +78,13 @@
 		 	    <script type="text/javascript" src="{$url_prefix}/javascript/accordion.js"/>
 		 	    
 		 	    	 	     
-		 	    <!-- <script src="{$url_prefix}/javascript/bootstrap/bootstrap-combobox.js"></script>--> 
+		 	    <script src="{$url_prefix}/javascript/bootstrap/bootstrap-combobox.js"/> 
 		 	    
 		        <script type="text/javascript" src="{$url_prefix}/javascript/sorttable.js"/> 
 		        
 		 	    <script type="text/javascript" src="{$url_prefix}/javascript/quicksearch.js"/>
 		 	    
-		 	    <script type="text/javascript" src="{$url_prefix}/javascript/combobox.js"/>
+
 		 	            
 
 				<script src="{$url_prefix}/javascript/bootstrap/bootstrap.min.js"></script> 
@@ -130,6 +130,7 @@
 				<script type="text/javascript" src="{$url_prefix}/javascript/yahoo/button/button-min.js" /> 
 				<script type="text/javascript" src="{$url_prefix}/javascript/yahoo/editor/editor.js" /> 
 				<script type="text/javascript" src="{$url_prefix}/javascript/Stickman.MultiUpload.js" />
+				<!--script type="text/javascript" src="{$url_prefix}/javascript/bootstrap-combobox.js"/-->
 				<!-- -->
 				 
 
@@ -139,7 +140,6 @@
 				
 					window.addEvent('domready', getAppletElem);
 					document.addEvent('domready', xpto);
-				
 					<!-- $jQuery(document).ready();-->
 					
 				</script>
@@ -150,16 +150,32 @@
 			
 <style type="text/css">
 			/* jcosta 2013-12-21 */
+			
+.blockdivision {
+	clear: left;
+}
+
 .page-header {
+background-color:khaki;
+margin: 5px 0 20px;
+/*
 padding-bottom: 5px;
-margin: 20px 0 20px;
 border-bottom: 1px solid #ddd;
 background-color: #eee;	
+*/
+}
+
+h4 {
+	margin-bottom: 2px;
+	margin-top: 2px;
 }
 
 .subheader {
-background-color: #eee;	
+background-color: #DDD5E8;	
+padding-top: 5px;
+padding-bottom: 5px;
 }
+
 </style>
 			
 				<div style="margin:auto;">
@@ -178,7 +194,7 @@ background-color: #eee;
 				<script type="text/javascript">
 					window.parent.onresize = function(event) {initProcFrame();};
 				</script>
-				
+						 	    <script type="text/javascript" src="{$url_prefix}/javascript/combobox.js"/>
 			</body>
 		</html>
 	</xsl:template>
@@ -280,6 +296,7 @@ background-color: #eee;
 					                   	</xsl:attribute>
 									</xsl:if>
 									<xsl:apply-templates select="field" /><!-- then the others -->
+									<xsl:apply-templates select="tabdivision" /><!-- then the others -->
 								</div>
 							</xsl:when>
 							<xsl:otherwise>
@@ -430,10 +447,13 @@ background-color: #eee;
 						<xsl:if test="string-length(prefix) &gt; 0">
 							<xsl:value-of select="prefix/text()" />
 						</xsl:if>
-						<xsl:apply-templates select="value" />
-						<xsl:if test="string-length(suffix) &gt; 0">
-							<xsl:value-of select="suffix/text()" />
-						</xsl:if>
+						<div class="col-sm-10" style="font-size: 14px; margin-top:8px;padding-left:0">
+							<xsl:apply-templates select="value" />
+							<xsl:if test="string-length(suffix) &gt; 0">
+								<xsl:value-of select="suffix/text()" />
+							</xsl:if>
+						</div>
+				<hr/>
 					</xsl:if>
 					<xsl:if test="type='textbox'">
 						<label>
@@ -457,7 +477,9 @@ background-color: #eee;
 						</label>
 						<xsl:choose>
 							<xsl:when test="disabled='true'">
-								<xsl:value-of select="value/text()" />
+								<div class="col-sm-10" style="font-size: 14px; margin-top:8px;padding-left:0">
+									<xsl:value-of select="value/text()" />
+								</div>
 							</xsl:when>
 							<xsl:otherwise>
 								<input type="text">
@@ -533,12 +555,13 @@ background-color: #eee;
 								</xsl:otherwise>
 							</xsl:choose>
 						</script>
+				<hr/>
 					</xsl:if>
 					<xsl:if test="type='password'">
 						<label>
 							<xsl:attribute name="class">
 								<xsl:value-of select="type" />
-								<xsl:text> field</xsl:text>
+								<xsl:text> field col-sm-2 control-label</xsl:text>
 								<xsl:if test="$multicol &gt; 1">
 									<xsl:text> multicol</xsl:text>
 								</xsl:if>
@@ -553,10 +576,16 @@ background-color: #eee;
 						</label>
 						<input type="password">
 							<xsl:attribute name="class">
-								<xsl:text>txt</xsl:text>
+								<xsl:text> form-control</xsl:text>
 								<xsl:if test="disabled='true'">
 									<xsl:text> readonly</xsl:text>			
 								</xsl:if>
+							</xsl:attribute>
+							<xsl:attribute name="placeholder">
+								
+							</xsl:attribute>
+							<xsl:attribute name="style">
+								<xsl:text>max-width:</xsl:text><xsl:value-of select="size/text()*8" />
 							</xsl:attribute>
 							<xsl:attribute name="id">
 				              	<xsl:value-of select="variable/text()" />
@@ -588,13 +617,14 @@ background-color: #eee;
 				            </xsl:attribute>
 						</input>
 						<xsl:value-of select="suffix/text()" />
+				<hr/>
 					</xsl:if>
 					<xsl:if test="type='datecal'">
 						<xsl:variable name="date" />
 						<label>
 							<xsl:attribute name="class">
 					            <xsl:value-of select="type" />
-					            <xsl:text> field</xsl:text>
+					            <xsl:text> field col-sm-2 control-label</xsl:text>
 					            <xsl:if test="$multicol &gt; 1">
 				              		<xsl:text> multicol</xsl:text>
 				            	</xsl:if>
@@ -612,13 +642,19 @@ background-color: #eee;
 								<xsl:apply-templates select="value" />
 							</xsl:when>
 							<xsl:otherwise>
-								<input type="text" size="12">
+								<input type="text" size="20">
 									<xsl:attribute name="class">
-						                <xsl:text>txt</xsl:text>
+						                <xsl:text> form-control</xsl:text>
 						                <xsl:if test="disabled='true'">
 					                  		<xsl:text> readonly</xsl:text>
 					                	</xsl:if>
 					     	        </xsl:attribute>
+									<xsl:attribute name="placeholder">
+						              	
+						            </xsl:attribute>
+									<xsl:attribute name="style">
+						              	<xsl:text>width:100px</xsl:text>
+						            </xsl:attribute>
 									<xsl:attribute name="id">
 						                <xsl:value-of select="variable/text()" />
 						            </xsl:attribute>
@@ -653,6 +689,7 @@ background-color: #eee;
 					            </xsl:attribute>
 							</img>
 						</xsl:if>
+				<hr/>
 					</xsl:if>
 					<xsl:if test="type='textarea'">
 						<label>
@@ -673,17 +710,18 @@ background-color: #eee;
 						</label>
 						<textarea name="{variable}" rows="{rows}">
 							<xsl:if test="string-length(cols) &gt; 0">
-								<xsl:attribute name="cols">
-				          		<xsl:value-of select="cols/text()" />
-				          	</xsl:attribute>
+								<!--xsl:attribute name="cols">
+				          		<xsl:value-of select="cols/text()">
+				          	</xsl:attribute /-->
 							</xsl:if>
-							<xsl:if test="string-length(width) &gt; 0">
-								<xsl:attribute name="style">
+							<xsl:attribute name="style">
+				          		<xsl:text>width:</xsl:text><xsl:value-of select="cols/text()*8"/><xsl:text>px</xsl:text>
+							<!--xsl:if test="string-length(width) &gt; 0">
 	          						<xsl:text>width:</xsl:text><xsl:value-of select="width/text()" />
-						        </xsl:attribute>
-							</xsl:if>
+							</xsl:if-->
+					        </xsl:attribute>
 							<xsl:attribute name="class">
-								<xsl:text>txt</xsl:text>
+								<xsl:text> form-control</xsl:text>
 					            <xsl:if test="disabled='true' or readonly='true'">
 									<xsl:text> readonly</xsl:text>			
 					            </xsl:if>
@@ -696,6 +734,7 @@ background-color: #eee;
 							<xsl:apply-templates select="value/text()" />
 						</textarea>
 						<xsl:apply-templates select="suffix" />
+				<hr/>
 					</xsl:if>
 					<xsl:if test="type='button'">
 						<xsl:text>&nbsp;</xsl:text>
@@ -828,6 +867,9 @@ background-color: #eee;
 									<xsl:text> multicol</xsl:text>
 								</xsl:if>
 							</xsl:attribute>
+							<xsl:attribute name="style">
+								<xsl:text>margin-bottom:10px</xsl:text>
+							</xsl:attribute>
 							<h4>
 							<xsl:apply-templates select="text" />
 							</h4>
@@ -849,7 +891,7 @@ background-color: #eee;
 						
 							<xsl:attribute name="class">
 								<xsl:value-of select="type" />
-								<xsl:text> field</xsl:text>
+								<xsl:text> field col-sm-2 control-label</xsl:text>
 								<xsl:if test="$multicol &gt; 1">
 									<xsl:text> multicol</xsl:text>
 								</xsl:if>
@@ -862,7 +904,7 @@ background-color: #eee;
 								<em>*</em>
 							</xsl:if>
 						</label>
-						<select class="combobox">
+						<select class="combobox col-sm-2  form-control" name="horizontal" required="required" style="width:250px">
 							<xsl:attribute name="name">
 								<xsl:value-of select="variable/text()" />
           					</xsl:attribute>
@@ -885,6 +927,7 @@ background-color: #eee;
 								</option>
 							</xsl:for-each>
 						</select>
+				<hr/>
 					</xsl:if>
 
 					<xsl:if test="type = 'arraytable'">
@@ -892,13 +935,13 @@ background-color: #eee;
 						<label>
 							<xsl:attribute name="class">
 								<xsl:value-of select="type" />
-								<xsl:text> field</xsl:text>
+								<xsl:text> field </xsl:text>
 								<xsl:if test="$multicol &gt; 1">
 									<xsl:text> multicol</xsl:text>
 								</xsl:if>
 							</xsl:attribute>
 						</label>
-						<table class="sortable" style="width:100%">
+						<table class="sortable table zebra-striped bordered-table" style="width:80%">
 							<xsl:variable name="rowCount" select="count(row)" />
 							<xsl:variable name="colCount" select="count(row/col)" />
 							<xsl:for-each select="row">
@@ -1045,7 +1088,7 @@ background-color: #eee;
 						<xsl:attribute name="style">
 							text-align:<xsl:apply-templates select="align" />
 				  		</xsl:attribute>
-						<a>
+						<a class="linkform">
 							<xsl:choose>
 								<xsl:when test="disabled='true'">
 									<xsl:attribute name="href">
@@ -1353,7 +1396,8 @@ background-color: #eee;
 	</xsl:template>
 
 	<xsl:template match="error">
-		<div class="error_msg">
+		<div class="alert alert-danger alert-dismissable">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&amp;times;</button>
 			<xsl:value-of select="text" disable-output-escaping="yes" />
 		</div>
 	</xsl:template>

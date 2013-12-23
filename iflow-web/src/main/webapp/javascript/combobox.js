@@ -1,5 +1,13 @@
-
   (function( $jQuery ) {
+  
+        $(document).ready(function(){
+          $('.combobox').combobox()
+        });
+
+  
+  return;
+  
+  
     $jQuery.widget( "custom.combobox", {
       _create: function() {
         this.wrapper = $jQuery( "<span>" )
@@ -74,7 +82,7 @@
  
         $jQuery( "<a>" )
           .attr( "tabIndex", -1 )
-          .attr( "title", "Show All Items" )
+          .attr( "title", "Mostrar todos os items" )
           .tooltip()
           .appendTo( this.wrapper )
           .button({
@@ -84,7 +92,8 @@
             text: false
           })
           .removeClass( "ui-corner-all" )
-          .addClass( "custom-combobox-toggle ui-corner-right" )
+          .addClass( "custom-combobox-toggle ui-corner-right form-input" )
+		  .css( 'width', '200px')
           .mousedown(function() {
             wasOpen = input.autocomplete( "widget" ).is( ":visible" );
           })
@@ -140,7 +149,7 @@
         // Remove invalid value
         this.input
           .val( "" )
-          .attr( "title", value + " didn't match any item" )
+          .attr( "title", value + " não coincide com nenhum item" )
           .tooltip( "open" );
         this.element.val( "" );
         this._delay(function() {
@@ -161,6 +170,7 @@
     var $jQuery = jQuery.noConflict();
     $jQuery('.combobox').combobox();
   });
+  
   
   /*
   //var $jQuery = jQuery.noConflict();

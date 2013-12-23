@@ -8,7 +8,7 @@ $jQuery('.sortable').each(function(e){
     j++;
   var currTb = "#"+tbId;
   var inputId = "input_"+tbId;
-  var inputTot = '<input type="text" placeholder="Search" autofocus="" name="search" value="" id="'+inputId+'" />'
+  var inputTot = '<input type="text" placeholder="Pesquisar" autofocus="" name="search" value="" id="'+inputId+'" />'
   var qs = "table"+currTb+" tbody tr";
   var inputCal = "input#"+inputId;
   $jQuery(inputTot).insertBefore(currTb);

@@ -58,22 +58,17 @@
 				$act.get("pinitials") 
 			</div>
 			<div class="left" style="$style_read">
-				$act.get("pnumber")&nbsp;$act.get("previousUserid")
-				<a href="javascript:getJSP('main_content.jsp?filterPreviousUserid=$act.get("previousUserid")')">
-					<img src="images/filter.png" width="15" height="15" alt=""/>
-				</a>
+				$act.get("pnumber")
+				#if($act.get("previousUserid") != "")
+				&nbsp;de:<a href="javascript:getJSP('main_content.jsp?filterPreviousUserid=$act.get("previousUserid")')">$act.get("previousUserid")</a>
+				
+				#end
 				<br/>
 				$act.get("desc")
 			</div>
 			<div class="right" style="$style_read;">
 				<div>
-					$act.get("createdDate")
-					<a href="javascript:getJSP('main_content.jsp?filterdate=$act.get("createdDate")')">
-						<img src="images/filter.png" width="15" height="15" alt=""/>
-					</a>
-				</div>
-				<div class="img">
-					<img src="images/V.png" width="25" height="12" alt="" />
+					<a href="javascript:getJSP('main_content.jsp?filterdate=$act.get("createdDate")')">$act.get("createdDate")</a>
 				</div>
 			</div>
 		</div>

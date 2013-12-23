@@ -7,6 +7,7 @@
 		<link rel="stylesheet" type="text/css" media="all" href="${url_prefix}/javascript/calendar/calendar-iflow.css" title="cal-iflow" />
 		<link rel="stylesheet" type="text/css" href="${url_prefix}/javascript/yahoo/container/assets/skins/sam/container.css" />
 		<link rel="stylesheet" type="text/css" href="${url_prefix}/javascript/yahoo/button/assets/skins/sam/button.css" />
+		<link href="{$url_prefix}/javascript/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>
 
 		<link rel="shortcut icon" href="images/favicon.ico" />
 	<!--[if IE]>
@@ -33,6 +34,7 @@
 		<script src="${url_prefix}/javascript/mootools.js" type="text/javascript"></script>
 		<script src="${url_prefix}/javascript/FormFunctions.js" type="text/javascript"></script>
 		<script src="${url_prefix}/javascript/Stickman.MultiUpload.js" type="text/javascript"></script>
+		<script src="{$url_prefix}/javascript/jquery-1.10.2.js"></script>
 	</head>
 	
 	<body>
@@ -46,13 +48,13 @@
 			#foreach($varName in $hmHidden.keySet())
 				<input type="hidden" name="$varName" id="$varName" value="$hmHidden.get($varName)" />
 			#end
-				<div class="table_inc">
+				<div class="table">
 			#if ($processDetail.isEmpty())
-					<div class="info_msg">
+					<div class="alert alert-warning">
 						$noDetail
 					</div>
 			#else
-					<table class="item_list">
+					<table class="table">
 						<tr class="tab_header">
 							<td>$variableLabel</td>
 							<td>$valueLabel</td>
@@ -75,31 +77,32 @@
 					</table>
 			#end
 				</div>
-		  
+		    #if (!$processDetail.isEmpty())
 				<fieldset class="submit">
-			#foreach($button in $buttonList)
-				#set($name=$button.get("name"))
-				#set($id=$button.get("id"))
-				#set($operation=$button.get("operation"))
-				#set($tooltip=$button.get("tooltip"))
-				#set($text=$button.get("text"))
-				#set($buttonimagesrc=$button.get("buttonimagesrc"))
-				#set($buttonimagealt=$button.get("buttonimagealt"))
-				#set($hiddenfield=$button.get("hiddenfield"))
+				#foreach($button in $buttonList)
+					#set($name=$button.get("name"))
+					#set($id=$button.get("id"))
+					#set($operation=$button.get("operation"))
+					#set($tooltip=$button.get("tooltip"))
+					#set($text=$button.get("text"))
+					#set($buttonimagesrc=$button.get("buttonimagesrc"))
+					#set($buttonimagealt=$button.get("buttonimagealt"))
+					#set($hiddenfield=$button.get("hiddenfield"))
 					&nbsp;
-					<button align="center" valign="center" class="button" type="submit" name="$name" id="$id" onClick="$operation" title="&tooltip">
-				#if ($buttonimagesrc != "")
+					<button align="center" valign="center" class="btn btn-default" type="submit" name="$name" id="$id" onClick="&operation" title="&tooltip">
+					#if ($buttonimagesrc != "")
 						<img src="$buttonimagesrc" alt="$buttonimagealt"></img>
 						<br />
-				#end
+					#end
 						$text
 					</button>
-				#if ($hiddenfield != "")
+					#if ($hiddenfield != "")
 					<input type="hidden" name="$hiddenfield" id="$hiddenfield" value=""></input>
-				#end
+					#end
 					&nbsp;
-			#end
+				#end
 				</fieldset>
+			#end
 			</form>
 		</div>
 		<div class="Preview">

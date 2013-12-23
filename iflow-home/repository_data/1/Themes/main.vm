@@ -125,7 +125,7 @@
 				getJSP(taskLabelsJSP, idDivLabels);
 				getJSP(mainContentJSP);
 				getJSP(mainContentJSP + '?data=procs', 'container_flow_list');
-				getJSP(adminNavJSPNew, 'container_admin');
+				getJSP(adminNavJSPNew, idMain);
 				jscolor.bind();
 				init("Themes/${orgTheme}/css/iflow_std.css");
 				mainResize();
@@ -193,6 +193,7 @@
 			function tabber_right(tabnr, contentpage, contentparam) {
 				getJSP(contentpage + '?' +contentparam);
 			}
+			
 		</script>
 
 		</head>
@@ -255,7 +256,7 @@
 			</div>
 
 			#if($sys_admin == "no")
-	
+
 			<div class="sidebar1">
 				<div id="Accordion1">
 					#if("$Tab2" != "no")	
@@ -271,10 +272,10 @@
 							<a id="bt_edit_0" href="" onClick="editLabel('0','1'); return false;" class="lmenu">$new_label</a>
 							<!--table-->
 							<input type="text" value="" id="edit_0" style="display:none;width:6em">
+							<input id="bt_pickColor_0" class="color {valueElement:'myValue'}" style="display:none;width:15px;height:15px;border: 1px solid #CCCCCC;" maxlength="0"></input>
 							<a id="bt_confirm_0" style="display:none" href="javascript:editLabel('0','0');">
 								<img border="0" src="images/icon_ok.png" title="$confirm::$confirm" class="toolTipImg" href="javascript:editLabel('0','0');">
 							</a>
-							<input id="bt_pickColor_0" class="color {valueElement:'myValue'}" style="display:none;width:15px;height:15px;border: 1px solid #CCCCCC;" maxlength="0"></input>
 							<!--/table-->
 							<a id="bt_cancel_0_tmp" style="" href="javascript:editLabel('0','-1');">
 								<img id="bt_cancel_0_tmp" border="0" src="images/icon_delete.png" title="$cancel::$cancel" class="toolTipImg" onclick="javascript:editLabel('0','-1');"/>
@@ -439,14 +440,11 @@
 
 					#if($org_admin == "yes")
 					<h3 class="Acor_01">
-						<a href="">
+						<a href="#">
 						<img src="images/admin.png" width="24" height="24" alt="" /> Admin</a>
 					</h3>
 					<div class="Acor_02" style=" margin: 0 ; padding:20px 0 0 0 ;">
 						<div id="container_admin">
-						
-
-						
 						</div>
 					</div>
 					#end
@@ -455,7 +453,8 @@
 				<div class="iflw-4" style="position:relative;bottom:0px;">By IflowBPM</div>
 				
 			</div>
-	 
+
+			 
 			<div id="div_main" class="main" style="margin-left: 220px;"></div>
 
 			<div class="yui-skin-sam">
