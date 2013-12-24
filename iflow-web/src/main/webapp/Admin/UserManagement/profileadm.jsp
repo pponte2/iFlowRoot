@@ -65,7 +65,7 @@ if ("del".equals(sOper)){
 <% } else { %>
 
       <div class="table_inc">  
-        <table class="item_list">
+        <table class="item_list table">
           <tr class="tab_header">
 				<td/>
 				<td/>

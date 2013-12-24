@@ -322,10 +322,10 @@
 </ol>
 </fieldset>
 <fieldset class="submit">
-  <input class="regular_button_01" type="button" name="back" value='<%=messages.getString("button.back")%>' onClick="javascript:tabber_right(4, '<%=response.encodeURL("Admin/UserManagement/"+jspBack)%>','userid=<%=userId%>');" />
+  <input class="regular_button_01 btn btn-default" type="button" name="back" value='<%=messages.getString("button.back")%>' onClick="javascript:tabber_right(4, '<%=response.encodeURL("Admin/UserManagement/"+jspBack)%>','userid=<%=userId%>');" />
 <% if(bEdit) { %>
-  <input class="regular_button_01" type="button" name="clear" value='<%=messages.getString("button.clear")%>' onClick="javascript:document.formulario.reset();" />
+  <input class="regular_button_01 btn btn-default" type="button" name="clear" value='<%=messages.getString("button.clear")%>' onClick="javascript:document.formulario.reset();" />
 <% } %>
-  <input class="regular_button_01" type="button" name="add" value="<%=botao%>" onClick="javascript:tabber_right(4, '<%=response.encodeURL("Admin/UserManagement/userform.jsp")%>', get_params(document.formulario));" />
+  <input class="regular_button_01 btn btn-default" type="button" name="add" value="<%=botao%>" onClick="javascript:tabber_right(4, '<%=response.encodeURL("Admin/UserManagement/userform.jsp")%>', get_params(document.formulario));" />
 </fieldset>
 </form>

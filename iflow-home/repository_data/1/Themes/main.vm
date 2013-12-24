@@ -8,7 +8,7 @@
 		<title>iFlow - enterprise process modeling</title>
 
 		<!-- CSS antigos -->
-		<!-- link rel="stylesheet" href="Themes/${orgTheme}/css/iflow_main.css" type="text/css" / -->
+		<!-- link rel="stylesheet" href="Themes/${orgTheme}/css/iflow_new_main.css" type="text/css" /-->
 		<link rel="stylesheet" type="text/css" media="all" href="javascript/calendar/calendar-iflow.css" title="cal-iflow" />
 		<link rel="stylesheet" type="text/css" href="javascript/yahoo/container/assets/skins/sam/container.css" />
 		<link rel="stylesheet" type="text/css" href="javascript/yahoo/button/assets/skins/sam/button.css" />
@@ -200,6 +200,15 @@
 			
 			function tabber_right(tabnr, contentpage, contentparam) {
 				getJSP(contentpage + '?' +contentparam);
+			}
+			
+			function changeColor(element) {
+			   var activities = document.getElementsByClassName("activity");
+
+				for(var i = (activities.length - 1); i >= 0; i--) {
+					activities[i].style.backgroundColor = '#fafafa';
+				}
+				element.style.backgroundColor = '#ddd';				
 			}
 			
 		</script>

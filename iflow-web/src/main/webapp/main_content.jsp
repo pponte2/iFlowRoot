@@ -309,7 +309,7 @@ function cleanFilter(){
 		    selectedDays = 0;
 		  }
 	  }
-
+	  
 	  //ORDER BY
 	  String orderBy = fdFormData.getParameter("orderBy");
 	  if (orderBy != null) {
@@ -415,7 +415,17 @@ function cleanFilter(){
 		String sCreatedDate = DateUtility.formatFormDate(userInfo, a.created);
 		String sPreviousUserid = (a.previousUserid != null)?a.previousUserid:"";
 		
-		String sDuration = Utils.getDuration(new Timestamp(a.created.getTime()), tsNow);
+		Timestamp createdTimestamp = new Timestamp(a.created.getTime());
+		
+		long diffTime = tsNow.getTime() - createdTimestamp.getTime();
+		int diffDays = (int) ((long)diffTime/1000/60)/60/24;
+		
+		String durationColor = (diffDays>=14)?"red":(diffDays>=7)?"yellow":"green";
+		
+		diffDays = 5*diffDays;
+		if (diffDays > 100) diffDays = 100;
+		
+		String sDuration = Utils.getDuration(createdTimestamp, tsNow);
 		String sUri = "";
 		if (a.url != null && StringUtilities.isNotEmpty(a.url)) {
 			if (a.url.indexOf("?") > -1) {
@@ -460,6 +470,8 @@ function cleanFilter(){
 		hm.put("created", sCreated);
 		hm.put("createdDate", sCreatedDate);
 		hm.put("duration", sDuration);
+		hm.put("durationColor", durationColor);
+		hm.put("diffDays", String.valueOf(diffDays));
 		hm.put("uri", sUri);
 		hm.put("pnumber", pnumber);
 		hm.put("previousUserid", sPreviousUserid);

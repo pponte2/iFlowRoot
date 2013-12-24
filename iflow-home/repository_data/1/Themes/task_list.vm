@@ -75,7 +75,7 @@
 					#set($style_read="font-weight:bold;")
 				#end
 
-		<div class="process draggable" valToAssign='$act.get("flowid")_$act.get("pid")_$act.get("subpid")' onclick='javascript:process_detail_new("user_proc_detail.jsp", "div_process_preview", $act.get("flowid"), $act.get("pid"), $act.get("subpid"), -4, "$act.get("uri")");'>
+		<div class="process draggable activity" valToAssign='$act.get("flowid")_$act.get("pid")_$act.get("subpid")' onclick='javascript:process_detail_new("user_proc_detail.jsp", "div_process_preview", $act.get("flowid"), $act.get("pid"), $act.get("subpid"), -4, "$act.get("uri")");changeColor(this);'>
 			<div class="cube" title='$act.get("task_annotation_color_title")' style='background-color:$act.get("task_annotation_color_backgroundColor")'>
 				$act.get("pinitials") 
 			</div>
@@ -101,11 +101,11 @@
 
 			#if($actsize <= 0 && $selectedFolder == 0 && $selectedLabel == 0 && $selectedDays==0)
 	
-	<div class="info_msg">${no_tasks}</div>
+	<div class="alert alert-info">${no_tasks}</div>
 	
 			#else
 	
-	<div class="info_msg">${no_tasks_filter}</div>
+	<div class="alert alert-info">${no_tasks_filter}</div>
 	
 			#end
 
@@ -117,8 +117,8 @@
 	
 	#else
 	
-<div class="content_template3"	>
-	<div class="process_t3">
+<div class="content_template3" style="width:100%">
+	<div class="process_t3" style=" border-bottom: 1px Solid #cccccc; padding: 0 2px 5px 2px;">
 		<div style=" margin-left: 180px;">Preview</div>
 		<div class="btn-group" style=" margin-right: 10px;">
 			<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
@@ -151,7 +151,7 @@
 			<button id="layout1" type="button" class="btn btn-default btn-sm" disabled="disabled" onclick="javascript:getJSP('main_content.jsp?layout=1');">OFF</button>
 		</div>
 		<!--div style="width: 150px;float:right; font-size: 12px;"> 1 de 55</div-->
-		<div class="btn-group">
+		<div class="btn-group align-right">
 			<button type="button" class="btn btn-default btn-sm"> &lt; </button>
 			<button type="button" class="btn btn-default btn-sm"> &gt; </button>
 		</div>
@@ -159,7 +159,20 @@
 
 		#if($hasActivities)
 
-			#foreach($act in $newact)
+	<div  class="process_t3">
+		<div class="cube" style="text-align: left;font-weight:bold">Processo</div>
+		<div class="pr01" style="text-align: left;width:15%;font-weight:bold">Nº processo</div>
+		<div class="pr02" style="text-align: left;width:10%;font-weight:bold">Vindo de</div>
+		<!--div class="pr03">
+			<img src="images/V.png" width="25" height="12" alt=""/>
+		</div-->
+		<div class="pr04" style="text-align: left;width:40%; font-weight:bold">Assunto</div>
+		<div class="pr05" style="text-align: left;width:6%; font-weight:bold"></div>
+		<div class="pr06" style="text-align: left;width:10%; font-weight:bold">Pendente há</div>
+		<div class="pr07" style="text-align: left;width:10%;font-weight:bold">Data de criação</div>
+	</div>
+
+	#foreach($act in $newact)
 				#set($style_read="")
 				#if($act.get("read") == 0)
 					#set($style_read="font-weight:bold;")
@@ -169,26 +182,18 @@
 		<div class="cube" title='$act.get("task_annotation_color_title")' style='background-color:$act.get("task_annotation_color_backgroundColor")'>
 			$act.get("pinitials") 
 		</div>
-		<div class="pr01">$act.get("pnumber") </div>
-		<div class="pr02">
-			$act.get("previousUserid")
-			<a href="javascript:getJSP('main_content.jsp?filterPreviousUserid=$act.get("previousUserid")')">
-				<img src="images/filter.png" width="15" height="15" alt=""/>
-			</a>
-	</div>
-		<div class="pr03">
+		<div class="pr01" style="width:15%">$act.get("pnumber") </div>
+		<div class="pr02" style="width:10%">
+			<a href="javascript:getJSP('main_content.jsp?filterPreviousUserid=$act.get("previousUserid")')">$act.get("previousUserid")</a>
+		</div>
+		<!--div class="pr03">
 			<img src="images/V.png" width="25" height="12" alt=""/>
-		</div>
-		<div class="pr04"> $act.get("desc")</div>
-		<div  class="pr05"></div>
-		<div  class="pr06">
-			<canvas id="R" width="25" height="10" style="background: #FF0004;"> Your browser does not support the HTML5 canvas tag.</canvas>
-		</div>
-		<div class="pr07">
-			$act.get("createdDate")
-			<a href="javascript:getJSP('main_content.jsp?filterdate=$act.get("createdDate")')">
-				<img src="images/filter.png" width="15" height="15" alt=""/>
-			</a>
+		</div-->
+		<div class="pr04" style="width:40%"> $act.get("desc")</div>
+		<div class="pr05" style="text-align: left;width:6%; font-weight:bold"></div>
+		<div  class="pr06" style="width:10%;"><div>$act.get("duration")</div><div style="height:2px;width:$act.get("diffDays")px;background-color:$act.get("durationColor")"></div></div>
+		<div class="pr07" style="width:10%;">
+			<a href="javascript:getJSP('main_content.jsp?filterdate=$act.get("createdDate")')">$act.get("createdDate")</a>
 			<br>
 			<img src="images/flag.png" width="12" height="14" alt=""/>
 		</div>
@@ -200,11 +205,11 @@
 
 			#if($actsize <= 0 && $selectedFolder == 0 && $selectedLabel == 0 && $selectedDays==0)
 	
-	<div class="info_msg">${no_tasks}</div>
+	<div class="alert alert-info">${no_tasks}</div>
 	
 			#else
 	
-	<div class="info_msg">${no_tasks_filter}</div>
+	<div class="alert alert-info">${no_tasks_filter}</div>
 	
 			#end
 

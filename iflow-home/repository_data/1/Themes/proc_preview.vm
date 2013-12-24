@@ -2,14 +2,15 @@
 	<head>
 		<title>Detail</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<link rel="stylesheet" href="${url_prefix}/Themes/${orgTheme}/css/iflow_main.css" type="text/css">
+		<!--link rel="stylesheet" href="${url_prefix}/Themes/${orgTheme}/css/iflow_main.css" type="text/css"-->
 		<link rel="stylesheet" href="${url_prefix}/Themes/${orgTheme}/css/tips.css" type="text/css">
 		<link rel="stylesheet" type="text/css" media="all" href="${url_prefix}/javascript/calendar/calendar-iflow.css" title="cal-iflow" />
 		<link rel="stylesheet" type="text/css" href="${url_prefix}/javascript/yahoo/container/assets/skins/sam/container.css" />
 		<link rel="stylesheet" type="text/css" href="${url_prefix}/javascript/yahoo/button/assets/skins/sam/button.css" />
-		<link href="{$url_prefix}/javascript/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+		<link href="${url_prefix}/javascript/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+		<link rel="stylesheet" type="text/css" href="${url_prefix}/Themes/newflow/cssNew/main.css">
 
-		<link rel="shortcut icon" href="images/favicon.ico" />
+		<link rel="shortcut icon" href="images/ .ico" />
 	<!--[if IE]>
 		<link rel="stylesheet" href="Themes/${orgTheme}/css/iflow_ie.css" type="text/css">
 	<![endif]-->
@@ -34,10 +35,15 @@
 		<script src="${url_prefix}/javascript/mootools.js" type="text/javascript"></script>
 		<script src="${url_prefix}/javascript/FormFunctions.js" type="text/javascript"></script>
 		<script src="${url_prefix}/javascript/Stickman.MultiUpload.js" type="text/javascript"></script>
-		<script src="{$url_prefix}/javascript/jquery-1.10.2.js"></script>
+		<script src="${$url_prefix}/javascript/jquery-1.10.2.js"></script>
 	</head>
 	
 	<body>
+	<style type="text/css">
+		body {
+			background: white;
+		}
+	</style>
 		<div class="header_processo">
 			<form name="user_proc_print" method="POST" action="$response.encodeURL(${url_prefix},'UserProcPrint')" target="_blank">
 				<input type="hidden" name="flowid" value="$procFlowid">
@@ -48,19 +54,28 @@
 			#foreach($varName in $hmHidden.keySet())
 				<input type="hidden" name="$varName" id="$varName" value="$hmHidden.get($varName)" />
 			#end
-				<div class="table">
+
+        <div class="title_cont" > Dados do processo nº $procPid</div>
+        <div class="panel-body">
+          <div class="form-horizontal" role="form">
+
+			<!--div class="table"-->
 			#if ($processDetail.isEmpty())
 					<div class="alert alert-warning">
 						$noDetail
 					</div>
 			#else
-					<table class="table">
-						<tr class="tab_header">
+					<!--table class="table">
+						<thead>
+						<tr class="tab_header" style="background-color:#ddd;">
 							<td>$variableLabel</td>
 							<td>$valueLabel</td>
 						</tr>
+						</thead>
+						<tbody-->
 				#set($odd=1)
 				#foreach($varName in $processDetail.keySet())
+				
 					#if($odd == 0)
 						#set($class_type="even")
 						#set($odd=1)
@@ -68,12 +83,18 @@
 						#set($class_type="odd")
 						#set($odd=0)
 					#end
+					<div class="form-group">
+						<label   class="col-sm-2 control-label">${varName}: </label>
+						<div class="col-sm-10" style=" font-size: 14px; margin-top: 5px"> $!processDetail.get(${varName}) </div>
+					</div>
+					<!--
 						<tr class="tab_row_${class_type}">
-							<td>${varName}</td>
+							<td style="font-weight:bold;">${varName}</td>
 							<td>$!processDetail.get(${varName})</td>
-						</tr>
+						</tr> -->
 				#end
-					</table>
+					<!--/tbody>
+					</table-->
 			#end
 				</div>
 		    #if (!$processDetail.isEmpty())
@@ -88,13 +109,7 @@
 					#set($buttonimagealt=$button.get("buttonimagealt"))
 					#set($hiddenfield=$button.get("hiddenfield"))
 					&nbsp;
-					<button align="center" valign="center" class="btn btn-default" type="submit" name="$name" id="$id" onClick="&operation" title="&tooltip">
-					#if ($buttonimagesrc != "")
-						<img src="$buttonimagesrc" alt="$buttonimagealt"></img>
-						<br />
-					#end
-						$text
-					</button>
+					<input type="button" align="center" valign="center" class="btn btn-default" name="$name" value="$text" id="$id" onClick="&operation" title="&tooltip"/>
 					#if ($hiddenfield != "")
 					<input type="hidden" name="$hiddenfield" id="$hiddenfield" value=""></input>
 					#end
@@ -104,7 +119,9 @@
 			#end
 			</form>
 		</div>
-		<div class="Preview">
+		</div>
+	</div>
+		<div id="preview" class="Preview">
 			<button id="Aceder" style=" font-size: 24px; padding: 10px;" class="btn btn-default navbar-btn"
 				onclick="javascript:openProcess($procFlowid, '$response.encodeURL($url_prefix,$uri)', 'flowid=$procFlowid&pid=$procPid&subpid=$procSubpid', false);"> #*$act.get("runMax")*#
 				Aceder

@@ -55,7 +55,7 @@
 		<a href="#"><%=messages.getString("admin_nav.section.users.title")%></a>
 		<ul>
 			<li>
-				<a title="<%=messages.getString("admin_nav.section.users.tooltip.organizations")%>" href="'Admin/UserManagement/organizationadm.jsp');">
+				<a title="<%=messages.getString("admin_nav.section.users.tooltip.organizations")%>" href="javascript:getJSP('Admin/UserManagement/organizationadm.jsp');">
 					<%=messages.getString("admin_nav.section.users.link.organizations")%>
 				</a>
 			</li>
