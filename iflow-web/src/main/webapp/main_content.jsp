@@ -233,6 +233,12 @@ function cleanFilter(){
     }
   	hsSubstLocal.put("layout", layout);
 
+  	//PAGINAÇÃO
+  	Integer startIndex = 0; 
+  	try {
+  	  startIndex = Integer.parseInt(fdFormData.getParameter("startindex"));
+  	} catch (Exception e) {}
+  	
 	//FILTROS
 	//CLEAN				
 	String cleanFilter = "0";
@@ -395,6 +401,7 @@ function cleanFilter(){
 
 	// newest
 	for (int i=0,j=0; i < alAct.size() && j < nNEWEST_LIMIT; i++) {
+	  if (i >= startIndex) {
 		a = alAct.get((i));
 
 		// build hashmap to be able to display things properly
@@ -503,14 +510,22 @@ function cleanFilter(){
         hm.put("task_annotation_color_backgroundColor", colorBackgroundColor);
 		alNew.add(hm);
 		j++;
+	  }
 	}
 
+	Integer previousIndex = -1;
+	Integer nextIndex = 0;
+	if (startIndex >= nNEWEST_LIMIT)
+		previousIndex = startIndex - nNEWEST_LIMIT;  
+	hsSubstLocal.put("previousIndex", previousIndex.toString());
+	if (alAct.size() >= startIndex + nNEWEST_LIMIT) nextIndex = startIndex + nNEWEST_LIMIT;  
 
 	// free unused objects
 	hmFlows = null;
 	alAct = null;
 	a = null;
 
+	hsSubstLocal.put("nextIndex", nextIndex.toString());
       hsSubstLocal.put("newact", alNew);
       hsSubstLocal.put("actsize", alNew.size());
       // check if contains appname

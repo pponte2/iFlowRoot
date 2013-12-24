@@ -42,8 +42,11 @@
   var taskLabelsJSP = "TaskLabels/task_labels.jsp";
   var containerLabels = 'container_task_labels';
   var containerMain = 'container_admin';
+  var containerSearch = 'container_search';
   var containerReportsAdmin = 'container_report_admin';
   var containerReportsSupervisor = 'container_report_supervisor';
+  var containerFlowList = 'container_flow_list';
+  var containerDelegations = 'container_delegations';
   var closeMenus = true;
   
   //tab links 
@@ -53,6 +56,7 @@
   var userProcsFiltroJSP="user_procs_filtro.jsp";
   var userProcsJSP="user_procs.jsp";
   var gestaoTarefasNavJSP="gestao_tarefas_nav.jsp";
+  var gestaoTarefasNavNewJSP="gestao_tarefas_nav_new.jsp";
   var gestaoTarefasJSP="gestao_tarefas.jsp";
   var adminNavJSP="Admin/admin_nav.jsp";
   var flowSettingsJSP="Admin/flow_settings.jsp";
@@ -63,6 +67,7 @@
   var helpNavJSP="help_nav.jsp";
   var helpJSP="help.jsp";
   var reportsNavJSP="Reports/reports_nav.jsp";
+  var reportsNavNewJSP="Reports/reports_nav_new.jsp";
   var reportsJSP="Reports/proc_perf.jsp";
   var adminNavJSPNew = "Admin/admin_nav_new.jsp";
   
@@ -1632,7 +1637,7 @@
     try {
       if (urlPrefix == null) urlPrefix = parent.URL_PREFIX;
     } catch (err) {}
-    if (urlPrefix == null) urlPrefix = '/iFlow'
+    if (urlPrefix == null) urlPrefix = '/iFlow';
     getJSP(urlPrefix+"/openprocess.jsp?src=" + src + "&param=" + param);
   }
   
@@ -1699,7 +1704,7 @@
     	    j++;
     	    var currTb = "#"+tbId;
     	    var inputId = "input_"+tbId;
-    	    var inputTot = '<input type="text" placeholder="Pesquisar" autofocus="" name="search" value="" id="'+inputId+'" />'
+    	    var inputTot = '<input type="text" placeholder="Pesquisar" autofocus="" name="search" value="" id="'+inputId+'" />';
     	    var qs = "table"+currTb+" tbody tr";
     	    var inputCal = "input#"+inputId;
     	    $jQuery(inputTot).insertBefore(currTb);
@@ -1718,11 +1723,18 @@
     }
 
   function reloadJS() {
+    
+    $('.donotclosemenu').click(function(e) { e.stopPropagation();});
+      
     $(".draggable").draggable({revert: "invalid", opacity: 0.7, helper: "clone"});
     $(".droppable").droppable({
       hoverClass: "ui-state-active",
       drop: function(event, ui) {
-        getJSP('main_content.jsp?setfolder='+event.target.attributes['valToAssign'].value+'&activities='+ui.draggable.attr('valToAssign'));
+        var aux = event.target.attributes['valToAssign'].value;
+        if (aux != null && aux != "")
+          getJSP('main_content.jsp?setfolder='+aux+'&activities='+ui.draggable.attr('valToAssign'));
+        else
+          getJSP('main_content.jsp?setfolder='+aux+'&removeactivities=='+ui.draggable.attr('valToAssign'));
       }
     });
     

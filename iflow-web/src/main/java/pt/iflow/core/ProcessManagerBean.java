@@ -5768,7 +5768,7 @@ public class ProcessManagerBean implements ProcessManager {
 	      }
 
 	      // TODO: ORDER
-          if(filter.getOrderBy() != null){
+          if(filter.getOrderBy() != null && !"".equals(filter.getOrderBy())){
             sQueryDelegated.append(" order by ").append(filter.getOrderBy()); 
             if(filter.getOrderType() != null){
               sQueryDelegated.append(" ").append(filter.getOrderType()); 

@@ -256,13 +256,14 @@ if (StringUtils.equals(searchType,"ss")) {
 	</div>
 <%//end of SimpleSearch
 }
-if(StringUtils.equals(searchType,"as")) {%>
+if (StringUtils.equals(searchType,"as") || StringUtils.equals(searchType,"nf") ) {
+	if(StringUtils.equals(searchType,"as")) { %>
 	<form name="advancedSearch" method="post">
 		<a id="searchlink"
 			title="<%=messages.getString("user_procs_filtro.simplesearch.tooltip")%>" class="toolTipItemLink li_link"
 			href="javascript:tabber_save(8,'<%=response.encodeRedirectUrl("user_procs_filtro.jsp") %>','searchtype=ss','<%=response.encodeRedirectUrl("user_procs.jsp") %>','searchtype=ss')"><%=messages.getString("user_procs_filtro.simplesearch")%></a>
 	</form>
-
+	<% } %>
 	<form name="advanced_user_procs_filter" method="post">
 	<% //load flows
 	FlowApplications appInfo = BeanFactory.getFlowApplicationsBean();
@@ -301,6 +302,7 @@ if(StringUtils.equals(searchType,"as")) {%>
   	
 	//Teste vm
 	String tabnr = (String) fdFormData.getParameter("navtabnr");
+	if (tabnr == null) tabnr= "8";
 	String pageContent = "proc_list";
 	java.util.Hashtable<String,Object> hsSubstLocal = new java.util.Hashtable<String,Object>();
 	hsSubstLocal.put("appflows", appFlows);

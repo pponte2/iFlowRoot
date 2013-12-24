@@ -124,13 +124,20 @@
 			function initDom() {
 				getJSP(taskLabelsJSP, containerLabels);
 				getJSP(mainContentJSP);
-				getJSP(mainContentJSP + '?data=procs', 'container_flow_list');
+				getJSP(mainContentJSP + '?data=procs', containerFlowList);
+				#if("$Tab8" != "no")
+				getJSP(userProcsFiltroJSP + '?searchtype=nf', containerSearch);
+				#end
 				#if($org_admin == "yes")
-				//getJSP(reportsNavJSP, containerReportsAdmin);
+				getJSP(reportsNavNewJSP, containerReportsAdmin);
 				#else
 					#if($supervisor == "yes")
-				//getJSP(reportsNavJSP, containerReportsSupervisor);
+				getJSP(reportsNavJSP, containerReportsSupervisor);
 					#end
+				#end
+				#if("$Tab5" != "no")	
+				getJSP(reportsNavJSP, containerReportsSupervisor);
+					getJSP(gestaoTarefasNavNewJSP, containerDelegations);
 				#end
 				getJSP(adminNavJSPNew, containerMain);
 				
@@ -292,7 +299,7 @@
 								<img border="0" src="images/icon_ok.png" title="$confirm::$confirm" class="toolTipImg" href="javascript:editLabel('0','0');">
 							</a>
 							<!--/table-->
-							<a id="bt_cancel_0_tmp" style="" href="javascript:editLabel('0','-1');">
+							<a id="bt_cancel_0" style="display:none;" href="javascript:editLabel('0','-1');">
 								<img id="bt_cancel_0_tmp" border="0" src="images/icon_delete.png" title="$cancel::$cancel" class="toolTipImg" onclick="javascript:editLabel('0','-1');"/>
 							</a>
 						</div>
@@ -308,66 +315,23 @@
 					</div>
 					#end
 					
+					#if("$Tab8" != "no")
 					<h3 class="Acor_01">
 						<a href="#">
 						<img src="images/pesquisa.png" width="24" height="24" alt="" /> Pesquisa</a>
 					</h3>
 					<div class="Acor_02" style=" margin: 0 ; padding:20px 0 0 0 ;">
-						<div id="container_XXX">
-							<ul class="menu">
-								<li>
-									<a href="#">Os meus Processos</a>
-									<ul>
-										<li>
-											<a href="#">Genérica</a>
-										</li>
-										<li>
-											<a href="#">Requisições Internas</a>
-										</li>
-									</ul>
-								</li>
-								<li>
-									<a href="#">Pesquisa de processos</a>
-									<ul>
-										<li>
-											<a href="#">Genérica</a>
-										</li>
-										<li>
-											<a href="#">Recursos Humanos</a>
-										</li>
-										<li>
-											<a href="#">Requisições Internas</a>
-										</li>
-									</ul>
-								</li>
-								<li>
-									<a href="#">Macro Processos</a>
-									<ul>
-										<li>
-											<a href="#">Macro Processos</a>
-										</li>
-									</ul>
-								</li>
-								<li>
-									<a href="#">Diversos</a>
-									<ul>
-										<li>
-											<a href="#">Pesquisa do Atendimento</a>
-										</li>
-										<li>
-											<a href="#">Requisiçôes de Viatura</a>
-										</li>
-									</ul>
-								</li>
-							</ul>
-						</div>
+						<div id="container_search"></div>
 					</div>
+					#end
+
+					#if("$Tab5" != "no")	
 					<h3 class="Acor_01">
 						<a href="#">
 						<img src="images/delegacaoes.png" width="24" height="24" alt="" /> Delegações</a>
 					</h3>
 					<div class="Acor_02" style=" margin: 0 ; padding:20px 0 0 0 ;">
-						<div id="container_XXX">
+						<div id="container_delegations">
 							<ul class="menu">
 								<li>
 									<a href="#">Gerir existentes</a>
@@ -380,25 +344,12 @@
 										</li>
 									</ul>
 								</li>
-								<li>
-									<a href="#">Defenir Novas</a>
-									<ul>
-										<li>
-											<a href="#">Requisitar</a>
-										</li>
-									</ul>
-								</li>
-								<li>
-									<a href="#">Outros utilizadores</a>
-									<ul>
-										<li>
-											<a href="#">Reatribuição Tarefas</a>
-										</li>
-									</ul>
 								</li>
 							</ul>
 						</div>
 					</div>
+					#end
+					
 					#if($org_admin == "yes" || $supervisor == "yes")
 					<h3 class="Acor_01">
 						<a href="#">
@@ -757,12 +708,6 @@
 				: <a class="menu_link" href="javascript:tutorialModeOn();"  title="$tooltip_tutorial">$link_tutorial</a>
 			#end	
 			: <a class="menu_link" href="javascript:tabber('help',helpNavJSP,'sel=8',helpJSP,'sel=8&ts=$ts');"  title="$tooltip_help">$link_help</a>
-			<!--
-			(<a class="menu_link" href="javascript:toggleHelpMode();" title="" id="helpModeSwitch">
-				  <span id="show_inline_help" class="$hiddenShowInlineHelp">$showInlineHelp</span>
-				  <span id="hide_inline_help" class="$hiddenHideInlineHelp">$hideInlineHelp</span>
-				</a>)
-				-->
 		   #if($http_auth_type != "HTTP")
 			: <a class="menu_link" href="$response.encodeURL($url_prefix,'logout.jsp')?ts=$ts" id="top_logout_link" title="$tooltip_logout">$link_logout</a>
 		   #end

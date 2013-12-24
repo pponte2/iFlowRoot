@@ -28,36 +28,8 @@
 <%
   if (userInfo.isOrgAdmin() || userInfo.isProcSupervisor(-1)) {
 %>
-<h1 id="title_reports"><%=messages.getString("reports_nav.title")%></h1>
-<p><%=messages.getString("reports_nav.introMsg")%></p>
-
-<h2 onclick="javascript:toggleItemBox('reports', $('reports_section'));"
-><%=messages.getString("reports_nav.section.title")%><img
-	id="reports_section" class="item_title_show"
-	src="images/minus.png" <%if(isClassic || isNewflow){%>style="display: none;"<%}%>/></h2>
-	
-	<ul id="reports_section_body">
-		<li><a id="li_a_reports_<%=ReportsNavConsts.PERFORMANCE_CHARTS%>"
-				title="<%=messages.getString("reports_nav.section.performance.tooltip")%>"
-				class="toolTipItemLink li_link"
-				href="javascript:selectedItem('reports', <%=ReportsNavConsts.PERFORMANCE_CHARTS%>);tabber_save(10,'','sel=<%=ReportsNavConsts.PERFORMANCE_CHARTS%>','<%=response.encodeURL("Reports/proc_perf.jsp")%>','ts=<%=ts%>');"><%=messages.getString("reports_nav.section.performance.link")%></a></li>
-		<li><a id="li_a_reports_<%=ReportsNavConsts.PROCESS_STATISTICS%>"
-					title="<%=messages.getString("reports_nav.section.statistics.tooltip")%>"
-					class="toolTipItemLink li_link"
-					href="javascript:selectedItem('reports', <%=ReportsNavConsts.PROCESS_STATISTICS%>);tabber_save(10,'','sel=<%=ReportsNavConsts.PROCESS_STATISTICS%>','<%=response.encodeURL("Reports/proc_stats.jsp")%>','ts=<%=ts%>');"><%=messages.getString("reports_nav.section.statistics.link")%></a></li>
-		<li><a id="li_a_reports_<%=ReportsNavConsts.PROCESS_SLA%>"
-					title="<%=messages.getString("reports_nav.section.sla.tooltip")%>"
-					class="toolTipItemLink li_link"
-					href="javascript:selectedItem('reports', <%=ReportsNavConsts.PROCESS_SLA%>);tabber_save(10,'','sel=<%=ReportsNavConsts.PROCESS_SLA%>','<%=response.encodeURL("Reports/proc_sla.jsp")%>','ts=<%=ts%>');"><%=messages.getString("reports_nav.section.sla.link")%></a></li>
-	</ul>
 <%  boolean showOnlyFlowsToBePresentInMenu = true;
     if(BeanFactory.getFlowHolderBean().listFlowsOnline(userInfo, FlowType.REPORTS, showOnlyFlowsToBePresentInMenu).length > 0){//show reports_personalized%>
-<h2 onclick="javascript:toggleItemBox('reports', $('reports_personalized_section'));"
-><%=messages.getString("reports_nav.personalized_section.title")%><img
-	id="reports_personalized_section" class="item_title_show"
-	src="images/minus.png" <%if(isClassic || isNewflow){%>style="display: none;"<%}%>/></h2>
-	<ul id="reports_personalized_section_body">
-		<form name="reports_personalized_section_form" method="post">
 			<%
 				//load flows
 				FlowApplications appInfo = BeanFactory.getFlowApplicationsBean();
@@ -103,9 +75,7 @@
 			    String html = PresentationManager.buildPage(response, userInfo, hsSubstLocal, pageContent);
 			    out.println(html);
 			%>
-		</form>
-	</ul>
 <%
   }//end reports_personalized
-  }
+}
 %>
