@@ -61,7 +61,6 @@
 						</tr>
 				#set($odd=1)
 				#foreach($varName in $processDetail.keySet())
-				ddddd $varName   dscsdcf
 					#if($odd == 0)
 						#set($class_type="even")
 						#set($odd=1)

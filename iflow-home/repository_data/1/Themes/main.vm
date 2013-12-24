@@ -8,11 +8,11 @@
 		<title>iFlow - enterprise process modeling</title>
 
 		<!-- CSS antigos -->
+		<!-- link rel="stylesheet" href="Themes/${orgTheme}/css/iflow_main.css" type="text/css" / -->
 		<link rel="stylesheet" type="text/css" media="all" href="javascript/calendar/calendar-iflow.css" title="cal-iflow" />
 		<link rel="stylesheet" type="text/css" href="javascript/yahoo/container/assets/skins/sam/container.css" />
 		<link rel="stylesheet" type="text/css" href="javascript/yahoo/button/assets/skins/sam/button.css" />
 		<link rel="stylesheet" href="Themes/${orgTheme}/css/tips.css" type="text/css" />
-		<link rel="stylesheet" href="Themes/${orgTheme}/css/iflow_main.css" type="text/css" />
 		<link rel="stylesheet" href="Themes/${orgTheme}/css/tutorial.css" type="text/css" />
 		<link rel="stylesheet" href="Themes/${orgTheme}/css/tree.css" type="text/css" />
 		<link rel="stylesheet" type="text/css" href="javascript/yahoo/assets/skins/sam/skin.css" />
@@ -122,10 +122,18 @@
 			}
 
 			function initDom() {
-				getJSP(taskLabelsJSP, idDivLabels);
+				getJSP(taskLabelsJSP, containerLabels);
 				getJSP(mainContentJSP);
 				getJSP(mainContentJSP + '?data=procs', 'container_flow_list');
-				getJSP(adminNavJSPNew, idMain);
+				#if($org_admin == "yes")
+				//getJSP(reportsNavJSP, containerReportsAdmin);
+				#else
+					#if($supervisor == "yes")
+				//getJSP(reportsNavJSP, containerReportsSupervisor);
+					#end
+				#end
+				getJSP(adminNavJSPNew, containerMain);
+				
 				jscolor.bind();
 				init("Themes/${orgTheme}/css/iflow_std.css");
 				mainResize();
@@ -212,11 +220,9 @@
 							<tr>
 								<td>
 									<input type="text" class="form-control" id="nl" placeholder="Pesquisa" title="Pesquisa" onkeydown="if (event.keyCode == 13) { alert('aaaa'); return false; }">
-										
 									</input>
 								</td>
 								<td>
-									
 									<div class="div_BTNL">
 										<input style=" margin: 0px;" type="button" name="Send" id="Send" class="btn btn-default btn-sm" value="Pesquisar" onclick="alert('aaaa')"/>
 									</div>
@@ -384,60 +390,25 @@
 							</ul>
 						</div>
 					</div>
+					#if($org_admin == "yes" || $supervisor == "yes")
 					<h3 class="Acor_01">
 						<a href="#">
 						<img src="images/relatorios.png" width="24" height="24" alt="" /> Relatórios</a>
 					</h3>
+						#if($org_admin == "yes")
 					<div class="Acor_02" style=" margin: 0 ; padding:20px 0 0 0 ;">
-						<div id="container_XXX">
-							<ul class="menu">
-								<li>
-									<a href="#">Fluxos</a>
-									<ul>
-										<li>
-											<a href="#">Criar / Editar</a>
-										</li>
-										<li>
-											<a href="#">Fluxos</a>
-										</li>
-										<li>
-											<a href="#">Menus</a>
-										</li>
-										<li>
-											<a href="#">Séries</a>
-										</li>
-										<li>
-											<a href="#">Agendamentos</a>
-										</li>
-									</ul>
-								</li>
-								<li>
-									<a href="#">Processos</a>
-									<ul>
-										<li>
-											<a href="#">Anular</a>
-										</li>
-										<li>
-											<a href="#">Estado</a>
-										</li>
-										<li>
-											<a href="#">Histórico Processo</a>
-										</li>
-										<li>
-											<a href="#">Cancelar Processo</a>
-										</li>
-										<li>
-											<a href="#">Ocultar Processo</a>
-										</li>
-										<li>
-											<a href="#">Gestão de Tarefas</a>
-										</li>
-									</ul>
-								</li>
-							</ul>
+						<div id="container_report_admin">
 						</div>
 					</div>
-
+						#else
+							#if($supervisor == "yes")
+					<div class="Acor_02" style=" margin: 0 ; padding:20px 0 0 0 ;">
+						<div id="container_report_supervisor">
+						</div>
+					</div>
+							#end
+						#end
+					#end
 					#if($org_admin == "yes")
 					<h3 class="Acor_01">
 						<a href="#">

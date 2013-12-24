@@ -38,10 +38,13 @@
   var flowInfoServlet="FlowInfo";
   var msgHandlerJSP="msgHandler.jsp";
   var processAnnotationsJSP="ProcessAnnotation/process_annotations.jsp";
-  var divMain = 'div_main' 
+  var divMain = 'div_main';
   var taskLabelsJSP = "TaskLabels/task_labels.jsp";
-  var idDivLabels = 'container_task_labels';
-  var idMain = 'container_admin'
+  var containerLabels = 'container_task_labels';
+  var containerMain = 'container_admin';
+  var containerReportsAdmin = 'container_report_admin';
+  var containerReportsSupervisor = 'container_report_supervisor';
+  var closeMenus = true;
   
   //tab links 
   var mainContentJSP="main_content.jsp";
@@ -1714,7 +1717,7 @@
     	
     }
 
-  function reloadJS(){
+  function reloadJS() {
     $(".draggable").draggable({revert: "invalid", opacity: 0.7, helper: "clone"});
     $(".droppable").droppable({
       hoverClass: "ui-state-active",
@@ -1722,14 +1725,15 @@
         getJSP('main_content.jsp?setfolder='+event.target.attributes['valToAssign'].value+'&activities='+ui.draggable.attr('valToAssign'));
       }
     });
-
+    
 	  try {
       $(function() {
         var menu_ul = $('.menu > li > ul'),
             menu_a  = $('.menu > li > a');
-        menu_ul.hide();
+        if (closeMenus) menu_ul.hide();
         menu_a.unbind('click');
         menu_a.click(function(e) {
+          closeMenus = false;
           e.preventDefault();
           if(!$(this).hasClass('active')) {
             menu_a.removeClass('active');
@@ -1744,26 +1748,26 @@
       });
 	  } catch (err) {}
 	
-    try {
-	    $( "#Accordion1" ).accordion({ // Accordion template1
-		    heightStyle:"content",
-	      active:0
-	    }); 
-	  } catch (err) {}
-
-	  try {
-	    $( "#Accordion2" ).accordion({ // Accordion template1
-		    heightStyle:"content",
-	      active:1
-	    });
-	  } catch (err) {}
-	
-	  try {
-	    $( "#Accordion3" ).accordion({ // Accordion template1
-		    heightStyle:"content",
-	      active:2
-	    }); 
-	  } catch (err) {}
+	  if (closeMenus) {
+      try {
+  	    $( "#Accordion1" ).accordion({ // Accordion template1
+  		    heightStyle:"content",
+  	      active:0
+  	    }); 
+  	  } catch (err) {}
+  
+  	  try {
+  	    $( "#Accordion2" ).accordion({ // Accordion template1
+  		    heightStyle:"content",
+  	      active:1
+  	    });
+  	  } catch (err) {}
+  	
+  	  try {
+  	    $( "#Accordion3" ).accordion({ // Accordion template1
+  		    heightStyle:"content",
+  	      active:2
+  	    }); 
+  	  } catch (err) {}
+	  }
   }
-
-    

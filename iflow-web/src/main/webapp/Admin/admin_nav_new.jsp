@@ -39,12 +39,12 @@
 				</a>
 			</li>
 			<li>
-				<a title="<%=messages.getString("admin_nav.section.users.tooltip.profiles")%>" href="getJSP('Admin/UserManagement/profileadm.jsp');">
+				<a title="<%=messages.getString("admin_nav.section.users.tooltip.profiles")%>" href="javascript:getJSP('Admin/UserManagement/profileadm.jsp');">
 					<%=messages.getString("admin_nav.section.users.link.profiles")%>
 				</a>
 			</li>
 			<li>
-				<a title="<%=messages.getString("admin_nav.section.users.tooltip.orgunits")%>" href="getJSP('Admin/UserManagement/unitadm.jsp');">
+				<a title="<%=messages.getString("admin_nav.section.users.tooltip.orgunits")%>" href="javascript:getJSP('Admin/UserManagement/unitadm.jsp');">
 					<%=messages.getString("admin_nav.section.users.link.orgunits")%>
 				</a>
 			</li>

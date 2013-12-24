@@ -3,36 +3,58 @@
 <div class="slide02">
 	<div style=" margin-left: 180px;">Preview</div>
 	<div style=" border-bottom: 1px Solid #cccccc; padding: 0 2px 5px 2px; text-align: center;">
-		<form>
+		<form style="display:inline">
 			<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">Ordenar</button>
-			<ul class="dropdown-menu" role="menu">
+			<ul class="dropdown-menu" role="menu" style="width:200px; top:110px; left: 190px;">
 				<li>
-					<a href="">Action</a>
+					<span>
+						Pid
+						<a href="javascript:getJSP('main_content.jsp?orderBy=pid&orderType=asc');">(asc)</a>
+						<a href="javascript:getJSP('main_content.jsp?orderBy=pid&orderType=desc');">(desc)</a>
+					</span>
 				</li>
 				<li>
-					<a href="">Another action</a>
+					<span>
+						User Anterior
+						<a href="javascript:getJSP('main_content.jsp?orderBy=previousUserId&orderType=asc');">(asc)</a>
+						<a href="javascript:getJSP('main_content.jsp?orderBy=previousUserId&orderType=desc');">(desc)</a>
+					</span>
 				</li>
 				<li>
-					<a href="">Something else here</a>
+					<span>
+						Data Criação
+						<a href="javascript:getJSP('main_content.jsp?orderBy=created&orderType=asc');">(asc)</a>
+						<a href="javascript:getJSP('main_content.jsp?orderBy=created&orderType=desc');">(desc)</a>
+					</span>
 				</li>
 				<li>
-					<a href="">Separated link</a>
+					<span>
+						Descrição
+						<a href="javascript:getJSP('main_content.jsp?orderBy=description&orderType=asc');">(asc)</a>
+						<a href="javascript:getJSP('main_content.jsp?orderBy=description&orderType=desc');">(desc)</a>
+					</span>
 				</li>
 			</ul>  
+		</form>
+		<form style="display:inline">
 			<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">Filtrar</button>
-			<ul class="dropdown-menu" role="menu">
+			<ul class="dropdown-menu" role="menu" style="width:200px; top:270px; left: 200px;">
 				<li>
-					<a href="">Action</a>
+					<span>
+						User Anterior
+					</span>
 				</li>
 				<li>
-					<a href="">Another action</a>
+					<span>
+						Data Criação
+					</span>
 				</li>
 				<li>
-					<a href="">Something else here</a>
+					<span>
+						Descrição
+					</span>
 				</li>
-				<li>
-					<a href="">Separated link</a>
-				</li>
+			</ul>  
 			</ul>
 			<div class="btn-group">
 				<button id="layout0" type="button" class="btn btn-default btn-sm" disabled="disabled" onclick="javascript:getJSP('main_content.jsp?layout=0');">ON</button> 

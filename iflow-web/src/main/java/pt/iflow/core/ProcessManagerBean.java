@@ -746,7 +746,7 @@ public class ProcessManagerBean implements ProcessManager {
     return procData;
   }
 
-  // XXX agon: rever metodo.. ir buscar xml para o mid respectivo e fazer
+  // TODO agon: rever metodo.. ir buscar xml para o mid respectivo e fazer
   // overwrite
   public ProcessData undoProcessData(UserInfoInterface userInfo, int flowid, int pid, int subpid, int newMid, ProcessData procData) throws Exception {
 
@@ -5277,7 +5277,6 @@ public class ProcessManagerBean implements ProcessManager {
         
         // historify it
         
-        //TODO
         if (doSaveProcessHistory(true)) {
           sQuery = new StringBuilder();
           sQuery.append("insert into process_history (flowid,pid,subpid,mid,creator,created,");
@@ -5768,11 +5767,19 @@ public class ProcessManagerBean implements ProcessManager {
 	        sQueryDelegated.append(" and upper(p.pnumber) like upper('%").append(escapeSQL(filter.getPnumber())).append("%')");
 	      }
 
-	      if(filter.getOrderType() != null && filter.getOrderType().equals("desc")){
-	          sQueryDelegated.append(" order by iconid asc, created desc"); 
-	      }else{
-	          sQueryDelegated.append(" order by iconid asc, created asc");
-	      }
+	      // TODO: ORDER
+          if(filter.getOrderBy() != null){
+            sQueryDelegated.append(" order by ").append(filter.getOrderBy()); 
+            if(filter.getOrderType() != null){
+              sQueryDelegated.append(" ").append(filter.getOrderType()); 
+            }
+          } else {
+   	        if(filter.getOrderType() != null && filter.getOrderType().equals("asc")){
+  	          sQueryDelegated.append(" order by iconid asc, created asc"); 
+  	        }else{
+  	          sQueryDelegated.append(" order by iconid asc, created desc");
+  	        }
+          }
 	      
 	      
 	      union = sQuery.toString()+" UNION "+sQueryDelegated.toString();

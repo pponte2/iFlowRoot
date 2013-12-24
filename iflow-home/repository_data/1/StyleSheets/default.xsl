@@ -194,7 +194,7 @@ padding-bottom: 5px;
 				<script type="text/javascript">
 					window.parent.onresize = function(event) {initProcFrame();};
 				</script>
-						 	    <script type="text/javascript" src="{$url_prefix}/javascript/combobox.js"/>
+				<script type="text/javascript" src="{$url_prefix}/javascript/combobox.js"/>
 			</body>
 		</html>
 	</xsl:template>
@@ -927,7 +927,7 @@ padding-bottom: 5px;
 								</option>
 							</xsl:for-each>
 						</select>
-				<hr/>
+						<hr/>
 					</xsl:if>
 
 					<xsl:if test="type = 'arraytable'">

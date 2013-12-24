@@ -309,13 +309,35 @@ function cleanFilter(){
 		    selectedDays = 0;
 		  }
 	  }
-	  
+
+	  //ORDER BY
+	  String orderBy = fdFormData.getParameter("orderBy");
+	  if (orderBy != null) {
+	    session.setAttribute("orderBy",orderBy); // Utilizador actualizou valor
+	  } else if ("".equals(orderBy)) {
+	    orderBy = null;
+	    session.removeAttribute("orderBy");
+	  } else {
+	    orderBy = (String) session.getAttribute("orderBy");
+	  }
+	  //ORDER TYPE
+	  String orderType = fdFormData.getParameter("orderType");
+	  if (orderType != null) {
+	    session.setAttribute("orderType",orderType); // Utilizador actualizou valor
+	  } else if ("".equals(orderType)) {
+	    orderType = null;
+	    session.removeAttribute("orderType");
+	  } else {
+	    orderType = (String) session.getAttribute("orderType");
+	  }
+
 	  //GET ACTIVITIES
 	  FlowFilter filter = new FlowFilter();
 	  filter.setFolderid(""+selectedFolder);
 	  filter.setLabelid(""+selectedLabel);
 	  filter.setDeadline(""+selectedDays);
-	  filter.setOrderType("desc");
+	  filter.setOrderBy(orderBy);
+	  filter.setOrderType(orderType);
 	  filter.setPreviousUserid(filterPreviousUserid);
 	  if (filterdate != null) {
 		try{
@@ -336,7 +358,6 @@ function cleanFilter(){
 	  hsSubstLocal.put("selectedFolder", selectedFolder);
 	  
 	//	now get activities
-	//ListIterator<Activity> it = pm.getUserActivitiesOrderByPid(userInfo);
 	Activity a;
 
 	// move activities to new list
@@ -422,7 +443,6 @@ function cleanFilter(){
 			sbAnnotationIcon.append("<img width=\"16\" height=\"16\" class=\"toolTipImg\" src=\"AnnotationIconsServlet?icon_name='"+annotationIcon+"'&ts='"+System.currentTimeMillis()+"'\" border=\"0\">");
 			sbAnnotationIcon.append("</a>");
 			imgParam = sbAnnotationIcon.toString();
-          //imgParam = "<img class=\"toolTipImg\" src=\"AnnotationIconsServlet?icon_name='"+annotationIcon+"'&ts='"+System.currentTimeMillis()+"'\" border=\"0\" \">";
         }
         
         FolderManager fm = BeanFactory.getFolderManagerBean();
