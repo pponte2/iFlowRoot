@@ -156,10 +156,10 @@ if (StringUtils.equals(searchType,"ss")) {
 		</form>
 	<% } %>
 
-	<h1 id="title_tasks"><%=messages.getString("user_procs_filtro.simplesearch.title")%></h1>
+	<!-- h1 id="title_tasks"><%=messages.getString("user_procs_filtro.simplesearch.title")%></h1-->
 	<!--  <p>< %=messages.getString("user_procs_filtro.simplesearch.introMsg") %></p> -->
 
-	<div class="greybox">
+	<div class="greybox" style="margin-left:10px;padding-bottom: 10px">
 		<form name="user_procs_filter" method="post">
 			<input type="hidden" name="mode" value="0">
 			<input type="hidden" name="process" value="">
@@ -249,7 +249,7 @@ if (StringUtils.equals(searchType,"ss")) {
 			</div>
 	 
 			<div class="button_box">
-				<input id="link_search_span" class="regular_button_00" type="button" name="filter" value="<%=messages.getString("button.filter")%>" 
+				<input id="link_search_span" class="regular_button_00 btn btn-default btn-xs" type="button" name="filter" value="<%=messages.getString("button.filter")%>" 
 					onClick="<%=filterAction %>" />
 			</div>
 		</form> 

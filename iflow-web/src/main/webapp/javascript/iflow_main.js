@@ -1643,7 +1643,7 @@
   
   function createLabel(labelid, editname, color) {
     var url = taskLabelsJSP + '?editfolder='+labelid+'&editname='+editname+'&color='+color;
-    getJSP(url, idDivLabels);
+    getJSP(url, containerLabels);
   }
   
   function process_detail_new(thePage, ctrl, flowid, pid, subpid, procStatus, uri) {

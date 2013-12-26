@@ -105,7 +105,7 @@
 			<li style="font-size:12px;color:black;margin-left:0px;margin-bottom:10px"><if:message string="process_annotations.field.labels" /></li>
 			<% for(int i=0; i < labels.size(); i++){ 
 			if(labels.get(i).getCheck()){%>
-				<li>
+				<li class="list-group">
 				<input type="checkbox" onclick="managerLabels(<%=labels.get(i).getId()%>,true)" checked id="checkLabel_<%=labels.get(i).getId()%>" />
 				<img src="AnnotationIconsServlet?label_name='<%=labels.get(i).getName()%>'&ts='+<%=System.currentTimeMillis() %>+'" width="16px" height="16px"/>
 				<%=labels.get(i).getName()%></li>
@@ -127,7 +127,7 @@
 		</ul>
 		
 		<%if (!"forward".equals(from)) {%>
-		<br><input type="button" class="apt_regular_button" value="<if:message string="button.save"/>" id="save" onclick="saveProcessAnnotations('false');">
-		<input type="button" class="apt_regular_button" value="<if:message string="button.cancel"/>" id="cancel" onclick="showAnnotations(<%=flowid%>,<%=pid%>,<%=subpid%>);">
+		<br><input type="button" class="apt_regular_button btn btn-default" value="<if:message string="button.save"/>" id="save" onclick="saveProcessAnnotations('false');">
+		<input type="button" class="apt_regular_button btn btn-default" value="<if:message string="button.cancel"/>" id="cancel" onclick="showAnnotations(<%=flowid%>,<%=pid%>,<%=subpid%>);">
 		<%}%>	
 	</div>    

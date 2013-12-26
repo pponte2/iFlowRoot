@@ -19,7 +19,6 @@
 <%@page import="pt.iflow.api.processannotation.*"%>
 <%@page import="pt.iflow.api.filters.FlowFilter"%>
 <script language="JavaScript">
-alert(2)
 function assignActivity(folderid, sactivity){
 		tabber_right(1, '<%=response.encodeURL("main_content.jsp")%>?setfolder='+folderid+'&activities='+sactivity);
 }
@@ -241,7 +240,7 @@ function cleanFilter(){
   	} catch (Exception e) {}
   	
 	//FILTROS
-	//CLEAN				
+	//CLEAN
 	String cleanFilter = "0";
 	cleanFilter = fdFormData.getParameter("cleanFilter");
 	  if ("1".equals(cleanFilter)) {
@@ -270,14 +269,18 @@ function cleanFilter(){
 	  //FILTER BY LABEL
 	  int selectedLabel = 0;
 
+	  String selectedPreviousUser = "";	
 	  String filterPreviousUserid = fdFormData.getParameter("filterPreviousUserid");
 	  if(filterPreviousUserid!=null){
 	    session.setAttribute("filterPreviousUserid", filterPreviousUserid); // Utilizador actualizou valor
+		selectedPreviousUser = filterPreviousUserid;
 	  }
 
+	  String selectedDate = "";	
 	  String filterDate = fdFormData.getParameter("filterDate");
 	  if(filterDate!=null){
-	    session.setAttribute("filterDate",filterDate); // Utilizador actualizou valor
+	    session.setAttribute("filterDate", filterDate); // Utilizador actualizou valor
+		selectedDate = filterDate;
 	  }
 	  String filterlabel = fdFormData.getParameter("filterlabel");
 	  if(filterlabel!=null){
@@ -319,6 +322,14 @@ function cleanFilter(){
 		    selectedDays = 0;
 		  }
 	  }
+	  
+	boolean isCleanFilter = true;
+	
+	if (session.getAttribute("filterlabel") != null
+	    || session.getAttribute("filterDate") != null
+	    || session.getAttribute("filterdays") != null
+	    || session.getAttribute("filterfolder") != null
+	    || session.getAttribute("filterPreviousUserid") != null) isCleanFilter = false;
 	  
 	  //ORDER BY
 	  String orderBy = fdFormData.getParameter("orderBy");
@@ -365,9 +376,23 @@ function cleanFilter(){
 
 	  ListIterator<Activity> it = pm.getUserActivitiesOrderFilters(userInfo, -1, filter);
 	  //PUT TO VM
+	  //jcosta: get selectedFolderName
+	  FolderManager fmFilter = BeanFactory.getFolderManagerBean();
+	  List<Folder> foldersFilter = fmFilter.getUserFolders(userInfo);
+		
+	  String selectedFolderName = "";
+	  if (selectedFolder == 0) {
+	    selectedFolderName = "";
+	  } else {
+	    selectedFolderName = fmFilter.getFolderName(selectedFolder, foldersFilter);	
+	  }
+
 	  hsSubstLocal.put("selectedLabel", selectedLabel);
 	  hsSubstLocal.put("selectedDays", selectedDays);
 	  hsSubstLocal.put("selectedFolder", selectedFolder);
+	  hsSubstLocal.put("selectedPreviousUser", selectedPreviousUser);
+	  hsSubstLocal.put("selectedDate", selectedDate);
+	  hsSubstLocal.put("selectedFolderName", selectedFolderName);
 	  
 	//	now get activities
 	Activity a;
@@ -390,7 +415,8 @@ function cleanFilter(){
 	else {
       	hsSubstLocal.put("hasActivities", Boolean.FALSE);
 	}
-
+	hsSubstLocal.put("cleanFilter", isCleanFilter?Boolean.TRUE:Boolean.FALSE);
+	
 	nAll_Tasks = alAct.size();
 	title = messages.getString("main_content.tasks.title")+" ("+nAll_Tasks+")";
 	
@@ -413,7 +439,7 @@ function cleanFilter(){
 	// newest
 	int j=0;
 	for (int i=0; i < alAct.size(); i++) {
-	  a = alAct.get((i));
+		a = alAct.get((i));
 	  String sCreatedDate = DateUtility.formatFormDate(userInfo, a.created);
 	  if (!allDates.contains(sCreatedDate)) {
 	    allDates.add(sCreatedDate);
@@ -482,6 +508,7 @@ function cleanFilter(){
         }
         
         FolderManager fm = BeanFactory.getFolderManagerBean();
+		
         List<Folder> folders = fm.getUserFolders(userInfo);
         String colorBackgroundColor = fm.getFolderColor(a.getFolderid(), folders);
 		if (colorBackgroundColor == null || colorBackgroundColor.equals("")) colorBackgroundColor = "#666";
@@ -550,6 +577,7 @@ function cleanFilter(){
 	hsSubstLocal.put("nextIndex", nextIndex.toString());
       hsSubstLocal.put("newact", alNew);
       hsSubstLocal.put("actsize", alNew.size());
+	 
       // check if contains appname
       {
         boolean contains = false;

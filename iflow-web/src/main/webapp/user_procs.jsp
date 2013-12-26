@@ -120,8 +120,8 @@
 %>
 
 <div style="vertical-align: middle;">
-  <img src="images/icon_tab_tarefas.png" class="icon_item"/>
-  <h1><if:message string="user_procs.title" /></h1>
+  <!--img src="images/icon_tab_tarefas.png" class="icon_item"/-->
+  <div class="title_cont"><if:message string="user_procs.title" /></div>
 </div>
 <%
   if (!showUserProcs) {
@@ -227,16 +227,19 @@
 	  	  }
 	  	%>
       </p>
-	  <table width="100%" cellpadding="2">
-	  	<tr class="tab_header">
-	  		<td />
-		  	<td><if:message string="user_procs.header.flow" /></td>
-		  	<td><if:message string="user_procs.header.process" /></td>
-		  	<td><if:message string="user_procs.header.status" /></td>
-		  	<td><if:message string="user_procs.header.statusDate" /></td>
-		  	<td style="min-width: 100px;"><if:message string="user_procs.header.assignedTo" /></td>	  	
-			<%=(StringUtils.isEmpty(targetUser) || isIntervenient) ? "<td>" + messages.getString("user_procs.header.owner") + "</td>" : ""%>
+	  <table width="100%" cellpadding="2" class="table">
+	  	<thead>
+		<tr class="tab_header">
+	  		<th />
+		  	<th><if:message string="user_procs.header.flow" /></th>
+		  	<th><if:message string="user_procs.header.process" /></th>
+		  	<th><if:message string="user_procs.header.status" /></th>
+		  	<th><if:message string="user_procs.header.statusDate" /></th>
+		  	<th style="min-width: 100px;"><if:message string="user_procs.header.assignedTo" /></th>	  	
+			<%=(StringUtils.isEmpty(targetUser) || isIntervenient) ? "<th>" + messages.getString("user_procs.header.owner") + "</th>" : ""%>
 		</tr>
+		</thead>
+		<tbody>
 	   <% boolean bFirstPage = true;
 	      boolean bHasMoreItems = false;
 	      if (nStartIndex < 0) {
@@ -390,7 +393,8 @@
 	        }
 	%>
 	</tr>
-    <% } %>			
+    <% } %>	
+	</tbody>	
   </table>
 </div>
 <%

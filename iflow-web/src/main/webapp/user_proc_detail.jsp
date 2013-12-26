@@ -30,21 +30,21 @@ if(scroll != null)
 <fieldset class="submit">
 <% if(status.equals("-2")){ %>
 
-  <input class="regular_button_01" type="button" name="back" value="Fechar" 
+  <input class="regular_button_01 btn btn-default" type="button" name="back" value="Fechar" 
   	onClick="javascript:tabber('<%=response.encodeURL("main.jsp")%>');"/>
   
 <%} else if(status.equals("-3")){ %>
 
-  <input class="regular_button_01" type="button" name="back" value="Fechar" 
+  <input class="regular_button_01 btn btn-default" type="button" name="back" value="Fechar" 
 	onClick="javascript:tabber('inbox','','',inboxJSP);"/>
 
 <%} else if(status.equals("-4")){ %>
 
 <%} else {%> 
-  <input class="regular_button_01" type="button" name="back" value="<if:message string="button.search"/>" 
+  <input class="regular_button_01 btn btn-default" type="button" name="back" value="<if:message string="button.search"/>" 
   	onClick="javascript:tabber_right(8, '<%=response.encodeURL("user_procs.jsp")%>', get_params(document.user_procs_filter));"/>
   
-  <input class="regular_button_01" type="button" name="back" value="<if:message string="button.proc_hist"/>" 
+  <input class="regular_button_01 btn btn-default" type="button" name="back" value="<if:message string="button.proc_hist"/>" 
   	onClick="javascript:tabber_right(8, '<%=response.encodeURL("user_proc_tasks.jsp")%>', get_params(document.form_proc_detail));"/>
 <% } %>
 </fieldset>

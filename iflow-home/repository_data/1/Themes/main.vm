@@ -218,11 +218,24 @@
 				element.style.backgroundColor = '#ddd';				
 			}
 			
+			function pesquisarPnumber(value) {
+				getJSP(userProcsFiltroJSP + '?searchtype=nf', containerSearch);
+				document.getElementById('pnumber').value = value;
+				getJS('user_procs.jsp?' + get_params(document.user_procs_filter) + '&clearsearch=true');
+				return false;
+			}
+			
 		</script>
 
 		</head>
 
 	<body onresize="javascript:mainResize()">
+	
+	<style type="text/css">
+		h1 {
+			font-size: 1.2em;
+		}
+	</style>
 	
 		<div id="container">
 		
@@ -232,19 +245,21 @@
 						<img border="0" src="$response.encodeURL('Logo')" id="img_org_logo"/>
 					</div>
 					<div class="Nl">
+					<form name="nlsearch">
 						<table width="390px" border="0" cellspacing="0" cellpadding="0">
 							<tr>
 								<td>
-									<input type="text" class="form-control" id="nl" placeholder="Pesquisa" title="Pesquisa" onkeydown="if (event.keyCode == 13) { alert('aaaa'); return false; }">
+									<input type="text" class="form-control" id="nl" placeholder="Nº de Processo" title="Pesquisa" onkeydown="if (event.keyCode == 13) { pesquisarPnumber(document.nlsearch.nl.value); return false; }">
 									</input>
 								</td>
 								<td>
 									<div class="div_BTNL">
-										<input style=" margin: 0px;" type="button" name="Send" id="Send" class="btn btn-default btn-sm" value="Pesquisar" onclick="alert('aaaa')"/>
+										<input style=" margin: 0px;" type="button" name="Send" id="Send" class="btn btn-default btn-sm" value="Pesquisar" onclick="pesquisarPnumber(document.nlsearch.nl.value)"/>
 									</div>
 								</td>
 							</tr>
 						</table>
+					</form>
 					</div>
 				</div>
 				<div class="div_bannerright">

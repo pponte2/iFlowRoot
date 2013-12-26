@@ -109,10 +109,10 @@
     	sOutput = msgBlock;
 %>
 <%@ include file = "../inc/process_top.jspf" %>
-<div class="info_msg" style="font-family: Verdana,Arial,sans-serif;"><%=sOutput%></div>
+<div class="alert alert-info"><%=sOutput%></div>
 <div class="button_box">
   <form action="#" onsubmit="return false;">
-    <input class="regular_button_00" <%if (userInfo.isGuest()) {%> type="hidden" <%} else {%> type="button" <%}%> name="close" value="<%=messages.getString("button.close")%>" onclick="if(parent && parent.close_process) parent.close_process(3); return false;" />
+    <input class="regular_button_00 btn btn-default" <%if (userInfo.isGuest()) {%> type="hidden" <%} else {%> type="button" <%}%> name="close" value="<%=messages.getString("button.close")%>" onclick="if(parent && parent.close_process) parent.close_process(3); return false;" />
   </form>
 </div>
 <% 
