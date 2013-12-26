@@ -1,5 +1,7 @@
 #if ($orgTheme == "newflow")
 	#if($layout==0)
+<input id="usersStr" type="hidden" value="$allUsers"></input>
+<input id="datesStr" type="hidden" value="$allDates"></input>
 <div class="slide02">
 	<div style=" margin-left: 180px;">Preview</div>
 	<div style=" border-bottom: 1px Solid #cccccc; padding: 0 2px 5px 2px; text-align: center;">
@@ -40,19 +42,21 @@
 			<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">Filtrar</button>
 			<ul class="dropdown-menu" role="menu" style="width:300px; top:110px; left: 270px;">
 				<li>
-					<span style="display: inline">
-						User Anterior
-					</span>
-					<input type="text" class="form-control donotclosemenu" id="previousUseridText" title="Utilizador Anterior"
-							style="display: inline; width: 150px; height: 20px; padding: 0;" onkeydown="javascript:if (event.keyCode == 13) { getJSP('main_content.jsp?filterPreviousUserid=' + this.value); return false; }">
-					</input>
+					<div class="ui-widget">
+						<span style="display: inline">
+							User Anterior
+						</span>
+						<input type="text" class="form-control donotclosemenu" id="previousUseridText" title="Utilizador Anterior" value="$filterPreviousUserid"
+								style="display: inline; width: 150px; height: 20px; padding: 0;" onkeydown="javascript:if (event.keyCode == 13) { getJSP('main_content.jsp?filterPreviousUserid=' + this.value  + '&filterDate=' + document.getElementById('dataCriacaoText').value); return false; }">
+						</input>
+					</div>
 				</li>
 				<li>
 					<span style="display: inline">
 						Data Criação
 					</span>
-					<input type="text" class="form-control donotclosemenu" id="previousDataCriacaoText" title="Utilizador Anterior"  
-							style="display: inline; width: 150px; height: 20px; padding: 0;" onkeydown="javascript:if (event.keyCode == 13) { getJSP('main_content.jsp?filterdate=' + this.value); return false; }">
+					<input type="text" class="form-control donotclosemenu" id="dataCriacaoText" title="Data de Criação"  value="$filterDate"
+							style="display: inline; width: 150px; height: 20px; padding: 0;" onkeydown="javascript:if (event.keyCode == 13) { getJSP('main_content.jsp?filterDate=' + this.value + '&filterPreviousUserid=' + document.getElementById('previousUseridText').value); return false; }">
 					</input>
 				</li>
 			</ul>  
@@ -101,7 +105,7 @@
 			</div>
 			<div class="right" style="$style_read;">
 				<div>
-					<a href="javascript:getJSP('main_content.jsp?filterdate=$act.get("createdDate")')">$act.get("createdDate")</a>
+					<a href="javascript:getJSP('main_content.jsp?filterDate=$act.get("createdDate")')">$act.get("createdDate")</a>
 				</div>
 			</div>
 		</div>
@@ -180,7 +184,7 @@
 						Data Criação
 					</span>
 					<input type="text" class="form-control donotclosemenu" id="previousDataCriacaoText" title="Utilizador Anterior"  
-							style="display: inline; width: 150px; height: 20px; padding: 0;" onkeydown="javascript:if (event.keyCode == 13) { getJSP('main_content.jsp?filterdate=' + this.value); return false; }">
+							style="display: inline; width: 150px; height: 20px; padding: 0;" onkeydown="javascript:if (event.keyCode == 13) { getJSP('main_content.jsp?filterDate=' + this.value); return false; }">
 					</input>
 				</li>
 			</ul>  
@@ -237,7 +241,7 @@
 		<div class="pr05" style="text-align: left;width:6%; font-weight:bold"></div>
 		<div  class="pr06" style="width:10%;"><div>$act.get("duration")</div><div style="height:2px;width:$act.get("diffDays")px;background-color:$act.get("durationColor")"></div></div>
 		<div class="pr07" style="width:10%;">
-			<a href="javascript:getJSP('main_content.jsp?filterdate=$act.get("createdDate")')">$act.get("createdDate")</a>
+			<a href="javascript:getJSP('main_content.jsp?filterDate=$act.get("createdDate")')">$act.get("createdDate")</a>
 			<br>
 			<img src="images/flag.png" width="12" height="14" alt=""/>
 		</div>

@@ -19,6 +19,7 @@
 <%@page import="pt.iflow.api.processannotation.*"%>
 <%@page import="pt.iflow.api.filters.FlowFilter"%>
 <script language="JavaScript">
+alert(2)
 function assignActivity(folderid, sactivity){
 		tabber_right(1, '<%=response.encodeURL("main_content.jsp")%>?setfolder='+folderid+'&activities='+sactivity);
 }
@@ -245,7 +246,7 @@ function cleanFilter(){
 	cleanFilter = fdFormData.getParameter("cleanFilter");
 	  if ("1".equals(cleanFilter)) {
 	    session.removeAttribute("filterlabel");
-	    session.removeAttribute("filterdate");
+	    session.removeAttribute("filterDate");
 	    session.removeAttribute("filterdays");
 	    session.removeAttribute("filterfolder");
 	    session.removeAttribute("filterPreviousUserid");
@@ -274,9 +275,9 @@ function cleanFilter(){
 	    session.setAttribute("filterPreviousUserid", filterPreviousUserid); // Utilizador actualizou valor
 	  }
 
-	  String filterdate = fdFormData.getParameter("filterdate");
-	  if(filterdate!=null){
-	    session.setAttribute("filterdate",filterdate); // Utilizador actualizou valor
+	  String filterDate = fdFormData.getParameter("filterDate");
+	  if(filterDate!=null){
+	    session.setAttribute("filterDate",filterDate); // Utilizador actualizou valor
 	  }
 	  String filterlabel = fdFormData.getParameter("filterlabel");
 	  if(filterlabel!=null){
@@ -284,9 +285,12 @@ function cleanFilter(){
 	  }
 	  if (filterPreviousUserid == null){
 	    filterPreviousUserid = (String) session.getAttribute("filterPreviousUserid");
+		hsSubstLocal.put("filterPreviousUserid", "");
+	  } else {
+		hsSubstLocal.put("filterPreviousUserid", filterPreviousUserid);
 	  }
-	  if (filterdate == null){
-	    filterdate = (String) session.getAttribute("filterdate");
+	  if (filterDate == null){
+	    filterDate = (String) session.getAttribute("filterDate");
 	  }
 	  if (filterlabel == null){
 	    filterlabel = (String) session.getAttribute("filterlabel");
@@ -345,14 +349,16 @@ function cleanFilter(){
 	  filter.setOrderBy(orderBy);
 	  filter.setOrderType(orderType);
 	  filter.setPreviousUserid(filterPreviousUserid);
-	  if (filterdate != null) {
+	  hsSubstLocal.put("filterDate", "");
+	  if (filterDate != null) {
 		try{
 		  Calendar cal = Calendar.getInstance();
 		  SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-		  Date dt = dateFormat.parse(filterdate);
+		  Date dt = dateFormat.parse(filterDate);
 		  cal.setTime(dt);
 		  filter.setDateBefore(cal.getTime());
 		  filter.setDateAfter(cal.getTime());
+		  hsSubstLocal.put("filterDate", filterDate);
 		} catch(Exception e) {
 		}
 	  }
@@ -399,11 +405,26 @@ function cleanFilter(){
 
 	Timestamp tsNow = new Timestamp((new java.util.Date()).getTime());
 
-	// newest
-	for (int i=0,j=0; i < alAct.size() && j < nNEWEST_LIMIT; i++) {
-	  if (i >= startIndex) {
-		a = alAct.get((i));
+	List<String> allUsers = new ArrayList<String>();
+	String allUsersStr = "";
+	List<String> allDates = new ArrayList<String>();
+	String allDatesStr = "";
 
+	// newest
+	int j=0;
+	for (int i=0; i < alAct.size(); i++) {
+	  a = alAct.get((i));
+	  String sCreatedDate = DateUtility.formatFormDate(userInfo, a.created);
+	  if (!allDates.contains(sCreatedDate)) {
+	    allDates.add(sCreatedDate);
+	    allDatesStr += (allDates.isEmpty() ? "" : ",") + sCreatedDate;  
+	  }
+	  String sPreviousUserid = (a.previousUserid != null)?a.previousUserid:"";
+	  if (!allUsers.contains(sPreviousUserid)) {
+	    allUsers.add(sPreviousUserid);
+	    allUsersStr += (allUsers.isEmpty() ? "" : ",") + sPreviousUserid;  
+	  }
+	  if (i >= startIndex && j < nNEWEST_LIMIT) {
 		// build hashmap to be able to display things properly
 		Map<String,String> hm = new HashMap<String,String>();
 
@@ -419,8 +440,6 @@ function cleanFilter(){
 		String sSubPid = String.valueOf(a.subpid);
 		String sDesc = (a.description.length()>70)?a.description.substring(0,67)+"...":a.description;
 		String sCreated = DateUtility.formatTimestamp(userInfo, a.created);
-		String sCreatedDate = DateUtility.formatFormDate(userInfo, a.created);
-		String sPreviousUserid = (a.previousUserid != null)?a.previousUserid:"";
 		
 		Timestamp createdTimestamp = new Timestamp(a.created.getTime());
 		
@@ -512,6 +531,9 @@ function cleanFilter(){
 		j++;
 	  }
 	}
+
+	hsSubstLocal.put("allUsers", allUsersStr);
+	hsSubstLocal.put("allDates", allDatesStr);
 
 	Integer previousIndex = -1;
 	Integer nextIndex = 0;

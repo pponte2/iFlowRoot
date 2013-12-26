@@ -1723,9 +1723,6 @@
     }
 
   function reloadJS() {
-    
-    $('.donotclosemenu').click(function(e) { e.stopPropagation();});
-      
     $(".draggable").draggable({revert: "invalid", opacity: 0.7, helper: "clone"});
     $(".droppable").droppable({
       hoverClass: "ui-state-active",
@@ -1782,4 +1779,22 @@
   	    }); 
   	  } catch (err) {}
 	  }
+
+    var ctrl = document.getElementById('previousUseridText');
+    if (ctrl != null) {
+      var str = document.getElementById('usersStr').value;
+      var arr = str.split(',');
+      $(function() {
+        $('#previousUseridText').autocomplete({source: arr});
+      });
+    }
+    ctrl = document.getElementById('dataCriacaoText');
+    if (ctrl != null) {
+      var str = document.getElementById('datesStr').value;
+      var arr = str.split(',');
+      $('#dataCriacaoText').autocomplete({source: arr});
+    }
+
+    $('.donotclosemenu').click(function(e) { e.stopPropagation();});
+    $('.ui-corner-all').click(function(e) { e.stopPropagation();});
   }
