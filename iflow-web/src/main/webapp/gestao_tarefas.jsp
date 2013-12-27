@@ -137,7 +137,7 @@
       <input type="hidden" name="ahid" value=""/>
       <input type="hidden" name="cb_accept" value=""/>
       <input type="hidden" name="cb_reject" value=""/>
-      <table class="itemlist">
+      <table class="itemlist table">
 
     <%bfirst = true;
       try {
@@ -159,15 +159,17 @@
           Integer flowid = new Integer(rs.getInt("flowid"));
           if (bfirst) {%>
 
+		<thead>
         <tr class="tab_header">
-          <td><input type="checkbox" name="cb_ignore" value="cb_ignore" onclick="javascript:toggle_all_cb(this, this.form.cb_flowid)" /></td>
-          <td><%=messages.getString("gestao_tarefas.field.owner")%></td>
-          <td><%=messages.getString("gestao_tarefas.field.flow")%></td>
-          <td><%=messages.getString("gestao_tarefas.field.enddate")%></td>
-          <td></td>
-          <td></td>
+          <th><input type="checkbox" name="cb_ignore" value="cb_ignore" onclick="javascript:toggle_all_cb(this, this.form.cb_flowid)" /></th>
+          <th><%=messages.getString("gestao_tarefas.field.owner")%></th>
+          <th><%=messages.getString("gestao_tarefas.field.flow")%></th>
+          <th><%=messages.getString("gestao_tarefas.field.enddate")%></th>
+          <th></th>
+          <th></th>
         </tr>
-
+		</thead>
+		<tbody>
          <%
             bfirst = false;
           }
@@ -187,6 +189,7 @@
           <td><a class="cell_button" href="javascript:tabber_right(5, '<%=sUrl%>', '<%=sParams + rkey%>&' + get_params(document.requests));"><%=messages.getString("button.refuse")%></a></td>
         </tr>
       <%}%>
+	  </tbody>
       </table>
       <%pt.iflow.api.db.DatabaseInterface.closeResources(db, st, rs);
       } catch (Exception e) {
@@ -196,12 +199,12 @@
       }
       if (bfirst) {%>
       <table>
-        <tr><td class="error_msg"><%=messages.getString("gestao_tarefas.msg.nodeleg")%></td></tr>
+        <tr><td class="alert alert_warning"><%=messages.getString("gestao_tarefas.msg.nodeleg")%></td></tr>
       </table>
       <%} else {%>
       <div class="button_box"> 
-        <input class="regular_button_03" type="button" name="add" value="<if:message string="button.accept_checked"></if:message>" onClick="javascript:document.requests.cb_accept.value=true;tabber_right(5, '<c:url value="confirmar_agendamento.jsp"></c:url>','ts=<%=ts%>&' + get_params(document.requests));"></input>
-        <input class="regular_button_03" type="button" name="add" value="<if:message string="button.refuse_checked"></if:message>" onClick="javascript:document.requests.cb_reject.value=true;tabber_right(5, '<c:url value="confirmar_agendamento.jsp"></c:url>','ts=<%=ts%>&' + get_params(document.requests));"></input>
+        <input class="regular_button_03 btn btn-default" type="button" name="add" value="<if:message string="button.accept_checked"></if:message>" onClick="javascript:document.requests.cb_accept.value=true;tabber_right(5, '<c:url value="confirmar_agendamento.jsp"></c:url>','ts=<%=ts%>&' + get_params(document.requests));"></input>
+        <input class="regular_button_03 btn btn-default" type="button" name="add" value="<if:message string="button.refuse_checked"></if:message>" onClick="javascript:document.requests.cb_reject.value=true;tabber_right(5, '<c:url value="confirmar_agendamento.jsp"></c:url>','ts=<%=ts%>&' + get_params(document.requests));"></input>
       </div>
       <%}%>
 
@@ -211,7 +214,7 @@
       <input type="hidden" name="id" value=""/>
       <input type="hidden" name="op" value=""/>
       <input type="hidden" name="cb_terminate" value=""/>
-      <table class="itemlist">
+      <table class="itemlist table">
     <%
       try {
         ds = Utils.getDataSource();
@@ -243,18 +246,20 @@
           if (bfirst) {
       %>
         <tr class="tab_header">
-          <td><input type="checkbox" name="cb_ignore" value="cb_ignore" onclick="javascript:toggle_all_cb(this, this.form.cb_flowid)" /></td>
-          <td><%=messages.getString("gestao_tarefas.field.owner")%></td>
-          <td><%=messages.getString("gestao_tarefas.field.flow")%></td>
-          <td><%=messages.getString("gestao_tarefas.field.teamworker")%></td>
-          <td><%=messages.getString("gestao_tarefas.field.status")%></td>
-          <td></td>
+          <th><input type="checkbox" name="cb_ignore" value="cb_ignore" onclick="javascript:toggle_all_cb(this, this.form.cb_flowid)" /></th>
+          <th><%=messages.getString("gestao_tarefas.field.owner")%></th>
+          <th><%=messages.getString("gestao_tarefas.field.flow")%></th>
+          <th><%=messages.getString("gestao_tarefas.field.teamworker")%></th>
+          <th><%=messages.getString("gestao_tarefas.field.status")%></th>
+          <th></th>
         </tr>
+		</thead>
         <%
             bfirst = false;
           }
           hsDelegatedFlows.add(flowid.toString() + owner);
         %>
+		<tbody>
         <tr class="<%=(toggle = !toggle) ? "tab_row_even" : "tab_row_odd"%>">
           <td><input type="checkbox" name="cb_flowid" value="<%=id%>" /></td>
           <td><%=owner%></td>
@@ -293,6 +298,7 @@
 
           if (bfirst) {
         %>
+		<thead>
         <tr class="tab_header">
           <td><%=messages.getString("gestao_tarefas.field.owner")%></td>
           <td><%=messages.getString("gestao_tarefas.field.flow")%></td>
@@ -300,6 +306,7 @@
           <td><%=messages.getString("gestao_tarefas.field.status")%></td>
           <td></td>
         </tr>
+		</thead>
           <%
             bfirst = false;
           }
@@ -316,6 +323,7 @@
         }
         pt.iflow.api.db.DatabaseInterface.closeResources(db, st, rs);
       %>
+	  </tbody>
       </table>
       <%
 	
@@ -331,7 +339,7 @@
       </table>
       <%} else {%>
       <div class="button_box"> 
-        <input class="regular_button_03" type="button" name="add" value="<if:message string="button.terminate_checked"></if:message>" onClick="javascript:document.terminar.cb_terminate.value=true;tabber_right(5, '<c:url value="terminar_agendamento.jsp"></c:url>','ts=<%=ts%>&' + get_params(document.terminar));"></input>
+        <input class="regular_button_03 btn btn-default" type="button" name="add" value="<if:message string="button.terminate_checked"></if:message>" onClick="javascript:document.terminar.cb_terminate.value=true;tabber_right(5, '<c:url value="terminar_agendamento.jsp"></c:url>','ts=<%=ts%>&' + get_params(document.terminar));"></input>
       </div>
       <%}%>
 
@@ -342,7 +350,7 @@
       <input type="hidden" name="ownerid" value=""/>
       <input type="hidden" name="cb_request" value=""/>
       <input type="hidden" name="action" value="<%=sAction%>"/>
-      <table class="itemlist">
+      <table class="itemlist table">
       <%try {
           ds = Utils.getDataSource();
           db = ds.getConnection();
@@ -368,16 +376,20 @@
 
             if (bfirst) {
       %>
+	  <thead>
         <tr class="tab_header">
-          <td><input type="checkbox" name="cb_ignore" value="cb_ignore" onclick="javascript:toggle_all_cb(this, this.form.cb_flowid)" /></td>
-          <td><%=messages.getString("gestao_tarefas.field.owner")%></td>
-          <td><%=messages.getString("gestao_tarefas.field.flow")%></td>
-          <td></td>
+          <th><input type="checkbox" name="cb_ignore" value="cb_ignore" onclick="javascript:toggle_all_cb(this, this.form.cb_flowid)" /></th>
+          <th><%=messages.getString("gestao_tarefas.field.owner")%></th>
+          <th><%=messages.getString("gestao_tarefas.field.flow")%></th>
+          <th></th>
         </tr>
+		</thead>
+		<tbody>
             <%
               bfirst = false;
             }
             %>
+		
         <tr class="<%=i % 2 == 0 ? "tab_row_even" : "tab_row_odd"%>">
           <td><input type="checkbox" name="cb_flowid" value="<%=fda[i].getId()%>;<%=ownerid%>" /></td>
           <td><%=ownerid%></td>
@@ -406,12 +418,15 @@
 
             if (bfirst) {
         %>
+		<thead>
         <tr class="tab_header">
-          <td><input type="checkbox" name="cb_ignore" value="cb_ignore" onclick="javascript:toggle_all_cb(this, this.form.cb_flowid)" /></td>
-          <td><%=messages.getString("gestao_tarefas.field.owner")%></td>
-          <td><%=messages.getString("gestao_tarefas.field.flow")%></td>
-          <td></td>
+          <th><input type="checkbox" name="cb_ignore" value="cb_ignore" onclick="javascript:toggle_all_cb(this, this.form.cb_flowid)" /></th>
+          <th><%=messages.getString("gestao_tarefas.field.owner")%></th>
+          <th><%=messages.getString("gestao_tarefas.field.flow")%></th>
+          <th></th>
         </tr>
+		</thead>
+		<tbody>
             <%
               bfirst = false;
             }
@@ -432,16 +447,17 @@
           pt.iflow.api.db.DatabaseInterface.closeResources(db, st, rs);
         }
         %>
+		</tbody>
       </table>
       <%if (bfirst) {%>
       <table>
         <tr>
-          <td class="error_msg"><%=messages.getString("gestao_tarefas.msg.nomorerequests")%></td>
+          <td class="alert alert-warning"><%=messages.getString("gestao_tarefas.msg.nomorerequests")%></td>
         </tr>
       </table>
       <%} else {%>
       <div class="button_box"> 
-        <input class="regular_button_03" type="button" name="add" value="<if:message string="button.request_checked"></if:message>" onClick="javascript:document.requisitar.cb_request.value=true;tabber_right(5, '<c:url value="requisitar_agendamento.jsp"></c:url>','ts=<%=ts%>&' + get_params(document.requisitar));"></input>
+        <input class="regular_button_03 btn btn-default" type="button" name="add" value="<if:message string="button.request_checked"></if:message>" onClick="javascript:document.requisitar.cb_request.value=true;tabber_right(5, '<c:url value="requisitar_agendamento.jsp"></c:url>','ts=<%=ts%>&' + get_params(document.requisitar));"></input>
       </div>
       <%}%>
     </form>
@@ -520,7 +536,7 @@
       %>
       <table>
         <tr>
-          <td class="error_msg"><%=messages.getString("gestao_tarefas.msg.nomorerequests")%></td>
+          <td class="alert alert-warning"><%=messages.getString("gestao_tarefas.msg.nomorerequests")%></td>
         </tr>
       </table>
     <%}%>

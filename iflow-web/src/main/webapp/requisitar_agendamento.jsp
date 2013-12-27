@@ -127,12 +127,12 @@ if(cbRequest && cbFlowids.length == 0) {
 
 		    if (sbError.length() > 0) {
 %>
-  <div class="<%=(recordInserted)?"info_msg":"error_msg"%>">
+  <div class="<%=(recordInserted)?"alert alert-warning":"alert alert-danger"%>">
     <%=sbError.toString()%>
   </div>
 <% if(recordInserted) {%>
   <div class="button_box">
-    <input class="regular_button_01" type="button" name="continue" value="<%=messages.getString("button.go")%>" onClick="javascript:tabber_right(5, '<%= response.encodeURL("gestao_tarefas.jsp") %>', 'ts=<%= ts %>&action=<%=sAction%>');"/>
+    <input class="regular_button_01 btn btn-default" type="button" name="continue" value="<%=messages.getString("button.go")%>" onClick="javascript:tabber_right(5, '<%= response.encodeURL("gestao_tarefas.jsp") %>', 'ts=<%= ts %>&action=<%=sAction%>');"/>
   </div>
 <%
 }
@@ -239,7 +239,7 @@ if(cbRequest && cbFlowids.length == 0) {
 
 		    if (sbError.length() > 0) {
 %>
-<div class="error_msg">
+<div class="alert alert-danger">
 <%=sbError%>
 </div>
 <%
@@ -247,7 +247,7 @@ if(cbRequest && cbFlowids.length == 0) {
 
 		    if (sbMsg.length() > 0) {
 		      %>
-		      <div class="info_msg">
+		      <div class="alert alert-info">
 		      <%=sbMsg%>
 		      </div>
 		      <%
@@ -255,7 +255,7 @@ if(cbRequest && cbFlowids.length == 0) {
 		    
 if(recordsInserted) {%>
 <div class="button_box">
-<input class="regular_button_01" type="button" name="continue" value="<%=messages.getString("button.go")%>" onClick="javascript:tabber_right(5, '<%= response.encodeURL("gestao_tarefas.jsp") %>', 'ts=<%= ts %>&action=<%=sAction%>');"/>
+<input class="regular_button_01 btn btn-default" type="button" name="continue" value="<%=messages.getString("button.go")%>" onClick="javascript:tabber_right(5, '<%= response.encodeURL("gestao_tarefas.jsp") %>', 'ts=<%= ts %>&action=<%=sAction%>');"/>
 </div>
 <%
 return;
@@ -371,7 +371,6 @@ return;
     } %>
 
 	<div style="vertical-align: middle;">
-		<img src="images/icon_tab_delegations.png" class="icon_item"/>
 		<h1><%=title%></h1>
 	</div>
   
@@ -461,8 +460,8 @@ return;
   	</fieldset>
 
 	<fieldset class="submit">
-		<input class="regular_button_02" type="button" name="cancel" value="<%=messages.getString("button.cancel")%>" onClick="tabber_right(5, '<%= response.encodeURL("gestao_tarefas.jsp") %>', 'ts=<%= ts %>&action=<%=sAction %>');"/>
-		<input class="regular_button_02" type="button" name="request" value="<%=messages.getString("button.request")%>" onClick="tabber_right(5, '<%= response.encodeURL("requisitar_agendamento.jsp") %>', get_params(document.flowForm));"/>
+		<input class="regular_button_02 btn btn-default" type="button" name="cancel" value="<%=messages.getString("button.cancel")%>" onClick="tabber_right(5, '<%= response.encodeURL("gestao_tarefas.jsp") %>', 'ts=<%= ts %>&action=<%=sAction %>');"/>
+		<input class="regular_button_02 btn btn-default" type="button" name="request" value="<%=messages.getString("button.request")%>" onClick="tabber_right(5, '<%= response.encodeURL("requisitar_agendamento.jsp") %>', get_params(document.flowForm));"/>
 	</fieldset>
 </form>
 <%

@@ -1314,11 +1314,16 @@
 
     function resizeProcDetail() {
       try {
+	 
         if(!$('iframe_proc_detail')) return
-        var buttonsHeight = $('buttons_proc_detail').getCoordinates().height-0;
-        var containerHeight = $('section8_content_div').getCoordinates().height-0;
-        var iframe_height=(containerHeight-buttonsHeight-20)+'px';
-        $('iframe_proc_detail').setStyle('height',iframe_height);
+				var iframe_height = (document.getElementById('Accordion1').style.height + 10) + "px";
+        var mainWidth = document.getElementById('mainheader').scrollWidth-0;
+        var sidebarWidth = document.getElementById('main_sidebar').scrollWidth-0;
+        var taskbarWidth = document.getElementById('taskbar').scrollWidth-0;
+        var iframe_width=(mainWidth-sidebarWidth-taskbarWidth-6)+'px'; // nao mexer sem saber
+	
+        document.getElementById('iframe_proc_detail').setStyle('width',iframe_width);
+		    document.getElementById('iframe_proc_detail').setStyle('height',iframe_width);
       } catch(err) {
       // ignore error....
       }
@@ -1723,9 +1728,14 @@
     }
 
   function reloadJS() {
+  
+	  jscolor.bind();
+    
+    $('.donotclosemenu').click(function(e) { e.stopPropagation();});
+      
     $(".draggable").draggable({revert: "invalid", opacity: 0.7, helper: "clone"});
     $(".droppable").droppable({
-      hoverClass: "ui-state-active",
+      hoverClass: "if-state-active",
       drop: function(event, ui) {
         var aux = event.target.attributes['valToAssign'].value;
         if (aux != null && aux != "")

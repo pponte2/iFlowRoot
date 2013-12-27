@@ -1,5 +1,4 @@
 <div style="vertical-align: middle;">
-    <img src="images/note.png" class="icon_item" />
     <h1>${title}</h1>
 </div>
 
@@ -11,15 +10,18 @@
 	#set($msg_empty_display="")
 #end
 <div class="table_inc" id="msg_table" style="display:${msg_display}">
-	<table class="item_list">
+	<table class="item_list table">
+	<thead>
 		<tr class="tab_header">
-			<td></td>
-			<td>$notes_from</td>
-			<td>$notes_message</td>
-			<td>$notes_date</td>
-			<td>$notificationtitle</td>
-			<td></td>
+			<th></th>
+			<th>$notes_from</th>
+			<th>$notes_message</th>
+			<th>$notes_date</th>
+			<th>$notificationtitle</th>
+			<th></th>
 		</tr>
+	<thead>
+	<tbody>
 		#set($odd=1)
 		#foreach($note in $notifications)
 			#if($odd == 0)
@@ -63,6 +65,7 @@
 				</td>
 			</tr>
 		#end
+	</tbody>
 	</table>
 </div>
 <div class="info_msg" id="msg_empty_div" style="display:${msg_empty_display}">

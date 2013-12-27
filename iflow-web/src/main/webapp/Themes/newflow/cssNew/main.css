@@ -528,3 +528,7 @@ float: left;
   .help_box_open {
 	display: none;
   }
+  
+  .if-state-active {
+	font-weight: bold;
+  }

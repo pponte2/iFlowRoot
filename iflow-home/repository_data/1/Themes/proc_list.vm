@@ -8,11 +8,7 @@
 		<ul>
 		#foreach($flow in $appflow.get("flows"))
 			<li>
-			#if ("${flowid}" == "${flow.id}")
 				<a title='$appflow.get("tooltip_flow")' href="javascript:openProcess(${flow.id}, 'inicio_flow.jsp', 'flowid=${flow.id}&sel=${flow.id}', false)">${flow.name}</a>
-			#else
-				<a title='$appflow.get("tooltip_flow")' href="javascript:openProcess(${flow.id}, 'inicio_flow.jsp', 'flowid=${flow.id}&sel=${flow.id}', false)">${flow.name}</a>
-			#end
 			</li>
 		#end
 		#foreach($link in $appflow.get("links"))

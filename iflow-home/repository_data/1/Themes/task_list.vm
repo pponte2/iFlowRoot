@@ -17,9 +17,12 @@
 </style>
 
 	#if($layout==0)
+
 <input id="usersStr" type="hidden" value="$allUsers"></input>
 <input id="datesStr" type="hidden" value="$allDates"></input>
-<div class="slide02">
+
+
+<div id="taskbar" class="slide02">
 
 	<div style=" border-bottom: 1px Solid #cccccc; padding: 5px 2px 5px 2px; text-align: left;">
 		<form style="display:inline">

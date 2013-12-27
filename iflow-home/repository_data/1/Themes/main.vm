@@ -95,9 +95,11 @@
 			function calcFrameHeight(frameName) {
 				//find the height of the internal page
 				var the_height = document.getElementById(frameName).contentWindow.document.body.scrollHeight + 10; //pp: martelada dos 10 deveria ser corrigida.
-
+					
 				//change the height of the iframe
 				document.getElementById(frameName).style.height = the_height.toString() + 'px';
+				
+				resizeDelay(2000);
 			}
 
 			function setFocus(el, focus) {
@@ -142,6 +144,9 @@
 				getJSP(adminNavJSPNew, containerMain);
 				
 				jscolor.bind();
+				
+				
+			
 				init("Themes/${orgTheme}/css/iflow_std.css");
 				mainResize();
 				#if($sys_admin != "no")
@@ -168,11 +173,27 @@
 					if (obj!=null) obj.style.display = 'inline-block';
 					obj = document.getElementById('edit_'+labelid);
 					if (obj!=null) obj.style.display = 'inline-block';
-					if (labelid=='0') {
-						  if (obj!=null) obj.value = '';
+					//if (labelid=='0') {
+						if (obj!=null) obj.value = '';
 						  obj = document.getElementById('bt_pickColor_'+labelid);
-						  if (obj!=null) obj.style.display = 'inline-block';
-						}
+						  if (obj!=null) {
+							obj.style.display = 'inline-block';
+							if (document.getElementById('cl_edit_bg_' + labelid )) {
+								obj.setStyle('background-color', document.getElementById('cl_edit_bg_' + labelid ).style.backgroundColor);
+							}
+							else {
+								obj.color.fromString('999999');
+							}
+							if (labelid!='0') {
+							obj = document.getElementById('bt_edit_'+labelid);
+							var obj2 = document.getElementById('edit_'+labelid);
+						  if (obj!=null && obj2!=null) {
+							obj2.value = obj.innerHTML;
+						  }
+						  }
+						  
+						  }
+					//}
 					obj = document.getElementById('edit_'+labelid);
 					if (obj!=null) obj.focus();	
 				} else  {
@@ -215,7 +236,7 @@
 				for(var i = (activities.length - 1); i >= 0; i--) {
 					activities[i].style.backgroundColor = '#fafafa';
 				}
-				element.style.backgroundColor = '#ddd';				
+				element.style.backgroundColor = '#ddd';						
 			}
 			
 			function pesquisarPnumber(value) {
@@ -226,7 +247,6 @@
 			}
 			
 		</script>
-
 		</head>
 
 	<body onresize="javascript:mainResize()">
@@ -239,7 +259,7 @@
 	
 		<div id="container">
 		
-			<div class="header">
+			<div id="mainheader" class="header">
 				<div class="bannerleft">
 					<div class="logo">
 						<img border="0" src="$response.encodeURL('Logo')" id="img_org_logo"/>
@@ -254,7 +274,9 @@
 								</td>
 								<td>
 									<div class="div_BTNL">
+				
 										<input style=" margin: 0px;" type="button" name="Send" id="Send" class="btn btn-default btn-sm" value="Pesquisar" onclick="pesquisarPnumber(document.nlsearch.nl.value)"/>
+										
 									</div>
 								</td>
 							</tr>
@@ -294,7 +316,7 @@
 
 			#if($sys_admin == "no")
 
-			<div class="sidebar1">
+			<div id="main_sidebar" class="sidebar1">
 				<div id="Accordion1">
 					#if("$Tab2" != "no")	
 					<h3 class="Acor_01">
@@ -305,18 +327,14 @@
 					</h3>
 					<div class="Acor_02">
 						<div id='container_task_labels' class="txt_categ"></div>
-						<div style="font-size: 10px; color: #666666;">
+						<div style="font-size: 0.9em; color: #666666;">
 							<a id="bt_edit_0" href="" onClick="editLabel('0','1'); return false;" class="lmenu">$new_label</a>
 							<!--table-->
-							<input type="text" value="" id="edit_0" style="display:none;width:6em">
-							<input id="bt_pickColor_0" class="color {valueElement:'myValue'}" style="display:none;width:15px;height:15px;border: 1px solid #CCCCCC;" maxlength="0"></input>
-							<a id="bt_confirm_0" style="display:none" href="javascript:editLabel('0','0');">
-								<img border="0" src="images/icon_ok.png" title="$confirm::$confirm" class="toolTipImg" href="javascript:editLabel('0','0');">
-							</a>
-							<!--/table-->
-							<a id="bt_cancel_0" style="display:none;" href="javascript:editLabel('0','-1');">
-								<img id="bt_cancel_0_tmp" border="0" src="images/icon_delete.png" title="$cancel::$cancel" class="toolTipImg" onclick="javascript:editLabel('0','-1');"/>
-							</a>
+							<input class="form-control" type="text" value="" id="edit_0" style="display:none;width:6em;height:25px;"
+									onkeydown="if (event.keyCode == 13) { editLabel('0','0');}"/>
+							<input id="bt_pickColor_0" class="color form-control" style="display:none;cursor:pointer;width:15px;height:25px;border: 1px solid #CCCCCC;" maxlength="0" title="Escolha a cor"></input>
+							<!--input id="bt_pickColor_1" class="color form-control" style="display:none;15px;height:25px;border: 1px solid #CCCCCC" maxlength="0" title="Escolha a cor"></input-->
+							<button id="bt_cancel_0"  style="display:none;"  type="button" class="close pull-left" onclick="javascript:editLabel('0','-1');">&times;</button>
 						</div>
 					</div>
 					#end
