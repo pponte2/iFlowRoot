@@ -11,7 +11,7 @@
 <%@ page import="pt.iflow.userdata.views.*" %>
 <%@ include file = "../../inc/defs.jsp" %>
 <if:checkUserAdmin type="org">
-	<div class="error_msg">
+	<div class="alert alert-danger">
 		<if:message string="admin.error.unauthorizedaccess" />
 	</div>
 </if:checkUserAdmin>
@@ -242,18 +242,17 @@
 
 
 
-<form method="post" name="formulario" id="formulario">
+<h1 id="title_admin"><%=title%></h1>
+<form method="post" name="formulario" id="formulario" role="form" class="form-horizontal">
   <input type="hidden" name="userid" value="<%=userId%>" />
   <input type="hidden" name="operation" value="<%=newAction%>" /> 
 
-  <h1 id="title_admin"><%=title%></h1>
-
-<% if (!success) { %>
-<div class="error_msg"><%=sErrorMsg%></div>
+<% if (!success && sErrorMsg != null && sErrorMsg.length() > 0) { %>
+<div class="alert alert-danger"><%=sErrorMsg%></div>
 <% } %>
 
 <% if (null != infoMsg) { %>
-<div class="info_msg"><%=infoMsg%></div>
+<div class="alert alert-info"><%=infoMsg%></div>
 <% } %>
 
 <fieldset><legend></legend>

@@ -26,7 +26,7 @@
 
 	<div style=" border-bottom: 1px Solid #cccccc; padding: 5px 2px 5px 2px; text-align: left;">
 		<form style="display:inline">
-			<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">Ordenar</button>
+			<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">Ordenar<img width="12" height="12" src="Themes/newflow/images/down-arrow.png" style="margin-left:2px"/></button>
 			<ul class="dropdown-menu" role="menu" style="width:250px; top:110px; left: 190px;">
 				<li class="form-group">
 					<label></label>
@@ -37,8 +37,8 @@
 						Nº de processo
 					</label>
 					<div class="btn-group pull-right">
-						<button type="button" class="btn btn-default btn-xs" onclick="javascript:getJSP('main_content.jsp?orderBy=pid&orderType=asc');"><img src="Themes\newflow\images\up_arrow.png"/></button> 
-						<button type="button" class="btn btn-default btn-xs" onclick="javascript:getJSP('main_content.jsp?orderBy=pid&orderType=desc');"><img src="Themes\newflow\images\down_arrow.png"/></button> 
+						<button type="button" class="btn btn-default btn-xs" onclick="javascript:getJSP('main_content.jsp?orderBy=pid&orderType=asc');"><img src="Themes\newflow\images\up-arrow.png"/></button> 
+						<button type="button" class="btn btn-default btn-xs" onclick="javascript:getJSP('main_content.jsp?orderBy=pid&orderType=desc');"><img src="Themes\newflow\images\down-arrow.png"/></button> 
 					</div>
 					</span>
 				</li>
@@ -47,8 +47,8 @@
 						Utilizador prévio
 					</label>
 					<div class="btn-group pull-right">
-						<button type="button" class="btn btn-default btn-xs" onclick="javascript:getJSP('main_content.jsp?orderBy=previousUserId&orderType=asc');"><img src="Themes\newflow\images\up_arrow.png"/></button> 
-						<button type="button" class="btn btn-default btn-xs" onclick="javascript:getJSP('main_content.jsp?orderBy=previousUserId&orderType=desc');"><img src="Themes\newflow\images\down_arrow.png"/></button> 
+						<button type="button" class="btn btn-default btn-xs" onclick="javascript:getJSP('main_content.jsp?orderBy=previousUserId&orderType=asc');"><img src="Themes\newflow\images\up-arrow.png"/></button> 
+						<button type="button" class="btn btn-default btn-xs" onclick="javascript:getJSP('main_content.jsp?orderBy=previousUserId&orderType=desc');"><img src="Themes\newflow\images\down-arrow.png"/></button> 
 					</div>
 				</li>
 				<li class="form-group">
@@ -56,8 +56,8 @@
 						Data de criação
 					</label>
 					<div class="btn-group pull-right">
-						<button type="button" class="btn btn-default btn-xs" onclick="javascript:getJSP('main_content.jsp?orderBy=created&orderType=asc');"><img src="Themes\newflow\images\up_arrow.png"/></button> 
-						<button type="button" class="btn btn-default btn-xs" onclick="javascript:getJSP('main_content.jsp?orderBy=created&orderType=desc');"><img src="Themes\newflow\images\down_arrow.png"/></button> 
+						<button type="button" class="btn btn-default btn-xs" onclick="javascript:getJSP('main_content.jsp?orderBy=created&orderType=asc');"><img src="Themes\newflow\images\up-arrow.png"/></button> 
+						<button type="button" class="btn btn-default btn-xs" onclick="javascript:getJSP('main_content.jsp?orderBy=created&orderType=desc');"><img src="Themes\newflow\images\down-arrow.png"/></button> 
 					</div>
 				</li>
 				<li class="form-group">
@@ -65,14 +65,14 @@
 						Descrição
 					</label>
 					<div class="btn-group pull-right">
-						<button type="button" class="btn btn-default btn-xs" onclick="javascript:getJSP('main_content.jsp?orderBy=description&orderType=asc');"><img src="Themes\newflow\images\up_arrow.png"/></button> 
-						<button type="button" class="btn btn-default btn-xs" onclick="javascript:getJSP('main_content.jsp?orderBy=description&orderType=desc');"><img src="Themes\newflow\images\down_arrow.png"/></button> 
+						<button type="button" class="btn btn-default btn-xs" onclick="javascript:getJSP('main_content.jsp?orderBy=description&orderType=asc');"><img src="Themes\newflow\images\up-arrow.png"/></button> 
+						<button type="button" class="btn btn-default btn-xs" onclick="javascript:getJSP('main_content.jsp?orderBy=description&orderType=desc');"><img src="Themes\newflow\images\down-arrow.png"/></button> 
 					</div>
 				</li>
 			</ul>  
 		</form>
 		<form style="display:inline">
-			<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">Filtrar</button>
+			<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">Filtrar<img width="12" height="12" src="Themes/newflow/images/down-arrow.png" style="margin-left:2px"/></button>
 			<ul class="dropdown-menu" role="menu" style="width:350px; top:110px; left: 270px;">
 				<li class="form-group">
 					<label></label>
@@ -180,7 +180,7 @@
 <div class="content_template3" style="width:100%">
 	<div class="process_t3" style=" border-bottom: 1px Solid #cccccc; padding: 5px 2px 5px 2px; height:40px;">
 		<form style="display:inline">
-			<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">Ordenar</button>
+			<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">Ordenar<img width="12" height="12" src="Themes/newflow/images/down-arrow.png" style="margin-left:2px"/></button>
 			<ul class="dropdown-menu" role="menu" style="width:250px; top:110px; left: 190px;">
 				<li class="form-group">
 					<label></label>
@@ -191,8 +191,8 @@
 						Nº de processo
 					</label>
 					<div class="btn-group pull-right">
-						<button type="button" class="btn btn-default btn-xs" onclick="javascript:getJSP('main_content.jsp?orderBy=pid&orderType=asc');"><img src="Themes\newflow\images\up_arrow.png"/></button> 
-						<button type="button" class="btn btn-default btn-xs" onclick="javascript:getJSP('main_content.jsp?orderBy=pid&orderType=desc');"><img src="Themes\newflow\images\down_arrow.png"/></button> 
+						<button type="button" class="btn btn-default btn-xs" onclick="javascript:getJSP('main_content.jsp?orderBy=pid&orderType=asc');"><img src="Themes\newflow\images\up-arrow.png"/></button> 
+						<button type="button" class="btn btn-default btn-xs" onclick="javascript:getJSP('main_content.jsp?orderBy=pid&orderType=desc');"><img src="Themes\newflow\images\down-arrow.png"/></button> 
 					</div>
 					</span>
 				</li>
@@ -201,8 +201,8 @@
 						Utilizador prévio
 					</label>
 					<div class="btn-group pull-right">
-						<button type="button" class="btn btn-default btn-xs" onclick="javascript:getJSP('main_content.jsp?orderBy=previousUserId&orderType=asc');"><img src="Themes\newflow\images\up_arrow.png"/></button> 
-						<button type="button" class="btn btn-default btn-xs" onclick="javascript:getJSP('main_content.jsp?orderBy=previousUserId&orderType=desc');"><img src="Themes\newflow\images\down_arrow.png"/></button> 
+						<button type="button" class="btn btn-default btn-xs" onclick="javascript:getJSP('main_content.jsp?orderBy=previousUserId&orderType=asc');"><img src="Themes\newflow\images\up-arrow.png"/></button> 
+						<button type="button" class="btn btn-default btn-xs" onclick="javascript:getJSP('main_content.jsp?orderBy=previousUserId&orderType=desc');"><img src="Themes\newflow\images\down-arrow.png"/></button> 
 					</div>
 				</li>
 				<li class="form-group">
@@ -210,8 +210,8 @@
 						Data de criação
 					</label>
 					<div class="btn-group pull-right">
-						<button type="button" class="btn btn-default btn-xs" onclick="javascript:getJSP('main_content.jsp?orderBy=created&orderType=asc');"><img src="Themes\newflow\images\up_arrow.png"/></button> 
-						<button type="button" class="btn btn-default btn-xs" onclick="javascript:getJSP('main_content.jsp?orderBy=created&orderType=desc');"><img src="Themes\newflow\images\down_arrow.png"/></button> 
+						<button type="button" class="btn btn-default btn-xs" onclick="javascript:getJSP('main_content.jsp?orderBy=created&orderType=asc');"><img src="Themes\newflow\images\up-arrow.png"/></button> 
+						<button type="button" class="btn btn-default btn-xs" onclick="javascript:getJSP('main_content.jsp?orderBy=created&orderType=desc');"><img src="Themes\newflow\images\down-arrow.png"/></button> 
 					</div>
 				</li>
 				<li class="form-group">
@@ -219,14 +219,14 @@
 						Descrição
 					</label>
 					<div class="btn-group pull-right">
-						<button type="button" class="btn btn-default btn-xs" onclick="javascript:getJSP('main_content.jsp?orderBy=description&orderType=asc');"><img src="Themes\newflow\images\up_arrow.png"/></button> 
-						<button type="button" class="btn btn-default btn-xs" onclick="javascript:getJSP('main_content.jsp?orderBy=description&orderType=desc');"><img src="Themes\newflow\images\down_arrow.png"/></button> 
+						<button type="button" class="btn btn-default btn-xs" onclick="javascript:getJSP('main_content.jsp?orderBy=description&orderType=asc');"><img src="Themes\newflow\images\up-arrow.png"/></button> 
+						<button type="button" class="btn btn-default btn-xs" onclick="javascript:getJSP('main_content.jsp?orderBy=description&orderType=desc');"><img src="Themes\newflow\images\down-arrow.png"/></button> 
 					</div>
 				</li>
 			</ul>  
 		</form>
 		<form style="display:inline">
-			<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">Filtrar</button>
+			<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">Filtrar<img width="12" height="12" src="Themes/newflow/images/down-arrow.png" style="margin-left:2px"/></button>
 			<ul class="dropdown-menu" role="menu" style="width:350px; top:110px; left: 270px;">
 				<li class="form-group">
 					<label></label>

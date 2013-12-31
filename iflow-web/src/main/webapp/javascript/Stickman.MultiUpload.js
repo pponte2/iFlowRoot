@@ -278,7 +278,7 @@ var MultiUpload = new Class(
     			var delete_button = new Element(
     				'img',
     				{
-    					'src':'../images/cross_small.gif',
+    					'src':'../images/cross_small.png',
     					'alt':this.getMessage('stickman_delete', lang),
     					'title':this.getMessage('stickman_delete', lang),
     					'events':{
@@ -291,7 +291,7 @@ var MultiUpload = new Class(
     			var row_element = new Element(
     				'div',
     				{
-    					'class':'item'
+    					'class':'item multiupload-item form-control'
     				}
     			).adopt( delete_button ).adopt( item );
     			this.list.adopt( row_element );
@@ -303,7 +303,8 @@ var MultiUpload = new Class(
     				'input',
     				{
     					'type':'file',
-    					'disabled':( this.elements.length == this.max )?true:false
+    					'disabled':( this.elements.length == this.max )?true:false,
+						'style':'width:300px;opacity:0;position:relative;top:-35px;height:35px'
     				}
     			);
     			// Apply multi-upload functionality to new element
@@ -330,7 +331,9 @@ var MultiUpload = new Class(
 	deleteRow:function( uid, lang ){
 		// Confirm before delete
 		deleted_row = this.elements[ this.uid_lookup[ uid ] ];
-		if( confirm( this.getMessage('stickman_delete_confirm', lang).replace("{0}", "" + deleted_row.element.value) ) ){
+		if( true
+		//confirm( this.getMessage('stickman_delete_confirm', lang).replace("{0}", "" + deleted_row.element.value) ) 
+		){
 			this.elements.getLast().element.disabled = false;
 			deleted_row.element.remove();
 			deleted_row.row.remove();

@@ -143,6 +143,8 @@ a.linkform:active {
 }
 #Accordion1 .Acor_02 {
 	background: #e1e3ea;
+	padding-left: 1.5em;
+	padding-right: 1.5em;
 }
 #Accordion2 .Acor_01 {
 	height: 50px;
@@ -182,7 +184,7 @@ a.linkform:active {
 	font-size: 12px;
 }
 .txt_categ li {
-	width: 160px;
+	/*width: 160px;*/
 }
 /*CSS Links menu categorias */
 
@@ -193,7 +195,7 @@ a.lmenu:link, a.classe1:visited {
 }
 a.lmenu:hover {
 	text-decoration: none;
-	color: #00ccff;
+	/*color: #00ccff;*/
 }
 a.lmenu:active {
 	text-decoration: none;
@@ -230,7 +232,7 @@ ul, ul ul {
 	min-height: 25px;
 	padding-top: 5px;
 	display: block;
-	color: #00ccff;
+	color: #0066bb;
 }
 .menu > li > a.active {
 	background-image: url(../images/arrow_sbmenu_open.png);
@@ -532,3 +534,45 @@ float: left;
   .if-state-active {
 	font-weight: bold;
   }
+  
+  .tab_header {
+	font-weight: bold;
+  }
+  
+  td.itemlist_icon {
+	width: 16px;
+  }
+  
+  #title_admin {
+  color: #333333;
+font-size: 1.2em;
+padding: 10px 15px 0 10px;
+border-bottom: 1px rgb( 217, 217, 217 ) solid;
+background-image: -moz-linear-gradient( 90deg, rgb(238,238,241) 0%, rgb(250,250,250) 100%);
+background-image: -webkit-linear-gradient( 90deg, rgb(238,238,241) 0%, rgb(250,250,250) 100%);
+background-image: -ms-linear-gradient( 90deg, rgb(238,238,241) 0%, rgb(250,250,250) 100%);
+height: 40px;
+margin-bottom: 10px;
+margin-top:0px;
+}
+
+a > img:hover {
+		filter:alpha(opacity=50);
+		-moz-opacity: 0.5;
+		opacity: 0.5;
+
+}
+
+  .indent {
+  	padding-left: 2em;
+  }
+ 
+ .tab_row_extra {
+	font-weight: bold;
+	font-style: italic;
+ }
+
+  .menu_selected_item {
+	background-color:#bbb;
+  }
+

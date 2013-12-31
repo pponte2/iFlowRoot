@@ -40,6 +40,7 @@
   var processAnnotationsJSP="ProcessAnnotation/process_annotations.jsp";
   var divMain = 'div_main';
   var taskLabelsJSP = "TaskLabels/task_labels.jsp";
+  var idDivLabels = 'container_task_labels';
   var containerLabels = 'container_task_labels';
   var containerMain = 'container_admin';
   var containerSearch = 'container_search';
@@ -76,10 +77,11 @@
  
   function selectedItem(tabnr, item) {    
      cur_item = 'li_a_' + tabnr + "_"+ item;
-     if ($((prev_item[tabnr]))) $((prev_item[tabnr])).className = 'toolTipItemLink li_link';
-   if($(cur_item)) {
-     $(cur_item).className = 'toolTipItemLink li_link li_selected';
-     $(cur_item).blur();
+     if (document.getElementById((prev_item[tabnr]))) document.getElementById((prev_item[tabnr])).className = 'toolTipItemLink li_link';
+   var elemCurItem = document.getElementById(cur_item);
+   if(elemCurItem) {
+     elemCurItem.className = 'menu_selected_item toolTipItemLink li_link';
+     elemCurItem.blur();
    }
      GLOBAL_session_config.sel[tabnr] = item;
      prev_item[tabnr] = cur_item;
@@ -1648,7 +1650,7 @@
   
   function createLabel(labelid, editname, color) {
     var url = taskLabelsJSP + '?editfolder='+labelid+'&editname='+editname+'&color='+color;
-    getJSP(url, containerLabels);
+    getJSP(url, idDivLabels);
   }
   
   function process_detail_new(thePage, ctrl, flowid, pid, subpid, procStatus, uri) {
@@ -1730,6 +1732,9 @@
   function reloadJS() {
   
 	  jscolor.bind();
+	  
+	  //tooltips('div_main');
+	  
     
     $('.donotclosemenu').click(function(e) { e.stopPropagation();});
       
@@ -1789,7 +1794,7 @@
   	    }); 
   	  } catch (err) {}
 	  }
-
+/*
     var ctrl = document.getElementById('previousUseridText');
     if (ctrl != null) {
       var str = document.getElementById('usersStr').value;
@@ -1807,4 +1812,5 @@
 
     $('.donotclosemenu').click(function(e) { e.stopPropagation();});
     $('.ui-corner-all').click(function(e) { e.stopPropagation();});
+*/
   }

@@ -265,20 +265,27 @@ table.arraytable td {
 
 
 div.multiupload{
-  border: 1px solid #aea998;
-  background-color: #dad7c9;
+  /*border: 1px solid #aea998;*/
+  /*background-color: #dad7c9;*/
   float:left;
   padding:3px;
 }
 
+  .multiupload-item {
+	width:300px;
+	height:35px;
+	position:relative;
+	top: -35px;
+  }
+
 div.multiupload div.list{
-  background-color: #dad7c9;
+  /*background-color: #dad7c9;*/
 }
 div.multiupload div.list div.item{
-  margin:1px;
+  /*margin:1px;
   background-color: #f7f5e8;
   font-size: 0.8em;
-  margin: 4px 0;
+  margin: 4px 0;*/
 }
 div.multiupload div.list div.item:hover{
 /*  background: #ccc;*/
@@ -1515,54 +1522,57 @@ label.subheader {
 
     <xsl:if test="type='file'">
       <!--  FILE  -->
-      <table align="center" border="0" width="100%">
+      <table align="center" border="0" width="100%" style="border:none;">
         <tr align="center">
           <td>
-            <table border="0" width="100%">
+            <table class="table" border="0" width="100%">
               <xsl:if test="has_label_row='true'">
                 <tr><!-- File Headers -->
-                  <xsl:if test="string-length(text) > 0">
-                    <td class="" nowrap="true">
+				  <td class="document_header" nowrap="true">
+					<xsl:if test="string-length(text) > 0">                    
                       <xsl:apply-templates select="file_label" />
-                    </td>
-                  </xsl:if>
+					</xsl:if>
+                  </td>
+                    <td class="document_header" nowrap="true">
                   <xsl:if test="show_link='true'">
-                    <td class="document_header" nowrap="true">
                       <xsl:apply-templates select="link_label" />
-                    </td>
                   </xsl:if>
+                    </td>
+                    <td class="document_header" nowrap="true">
                   <xsl:if test="show_edition='true'">
-                    <td class="document_header" nowrap="true">
                       <xsl:apply-templates select="edition_label" />
-                    </td>
                   </xsl:if>
-                  <xsl:if test="show_remove='true'">
+                    </td>
                     <td class="document_header" nowrap="true">
-                      <xsl:apply-templates select="remove_label" />
+						&nbsp;
                     </td>
+                    <td class="document_header" nowrap="true">
+                  <xsl:if test="show_remove='true'">
+                      <xsl:apply-templates select="remove_label" />
                   </xsl:if>
+                    </td>
                 </tr>
               </xsl:if>
               
               <xsl:for-each select="file">
               <tr>
-                <xsl:if test="string-length(../text) > 0">
-                  <td class="normal_text" align="left" valign="middle" width="100%">
-                    <xsl:apply-templates select="text" />
-                  </td>
-                </xsl:if>
+                <td class="normal_text" align="left" valign="middle" width="100%">
+					<xsl:if test="string-length(../text) > 0">
+						<xsl:apply-templates select="text" />
+					</xsl:if>
+                </td>
+                  <td class="normal_text" align="left">
                 <xsl:if test="../show_link='true'">
-                  <td class="normal_text" align="center">
                     <xsl:text>&nbsp;</xsl:text>
                     <xsl:if test="string-length(link_url) > 0">
                       <a target="_blank" href="{link_url}">
                         <xsl:apply-templates select="link_text" />
                       </a>
                     </xsl:if>
-                  </td>
                 </xsl:if>
-                <xsl:if test="../show_edition='true' or ../file_sign_existing='true'">
+                  </td>
                   <td align="center" valign="middle">
+                <xsl:if test="../show_edition='true' or ../file_sign_existing='true'">
 	                <xsl:if test="../show_edition='true'">
 	                  	<xsl:choose>
 							<xsl:when test="($use_scanner='true' and ../scanner_enabled='true') or (../signatureType!='' and ../signatureType!='NONE')">
@@ -1571,7 +1581,9 @@ label.subheader {
 			                  	</img>
 							</xsl:when>
 							<xsl:otherwise>
-		                    	<input type="file" name="{../variable}_upd_[{id}]" size="20" />
+								<div id="idb_{../variable}_upd_[{id}]" class="btn btn-default" style="float:left;width:300px;height:35px;position:relative;top:2px;">Arraste ou pressione para alterar ficheiro</div>
+						   		<input type="file" name="{../variable}_upd_[{id}]" size="20" style="width:300px;opacity:0;position:relative;height:35px"
+									onchange="javascript:document.getElementById('idb_{../variable}_upd_[{id}]').innerHTML = this.value"/>
 							</xsl:otherwise>
 						</xsl:choose>
 	                </xsl:if>
@@ -1581,15 +1593,15 @@ label.subheader {
 							<xsl:attribute name="onclick">modifyFile('<xsl:value-of select="../variable" />','<xsl:value-of select="id"/>','<xsl:value-of select="../signatureType"/>','<xsl:value-of select="../encryptType"/>')</xsl:attribute>
 	                  	</img>
 					</xsl:if>
-                  </td>
                 </xsl:if>
-                <xsl:if test="../add_enabled='true' and ../show_edition!='true'">
+                  </td>
                   <td align="center" valign="middle"> <!-- add files is enabled but edit is disabled -->
+                <xsl:if test="../add_enabled='true' and ../show_edition!='true'">
                     &nbsp;
-                  </td>
                 </xsl:if>
-                <xsl:if test="../show_remove='true'">
+                  </td>
                   <td align="center" valign="middle">
+                <xsl:if test="../show_remove='true'">
                     <input type="checkbox" name="{../variable}_rem_[{id}]" value="true">
                       <xsl:if test="../onclick!=''">
                         <xsl:attribute name="onclick">
@@ -1597,8 +1609,8 @@ label.subheader {
                         </xsl:attribute>
                       </xsl:if>
                     </input>
-                  </td>
                 </xsl:if>
+                  </td>
               </tr>
               </xsl:for-each>
               
@@ -1611,9 +1623,9 @@ label.subheader {
                     <xsl:apply-templates select="upload_label" />
                   </td>
                   <td align="center" valign="middle">
-                    <xsl:if test="show_remove='true'">
-                      <xsl:attribute name="colspan">2</xsl:attribute>
-                    </xsl:if>
+                    <!--xsl:if test="show_remove='true'"-->
+                      <xsl:attribute name="colspan">3</xsl:attribute>
+                    <!--/xsl:if-->
 					<xsl:choose>
 						<xsl:when test="($use_scanner='true' and scanner_enabled='true') or (signatureType!='' and signatureType!='NONE')">
 							<div class="multiupload">
@@ -1634,8 +1646,9 @@ label.subheader {
 							</SCRIPT>
 						</xsl:when>
 						<xsl:otherwise>
-							<div id="{variable}_add_container">
-						   		<input type="file" name="{variable}_add" size="20">
+							<div id="{variable}_add_container form-group">
+								<div class="btn btn-default" style="width:300px;height:35px;position:relative;top:2px;">Arraste ou pressione para carregar ficheiro</div>
+						   		<input type="file" name="{variable}_add" size="20" style="width:300px;opacity:0;position:relative;top:-35px;height:35px">
 						   			<xsl:if test="accept!=''">
 						   				<xsl:attribute name="accept">
 						   					<xsl:value-of select="accept" />

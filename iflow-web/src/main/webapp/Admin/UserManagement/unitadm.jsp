@@ -71,7 +71,7 @@ UserManager manager = BeanFactory.getUserManagerBean();
 		</div>
 	<%} %>
       <div class="table_inc">  
-        <table class="list_item">
+        <table class="list_item table">
           <tr class="tab_header">
 				<td/>
 				<td>
@@ -157,7 +157,7 @@ UserManager manager = BeanFactory.getUserManagerBean();
 		</table>
 	</div>
 	<div class="button_box">
-    	<input class="regular_button_01" type="button" name="add_unit" value="<%=messages.getString("button.add")%>" onClick="javascript:tabber_right(4, '<%=response.encodeURL("Admin/UserManagement/unitform.jsp")%>','');"/>
+    	<input class="regular_button_01 btn btn-default" type="button" name="add_unit" value="<%=messages.getString("button.add")%>" onClick="javascript:tabber_right(4, '<%=response.encodeURL("Admin/UserManagement/unitform.jsp")%>','');"/>
      </div>
 
      <if:generateHelpBox context="unitadm"/>

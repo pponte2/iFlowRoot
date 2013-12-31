@@ -4,7 +4,7 @@
 <%@ include file = "../inc/defs.jsp" %>
 
 <if:checkUserAdmin type="org">
-	<div class="error_msg"><if:message string="admin.error.unauthorizedaccess"/></div>
+	<div class="alert alert-danger"><if:message string="admin.error.unauthorizedaccess"/></div>
 </if:checkUserAdmin>
 
 <%
@@ -69,26 +69,26 @@
   }
 %>
 
-
+<h1 id="title_admin"><%=title%></h1>
 <form name="flowdelete" id="flowdelete" method="POST">
   <input type="hidden" name="flowfile" value="<%= sFlowFile %>">
   <input type="hidden" name="flowname" value="<%= sFlowName %>">
   <input type="hidden" name="<%= DataSetVariables.FLOWID %>" value="<%= sFlowId %>">
 
 
-  <h1 id="title_admin"><%=title%></h1>
+
 
 <%
   if (sbError.length() > 0) {
 %>
-      <div class="error_msg">
+      <div class="alert alert-danger">
         <%=sbError%>
 	  </div>
 <%
   }
   if (StringUtils.isNotEmpty(sHtml)) {
 %>
-      <div class="info_msg">
+      <div class="alert alert-info">
         <%=sHtml%>
 	  </div>
 <%
@@ -103,7 +103,7 @@
   <if:formInput name="dummy3" labelkey="flow_delete.flowname" type="text" value='<%=sFlowName%>' edit="false" />
   <li>
     <label><if:message string="flow_delete.disclaimer" /></label>
-    <input type="button" name="offline" value="<%=messages.getString("button.offline")%>" 
+    <input type="button" name="offline" class="btn btn-default" value="<%=messages.getString("button.offline")%>" 
            onclick="tabber_right(4, '<%=response.encodeURL("Admin/flow_deployer.jsp") %>', 'action=undeploy&'+get_params(document.flowdelete));"/>
   </li>
   <if:formInput name="procs"  labelkey="flow_delete.agree" type="checkbox" value="false" edit="true" />
@@ -114,14 +114,14 @@
 <%
   if (op == 1 && sbError.length() == 0) {
 %>
-  <input class="regular_button_01" type="button" name="back" value="<%=messages.getString("button.back")%>" 
+  <input class="regular_button_01 btn btn-default" type="button" name="back" value="<%=messages.getString("button.back")%>" 
          onClick="javascript:tabber_right(4, '<%=response.encodeURL("Admin/flow_settings.jsp") %>','ts=<%=ts%>');"/>
 <%
   } else {
 %>
-  <input class="regular_button_01" type="button" name="cancel" value="<%=messages.getString("button.cancel")%>" 
+  <input class="regular_button_01 btn btn-default" type="button" name="cancel" value="<%=messages.getString("button.cancel")%>" 
          onClick="javascript:tabber_right(4, '<%=response.encodeURL("Admin/flow_settings.jsp") %>','ts=<%=ts%>');"/>
-  <input class="regular_button_01" type="button" name="delete" value="<%=messages.getString("button.delete")%>" 
+  <input class="regular_button_01 btn btn-default" type="button" name="delete" value="<%=messages.getString("button.delete")%>" 
          onClick="javascript:tabber_right(4, '<%=response.encodeURL("Admin/flow_delete.jsp") %>','op=1&' + get_params(document.flowdelete));"/>
 <%
   }

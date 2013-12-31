@@ -147,7 +147,7 @@
 				
 				
 			
-				init("Themes/${orgTheme}/css/iflow_std.css");
+				//init("Themes/${orgTheme}/css/iflow_std.css");
 				mainResize();
 				#if($sys_admin != "no")
 				#end
@@ -237,6 +237,17 @@
 					activities[i].style.backgroundColor = '#fafafa';
 				}
 				element.style.backgroundColor = '#ddd';						
+			}
+			
+			function selectedLabel(element) {
+			   var labels = document.getElementsByClassName("labellink");
+
+				for(var i = (labels.length - 1); i >= 0; i--) {
+					labels[i].style.fontWeight = 'normal';
+				}
+				
+				var elem = document.getElementById(element);
+				elem.style.fontWeight = 'bold';						
 			}
 			
 			function pesquisarPnumber(value) {
