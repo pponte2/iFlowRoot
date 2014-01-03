@@ -70,7 +70,7 @@
 %>
 
 <h1 id="title_admin"><%=title%></h1>
-<form name="flowdelete" id="flowdelete" method="POST">
+<form name="flowdelete" id="flowdelete" method="POST" class="form-horizontal">
   <input type="hidden" name="flowfile" value="<%= sFlowFile %>">
   <input type="hidden" name="flowname" value="<%= sFlowName %>">
   <input type="hidden" name="<%= DataSetVariables.FLOWID %>" value="<%= sFlowId %>">
@@ -101,10 +101,12 @@
 <ol>
   <if:formInput name="dummy2" labelkey="flow_delete.flowfile" type="text" value='<%=sFlowFile%>' edit="false" />
   <if:formInput name="dummy3" labelkey="flow_delete.flowname" type="text" value='<%=sFlowName%>' edit="false" />
-  <li>
-    <label><if:message string="flow_delete.disclaimer" /></label>
+  <li class="form-group">
+    <label class="control-label col-sm-2"><if:message string="flow_delete.disclaimer" /></label>
+	<div class="col-sm-5">
     <input type="button" name="offline" class="btn btn-default" value="<%=messages.getString("button.offline")%>" 
            onclick="tabber_right(4, '<%=response.encodeURL("Admin/flow_deployer.jsp") %>', 'action=undeploy&'+get_params(document.flowdelete));"/>
+	</div>
   </li>
   <if:formInput name="procs"  labelkey="flow_delete.agree" type="checkbox" value="false" edit="true" />
 </ol>

@@ -249,6 +249,22 @@ ul, ul ul {
 	padding-top: 5px;
 	display: block;
 }
+
+.menu  > a {
+	text-decoration: none;
+	padding-left: 30px;
+	min-height: 25px;
+	padding-top: 5px;
+	display: block;
+	color: #333;
+	background-image: url(../images/arrow_sbmenu.png);
+	background-repeat: no-repeat;
+}
+
+.menu > a.active {
+background-image: url(../images/arrow_sbmenu_open.png);
+}
+
 .iflw-4 {
 
 	bottom: 0px;
@@ -543,7 +559,7 @@ float: left;
 	width: 16px;
   }
   
-  #title_admin {
+  #title_admin, #title_delegations , #title_account{
   color: #333333;
 font-size: 1.2em;
 padding: 10px 15px 0 10px;
@@ -554,6 +570,7 @@ background-image: -ms-linear-gradient( 90deg, rgb(238,238,241) 0%, rgb(250,250,2
 height: 40px;
 margin-bottom: 10px;
 margin-top:0px;
+margin-left: -5px;
 }
 
 a > img:hover {
@@ -576,3 +593,17 @@ a > img:hover {
 	background-color:#bbb;
   }
 
+  td.gauge_full {
+  	background-color:#fec512;
+  	margin:0;
+  	padding:0;
+  	border: 1px solid gray;
+  }
+  
+  /* indicador de percentagem parte vazia */
+  td.gauge_empty {
+  	background-color:white;
+  	margin:0;
+  	padding:0;
+  	border: 1px solid gray;
+  }

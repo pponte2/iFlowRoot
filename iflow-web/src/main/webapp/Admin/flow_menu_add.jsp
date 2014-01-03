@@ -12,7 +12,7 @@ String sPage = "Admin/flow_menu_edit";
 
 <h1 id="title_admin"><%=title%></h1>
 
-<form name="flows" method="post">
+<form name="flows" method="post" class="form-horizontal">
 
 	<c:if test="${not empty err_msg}">
 		<div class="alert alert-danger">

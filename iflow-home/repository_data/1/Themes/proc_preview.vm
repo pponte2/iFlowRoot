@@ -112,7 +112,7 @@
 					#set($buttonimagealt=$button.get("buttonimagealt"))
 					#set($hiddenfield=$button.get("hiddenfield"))
 					&nbsp;
-					<input type="button" align="center" valign="center" class="btn btn-default" name="$name" value="$text" id="$id" onClick="&operation" title="&tooltip"/>
+					<input type="button" disabled="disabled" align="center" valign="center" class="btn btn-default" name="$name" value="$text" id="$id" onClick="&operation" title="&tooltip"/>
 					#if ($hiddenfield != "")
 					<input type="hidden" name="$hiddenfield" id="$hiddenfield" value=""></input>
 					#end

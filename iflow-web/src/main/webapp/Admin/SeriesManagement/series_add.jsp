@@ -11,7 +11,7 @@
 <%@ include file = "../../inc/defs.jsp" %>
 
 <if:checkUserAdmin type="org">
-	<div class="error_msg">
+	<div class="alert alert-danger">
 		<if:message string="admin.error.unauthorizedaccess" />
 	</div>
 </if:checkUserAdmin>
@@ -158,7 +158,7 @@ String onchange = "$('" + PARAM_ACTION + "').value='" + ACTION_PREVIEW + "';new 
 
 <h1 id="title_admin"><%=title%></h1>
 
-<form method="post" name="series_add" id="series_add">
+<form method="post" name="series_add" id="series_add" class="form-horizontal">
 <input type="hidden" name="<%=PARAM_ACTION %>" id="<%=PARAM_ACTION %>" value=""/>
 <input type="hidden" name="ts" id="ts" value="<%=ts %>"/>
 

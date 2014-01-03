@@ -148,19 +148,24 @@ else
 request.setAttribute("flow_type", FlowType.WORKFLOW);
 
 //check if it's simple search
-if (StringUtils.equals(searchType,"ss")) { 
-	if (fdFormData.getParameter("ssonly")==null || !StringUtils.equals(fdFormData.getParameter("ssonly"), "true")) { %>
-		<form name="simpleSearchForm" method="post">
-			<a id="searchlink" title="<%=messages.getString("user_procs_filtro.advancedsearch.tooltip")%>" class="toolTipItemLink li_link"
-				href="javascript:tabber_save(8,'<%=response.encodeRedirectUrl("user_procs_filtro.jsp") %>','<%=paramAux%>','<%=response.encodeRedirectUrl("user_proc_seach.jsp") %>','<%=paramAux%>')"><%=messages.getString("user_procs_filtro.advancedsearch")%></a>
-		</form>
-	<% } %>
+%>
+	<form id="search_simple_link" class="menu" name="advancedSearch" method="post" style="display:block;">
+		<a id="searchlink"
+			title="<%=messages.getString("user_procs_filtro.simplesearch.tooltip")%>" class="toolTipItemLink li_link"
+			href="javascript:document.getElementById('search_simple_form').setStyle('display','block');document.getElementById('search_simple_link_2').setStyle('display','block');document.getElementById('search_simple_link').setStyle('display','none');"><%=messages.getString("user_procs_filtro.simplesearch")%></a>
+	</form>
 
-	<!-- h1 id="title_tasks"><%=messages.getString("user_procs_filtro.simplesearch.title")%></h1-->
+	<form id="search_simple_link_2" class="menu" name="advancedSearch" method="post" style="display:none;">
+		<a id="searchlink"
+			title="<%=messages.getString("user_procs_filtro.simplesearch.tooltip")%>" class="toolTipItemLink li_link" style="background-image: url(images/arrow_sbmenu_open.png)"
+			href="javascript:document.getElementById('search_simple_form').setStyle('display','none');document.getElementById('search_simple_link').setStyle('display','block');document.getElementById('search_simple_link_2').setStyle('display','none');"><%=messages.getString("user_procs_filtro.simplesearch")%></a>
+	</form>
+
+	<!--h1 id="title_tasks"><%=messages.getString("user_procs_filtro.simplesearch.title")%></h1-->
 	<!--  <p>< %=messages.getString("user_procs_filtro.simplesearch.introMsg") %></p> -->
 
 	<div class="greybox" style="margin-left:10px;padding-bottom: 10px">
-		<form name="user_procs_filter" method="post">
+		<form id="search_simple_form" name="user_procs_filter" method="post" style="display:none">
 			<input type="hidden" name="mode" value="0">
 			<input type="hidden" name="process" value="">
 			<input type="hidden" id="proc_search" name="proc_search" value="false">
@@ -254,17 +259,8 @@ if (StringUtils.equals(searchType,"ss")) {
 			</div>
 		</form> 
 	</div>
-<%//end of SimpleSearch
-}
-if (StringUtils.equals(searchType,"as") || StringUtils.equals(searchType,"nf") ) {
-	if(StringUtils.equals(searchType,"as")) { %>
-	<form name="advancedSearch" method="post">
-		<a id="searchlink"
-			title="<%=messages.getString("user_procs_filtro.simplesearch.tooltip")%>" class="toolTipItemLink li_link"
-			href="javascript:tabber_save(8,'<%=response.encodeRedirectUrl("user_procs_filtro.jsp") %>','searchtype=ss','<%=response.encodeRedirectUrl("user_procs.jsp") %>','searchtype=ss')"><%=messages.getString("user_procs_filtro.simplesearch")%></a>
-	</form>
-	<% } %>
-	<form name="advanced_user_procs_filter" method="post">
+
+	<form id="search_advanced_form" name="advanced_user_procs_filter" method="post" style="display:<%= (StringUtils.equals(searchType,"as") || StringUtils.equals(searchType,"nf"))?"block":"block" %>">
 	<% //load flows
 	FlowApplications appInfo = BeanFactory.getFlowApplicationsBean();
 	//only loads search flows
@@ -318,6 +314,6 @@ if (StringUtils.equals(searchType,"as") || StringUtils.equals(searchType,"nf") )
 	
 	String html = PresentationManager.buildPage(response, userInfo, hsSubstLocal, pageContent);
 	out.println(html);
-}
+
 %>
 </form>

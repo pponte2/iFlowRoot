@@ -83,13 +83,13 @@ public class FormSelectTag extends IknowTag {
     StringBuffer sb = new StringBuffer();
 
     if(!isNoli())
-      sb.append("<li>");
+      sb.append("<li class=\"form-group\">");
     boolean doLabel = true;
     if(isNoli())
       doLabel = isNotClean(getLabelkey()) || isNotClean(getLabel());
     
     if(doLabel) {
-      sb.append("<label for=\"");
+      sb.append("<label class=\"control-label col-sm-2\" for=\"");
       sb.append(getName());
       sb.append("\">"); 
       if(isNotClean(getLabelkey())) {
@@ -102,9 +102,10 @@ public class FormSelectTag extends IknowTag {
       sb.append("</label>");
 
     }
+    sb.append("<div class = \"control-label col-sm-5\">");
 
     if (isEdit()) {
-      sb.append("<select name=\"").append(getName()).append("\" id=\"").append(getName()).append("\"");
+      sb.append("<select name=\"").append(getName()).append("\"  class = \"form-control\" id=\"").append(getName()).append("\"");
       if(StringUtils.isNotEmpty(onchange))
         sb.append(" onchange=\"").append(onchange).append("\"");
       if (multiple)
@@ -121,8 +122,10 @@ public class FormSelectTag extends IknowTag {
     StringBuffer sb = new StringBuffer();
     
     if(isEdit()) sb.append("</select>");
+    sb.append("</div>");
     if(!isNoli())
       sb.append("</li>");
+    
     return sb.toString();
   }
   

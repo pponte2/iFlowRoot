@@ -121,12 +121,12 @@
 
 <div style="vertical-align: middle;">
   <!--img src="images/icon_tab_tarefas.png" class="icon_item"/-->
-  <div class="title_cont"><if:message string="user_procs.title" /></div>
+  <div id="title_admin"><if:message string="user_procs.title" /></div>
 </div>
 <%
   if (!showUserProcs) {
 %>
-	<div class="info_msg">
+	<div class="alert alert-info">
 		<%=messages.getString("user_procs.msg.select")%>
 	</div>
 <%
@@ -227,10 +227,10 @@
 	  	  }
 	  	%>
       </p>
-	  <table width="100%" cellpadding="2" class="table">
+	  <table width="100%" cellpadding="2" class="table sortable">
 	  	<thead>
-		<tr class="tab_header">
-	  		<th />
+		<tr class="tab_header table_sub_header">
+	  		<th class="table_sub_header"/>
 		  	<th><if:message string="user_procs.header.flow" /></th>
 		  	<th><if:message string="user_procs.header.process" /></th>
 		  	<th><if:message string="user_procs.header.status" /></th>
@@ -254,9 +254,9 @@
 	        if (row >= nItems) {
 	          bHasMoreItems = true;
 	          break;
-	        } %> 
-		<tr class="<%=((row % 2 == 0) ? "tab_row_even" : "tab_row_odd")%>">
-		<%
+	        } 
+				
+		 
 	         List<String> alMixedData = alData.get(row);
 	         String flowid = alMixedData.get(UserProcsConst.FLOW_ID);
 	         String flowName = alMixedData.get(UserProcsConst.FLOW_NAME);
@@ -288,48 +288,32 @@
 	         if (!showAssigned && !canView) {
 	           href = null;
 	         }
-	    %>
-         <% if(spid.equals(pid) && ssubpid.equals(subpid)){
-         	out.println("<td class=\"itemlist_icon\"><a><img class=\"toolTipImg\" src=\"images/icon_task_enable.png\" border=\"0\"></a> </td>");
-         }else
-         	out.println("<td> </td>");
+		 
+		 String myStyle = "style=\"background-color:#fafafa\"";
+		 
+		 if(spid.equals(pid) && ssubpid.equals(subpid)){
+         	//out.println("<td class=\"itemlist_icon\"><a><img class=\"toolTipImg\" src=\"images/icon_task_enable.png\" border=\"0\"></a> </td>");
+         }else {
+         	// out.println("<td> </td>");
+		 }
+
+		 if(spid.equals(pid) && ssubpid.equals(subpid)){
+			myStyle = " style=\"background-color:#ddd\"";
+         }	
+		 
+		 
+		 String onclick = "";
+		 if (href != null) {
+			onclick = "onclick=\"" + href+ "\"";
+		 }
+			
          %>
-		<td>
-	  	  <% if (href != null) { %>
-	  	  <a href="<%=href%>" class="toolTipImg" title="<%=messages.getString("user_procs.tooltip.view_history")%>">
-	  	  <% } %>
-	  	    <%=flowName%>
-	  	  <% if (href != null) { %>
-	  	  </a>
-	  	  <% } %>
-	  	</td>
-	  	<td>
-	  	  <% if (href != null) { %>
-	  	  <a href="<%=href%>" class="toolTipImg" title="<%=messages.getString("user_procs.tooltip.view_history")%>">
-	  	  <% } %>
-	  	    <%=pidShow%>
-	  	  <% if (href != null) { %>
-	  	  </a>
-	  	  <% } %>
-	  	</td>
-	  	<td>
-	  	  <% if (href != null) { %>
-	  	    <a href="<%=href%>" class="toolTipImg" title="<%=messages.getString("user_procs.tooltip.view_history")%>">
-	  	  <% } %>
-	  	    <%=result%>
-	  	  <% if (href != null) { %>
-	  	  </a>
-	  	  <% } %>
-	  	</td>
-	  	<td>
-	  	  <% if (href != null) { %>
-	  	  <a href="<%=href%>" class="toolTipImg" title="<%=messages.getString("user_procs.tooltip.view_history")%>">
-	  	  <% } %>
-	  	    <%=sDate%>
-	  	  <% if (href != null) { %>
-	  	  </a>
-	  	  <% } %>
-	  	</td>
+		 <tr class="<%=((row % 2 == 0) ? "tab_row_even" : "tab_row_odd")%> process_t3" <%=myStyle%> <%=onclick%>>
+		 <td></td>
+		<td><%=flowName%></td>
+	  	<td><%=pidShow%></td>
+	  	<td><%=result%></td>
+	  	<td><%=sDate%></td>
 	    <% if (showAssigned) {
 	          // assigned
 	          Map<String, List<String>> hmPidUsers = new HashMap<String, List<String>>();
@@ -403,11 +387,11 @@
 %>
    <div class="button_box">
    <% if (!bDisableNavigationPrev) { %>
-   	<input class="regular_button_01" type="button" name="previous" value="<%=messages.getString("button.previous")%>" 
+   	<input class="regular_button_01 btn btn-default" type="button" name="previous" value="<%=messages.getString("button.previous")%>" 
    		onClick="javascript:document.userprocsForm.mode.value='-1';tabber_right(8, '<%=response.encodeURL("user_procs.jsp")%>', get_params(document.userprocsForm));"/>
    <% } %>
    <% if (!bDisableNavigationNext) { %>
-   	<input class="regular_button_01" type="button" name="next" value="<%=messages.getString("button.next")%>" 
+   	<input class="regular_button_01 btn btn-default" type="button" name="next" value="<%=messages.getString("button.next")%>" 
    		onClick="javascript:document.userprocsForm.mode.value='1';tabber_right(8, '<%=response.encodeURL("user_procs.jsp")%>', get_params(document.userprocsForm));"/>    
    <% } %>
    </div>

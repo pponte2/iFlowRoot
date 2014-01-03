@@ -4,7 +4,7 @@
 <ul class="menu">
 	#foreach( $appflow in $appflows )
 	<li>
-		<a href="#">${appflow.get("appname")}</a>
+		<a href="#" onclick="javascript:document.getElementById('search_simple_form').setStyle('display','none');this.focus()">${appflow.get("appname")}</a>
 		<ul>
 		#foreach($flow in $appflow.get("flows"))
 			<li>

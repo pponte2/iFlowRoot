@@ -130,7 +130,9 @@
         document.getElementById('section' + i + '_div').style.height=(getBrowserWindowHeight()-offset)+'px';
       }
     }
+	/*
     document.getElementById('open_proc_frame').style.height=(getBrowserWindowHeight()-offset)+'px';   
+	*/
     resizeProcDetail();
   }
   
@@ -1735,7 +1737,16 @@
 	  
 	  //tooltips('div_main');
 	  
-    
+       	//sortable
+	  try {
+		  var tables = document.getElementsByTagName('table');
+		  for(var i = 0; i <tables.length; i++) {
+			if (tables[i].className.search(/\bsortable\b/) != -1) {
+				sorttable.makeSortable(tables[i]);
+			}
+		  }
+	  } catch (err) {alert('error');}
+
     $('.donotclosemenu').click(function(e) { e.stopPropagation();});
       
     $(".draggable").draggable({revert: "invalid", opacity: 0.7, helper: "clone"});

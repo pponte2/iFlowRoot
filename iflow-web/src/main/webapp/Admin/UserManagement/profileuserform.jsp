@@ -150,9 +150,11 @@
 
 	<fieldset>
 		<ol>
-			<li>
-				<label for="act_process"><%=messages.getString("profileuserform.actprocess")%></label>
-				<input type="checkbox" title="<%=messages.getString("profileuserform.actprocess")%>" value="set" id="act_process" name="act_process" <%=(actProcess == null) || !"".equals(actProcess) ? "CHECKED" : ""%>/>
+			<li class="form-group">
+				<label class="control-label col-sm-2" for="act_process"><%=messages.getString("profileuserform.actprocess")%></label>
+				<div class="col-sm-1">
+				<input type="checkbox" class="form-control" title="<%=messages.getString("profileuserform.actprocess")%>" value="set" id="act_process" name="act_process" <%=(actProcess == null) || !"".equals(actProcess) ? "CHECKED" : ""%>/>
+				</div>
 			</li>
 		</ol>
 	</fieldset>

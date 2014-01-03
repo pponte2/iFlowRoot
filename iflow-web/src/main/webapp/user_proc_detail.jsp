@@ -41,7 +41,7 @@ if(scroll != null)
 <%} else if(status.equals("-4")){ %>
 
 <%} else {%> 
-  <input class="regular_button_01 btn btn-default" type="button" name="back" value="<if:message string="button.search"/>" 
+  <input class="regular_button_01 btn btn-default" type="button" name="back" value="<if:message string="button.back"/>" 
   	onClick="javascript:tabber_right(8, '<%=response.encodeURL("user_procs.jsp")%>', get_params(document.user_procs_filter));"/>
   
   <input class="regular_button_01 btn btn-default" type="button" name="back" value="<if:message string="button.proc_hist"/>" 

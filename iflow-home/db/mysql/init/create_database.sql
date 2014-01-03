@@ -1111,11 +1111,6 @@ CREATE VIEW activity_delegated
     from activity A, activity_hierarchy H
     where ((A.userid = H.ownerid and H.slave=1) or (A.userid = H.userid and slave=0)) 
     and A.flowid = H.flowid and H.pending=0 and A.delegated <> 0;
--- Tarefas no topo da hierarquia --
--- WHERE A.userid = H.ownerid and H.slave=1 and A.flowid = H.flowid and H.pending=0 and A.delegated = 1;
--- Tarefas na base da hierarquia -- Nao e preciso estar delegado...
--- Tarefas no meio da hierarquia --
--- WHERE  and H.slave=1 and A.flowid = H.flowid and H.pending=0 and A.delegated = 1;
 
 DELIMITER //
     

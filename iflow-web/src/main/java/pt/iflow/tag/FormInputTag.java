@@ -79,8 +79,8 @@ public class FormInputTag extends IknowTag {
 
     StringBuffer sb = new StringBuffer();
 
-    sb.append("<li>");
-    sb.append("<label for=\"");
+    sb.append("<li class=\"form-group\">");
+    sb.append("<label class=\"control-label col-sm-2\" for=\"");
     sb.append(asName);
     sb.append("\">"); 
     if("challenge".equalsIgnoreCase(asType)) {
@@ -102,10 +102,14 @@ public class FormInputTag extends IknowTag {
     }
     
     
-
     if (abEdit && abRequired)
       sb.append("<em>*</em>");
     sb.append("</label>");
+
+    if("checkbox".equals(asType))
+      sb.append("<div class=\"col-sm-1\">");
+    else
+      sb.append("<div class=\"col-sm-5\">");
 
     if("logo".equalsIgnoreCase(asType)) {
       sb.append("<img src=\"Logo?ts="+System.currentTimeMillis()+"\" alt=\"logo\" />");
@@ -114,7 +118,7 @@ public class FormInputTag extends IknowTag {
         sb.append("<input type=\"file\" name=\"").append(asName).append("\" id=\"").append(asName).append("\">");
       }
     } else if("checkbox".equals(asType)) {
-      sb.append("<input type=\"checkbox\" name=\"").append(asName);
+      sb.append("<input type=\"checkbox\" class=\"form-control\" name=\"").append(asName);
       sb.append("\" id=\"").append(asName).append("\" value=\"true");
       if(StringUtils.equalsIgnoreCase("true", asValue)) sb.append("\" checked=\"checked");
       if(!abEdit) sb.append("\" disabled=\"disabled");
@@ -134,6 +138,7 @@ public class FormInputTag extends IknowTag {
         sb.append(asName);
         sb.append("\" id=\"");
         sb.append(asName);
+        sb.append("\" class=\"form-control");
         sb.append("\" value=\"");
         sb.append(asValue);
         if(("text".equals(asType) || "password".equals(asType))&&!StringUtils.isEmpty(maxlength)) {
@@ -154,9 +159,12 @@ public class FormInputTag extends IknowTag {
         sb.append("/>");
       }
       else {
+		sb.append("<div class=\"control-label pull-left\">");
         sb.append(asValue); 
+		sb.append("</span>");
       }
     }
+    sb.append("</div>");
     sb.append("</li>");
 
 

@@ -55,18 +55,16 @@ UserManager manager = BeanFactory.getUserManagerBean();
       }
 %>
 
-
+<h1 id="title_admin"><%=title%></h1>
 <form method="post" name="formulario" id="formulario">
-
-	<h1 id="title_admin"><%=title%></h1>
 	
 <% if (units.length == 0) { %>
-	<div class="info_msg">
+	<div class="alert alert-info">
 		<if:message string="unitadm.msg.noUnits"/>
 	</div>
 <% } else { %>
 	<%  if (!asDel) { %>
-		<div class="error_msg">
+		<div class="alert alert-danger">
 		  <%=messages.getString("admin_nav.section.users.notdeleted")%>
 		</div>
 	<%} %>

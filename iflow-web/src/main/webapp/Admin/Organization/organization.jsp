@@ -16,13 +16,14 @@ OrganizationThemeData orgTheme = BeanFactory.getOrganizationThemeBean().getOrgan
 
 %>
 <if:checkUserAdmin type="both">
-	<div class="error_msg"><if:message string="admin.error.unauthorizedaccess"/></div>
+	<div class="alert alert-danger"><if:message string="admin.error.unauthorizedaccess"/></div>
 </if:checkUserAdmin>
 
  <h1 id="title_admin"><if:message string="organization.propertiesform.title"/></h1>
 
 <div class="upload_box table_inc">
 	<form name="formulario" id="formulario" action="<%=response.encodeURL("UpdateOrg")%>" method="POST" enctype="multipart/form-data"
+	    class="form-horizontal"
 		onsubmit="javascript:AIM.submit(this, {'onStart' : getStartUploadCallback('the_logo'), 'onComplete' : getUploadCompleteCallback('Upload complete', 4, '<%=response.encodeURL("Admin/Organization/organization.jsp")%>', 'type=org')}); if(confirm('<%=messages.getString("organization.propertiesform.confirm.refresh")%>')) { setTimeout(function () { window.location.href = unescape(window.location.pathname); }, 1000) }">
 	
   	<fieldset>
@@ -53,12 +54,12 @@ OrganizationThemeData orgTheme = BeanFactory.getOrganizationThemeBean().getOrgan
 	</fieldset>
     <fieldset class="submit">
     	<% if(bEdit) { %>
-		<input class="regular_button_01" type="button" name="cancel" value="<if:message string="button.cancel"/>" onclick="javascript:tabber_right(4,'<%=response.encodeURL("Admin/Organization/organization.jsp")%>','ts=<%=ts%>');"/>
-		<input class="regular_button_01" type="submit" name="save" value="<if:message string="button.save"/>" />
+		<input class="regular_button_01 btn btn-default" type="button" name="cancel" value="<if:message string="button.cancel"/>" onclick="javascript:tabber_right(4,'<%=response.encodeURL("Admin/Organization/organization.jsp")%>','ts=<%=ts%>');"/>
+		<input class="regular_button_01 btn btn-default" type="submit" name="save" value="<if:message string="button.save"/>" />
     	<% } else { %>
 		<%--<input class="regular_button_01" type="button" name="clear" value="<if:message string="button.clear"/>" onClick="javascript:document.formulario.reset()"/>--%>
-		<input class="regular_button_01" type="button" name="modify" value="<if:message string="button.modify"/>" onclick="javascript:tabber_right(4,'<%=response.encodeURL("Admin/Organization/organization.jsp")%>','oper=edit&ts=<%=ts%>');"/>
-		<input class="regular_button_02" type="button" name="cache" value="<if:message string="admin-flows.button.reloadCache"/>" onClick="javascript:tabber_right(4, '<%=response.encodeURL("Admin/Organization/organization.jsp")%>','oper=cache&ts=<%=ts%>');"/>
+		<input class="regular_button_01 btn btn-default" type="button" name="modify" value="<if:message string="button.modify"/>" onclick="javascript:tabber_right(4,'<%=response.encodeURL("Admin/Organization/organization.jsp")%>','oper=edit&ts=<%=ts%>');"/>
+		<input class="regular_button_02 btn btn-default" type="button" name="cache" value="<if:message string="admin-flows.button.reloadCache"/>" onClick="javascript:tabber_right(4, '<%=response.encodeURL("Admin/Organization/organization.jsp")%>','oper=cache&ts=<%=ts%>');"/>
 		<% } %>
 	</fieldset>
 </form>

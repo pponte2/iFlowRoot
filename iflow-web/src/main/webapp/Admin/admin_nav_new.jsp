@@ -109,7 +109,7 @@
 		    <li>
 		        <a id="li_a_admin_<%=AdminNavConsts.FLOW_SCHEDULE%>" 
 				class="toolTipItemLink li_link"
-				title="<%=messages.getString("admin_nav.section.flows.tooltip.flow_schedule")%>" href="javascript:selectedItem('admin',<%=AdminNavConsts.FLOW_SCHEDULE%>);getJSP('Admin/flow_schedule_list');">
+				title="<%=messages.getString("admin_nav.section.flows.tooltip.flow_schedule")%>" href="javascript:selectedItem('admin',<%=AdminNavConsts.FLOW_SCHEDULE%>);getJSP('Admin/flowSchedule/flow_schedule_list.jsp');">
 		       		<%=messages.getString("admin_nav.section.flows.link.flow_schedule")%>
 		       	</a>
 		    </li>
@@ -148,7 +148,7 @@
 			<li>
 				<a id="li_a_admin_<%=AdminNavConsts.PROCESS_CANCEL%>" 
 				class="toolTipItemLink li_link"
-				title="<%=messages.getString("admin_nav.section.processes.tooltip.cancel")%>" href="javascript:selectedItem('admin', <%=AdminNavConsts.PROCESS_CANCEL%>);getJSP('Admin/ProcManagement/proc_cancel.jsp&cancel=true');">
+				title="<%=messages.getString("admin_nav.section.processes.tooltip.cancel")%>" href="javascript:selectedItem('admin', <%=AdminNavConsts.PROCESS_CANCEL%>);getJSP('Admin/ProcManagement/proc_cancel.jsp?cancel=true');">
 					<%=messages.getString("admin_nav.section.processes.link.cancel")%>
 				</a>
 			</li>
@@ -169,28 +169,28 @@
 			<li>
 				<a id="li_a_admin_<%=AdminNavConsts.RESOURCES_STYLESHEETS%>" 
 				class="toolTipItemLink li_link"
-				title="<%=messages.getString("admin_nav.section.resources.tooltip.stylesheets")%>" href="javascript:selectedItem('admin', <%=AdminNavConsts.RESOURCES_STYLESHEETS%>);getJSP('Admin/Resources/dolist.jsp');">
+				title="<%=messages.getString("admin_nav.section.resources.tooltip.stylesheets")%>" href="javascript:selectedItem('admin', <%=AdminNavConsts.RESOURCES_STYLESHEETS%>);getJSP('Admin/Resources/dolist.jsp?type=<%=ResourceNavConsts.STYLESHEETS%>&ts=<%=ts%>');">
 					<%=messages.getString("admin_nav.section.resources.link.stylesheets")%>
 				</a>
 			</li>
 			<li>
 				<a id="li_a_admin_<%=AdminNavConsts.RESOURCES_PRINTING%>" 
 				class="toolTipItemLink li_link"
-				title="<%=messages.getString("admin_nav.section.resources.tooltip.print")%>" href="javascript:selectedItem('admin', <%=AdminNavConsts.RESOURCES_PRINTING%>);getJSP('Admin/Resources/dolist.jsp');">
+				title="<%=messages.getString("admin_nav.section.resources.tooltip.print")%>" href="javascript:selectedItem('admin', <%=AdminNavConsts.RESOURCES_PRINTING%>);getJSP('Admin/Resources/dolist.jsp?type=<%=ResourceNavConsts.PRINT_TEMPLATES%>&ts=<%=ts%>');">
 					<%=messages.getString("admin_nav.section.resources.link.print")%>
 				</a>
 			</li>
 			<li>
 				<a id="li_a_admin_<%=AdminNavConsts.RESOURCES_EMAIL_TEMPLATES%>" 
 				class="toolTipItemLink li_link"
-				title="<%=messages.getString("admin_nav.section.resources.tooltip.email")%>" href="javascript:selectedItem('admin', <%=AdminNavConsts.RESOURCES_EMAIL_TEMPLATES%>);getJSP('Admin/Resources/dolist.jsp');">
+				title="<%=messages.getString("admin_nav.section.resources.tooltip.email")%>" href="javascript:selectedItem('admin', <%=AdminNavConsts.RESOURCES_EMAIL_TEMPLATES%>);getJSP('Admin/Resources/dolist.jsp?type=<%=ResourceNavConsts.EMAIL_TEMPLATES%>&ts=<%=ts%>');">
 					<%=messages.getString("admin_nav.section.resources.link.email")%>
 				</a>
 			</li>
 			<li>
 				<a id="li_a_admin_<%=AdminNavConsts.RESOURCES_PUBLIC%>" 
 				class="toolTipItemLink li_link"
-				title="<%=messages.getString("admin_nav.section.resources.tooltip.public")%>" href="javascript:selectedItem('admin',<%=AdminNavConsts.RESOURCES_PUBLIC%>);getJSP('Admin/Resources/dolist.jsp');">
+				title="<%=messages.getString("admin_nav.section.resources.tooltip.public")%>" href="javascript:selectedItem('admin',<%=AdminNavConsts.RESOURCES_PUBLIC%>);getJSP('Admin/Resources/dolist.jsp?type=<%=ResourceNavConsts.PUBLIC_FILES%>&ts=<%=ts%>');">
 					<%=messages.getString("admin_nav.section.resources.link.public")%>
 				</a>
 			</li>
