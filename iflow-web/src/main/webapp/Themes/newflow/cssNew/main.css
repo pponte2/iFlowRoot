@@ -549,6 +549,7 @@ float: left;
   
   .if-state-active {
 	font-weight: bold;
+	border: 1px dashed #999;
   }
   
   .tab_header {
