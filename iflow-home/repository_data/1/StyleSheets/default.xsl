@@ -575,13 +575,17 @@ label.subheader {
   		<script type="text/javascript" src="{$url_prefix}/javascript/Stickman.MultiUpload.js"></script>
         <script type="text/javascript" src="{$url_prefix}/javascript/livevalidation_standalone.js"> </script>
         <script type="text/javascript" src="{$url_prefix}/Themes/{$theme}/javascript/theme.js"> </script>
+        
   		
 		
 		
 				<link href="{$url_prefix}/javascript/jQueryAssets/jquery.ui.core.min.css" rel="stylesheet" type="text/css" />
 				<link href="{$url_prefix}/javascript/jQueryAssets/jquery.ui.theme.min.css" rel="stylesheet" type="text/css" />
 				<link href="{$url_prefix}/javascript/jQueryAssets/jquery.ui.accordion.min.css" rel="stylesheet" type="text/css" />
-<link href="{$url_prefix}/javascript/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+				<link href="{$url_prefix}/javascript/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+				<link href="{$url_prefix}/javascript/sexy-combo/css/sexy-combo.css" rel="stylesheet" type="text/css" />
+	    		<link href="{$url_prefix}/javascript/sexy-combo/css/sexy/sexy.css" rel="stylesheet" type="text/css" />
+					
 
 		 	    <script src="{$url_prefix}/javascript/jquery-1.10.2.js"></script>
 		 	    <script src="{$url_prefix}/javascript/jquery-ui.js"></script>
@@ -589,7 +593,7 @@ label.subheader {
 			        <script type="text/javascript" src="{$url_prefix}/javascript/sorttable.js"/> 
 		        
 		 	    <script type="text/javascript" src="{$url_prefix}/javascript/quicksearch.js"/>
-		 	    
+		 	    <script type="text/javascript" src="{$url_prefix}/javascript/sexy-combo/jquery.sexy-combo.js"/>
 		<!-- Carrega codigo javacript de interaccao com a applet e prepara o ambiente -->
 		<script type="text/javascript" src="{$url_prefix}/javascript/applet_functions.js" > </script>
 		<script type="text/javascript">
@@ -599,7 +603,7 @@ label.subheader {
         <xsl:text disable-output-escaping="yes">
 </xsl:text>
       </head>
-      <body onload="initProcFrame();">
+      <body onload="reloadBootstrapElements(); initProcFrame();">
         <div style="margin:auto;">
           <xsl:apply-templates select="form" />
         </div>
@@ -609,7 +613,7 @@ label.subheader {
 			</div></div>
 		</div>
 		<script type="text/javascript">
-				window.parent.onresize = function(event) {initProcFrame();};
+				window.parent.onresize = function(event) { initProcFrame();};				
 		</script>
       </body>
     </html>
@@ -1113,8 +1117,8 @@ label.subheader {
               </xsl:attribute>
               <xsl:if test="string-length(onchange_submit) > 0">
                 <xsl:attribute name="onChange">
-                  <xsl:apply-templates select="onchange_submit" />
-                </xsl:attribute>
+					ajaxFormRefresh(this);
+				</xsl:attribute>
               </xsl:if>
             </input>
           </xsl:otherwise>
@@ -1268,15 +1272,13 @@ label.subheader {
 			<em>*</em>
 		</xsl:if>
 		</label>
-		<select class="txt  form-control pull-right" style="width:250px;">
+		<select class="txt  form-control pull-right combobox" style="width:250px;">
 		<xsl:attribute name="name">
 			<xsl:value-of select="variable/text()" />
           	</xsl:attribute>
 		<xsl:if test="string-length(onchange_submit) > 0">
 			<xsl:if test="string-length(onchange_submit) &gt; 0">
-				<xsl:attribute name="onChange">
-					ajaxFormRefresh(this);
-				</xsl:attribute>
+				
 			</xsl:if>
 			<!--xsl:attribute name="onChange">
 				<xsl:apply-templates select="onchange_submit" />

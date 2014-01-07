@@ -1690,22 +1690,19 @@
     function reloadBootstrapElements(){
     	var $jQuery = jQuery.noConflict();
     	
-    	
     	//combobox
-    	try {
-			$jQuery('.combobox').combobox();
-		} catch (err) {}
+    	$jQuery('.combobox').sexyCombo();
     	
     	//accordion
-		try {
-		  $jQuery( ".PanelCollapse" ).accordion({
-    	    collapsible:true,
+  		try {
+	  	  $jQuery( ".PanelCollapse" ).accordion({
+          collapsible:true,
     	    animate:{easing: "swing"}
     	  }); 
-		} catch (err) {}
+		  } catch (err) {}
     
-    	  //Quickserch
-		try {
+    	//Quickserch
+		  try {
     	  var j = 0;
     	  $jQuery('.sortable').each(function(e){
     	    var tbId= "tb_"+j;
