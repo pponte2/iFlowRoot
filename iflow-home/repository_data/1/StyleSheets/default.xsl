@@ -735,80 +735,19 @@ label.subheader {
   </xsl:template>
 
   <xsl:template match="tabdivision">
-    <div class="tab_table" style="background-color:white;z-index:1;position: relative;top:1px;">
-      <xsl:attribute name="id">
-  		  <xsl:text>tabholder</xsl:text><xsl:apply-templates select="id" />
-  	   </xsl:attribute>
-      <xsl:for-each select="tab">
-        <td class="tabspacer">
-          <xsl:attribute name="id">
-  				<xsl:text>tabspace</xsl:text><xsl:apply-templates select="id" />
-  			</xsl:attribute>
-          &nbsp;
-        </td>
-        <td id="tabbutton2" style="vertical-align:bottom;">
-          <xsl:attribute name="id">
-  				<xsl:text>tabspace</xsl:text><xsl:apply-templates select="id" />
-  			</xsl:attribute>
-          <input type="button" id="button2" class="tab_button">
-            <xsl:attribute name="id">
-  					<xsl:text>tabbutton</xsl:text><xsl:apply-templates select="id" />
-  				</xsl:attribute>
-            <xsl:attribute name="value">
-  					<xsl:apply-templates select="name" />
-  				</xsl:attribute>
-            <xsl:attribute name="onClick">
-  					<xsl:text>javascript:inner_tabber(</xsl:text>
-  					<xsl:apply-templates select="id" />
-  					<xsl:text>,</xsl:text>
-  					<xsl:apply-templates select="../id" />
-  					<xsl:text>);</xsl:text>
-  					<xsl:value-of select="action/text()" />
-  				</xsl:attribute>
-          </input>
-        </td>
-      </xsl:for-each>
-      <xsl:apply-templates select="tab" />
-    </div>
-    <!--  TODO obter o primeiro tab filho e chamar-lhe o tabber -->
-    <script language="JavaScript" type="text/javascript">
-      <!-- Configuracao da nova tab. Está propositadamente mal identado para aparecer correctamente no HTML resultante. -->
-      <xsl:text>
-	var tmpArray = new Array();
-</xsl:text>
-      <xsl:for-each select="tab">
-        <xsl:text>
-	tmpArray[</xsl:text>
-        <xsl:value-of select="position()" />
-        <xsl:text>] = </xsl:text>
-        <xsl:value-of select="id" />
-        <xsl:text>;
-</xsl:text>
-      </xsl:for-each>
-      <xsl:text>
-	_tabArray[</xsl:text>
-      <xsl:value-of select="id" />
-      <xsl:text>] = tmpArray;
-</xsl:text>
-      <xsl:text>
-	inner_tabber(</xsl:text>
-      <xsl:value-of select="tab[1]/id" />
-      <xsl:text>,</xsl:text>
-      <xsl:value-of select="id" />
-      <xsl:text>);
-</xsl:text>
+		<div class="accordion">			
+			<xsl:apply-templates select="tab" />
+		</div>
+	</xsl:template>
 
-    </script>
-  </xsl:template>
-
-  <xsl:template match="tab">
-    <div class="tab_panel">
-      <xsl:attribute name="id">
-				<xsl:text>tabsection</xsl:text><xsl:apply-templates select="id" /><xsl:text>_div</xsl:text>
-			</xsl:attribute>
-      <xsl:apply-templates select="blockdivision" />
-    </div>
-  </xsl:template>
+	<xsl:template match="tab">	    
+			<h3>
+				<xsl:apply-templates select="name" />
+			</h3>
+			<div>
+				<xsl:apply-templates select="blockdivision" />
+			</div>			
+	</xsl:template>
 
   <xsl:template match="field">
     <xsl:variable name="multicol" select="count(../../columndivision)" />

@@ -1,6 +1,6 @@
 var $jQuery = jQuery.noConflict();
 $jQuery(function(){
-  
+/* código de init comentado, agora faz-se explicitamente em reloadBootstrapElements()  
   var j = 0;
 $jQuery('.sortable').each(function(e){
     var tbId= "tb_"+j;
@@ -8,13 +8,13 @@ $jQuery('.sortable').each(function(e){
     j++;
   var currTb = "#"+tbId;
   var inputId = "input_"+tbId;
-  var inputTot = '<input type="text" placeholder="Pesquisar" autofocus="" name="search" value="" id="'+inputId+'" />'
+  var inputTot = '<input type="text" placeholder="Search" autofocus="" name="search" value="" id="'+inputId+'" />'
   var qs = "table"+currTb+" tbody tr";
   var inputCal = "input#"+inputId;
   $jQuery(inputTot).insertBefore(currTb);
   $jQuery(inputCal).quicksearch(qs);
 });
-  
+*/  
   
   
 });
