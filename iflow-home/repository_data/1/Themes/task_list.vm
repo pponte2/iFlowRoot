@@ -152,6 +152,9 @@
 				<div>
 					<a href="javascript:getJSP('main_content.jsp?filterDate=$act.get("createdDate")')">$act.get("createdDate")</a>
 				</div>
+				<div>
+					$act.get("task_annotation_icon")
+				</div>
 			</div>
 		</div>
 	
