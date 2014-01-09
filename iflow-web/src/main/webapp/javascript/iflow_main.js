@@ -192,53 +192,84 @@
   }   
   
   function expand() {
-    document.getElementsByTagName('html')[0].style.width='99%';
-    document.getElementsByTagName('body')[0].style.width='99%';
-    document.getElementById('div_header').style.display='none';
-    document.getElementById('div_menu').style.display='none';
-    document.getElementById('div_proc_menu_expanded').style.display='block';
-    document.getElementById('div_proc_menu_colapsed').style.display='none';
-    document.getElementById('link_process_help').style.display='block';
-    document.getElementById('link_process_help').style.display='none';
-    document.getElementById('div_main').style.height='100%';
-    document.getElementById('div_main').className='main_expanded';
-    document.getElementById('section3_nav_div').style.display='none';
-    document.getElementById('section3_div').className='tab_body_expanded';
-    document.getElementById('section3_header_div').style.height='0px';
+    var obj;
+    obj = document.getElementsByTagName('html');
+    if (obj != null) obj[0].style.width='99%';
+    obj = document.getElementsByTagName('body');
+    if (obj != null) obj[0].style.width='99%';
+    obj = document.getElementById('div_header');
+    if (obj != null) obj.style.display='none';
+    obj = document.getElementById('div_menu');
+    if (obj != null) obj.style.display='none';
+    obj = document.getElementById('div_proc_menu_expanded');
+    if (obj != null) obj.style.display='block';
+    obj = document.getElementById('div_proc_menu_colapsed');
+    if (obj != null) obj.style.display='none';
+    obj = document.getElementById('link_process_help');
+    if (obj != null) obj.style.display='block';
+    obj = document.getElementById('link_process_help');
+    if (obj != null) obj.style.display='none';
+    obj = document.getElementById('div_main');
+    if (obj != null) obj.style.height='100%';
+    obj = document.getElementById('div_main');
+    if (obj != null) obj.className='main_expanded';
+    obj = document.getElementById('section3_nav_div');
+    if (obj != null) obj.style.display='none';
+    obj = document.getElementById('section3_div');
+    if (obj != null) obj.className='tab_body_expanded';
+    obj = document.getElementById('section3_header_div');
+    if (obj != null) obj.style.height='0px';
     document.body.style.margin = '0px'; 
 
     if(orgTheme() == "classic") {
       document.getElementById('section3_content_div').style.height="100%";
       document.getElementById('open_proc_frame').style.height=(getBrowserWindowHeight()-2)+'px';
+      document.getElementById('section3_content_div').className='content_div_expanded';
+      $('footerwrapper').setStyle('display','none');
     } else if (orgTheme() == "default") {
       document.getElementById('section3_content_div').style.height=(getBrowserWindowHeight()-2)+'px';
       document.getElementById('open_proc_frame').style.height=(getBrowserWindowHeight()-2)+'px';
+      document.getElementById('section3_content_div').className='content_div_expanded';
+      $('footerwrapper').setStyle('display','none');
     }
-    document.getElementById('section3_content_div').className='content_div_expanded';
-    $('footerwrapper').setStyle('display','none');
     GLOBAL_HEIGHT_OFFSET=2;
   }
   
   function colapse() {
     GLOBAL_HEIGHT_OFFSET=GLOBAL_HEIGHT_OFFSET_SAVE;
-    document.getElementsByTagName('html')[0].style.width='';
-    document.getElementsByTagName('body')[0].style.width='';
-    document.getElementById('div_header').style.display='block';
-    document.getElementById('div_menu').style.display='block';
-    document.getElementById('div_proc_menu_expanded').style.display='none';
-    document.getElementById('div_proc_menu_colapsed').style.display='block';
-    document.getElementById('link_process_help').style.display='none';
-    document.getElementById('link_process_help').style.display='block';
-    document.getElementById('div_main').style.height='auto';
-    document.getElementById('div_main').className='main';   
-    document.getElementById('section3_header_div').style.height='35px';
-    document.getElementById('section3_nav_div').style.display='block';
-    document.getElementById('section3_div').className='tab_body';
+    var obj;
+    obj = document.getElementsByTagName('html');
+    if (obj != null) obj[0].style.width='';
+    obj = document.getElementsByTagName('body');
+    if (obj != null) obj[0].style.width='';
+    obj = document.getElementById('div_header');
+    if (obj != null) obj.style.display='block';
+    obj = document.getElementById('div_menu');
+    if (obj != null) obj.style.display='block';
+    obj = document.getElementById('div_proc_menu_expanded');
+    if (obj != null) obj.style.display='none';
+    obj = document.getElementById('div_proc_menu_colapsed');
+    if (obj != null) obj.style.display='block';
+    obj = document.getElementById('link_process_help');
+    if (obj != null) obj.style.display='block';
+    obj = document.getElementById('div_main');
+    if (obj != null) {
+      obj.style.height='auto';
+      obj.className='main';
+    }
+    obj = document.getElementById('section3_header_div');
+    if (obj != null) obj.style.height='35px';
+    obj = document.getElementById('section3_nav_div');
+    if (obj != null) obj.style.display='block';
+    obj = document.getElementById('section3_div');
+    if (obj != null) obj.className='tab_body';
     document.body.style.margin = '10px 20px 0 20px';
 
     if(orgTheme() == "classic") {
       document.getElementById('section3_content_div').style.height="100%";
       document.getElementById('open_proc_frame').style.height="100%";
+      document.getElementById('section3_content_div').className='content_div';
+      $('footerwrapper').setStyle('display','block');
     } else if (orgTheme() == "default") {
           var h1;
       if (window.frames[0].document.forms[0]) {
@@ -252,11 +283,10 @@
         document.getElementById('section3_content_div').style.height = (h1 + 40)+ 'px';
         document.getElementById('open_proc_frame').style.height=(h1 + 40)+ 'px';
       }
-
+      document.getElementById('section3_content_div').className='content_div';
+      $('footerwrapper').setStyle('display','block');
     }
-    document.getElementById('section3_content_div').className='content_div';
     
-    $('footerwrapper').setStyle('display','block');
       
   }
   

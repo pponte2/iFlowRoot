@@ -107,6 +107,9 @@
 				el.focused = focus;
 			}
 
+			function orgTheme() {
+			  return '${orgTheme}';
+			}
 			var iboxlogin = new iBox({
 				indicatorImg: "images/indicator.gif",
 				bgColor: '#528b8b', // dark slate gray 4
