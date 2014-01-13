@@ -41,7 +41,7 @@
 		<a href="" onclick="javascript:editLabel('<%=folder.getFolderid()%>','-1'); return false;" class="lmenu">
 			<img id="bt_cancel_<%=folder.getFolderid()%>" title="fechar" width="10" height="10" src="Themes/newflow/images/close.png" style="display:none;"/>
 		</a>
-		<a id="bt_edit_<%=folder.getFolderid()%>" href="javascript:getJSP('main_content.jsp?filterfolder=<%= folder.getFolderid()%>');selectedLabel('bt_edit_<%=folder.getFolderid()%>');" 
+		<a id="bt_edit_<%=folder.getFolderid()%>" href="javascript:tabber_right(1, 'main_content.jsp', 'filterfolder=<%= folder.getFolderid()%>');selectedLabel('bt_edit_<%=folder.getFolderid()%>');" 
 				onmousehover="document.getElementById('bte_change_<%=folder.getFolderid()%>').setStyle('display','block');"
 				class="lmenu form-label labellink" ><%=folder.getName()%></a>
 		

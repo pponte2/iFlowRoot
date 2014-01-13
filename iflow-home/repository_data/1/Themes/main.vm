@@ -129,30 +129,39 @@
 			}
 
 			function initDom() {
-				getJSP(taskLabelsJSP, containerLabels);
-				getJSP(mainContentJSP);
-				getJSP(mainContentJSP + '?data=procs', containerFlowList);
+				setHistory(1, '', '', '$response.encodeURL($url_prefix,mainContentJSP)', '');
+				//setHistory(2, '', '', '$response.encodeURL($url_prefix,'actividades.jsp')', 'ts=$ts');
+				setHistory(3, '', '', '','');
+				setHistory(4, '', '', '$response.encodeURL($url_prefix,'Admin/flow_settings.jsp')', 'ts=$ts');
+				setHistory(5, '', '', '$response.encodeURL($url_prefix,'gestao_tarefas.jsp')', 'ts=$ts');        
+				setHistory(6, '', '', '$response.encodeURL('personal_account.jsp')', '');
+				setHistory(7, '', '', '','');
+				setHistory(8, '', '', '$response.encodeURL($url_prefix,'user_proc_seach.jsp')', 'ts=$ts');
+				setHistory(9, '', '', '','');
+				setHistory(10,'', '', '$response.encodeURL($url_prefix,'Reports/proc_perf.jsp')', 'ts=$ts');        
+				setHistory(11,'', '', '','');
+
+				getCtrlFill(taskLabelsJSP, '', containerLabels);
+				tabber_right(1, mainContentJSP, '');
+				getCtrlFill(mainContentJSP, 'data=procs', containerFlowList);
 				#if("$Tab8" != "no")
-				getJSP(userProcsFiltroJSP + '?searchtype=as', containerSearch);
+				getCtrlFill(userProcsFiltroJSP, 'searchtype=as', containerSearch);
 				#end
 				#if($org_admin == "yes")
-				getJSP(reportsNavNewJSP, containerReportsAdmin);
+				getCtrlFill(reportsNavNewJSP, '', containerReportsAdmin);
 				#else
 					#if($supervisor == "yes")
-				getJSP(reportsNavJSP, containerReportsSupervisor);
+				getCtrlFill(reportsNavJSP, '', containerReportsSupervisor);
 					#end
 				#end
 				#if("$Tab5" != "no")	
-				getJSP(reportsNavJSP, containerReportsSupervisor);
-					getJSP(gestaoTarefasNavNewJSP, containerDelegations);
+				getCtrlFill(reportsNavJSP, '', containerReportsSupervisor);
+					getCtrlFill(gestaoTarefasNavNewJSP, '', containerDelegations);
 				#end
-				getJSP(adminNavJSPNew, containerMain);
+				getCtrlFill(adminNavJSPNew, '', containerMain);
 				
 				jscolor.bind();
-				
-				
-			
-				//init("Themes/${orgTheme}/css/iflow_std.css");
+
 				mainResize();
 				#if($sys_admin != "no")
 				#end
@@ -162,7 +171,7 @@
 
 			function deleteLabel(labelid){
 				if (confirm('Confirma a eliminação da categoria?')) {
-					getJSP(taskLabelsJSP + "?deletefolder=" + labelid, containerLabels);
+					getCtrlFill(taskLabelsJSP, 'deletefolder=' + labelid, containerLabels);
 				}
 			}
 
@@ -184,27 +193,24 @@
 					if (obj!=null) obj.style.display = 'inline-block';
 					obj = document.getElementById('edit_'+labelid);
 					if (obj!=null) obj.style.display = 'inline-block';
-					//if (labelid=='0') {
-						if (obj!=null) obj.value = '';
-						  obj = document.getElementById('bt_pickColor_'+labelid);
-						  if (obj!=null) {
-							obj.style.display = 'inline-block';
-							if (document.getElementById('cl_edit_bg_' + labelid )) {
-								obj.setStyle('background-color', document.getElementById('cl_edit_bg_' + labelid ).style.backgroundColor);
-							}
-							else {
-								obj.color.fromString('999999');
-							}
-							if (labelid!='0') {
+					if (obj!=null) obj.value = '';
+					obj = document.getElementById('bt_pickColor_'+labelid);
+					if (obj!=null) {
+						obj.style.display = 'inline-block';
+						if (document.getElementById('cl_edit_bg_' + labelid )) {
+							obj.setStyle('background-color', document.getElementById('cl_edit_bg_' + labelid ).style.backgroundColor);
+						} else {
+							obj.color.fromString('999999');
+						}
+						if (labelid!='0') {
 							obj = document.getElementById('bt_edit_'+labelid);
 							var obj2 = document.getElementById('edit_'+labelid);
-						  if (obj!=null && obj2!=null) {
-							obj2.value = obj.innerHTML;
-						  }
-						  }
-						  
-						  }
-					//}
+							if (obj!=null && obj2!=null) {
+								obj2.value = obj.innerHTML;
+							}
+						}
+				  
+					}
 					obj = document.getElementById('edit_'+labelid);
 					if (obj!=null) obj.focus();	
 				} else  {
@@ -237,10 +243,6 @@
 				}
 			}
 			
-			function tabber_right(tabnr, contentpage, contentparam) {
-				getJSP(contentpage + '?' +contentparam);
-			}
-			
 			function changeColor(element) {
 			   var activities = document.getElementsByClassName("activity");
 
@@ -262,9 +264,9 @@
 			}
 			
 			function pesquisarPnumber(value) {
-				getJSP(userProcsFiltroJSP + '?searchtype=ss&targetUser=__ALL_PROCS__', containerSearch);
+				getCtrlFill(userProcsFiltroJSP, 'searchtype=ss&targetUser=__ALL_PROCS__', containerSearch);
 				document.getElementById('pnumber').value = value;
-				getJSP('user_procs.jsp?' + get_params(document.user_procs_filter) + '&clearsearch=true');							
+				tabber_right(8, 'user_procs.jsp', get_params(document.user_procs_filter) + '&clearsearch=true');
 			    eventFire(document.getElementById('ui-accordion-Accordion1-header-2'),'click');
 			    eventFire(document.getElementById('searchlink'),'click');
 				return false;
@@ -322,14 +324,14 @@
 							#end
 							</td>
 							<td style="color: #009933;padding:5px">
-							<a style="color: #009933;text-decoration:none;" href ="javascript:getJSP('personal_account.jsp')">
+							<a style="color: #009933;text-decoration:none;" href="javascript:tabber_right(6, 'personal_account.jsp')">
 							#if($sys_admin != "yes")
 								$username @ $unit
 							#end
 							</a>
 							</td>
 							<td style="padding:5px">
-								<a href ="javascript:getJSP('inbox.jsp')"><img src="images/envelope.png" width="20" height="13" alt=""/></a> (1)</td>
+								<a href ="javascript:tabber_right(11, 'inbox.jsp')"><img src="images/envelope.png" width="20" height="13" alt=""/></a> (1)</td>
 							<td>
 								<form action="$response.encodeURL($url_prefix,'logout.jsp')?ts=$ts">
 									<input type="submit" class="btn btn-default btn-sm" style="margin: 0px;" name="Logout" id="Logout" value="Sair"/>
@@ -346,7 +348,7 @@
 				<div id="Accordion1">
 					#if("$Tab2" != "no")	
 					<h3 class="Acor_01">
-						<a href="" onclick="javascript:getJSP('main_content.jsp?cleanFilter=1');" title="$field_tasks">	
+						<a href="" onclick="javascript:tabber_right(2, 'main_content.jsp', 'cleanFilter=1');" title="$field_tasks">	
 							<img src="images/tarefas.png" width="24" height="24" alt="" />
 							$field_tasks
 						</a>
@@ -355,20 +357,18 @@
 						<div id='container_task_labels' class="txt_categ"></div>
 						<div style="font-size: 0.9em; color: #666666;">
 							<a id="bt_edit_0" href="" onClick="editLabel('0','1'); return false;" class="lmenu">$new_label</a>
-							<!--table-->
 							<a href="" onclick="javascript:editLabel('0','-1'); return false;" class="lmenu" >
 								<img id="bt_cancel_0" title="fechar" width="10" height="10" style="display:none" src="Themes/newflow/images/close.png"/>
 							</a>
 							<input class="form-control" type="text" value="" id="edit_0" style="display:none;width:6em;height:25px;"
 									onkeydown="if (event.keyCode == 13) { editLabel('0','0');}"/>
 							<input id="bt_pickColor_0" class="color form-control" style="display:none;cursor:pointer;width:15px;height:25px;border: 1px solid #CCCCCC;" maxlength="0" title="Escolha a cor"></input>
-							<!--input id="bt_pickColor_1" class="color form-control" style="display:none;15px;height:25px;border: 1px solid #CCCCCC" maxlength="0" title="Escolha a cor"></input-->
 						</div>
 					</div>
 					#end
 					#if("$Tab3" != "no")
 					<h3 class="Acor_01">
-						<a href="#" title="$tooltip_processes">
+						<a href="" onclick="javascript:tabber_load(3, '');" title="$tooltip_processes">
 						<img src="images/processos.png" width="24" height="24" alt=""/>$field_processes</a>
 					</h3>
 					<div class="Acor_02" style=" margin: 0 ; padding:20px 0 0 0 ;">
@@ -378,7 +378,7 @@
 					
 					#if("$Tab8" != "no")
 					<h3 class="Acor_01">
-						<a href="#">
+						<a href="" onclick="javascript:tabber_load(8, '');">
 						<img src="images/pesquisa.png" width="24" height="24" alt="" /> Pesquisa</a>
 					</h3>
 					<div class="Acor_02" style=" margin: 0 ; padding:20px 0 0 0 ;">
@@ -388,7 +388,7 @@
 
 					#if("$Tab5" != "no")	
 					<h3 class="Acor_01">
-						<a href="#">
+						<a href="" onclick="javascript:tabber_load(5, '');">
 						<img src="images/delegacaoes.png" width="24" height="24" alt="" /> Delegações</a>
 					</h3>
 					<div class="Acor_02" style=" margin: 0 ; padding:20px 0 0 0 ;">
@@ -413,7 +413,7 @@
 					
 					#if($org_admin == "yes" || $supervisor == "yes")
 					<h3 class="Acor_01">
-						<a href="#">
+						<a href="" onclick="javascript:tabber_load(10, '');">
 						<img src="images/relatorios.png" width="24" height="24" alt="" /> Relatórios</a>
 					</h3>
 						#if($org_admin == "yes")
@@ -432,7 +432,7 @@
 					#end
 					#if($org_admin == "yes")
 					<h3 class="Acor_01">
-						<a href="#">
+						<a href="" onclick="javascript:tabber_load(4, '');">
 						<img src="images/admin.png" width="24" height="24" alt="" /> Admin</a>
 					</h3>
 					<div class="Acor_02" style=" margin: 0 ; padding:20px 0 0 0 ;">
@@ -446,8 +446,30 @@
 				
 			</div>
 
-			 
-			<div id="div_main" class="main" style="margin-left: 220px;"></div>
+			<!-- 
+			  dashboard = 1
+			  tasks = 2
+			  processes = 3
+			  admin = 4
+			  delegations = 5
+			  account = 6
+			  help = 7
+			  search = 8
+			  rss = 9
+			  reports = 10
+			  inbox = 11
+			-->
+			<div id="section_div_1" class="main" style="margin-left: 220px; display: none"></div>
+			<div id="section_div_2" class="main" style="margin-left: 220px; display: none"></div>
+			<div id="section_div_3" class="main" style="margin-left: 220px; display: none"></div>
+			<div id="section_div_4" class="main" style="margin-left: 220px; display: none"></div>
+			<div id="section_div_5" class="main" style="margin-left: 220px; display: none"></div>
+			<div id="section_div_6" class="main" style="margin-left: 220px; display: none"></div>
+			<div id="section_div_7" class="main" style="margin-left: 220px; display: none"></div>
+			<div id="section_div_8" class="main" style="margin-left: 220px; display: none"></div>
+			<div id="section_div_9" class="main" style="margin-left: 220px; display: none"></div>
+			<div id="section_div_10" class="main" style="margin-left: 220px; display: none"></div>
+			<div id="section_div_11" class="main" style="margin-left: 220px; display: none"></div>
 
 			<div class="yui-skin-sam">
 				<div id="userdialog">
@@ -977,27 +999,6 @@
 
 	#if($org_admin == "yes")
 	
-	<!--
-	  <div id="tutorial" style="display:${tutorialDisplay};">
-	  	<div class="hd">Tutorial</div>
-			<div style="float:left;">
-				<ul id="select_tutorial" style="padding-left: 20px;">
-					<script type="text/javascript">
-						generateOptions();
-					</script>
-				</ul>
-				<div style="float:left;">
-					<a style="margin-left: 0px; color:white; text-decoration:underline;font-weight: bold;" href="javascript:resetTutorial();">$linkReset</a>
-					<a style="margin-right: 0px; color:white; text-decoration:underline;font-weight: bold;" href="javascript:closeTutorial();">$linkClose</a>
-				</div>
-			</div>
-	  </div>
-
-	  <div id="tutorial_bubble" class="tutorialbox" style="display:none;">
-	    <div>$tutorialBubbleMsg</div>
-	  </div>
-	  -->
-	  
     #end
 
 
