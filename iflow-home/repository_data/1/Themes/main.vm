@@ -110,6 +110,7 @@
 			function orgTheme() {
 			  return '${orgTheme}';
 			}
+
 			var iboxlogin = new iBox({
 				indicatorImg: "images/indicator.gif",
 				bgColor: '#528b8b', // dark slate gray 4
@@ -263,9 +264,13 @@
 			function pesquisarPnumber(value) {
 				getJSP(userProcsFiltroJSP + '?searchtype=ss&targetUser=__ALL_PROCS__', containerSearch);
 				document.getElementById('pnumber').value = value;
-				getJSP('user_procs.jsp?' + get_params(document.user_procs_filter) + '&clearsearch=true');
+				getJSP('user_procs.jsp?' + get_params(document.user_procs_filter) + '&clearsearch=true');							
+			    eventFire(document.getElementById('ui-accordion-Accordion1-header-2'),'click');
+			    eventFire(document.getElementById('searchlink'),'click');
 				return false;
 			}
+			
+			
 			
 		</script>
 		</head>

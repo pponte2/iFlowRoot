@@ -364,8 +364,8 @@
   
   function open_process_report(tabnr, flowid, contentpage, contentparam, runMax) {
     // do the pinging...
-  if(gTabNr != null) gOldTabNr = gTabNr;
-  gTabNr = tabnr;
+	if(gTabNr != null) gOldTabNr = gTabNr;
+	gTabNr = tabnr;
     gFlowId=flowid;
     gContentPage=contentpage;
     gContentParam=contentparam;
@@ -395,16 +395,16 @@
   }
   
   function close_process(tabnr) {
-  if(gOldTabNr == 2 && gTabNr == 3){
-    this.blur();
-    tabber_load(2,actividadesFiltroJSP);
-  } else {
-    colapse();
-    myframe = document.getElementById('open_proc_frame');
-      myframe.style.display = "none";
-      myframe.src = '';
-      tabber(1, mainContentJSP , 'data=procs', mainContentJSP, 'data=tasks');
-  }
+	if(gOldTabNr == 2 && gTabNr == 3){
+		this.blur();
+		tabber_load(2,actividadesFiltroJSP);
+	} else {
+		colapse();
+		myframe = document.getElementById('open_proc_frame');
+	    myframe.style.display = "none";
+	    myframe.src = '';
+	    tabber(1, mainContentJSP , 'data=procs', mainContentJSP, 'data=tasks');
+	}
   }
   
   function tabber_right(tabnr, contentpage, contentparam) {
@@ -505,7 +505,7 @@
   }
   
   function tabber_load(tabnr, navpage) {
-  tabnr = convert_tabnr(tabnr);
+	tabnr = convert_tabnr(tabnr);
     var hist = page_history[tabnr];
     tabber(tabnr, navpage, hist['navparam'], hist['contentpage'], hist['contentparam']);
     GLOBAL_session_config = hist['sessionconfig'];
@@ -1348,16 +1348,16 @@
 
     function resizeProcDetail() {
       try {
-   
+	 
         if(!$('iframe_proc_detail')) return
-        var iframe_height = (document.getElementById('Accordion1').style.height + 10) + "px";
+				var iframe_height = (document.getElementById('Accordion1').style.height + 10) + "px";
         var mainWidth = document.getElementById('mainheader').scrollWidth-0;
         var sidebarWidth = document.getElementById('main_sidebar').scrollWidth-0;
         var taskbarWidth = document.getElementById('taskbar').scrollWidth-0;
         var iframe_width=(mainWidth-sidebarWidth-taskbarWidth-6)+'px'; // nao mexer sem saber
-  
+	
         document.getElementById('iframe_proc_detail').setStyle('width',iframe_width);
-        document.getElementById('iframe_proc_detail').setStyle('height',iframe_width);
+		    document.getElementById('iframe_proc_detail').setStyle('height',iframe_width);
       } catch(err) {
       // ignore error....
       }
@@ -1691,87 +1691,88 @@
     getJSP(thePage + params, ctrl);
   }
 
-  function ajaxFormRefresh(component){
-    var $jQuery = jQuery.noConflict();
-    $jQuery.ajaxSetup ({cache: false});
-    $jQuery(component).after('<img src=\'/iFlow//images/loading.gif\'>');
-    var varNewValue=component.value;
-    var varName=component.name;
-    var flowid = document.getElementById('flowid').value;
-    var pid = document.getElementById('pid').value;
-    var subpid = document.getElementById('subpid').value;
-    $jQuery.getJSON(  
-        '../AjaxFormServlet',
-        {varNewValue: varNewValue, varName: varName,
-          flowid: flowid, pid: pid, subpid:subpid}, 
-          function(response){  
-            try{
-              var main = $jQuery('#main');
-              main.html(response);
-            } catch (err){}
-            finally{
-              reloadBootstrapElements();
+    function ajaxFormRefresh(component){
+    	var $jQuery = jQuery.noConflict();
+			$jQuery.ajaxSetup ({cache: false});
+			$jQuery(component).after('<img src=\'/iFlow//images/loading.gif\'>');
+		var varNewValue=component.value;
+			var varName=component.name;
+			var flowid = document.getElementById('flowid').value;
+			var pid = document.getElementById('pid').value;
+			var subpid = document.getElementById('subpid').value;
+       	$jQuery.getJSON(  
+            '../AjaxFormServlet',
+            {varNewValue: varNewValue, varName: varName,
+             flowid: flowid, pid: pid, subpid:subpid}, 
+            function(response){  
+            	try{
+            	var main = $jQuery('#main');
+            	main.html(response);
+            	} catch (err){}
+            	finally{
+            		reloadBootstrapElements();
+            	}
+            	
             }
-
-          }
-    );        
-  }    
-
-  function reloadBootstrapElements(){
-    var $jQuery = jQuery.noConflict();
-
-    //combobox
-    $jQuery('.combobox').sexyCombo();
-
-    //accordion
-    try {
-      $jQuery( ".PanelCollapse" ).accordion({
-        collapsible:true,
-        animate:{easing: "swing"}
-      }); 
-    } catch (err) {}
-
-    //Quickserch
-    try {
-      var j = 0;
-      $jQuery('.sortable').each(function(e){
-        var tbId= "tb_"+j;
-        $jQuery(this).attr('id', tbId);
-        j++;
-        var currTb = "#"+tbId;
-        var inputId = "input_"+tbId;
-        var inputTot = '<input type="text" placeholder="Pesquisar" autofocus="" name="search" value="" id="'+inputId+'" />';
-        var qs = "table"+currTb+" tbody tr";
-        var inputCal = "input#"+inputId;
-        $jQuery(inputTot).insertBefore(currTb);
-        $jQuery(inputCal).quicksearch(qs);    
+    	);       	
+    }    
+    
+    function reloadBootstrapElements(){
+    	var $jQuery = jQuery.noConflict();
+    	
+    	//combobox
+    	$jQuery('.combobox').sexyCombo();
+    	
+    	//accordion
+  		try {
+	  	  $jQuery( ".PanelCollapse" ).accordion({
+          collapsible:true,
+    	    animate:{easing: "swing"}
+    	  }); 
+		  } catch (err) {}
+    
+    	//Quickserch
+		  try {
+    	  var j = 0;
+    	  $jQuery('.sortable').each(function(e){
+    	    var tbId= "tb_"+j;
+    	    $jQuery(this).attr('id', tbId);
+    	    j++;
+    	    var currTb = "#"+tbId;
+    	    var inputId = "input_"+tbId;
+    	    var inputTot = '<input type="text" placeholder="Pesquisar" autofocus="" name="search" value="" id="'+inputId+'" />';
+    	    var qs = "table"+currTb+" tbody tr";
+    	    var inputCal = "input#"+inputId;
+    	    $jQuery(inputTot).insertBefore(currTb);
+    	    $jQuery(inputCal).quicksearch(qs);    
+		  });
+		} catch (err) {}
+		
+    	
+    	//sortable
+      forEach(document.getElementsByTagName('table'), function(table) {
+        if (table.className.search(/\bsortable\b/) != -1) {
+          sorttable.makeSortable(table);
+        }
       });
-    } catch (err) {}
-
-
-    //sortable
-    forEach(document.getElementsByTagName('table'), function(table) {
-      if (table.className.search(/\bsortable\b/) != -1) {
-        sorttable.makeSortable(table);
-      }
-    });
-  }
+    	
+    }
 
   function reloadJS() {
   
-    jscolor.bind();
-    
-    //tooltips('div_main');
-    
-        //sortable
-    try {
-      var tables = document.getElementsByTagName('table');
-      for(var i = 0; i <tables.length; i++) {
-      if (tables[i].className.search(/\bsortable\b/) != -1) {
-        sorttable.makeSortable(tables[i]);
-      }
-      }
-    } catch (err) {alert('error');}
+	  jscolor.bind();
+	  
+	  //tooltips('div_main');
+	  
+       	//sortable
+	  try {
+		  var tables = document.getElementsByTagName('table');
+		  for(var i = 0; i <tables.length; i++) {
+			if (tables[i].className.search(/\bsortable\b/) != -1) {
+				sorttable.makeSortable(tables[i]);
+			}
+		  }
+	  } catch (err) {alert('error');}
 
     $('.donotclosemenu').click(function(e) { e.stopPropagation();});
       
@@ -1787,7 +1788,7 @@
       }
     });
     
-    try {
+	  try {
       $(function() {
         var menu_ul = $('.menu > li > ul'),
             menu_a  = $('.menu > li > a');
@@ -1807,28 +1808,34 @@
         });
   
       });
-    } catch (err) {}
+	  } catch (err) {}
+	
+	  if (closeMenus) {
+      try {
+  	    $( "#Accordion1" ).accordion({ // Accordion template1
+  		    heightStyle:"content",
+  	      active:0
+  	    }); 
+  	  } catch (err) {}
   
-    if (closeMenus) {
-      try {
-        $( "#Accordion1" ).accordion({ // Accordion template1
-          heightStyle:"content",
-          active:0
-        }); 
-      } catch (err) {}
-  
-      try {
-        $( "#Accordion2" ).accordion({ // Accordion template1
-          heightStyle:"content",
-          active:1
-        });
-      } catch (err) {}
-    
-      try {
-        $( "#Accordion3" ).accordion({ // Accordion template1
-          heightStyle:"content",
-          active:2
-        }); 
-      } catch (err) {}
-    }
+  	  try {
+  	    $( "#Accordion2" ).accordion({ // Accordion template1
+  		    heightStyle:"content",
+  	      active:1
+  	    });
+  	  } catch (err) {}
+  	
+  	  try {
+  	    $( "#Accordion3" ).accordion({ // Accordion template1
+  		    heightStyle:"content",
+  	      active:2
+  	    }); 
+  	  } catch (err) {}
+	  }
   }
+  
+  function eventFire(el, etype){	 
+	    var evObj = document.createEvent('Events');
+	    evObj.initEvent(etype, true, false);
+	    el.dispatchEvent(evObj);	  
+	}

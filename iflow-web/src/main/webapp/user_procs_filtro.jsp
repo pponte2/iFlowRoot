@@ -143,122 +143,129 @@ String filterAction = "";
 if (Const.SEARCH_ALL_USER_PROCS_BY_DEFAULT)
 	filterAction = "javascript:tabber_right(8, '" + response.encodeURL("user_procs.jsp") + "', get_params(document.user_procs_filter)+'&clearsearch=true');";
 else 
-	filterAction = "javascript:if ($('showflowid').value != -1) tabber_right(8, '" + response.encodeURL("user_procs.jsp") + "', get_params(document.user_procs_filter)+'&clearsearch=true');";
+// 	filterAction = "javascript:if ($('showflowid').value != -1) tabber_right(8, '" + response.encodeURL("user_procs.jsp") + "', get_params(document.user_procs_filter)+'&clearsearch=true');";
 
 request.setAttribute("flow_type", FlowType.WORKFLOW);
 
 //check if it's simple search
 %>
-	<form id="search_simple_link" class="menu" name="advancedSearch" method="post" style="display:block;">
-		<a id="searchlink"
-			title="<%=messages.getString("user_procs_filtro.simplesearch.tooltip")%>" class="toolTipItemLink li_link"
-			href="javascript:document.getElementById('search_simple_form').setStyle('display','block');document.getElementById('search_simple_link_2').setStyle('display','block');document.getElementById('search_simple_link').setStyle('display','none');"><%=messages.getString("user_procs_filtro.simplesearch")%></a>
+	<form id="search_simple_form" class="menu" name="user_procs_filter" method="post" style="display:block;">
+		<ul class="menu">
+			<li>
+				<a id="searchlink" title="<%=messages.getString("user_procs_filtro.simplesearch.tooltip")%>" class="toolTipItemLink li_link" href= "#"><%=messages.getString("user_procs_filtro.simplesearch")%></a>
+				<ul>
+					<li>
+						<div class="greybox" style="margin-left:10px;padding-bottom: 10px">
+							<div id="search_simple_link" name="advancedSearch" method="post" style="display:block">
+								<input type="hidden" name="mode" value="0">
+								<input type="hidden" name="process" value="">
+								<input type="hidden" id="proc_search" name="proc_search" value="false">
+								<input type="hidden" id="atLeastOneSuper" name="atLeastOneSuper" value="<%= !hsSuperPrivs.isEmpty() %>">
+								<!-- SearchTextRelated -->
+								<input type="hidden" id="searchText" name="searchText" value="<%=searchText%>">
+								
+								<%  Iterator<String> superIter = hsSuperPrivs.iterator(); 
+									while (superIter.hasNext()) { 
+										String inputFlow = superIter.next();%>
+										<input type="hidden" name="<%=inputFlow%>" id="<%=inputFlow%>" value="">
+								<%	}
+							    if(fda.length > 0) { %>
+									<p class="item"><if:message string="user_procs_filtro.field.select"/>:</p>
+									<p class="item_indent">
+										<%@ include file="inc/grouped_flow_list.jspf" %>
+									</p>
+								<% } %>
+						
+								<p class="item"><if:message string="user_procs_filtro.field.pnumber"/>:</p>
+								<p class="item_indent"><input type="text" id="pnumber" name="pnumber" size="12" value="<%=pnumber %>" maxlength="1024"/><img class="icon_clear" src="images/icon_delete.png" onclick="javascript:document.getElementById('pnumber').value='';"/></p>
+								
+								<p class="item"><if:message string="user_procs_filtro.field.fromdate"/>:</p>
+								<p class="item_indent"><%=sAfterHtml%></p>
+								
+								<p class="item"><if:message string="user_procs_filtro.field.todate"/>:</p>
+								<p class="item_indent"><%=sBeforeHtml%></p>
+								
+								<p class="item"><if:message string="user_procs_filtro.field.process_status"/>:</p>
+								<p class="item_indent">
+								<if:formSelect name="processStatus" edit="true" value="<%=processStatus %>" noli="true" >
+									<if:formOption value="__OPEN__" labelkey="user_procs_filtro.field.open"/>
+									<if:formOption value="__CLOSED__" labelkey="user_procs_filtro.field.closed"/>
+								</if:formSelect>
+								</p>
+								
+								<p class="item"><%=messages.getString("user_procs_filtro.field.nitems")%>:</p>
+								<p class="item_indent">
+								    <select name="numitemspage" id="items_page" onchange="<%=filterAction %>">
+								       <option value="5">5</option>
+								       <option value="20" selected="selected">20</option>
+								       <option value="50">50</option>
+								       <option value="100">100</option>
+								    </select>
+								</p>
+								
+								<!-- "Texto a pesquisar" -->
+								<p class="item" style="display:none"><if:message string="user_procs_filtro.field.searchtext"/>:</p>
+								<p class="item_indent" style="display:none"><input type="text" id="searchText" name="searchText" size="15" value="<%=searchText %>" maxlength="1024"/></p>
+								
+								<p class="item" style="display:none"><if:message string="user_procs_filtro.field.searchtext.checkbox"/>:
+								<input class="" type="checkbox" id="searchTextCheckbox" value="set" title="<%=messages.getString("user_procs_filtro.field.searchtext.checkbox") %>" 
+							   		onclick="proc_sla_execute('<%=ts%>')">
+								</p>
+							   
+								<input type="hidden" name="showUserProcs" value="true" > 
+								<div id="searchForm">
+								<% if (isAdmin || isSearchableByInterv) { %>
+								<p class="item" id="targetuser_label"><if:message string="user_procs_filtro.field.targetuserlabel"/>:</p>
+								<p class="item_indent" id="targetuser_body">
+								<if:formSelect name="targetUser" edit="true" value="<%=targetUser %>" noli="true">
+									<if:formOption value="__MY_PROCS__" labelkey="user_procs_filtro.field.mytargetuser"/>
+									<% if (isAdmin) { %>
+									<if:formOption value="__ALL_PROCS__" labelkey="user_procs_filtro.field.alltargetuser"/>
+									<% } %>
+									<% if (isSearchableByInterv) { %>
+									<if:formOption value="__INT_PROCS__" labelkey="user_procs_filtro.field.inttargetuser"/>
+									<% } %>
+								</if:formSelect>
+								<%} %>
+								</p>
+								<p class="item" id="orderby_label"><if:message string="user_procs_filtro.field.orderbylabel"/>:</p>
+								<p class="item_indent" id="orderby_body">
+								<if:formSelect name="orderby" edit="true" value="<%=orderBy %>" noli="true">
+									<if:formOption value="f.flowname" label="fluxo"/>
+									<if:formOption value="p.pnumber" label="processo"/>
+									<if:formOption value="fs.result" label="estado"/>
+									<if:formOption value="fs.mdate" label="desde"/>
+									<if:formOption value="p.creator" label="dono"/>
+								</if:formSelect>
+								<if:formSelect name="ordertype" edit="true" value="<%=orderType %>" noli="true">
+									<if:formOption value="asc" label="asc"/>
+									<if:formOption value="desc" label="desc"/>
+								</if:formSelect>
+								</p>
+								</div>
+						 
+								<div class="button_box">
+									<input id="link_search_span" class="regular_button_00 btn btn-default btn-xs" type="button" name="filter" value="<%=messages.getString("button.filter")%>" 
+										onClick="<%=filterAction %>" />
+								</div>
+							</div> 
+						</div>
+					</li>
+				</ul>
+			</li>
+		</ul>
 	</form>
 
-	<form id="search_simple_link_2" class="menu" name="advancedSearch" method="post" style="display:none;">
+	<!-- form id="search_simple_link_2" class="menu" name="advancedSearch" method="post" style="display:none;">
 		<a id="searchlink"
 			title="<%=messages.getString("user_procs_filtro.simplesearch.tooltip")%>" class="toolTipItemLink li_link" style="background-image: url(images/arrow_sbmenu_open.png)"
 			href="javascript:document.getElementById('search_simple_form').setStyle('display','none');document.getElementById('search_simple_link').setStyle('display','block');document.getElementById('search_simple_link_2').setStyle('display','none');"><%=messages.getString("user_procs_filtro.simplesearch")%></a>
-	</form>
+	</form -->
 
 	<!--h1 id="title_tasks"><%=messages.getString("user_procs_filtro.simplesearch.title")%></h1-->
 	<!--  <p>< %=messages.getString("user_procs_filtro.simplesearch.introMsg") %></p> -->
 
-	<div class="greybox" style="margin-left:10px;padding-bottom: 10px">
-		<form id="search_simple_form" name="user_procs_filter" method="post" style="display:none">
-			<input type="hidden" name="mode" value="0">
-			<input type="hidden" name="process" value="">
-			<input type="hidden" id="proc_search" name="proc_search" value="false">
-			<input type="hidden" id="atLeastOneSuper" name="atLeastOneSuper" value="<%= !hsSuperPrivs.isEmpty() %>">
-			<!-- SearchTextRelated -->
-			<input type="hidden" id="searchText" name="searchText" value="<%=searchText%>">
-			
-			<%  Iterator<String> superIter = hsSuperPrivs.iterator(); 
-				while (superIter.hasNext()) { 
-					String inputFlow = superIter.next();%>
-					<input type="hidden" name="<%=inputFlow%>" id="<%=inputFlow%>" value="">
-			<%	}
-		    if(fda.length > 0) { %>
-				<p class="item"><if:message string="user_procs_filtro.field.select"/>:</p>
-				<p class="item_indent">
-					<%@ include file="inc/grouped_flow_list.jspf" %>
-				</p>
-			<% } %>
 	
-			<p class="item"><if:message string="user_procs_filtro.field.pnumber"/>:</p>
-			<p class="item_indent"><input type="text" id="pnumber" name="pnumber" size="12" value="<%=pnumber %>" maxlength="1024"/><img class="icon_clear" src="images/icon_delete.png" onclick="javascript:document.getElementById('pnumber').value='';"/></p>
-			
-			<p class="item"><if:message string="user_procs_filtro.field.fromdate"/>:</p>
-			<p class="item_indent"><%=sAfterHtml%></p>
-			
-			<p class="item"><if:message string="user_procs_filtro.field.todate"/>:</p>
-			<p class="item_indent"><%=sBeforeHtml%></p>
-			
-			<p class="item"><if:message string="user_procs_filtro.field.process_status"/>:</p>
-			<p class="item_indent">
-			<if:formSelect name="processStatus" edit="true" value="<%=processStatus %>" noli="true" >
-				<if:formOption value="__OPEN__" labelkey="user_procs_filtro.field.open"/>
-				<if:formOption value="__CLOSED__" labelkey="user_procs_filtro.field.closed"/>
-			</if:formSelect>
-			</p>
-			
-			<p class="item"><%=messages.getString("user_procs_filtro.field.nitems")%>:</p>
-			<p class="item_indent">
-			    <select name="numitemspage" id="items_page" onchange="<%=filterAction %>">
-			       <option value="5">5</option>
-			       <option value="20" selected="selected">20</option>
-			       <option value="50">50</option>
-			       <option value="100">100</option>
-			    </select>
-			</p>
-			
-			<!-- "Texto a pesquisar" -->
-			<p class="item" style="display:none"><if:message string="user_procs_filtro.field.searchtext"/>:</p>
-			<p class="item_indent" style="display:none"><input type="text" id="searchText" name="searchText" size="15" value="<%=searchText %>" maxlength="1024"/></p>
-			
-			<p class="item" style="display:none"><if:message string="user_procs_filtro.field.searchtext.checkbox"/>:
-			<input class="" type="checkbox" id="searchTextCheckbox" value="set" title="<%=messages.getString("user_procs_filtro.field.searchtext.checkbox") %>" 
-		   		onclick="proc_sla_execute('<%=ts%>')">
-			</p>
-		   
-			<input type="hidden" name="showUserProcs" value="true" > 
-			<div id="searchForm">
-			<% if (isAdmin || isSearchableByInterv) { %>
-			<p class="item" id="targetuser_label"><if:message string="user_procs_filtro.field.targetuserlabel"/>:</p>
-			<p class="item_indent" id="targetuser_body">
-			<if:formSelect name="targetUser" edit="true" value="<%=targetUser %>" noli="true">
-				<if:formOption value="__MY_PROCS__" labelkey="user_procs_filtro.field.mytargetuser"/>
-				<% if (isAdmin) { %>
-				<if:formOption value="__ALL_PROCS__" labelkey="user_procs_filtro.field.alltargetuser"/>
-				<% } %>
-				<% if (isSearchableByInterv) { %>
-				<if:formOption value="__INT_PROCS__" labelkey="user_procs_filtro.field.inttargetuser"/>
-				<% } %>
-			</if:formSelect>
-			<%} %>
-			</p>
-			<p class="item" id="orderby_label"><if:message string="user_procs_filtro.field.orderbylabel"/>:</p>
-			<p class="item_indent" id="orderby_body">
-			<if:formSelect name="orderby" edit="true" value="<%=orderBy %>" noli="true">
-				<if:formOption value="f.flowname" label="fluxo"/>
-				<if:formOption value="p.pnumber" label="processo"/>
-				<if:formOption value="fs.result" label="estado"/>
-				<if:formOption value="fs.mdate" label="desde"/>
-				<if:formOption value="p.creator" label="dono"/>
-			</if:formSelect>
-			<if:formSelect name="ordertype" edit="true" value="<%=orderType %>" noli="true">
-				<if:formOption value="asc" label="asc"/>
-				<if:formOption value="desc" label="desc"/>
-			</if:formSelect>
-			</p>
-			</div>
-	 
-			<div class="button_box">
-				<input id="link_search_span" class="regular_button_00 btn btn-default btn-xs" type="button" name="filter" value="<%=messages.getString("button.filter")%>" 
-					onClick="<%=filterAction %>" />
-			</div>
-		</form> 
-	</div>
 
 	<form id="search_advanced_form" name="advanced_user_procs_filter" method="post" style="display:<%= (StringUtils.equals(searchType,"as") || StringUtils.equals(searchType,"nf"))?"block":"block" %>">
 	<% //load flows
