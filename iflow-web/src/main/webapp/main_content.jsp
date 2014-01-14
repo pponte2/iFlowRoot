@@ -177,6 +177,7 @@ function cleanFilter(){
       }
       hsSubstLocal.put("receivedDelegs", receivedDelegs);
       hsSubstLocal.put("receivedSize", new Integer(receivedDelegs.size()));
+      hsSubstLocal.put("hasDelegs", new Boolean(receivedDelegs.size() > 0));
     if (iter.hasNext()) {
         hsSubstLocal.put("hasMoreReceived", Boolean.TRUE);
       }
@@ -189,6 +190,17 @@ function cleanFilter(){
       }
       hsSubstLocal.put("sentDelegs", sentDelegs);
       hsSubstLocal.put("sentSize", new Integer(sentDelegs.size()));
+	  hsSubstLocal.put("delegs_title", messages.getString("main_content.delegs.mainTitle"));
+      hsSubstLocal.put("delegs_received_requests", messages.getString("main_content.delegs.receivedRequests"));
+      hsSubstLocal.put("delegs_title_responsible", messages.getString("main_content.delegs.title.responsible"));
+      hsSubstLocal.put("delegs_title_flow", messages.getString("main_content.delegs.title.flow"));
+      hsSubstLocal.put("delegs_title_endDate", messages.getString("main_content.delegs.title.endDate"));
+      hsSubstLocal.put("delegs_title_accept", messages.getString("button.accept"));
+      hsSubstLocal.put("delegs_title_refuse", messages.getString("button.refuse"));
+      hsSubstLocal.put("no_delegs", messages.getString("main_content.delegs.noDelegationsText"));
+      hsSubstLocal.put("no_delegs_link_text", messages.getString("main_content.delegs.noDelegationsLinkText"));
+      hsSubstLocal.put("tooltip_delegs", messages.getString("main.tooltip.delegations"));
+      hsSubstLocal.put("delegationsMsg", messages.getString("main_content.delegs.delegationsMsg"));
       if (iter.hasNext()) {
         hsSubstLocal.put("hasMoreSent", Boolean.TRUE);
       }
@@ -695,7 +707,7 @@ function cleanFilter(){
  
       
       // DELEGATIONS --------------------------------------------------------------------------------------------------------
-		  hsSubstLocal.put("delegs_title", messages.getString("main_content.delegs.mainTitle"));
+	  hsSubstLocal.put("delegs_title", messages.getString("main_content.delegs.mainTitle"));
 
       DelegationInfo delegInfo = BeanFactory.getDelegationInfoBean();
 

@@ -40,7 +40,6 @@ var msgHandlerJSP="msgHandler.jsp";
 var processAnnotationsJSP="ProcessAnnotation/process_annotations.jsp";
 var sectionDiv = 'section_div_';
 var taskLabelsJSP = "TaskLabels/task_labels.jsp";
-var idDivLabels = 'container_task_labels';
 var containerLabels = 'container_task_labels';
 var containerMain = 'container_admin';
 var containerSearch = 'container_search';
@@ -48,6 +47,7 @@ var containerReportsAdmin = 'container_report_admin';
 var containerReportsSupervisor = 'container_report_supervisor';
 var containerFlowList = 'container_flow_list';
 var containerDelegations = 'container_delegations';
+var delegationsForm = 'delegations-form';
 var closeMenus = true;
 
 //tab links 
@@ -1615,7 +1615,7 @@ function openProcess(flowid, contentpage, contentparam, runMax) {
 }
 
 function createLabel(labelid, editname, color) {
-  getCtrlFill(taskLabelsJSP, 'editfolder='+labelid+'&editname='+editname+'&color='+color, idDivLabels);
+  getCtrlFill(taskLabelsJSP, 'editfolder='+labelid+'&editname='+editname+'&color='+color, containerLabels);
 }
 
 function process_detail_new(thePage, ctrl, flowid, pid, subpid, procStatus, uri) {

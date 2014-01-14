@@ -28,6 +28,7 @@
 		<link href="javascript/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
 		<link href="javascript/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
 		<!--link href="javascript/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" /-->
+		<link href="javascript/jQueryAssets/jquery-ui-smoothness.css" rel="stylesheet" type="text/css" />
 		<link href="javascript/jQueryAssets/jquery.ui.core.min.css" rel="stylesheet" type="text/css" />
 		<link href="javascript/jQueryAssets/jquery.ui.theme.min.css" rel="stylesheet" type="text/css" />
 		<link href="javascript/jQueryAssets/jquery.ui.accordion.min.css" rel="stylesheet" type="text/css" />
@@ -143,6 +144,7 @@
 
 				getCtrlFill(taskLabelsJSP, '', containerLabels);
 				tabber_right(1, mainContentJSP, '');
+				getCtrlFill(mainContentJSP, 'data=delegs', delegationsForm);
 				getCtrlFill(mainContentJSP, 'data=procs', containerFlowList);
 				#if("$Tab8" != "no")
 				getCtrlFill(userProcsFiltroJSP, 'searchtype=as', containerSearch);
@@ -272,8 +274,16 @@
 				return false;
 			}
 			
-			
-			
+			$(function() {
+				$('#delegations-form').dialog({
+					autoOpen: false,
+					height: 500,
+					width: 750,
+					modal: false,
+					close: function() {
+					}
+				});
+			});
 		</script>
 		</head>
 
@@ -306,6 +316,9 @@
 										<input style=" margin: 0px;" type="button" name="Send" id="Send" class="btn btn-default btn-sm" value="Pesquisar" onclick="pesquisarPnumber(document.nlsearch.nl.value); return false;"/>
 										
 									</div>
+								</td>
+								<td>
+									<button id="delegButton" onclick="javascript:$('#delegations-form').dialog('open');return false;">Delegações</button>
 								</td>
 							</tr>
 						</table>
@@ -470,6 +483,7 @@
 			<div id="section_div_9" class="main" style="margin-left: 220px; display: none"></div>
 			<div id="section_div_10" class="main" style="margin-left: 220px; display: none"></div>
 			<div id="section_div_11" class="main" style="margin-left: 220px; display: none"></div>
+			<div id="delegations-form" title="Delegations"></div>
 
 			<div class="yui-skin-sam">
 				<div id="userdialog">

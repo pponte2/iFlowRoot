@@ -33,10 +33,10 @@
 	<li class="droppable" style="height:34px;padding:2px;margin:2px;" valToAssign="<%= folder.getFolderid()%>">
 
 		<a href="" onClick="deleteLabel('<%=folder.getFolderid()%>'); return false;" class="lmenu">
-			<img id="bte_change_<%=folder.getFolderid()%>"title="Remover" width="10" height="10" src="images/icon_delete.png" style="margin-left:-20px"/>
+			<img id="bte_change_<%=folder.getFolderid()%>" title="Remover" width="10" height="10" src="images/icon_delete.png" style="margin-left:-20px"/>
 		</a>
 		<a href="" onClick="editLabel('<%=folder.getFolderid()%>','1'); return false;" class="lmenu">
-			<img id="btd_change_<%=folder.getFolderid()%>"title="Alterar" width="10" height="10" src="images/icon_modify.png" style="margin-left:0px"/>
+			<img id="btd_change_<%=folder.getFolderid()%>" title="Alterar" width="10" height="10" src="images/icon_modify.png" style="margin-left:0px"/>
 		</a>
 		<a href="" onclick="javascript:editLabel('<%=folder.getFolderid()%>','-1'); return false;" class="lmenu">
 			<img id="bt_cancel_<%=folder.getFolderid()%>" title="fechar" width="10" height="10" src="Themes/newflow/images/close.png" style="display:none;"/>
