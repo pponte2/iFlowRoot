@@ -45,9 +45,11 @@
           message = userInfo.getMessages().getString("flow_editor.label.editorDsc", name, url);
         }
       %>
-        <p><%=message %></p>
-        <img src="images/iflow4.login.png" alt="Flow Editor" style="width: auto;" />
-      </li>
+        <div class="alert"><%=message %></label>
+	   </li>
+       <li class="form-group">
+         <img class="control-label" src="images/iflow4.login.png" alt="Flow Editor" style="margin-left:20px;width: auto;" />
+	   </li>
 	  </ol>
   </fieldset>
   <fieldset class="submit"/>

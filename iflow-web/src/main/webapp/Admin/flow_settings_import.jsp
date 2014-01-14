@@ -34,25 +34,29 @@ String sSave = fdFormData.getParameter("save");
 
 
 <div class="upload_box table_inc">
+<h1 id="title_admin"></h1>
 	<form name="formulario" action="<%=response.encodeURL("Admin/flow_settings_doimport.jsp") %>" method="POST" enctype="multipart/form-data"
-		onsubmit="javascript:return AIM.submit(this, {'onStart' : getStartUploadCallback(), 'onComplete' : getUploadCompleteCallback('Upload complete', 4, '<%=response.encodeURL("Admin/flow_settings_edit.jsp") %>', 'ts=<%=ts%>&<%=DataSetVariables.FLOWID%>=<%=flowid%>&flowname=<%=sFlowName%>')})">
+		onsubmit="javascript:return AIM.submit(this, {'onStart' : getStartUploadCallback(), 'onComplete' : getUploadCompleteCallback('Upload complete', 4, '<%=response.encodeURL("Admin/flow_settings_edit.jsp") %>', 'ts=<%=ts%>&<%=DataSetVariables.FLOWID%>=<%=flowid%>&flowname=<%=sFlowName%>')})"
+		class="form-horizontal">
 		<input type="hidden" name="flowid" value="<%=flowid%>">
 		<input type="hidden" name="flowname" value="<%=sFlowName%>">
 		<input type="hidden" name="op" value="3">
 		<fieldset>
 			<legend></legend>
 			<ol>
-				<li>
-					<label for="file"><if:message string="flow_settings_import.field.file"/></label>
-					<input type="file" name="file" />
+				<li class="form-group">
+					<label for="file" class="control-label col-sm-3"><if:message string="flow_settings_import.field.file"/></label>
+					<div class="col-sm-5">
+						<input type="file" name="file" class="form-control"/>
+					</div>
 				</li>
 			</ol>
 		</fieldset>
 		
 		<fieldset class="submit"> 
-			<input class="regular_button_01" type="button" name="back" value="<if:message string="button.back"/>" onClick="javascript:tabber_right(4, '<%=response.encodeURL("Admin/flow_settings_edit.jsp") %>', 'ts=<%=ts%>&<%=DataSetVariables.FLOWID%>=<%=flowid%>&flowname=<%=sFlowName%>');"/>
-			<input class="regular_button_01" type="button" name="clear" value="<if:message string="button.clear"/>" onClick="javascript:document.formulario.reset()"/>
-			<input class="regular_button_01" type="submit" name="add" value="<if:message string="button.import"/>"/>
+			<input class="regular_button_01 btn btn-default" type="button" name="back" value="<if:message string="button.back"/>" onClick="javascript:tabber_right(4, '<%=response.encodeURL("Admin/flow_settings_edit.jsp") %>', 'ts=<%=ts%>&<%=DataSetVariables.FLOWID%>=<%=flowid%>&flowname=<%=sFlowName%>');"/>
+			<input class="regular_button_01 btn btn-default" type="button" name="clear" value="<if:message string="button.clear"/>" onClick="javascript:document.formulario.reset()"/>
+			<input class="regular_button_01 btn btn-default" type="submit" name="add" value="<if:message string="button.import"/>"/>
    		</fieldset>
    	</form>
 </div>

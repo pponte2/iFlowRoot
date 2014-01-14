@@ -1653,7 +1653,9 @@ function reloadBootstrapElements(){
   var $jQuery = jQuery.noConflict();
 
   //combobox
-  $jQuery('.combobox').sexyCombo();
+  try {
+    $jQuery('.combobox').sexyCombo();
+  } catch (err) {}
 
   //accordion
   try {
@@ -1765,6 +1767,7 @@ function reloadJS() {
     } catch (err) {}
   }
 }
+
 
 function eventFire(el, etype){	 
   var evObj = document.createEvent('Events');

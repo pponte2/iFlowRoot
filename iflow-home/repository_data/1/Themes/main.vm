@@ -209,7 +209,7 @@
 								obj2.value = obj.innerHTML;
 							}
 						}
-				  
+						  
 					}
 					obj = document.getElementById('edit_'+labelid);
 					if (obj!=null) obj.focus();	
@@ -303,7 +303,7 @@
 								<td>
 									<div class="div_BTNL">
 				
-										<input style=" margin: 0px;" type="button" name="Send" id="Send" class="btn btn-default btn-sm" value="Pesquisar" onclick="pesquisarPnumber(document.nlsearch.nl.value)"/>
+										<input style=" margin: 0px;" type="button" name="Send" id="Send" class="btn btn-default btn-sm" value="Pesquisar" onclick="pesquisarPnumber(document.nlsearch.nl.value); return false;"/>
 										
 									</div>
 								</td>

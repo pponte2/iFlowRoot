@@ -291,7 +291,7 @@
             flow.saveFlowSettings(userInfo, fsa);
             flow.refreshFlowSettings(userInfo, flowid); // include propagate to flow
 
-            sSave = "<div class=\"info_msg\">"
+            sSave = "<div class=\"alert alert-info\">"
                     + messages.getString("flow_settings_edit.msg.propsaved")
                     + "</div>";
         } else {
@@ -350,7 +350,7 @@
 <%
     if (sbError.length() > 0) {
 %>
-<div class="error_msg"><%=sbError.toString()%></div>
+<div class="alert alert-danger"><%=sbError.toString()%></div>
 <%
     }
 %> <%=sSave%>
@@ -371,6 +371,7 @@ redirect.append("4");
 redirect.append(", '" + response.encodeURL("Admin/flow_settings_edit.jsp") + "'");
 redirect.append(", 'flowid=' + this.value + '&ts="+ts+"');");
 StringBuffer extra = new StringBuffer();
+extra.append(" class=\"form-control\" ");
 extra.append("onchange=\"javascript:");
 extra.append("if(confirm('" + messages.getString("flow_settings_edit.confirm.redirect") + "')) { ");
 extra.append("document.flows.op.value='2';");
@@ -389,13 +390,23 @@ String sFlowHtml = Utils.genHtmlSelect("flowSelect",
 %>
 <div class="table_inc">
 <ol>
-  <li>
-    <label for="flowSelect"><%=messages.getString("flow_settings_edit.field.flow")%></label>
+  <li class="form-group">
+    <label for="flowSelect" class="control-label col-sm-3"><%=messages.getString("flow_settings_edit.field.flow")%></label>
+	<div class="col-sm-5" style="margin-bottom:10px;">
     <%=sFlowHtml%>
+	</div>
   </li>
 </ol>
 <% if (fsa != null && fsa.length > 0) { %>
-<table class="item_list">
+<style type="text/css">
+	.txt {
+		height: 30px;
+		font-size: 1em;
+		padding: 0px;
+		paddin-left: 5px;
+	}
+</style>
+<table class="item_list table">
 	<tr class="tab_header">
 		<!--td><if:message string="flow_settings_edit.field.variable" /></td-->
 		<td><if:message string="flow_settings_edit.field.property" /></td>
@@ -507,7 +518,7 @@ String sFlowHtml = Utils.genHtmlSelect("flowSelect",
 		            } else {
 		                stmp3 = Const.sNOTIFY_USER_NO;
 		            }
-		%> <select class="txt" name="<%=stmp%>">
+		%> <div class="col-sm-3"><select class="txt form-control" name="<%=stmp%>">
 			<option value="<%=Const.sNOTIFY_USER_YES%>"
 				<%=stmp3.equals(Const.sNOTIFY_USER_YES) ? "selected"
                                             : ""%>><%=Const.sNOTIFY_USER_YES%>
@@ -516,7 +527,7 @@ String sFlowHtml = Utils.genHtmlSelect("flowSelect",
 				<%=stmp3.equals(Const.sNOTIFY_USER_NO) ? "selected"
                                             : ""%>><%=Const.sNOTIFY_USER_NO%>
 			</option>
-		</select> <%
+		</select></div> <%
      			} else if (stmp.equals(Const.sSEARCHABLE_BY_INTERVENIENT)) {
 		            if (stmp3 == null
 		                    || stmp3.equals("")
@@ -527,7 +538,7 @@ String sFlowHtml = Utils.genHtmlSelect("flowSelect",
 		            } else {
 		                stmp3 = Const.sSEARCHABLE_BY_INTERVENIENT_YES;
 		            }
-		%> <select class="txt" name="<%=stmp%>">
+		%> <div class="col-sm-3"><select class="txt form-control" name="<%=stmp%>">
 			<option value="<%=Const.sSEARCHABLE_BY_INTERVENIENT_YES%>"
 				<%=stmp3.equals(Const.sSEARCHABLE_BY_INTERVENIENT_YES) ? "selected"
                                             : ""%>><%=Const.sSEARCHABLE_BY_INTERVENIENT_YES%>
@@ -536,7 +547,7 @@ String sFlowHtml = Utils.genHtmlSelect("flowSelect",
 				<%=stmp3.equals(Const.sSEARCHABLE_BY_INTERVENIENT_NO) ? "selected"
                                             : ""%>><%=Const.sSEARCHABLE_BY_INTERVENIENT_NO%>
 			</option>
-		</select> <%
+		</select></div> <%
 
      			} else if (stmp.equals(Const.sFORCE_NOTIFY_FOR_PROFILES)
                          || stmp.equals(Const.sDENY_NOTIFY_FOR_PROFILES)) {
@@ -567,8 +578,8 @@ String sFlowHtml = Utils.genHtmlSelect("flowSelect",
                              altmp.add(saProfiles[iii]);
                          }
                      }
- %> <input type="text" class="txt" name="<%=stmp%>" value="<%=stmp3%>"
-			size="30" maxlength="250"><br>
+ %> <div class="form-group"><div class="col-sm-5"><input type="text" class="txt form-control" name="<%=stmp%>" value="<%=stmp3%>"
+			size="30" maxlength="250"></div></div><div class="form-group"><br>
 		&nbsp;&nbsp;&nbsp;&nbsp; <%=Utils.genHtmlSelect(stmp + "_profile",
                                             "class=\"txt\"", sSELECT, altmp,
                                             altmp)%> &nbsp;&nbsp; <a
@@ -578,7 +589,7 @@ String sFlowHtml = Utils.genHtmlSelect("flowSelect",
                              + "';tabber_right(4, '"
                              + response.encodeURL("Admin/flow_settings_edit.jsp")
                              + "',get_params(document.flows));",(altmp.size() < 2))%>>
-		<if:message string="flow_settings_edit.link.addprof" /> </a> <%
+		<if:message string="flow_settings_edit.link.addprof" /> </a></div> <%
      } else if (stmp.equals(Const.sSHOW_SCHED_USERS)) {
                      if (StringUtils.isEmpty(stmp3)
                              || ArrayUtils.contains(new Object[] {
@@ -588,7 +599,7 @@ String sFlowHtml = Utils.genHtmlSelect("flowSelect",
                      } else {
                          stmp3 = Const.sSHOW_YES;
                      }
- %> <select class="txt" name="<%=stmp%>">
+ %> <div class="col-sm-3"><select class="txt form-control" name="<%=stmp%>">
 			<option value="<%=Const.sSHOW_YES%>"
 				<%=stmp3.equals(Const.sSHOW_YES) ? "selected"
                                             : ""%>><%=Const.sSHOW_YES%></option>
@@ -596,7 +607,7 @@ String sFlowHtml = Utils.genHtmlSelect("flowSelect",
 				<%=stmp3.equals(Const.sSHOW_NO) ? "selected"
                                             : ""%>><%=Const.sSHOW_NO%>
 			</option>
-		</select> <%
+		</select> </div><%
      } else if (stmp.equals(Const.sSHOW_ASSIGNED_TO)) {
                      if (stmp3 == null || stmp3.equals("")
                              || stmp3.equalsIgnoreCase(Const.sSHOW_NO)
@@ -606,7 +617,7 @@ String sFlowHtml = Utils.genHtmlSelect("flowSelect",
                      } else {
                          stmp3 = Const.sSHOW_YES;
                      }
- %> <select class="txt" name="<%=stmp%>">
+ %> <div class="col-sm-3"><select class="txt form-control" name="<%=stmp%>">
 			<option value="<%=Const.sSHOW_YES%>"
 				<%=stmp3.equals(Const.sSHOW_YES) ? "selected"
                                             : ""%>><%=Const.sSHOW_YES%></option>
@@ -614,7 +625,7 @@ String sFlowHtml = Utils.genHtmlSelect("flowSelect",
 				<%=stmp3.equals(Const.sSHOW_NO) ? "selected"
                                             : ""%>><%=Const.sSHOW_NO%>
 			</option>
-		</select> <%
+		</select> </div><%
      } else if (stmp.equals(Const.sRUN_MAXIMIZED)) {
                      if (stmp3 == null
                              || stmp3.equals("")
@@ -625,14 +636,14 @@ String sFlowHtml = Utils.genHtmlSelect("flowSelect",
                      } else {
                          stmp3 = Const.sRUN_MAXIMIZED_YES;
                      }
- %> <select class="txt" name="<%=stmp%>">
+ %> <div class="col-sm-3"><select class="txt form-control" name="<%=stmp%>">
 			<option value="<%=Const.sRUN_MAXIMIZED_YES%>"
 				<%=stmp3.equals(Const.sRUN_MAXIMIZED_YES) ? "selected" : ""%>>
 			<%=Const.sRUN_MAXIMIZED_YES%></option>
 			<option value="<%=Const.sRUN_MAXIMIZED_NO%>"
 				<%=stmp3.equals(Const.sRUN_MAXIMIZED_NO) ? "selected" : ""%>><%=Const.sRUN_MAXIMIZED_NO%>
 			</option>
-		</select> <%
+		</select></div> <%
      } else if (stmp.equals(Const.sENABLE_HISTORY)) {
        if (StringUtils.isBlank(stmp3)
                || StringUtils.equalsIgnoreCase(stmp3, Const.sENABLE_HISTORY_NO)
@@ -939,27 +950,27 @@ String sFlowHtml = Utils.genHtmlSelect("flowSelect",
 <%
     } else {
 %>
-<div class="info_msg">
+<div class="alert alert-info">
 	<if:message string="flow_settings_edit.msg.noProperties" />
 </div>
 <%
     }
 %>
-<div class="button_box"><input class="regular_button_01"
+<div class="button_box" style="padding-bottom:10px"><input class="regular_button_01 btn btn-default" 
 	type="button" name="back"
 	value="<%=messages.getString("button.back")%>"
 	onClick="javascript:tabber_right(4, '<%=response.encodeURL("Admin/flow_settings.jsp")%>', '');" />
-<input class="regular_button_01" type="button" name="export"
+<input class="regular_button_01 btn btn-default" type="button" name="export"
 	value="<%=messages.getString("button.export")%>"
 	onClick="W=window.open('<%=response.encodeURL("Admin/flow_settings_export.jsp?"
 	    + DataSetVariables.FLOWID + "="
 	    + flowid + "&ts="
 	    + ts)%>','_export','menubar=no,status=no,scrollbars=no,width=1,height=1');W.focus()" />
-<input class="regular_button_01" type="button" name="import"
+<input class="regular_button_01 btn btn-default" type="button" name="import"
 	value="<%=messages.getString("button.import")%>"
 	onClick="javascript:if (W != null) W.close();tabber_right(4, '<%=response
                                     .encodeURL("Admin/flow_settings_import.jsp")%>',get_params(document.flows));" />
-<input class="regular_button_01" type="button" name="save"
+<input class="regular_button_01 btn btn-default" type="button" name="save"
 	value="<%=messages.getString("button.save")%>"
 	onClick="javascript:document.flows.op.value='2';if (W != null) W.close();tabber_right(4, '<%=response.encodeURL("Admin/flow_settings_edit.jsp")%>','' + get_params(document.flows));" />
 <if:generateHelpBox context="flow_settings_edit" />

@@ -15,28 +15,28 @@ div.sexy {
 
 div.sexy input {
     margin: 0 0 0 0;
-    font:normal 12px tahoma, arial, helvetica, sans-serif;
+    /*font:normal 12px tahoma, arial, helvetica, sans-serif;*/
     padding:1px 3px;
     background:#fff url(text-bg.gif) repeat-x 0 0;
     border:1px solid #B5B8C8;
-    height: 35px;
+    height: 34px;
     line-height:18px;
     vertical-align:middle; 
     left: 0px;
     top: 0px; 
-    width: 129px;  
+    width: 126px;  
 
 }
 
 div.sexy div.icon {
-    width:17px;
-    height:21px;
+    width:34px;
+    height:34px;
     border: 0;
-    background:transparent url(trigger.gif) no-repeat 0 0;
+    background:transparent url(trigger.png) no-repeat 0 0;
     cursor:pointer;
-    border-bottom: 1px solid #B5B8C8;
+    /*border-bottom: 1px solid #B5B8C8;*/
     top:0px;
-    left: 129px; 
+    left: 120px; 
 
 }
 
@@ -50,6 +50,7 @@ div.sexy div.list-wrapper {
     margin: 0;
     width: 146px;
     bottom: auto;
+	text-align: left;
 }
 
 div.sexy div.list-wrapper-up {

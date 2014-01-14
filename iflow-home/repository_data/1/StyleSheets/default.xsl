@@ -808,11 +808,18 @@ label.subheader {
               <xsl:text>text-align:</xsl:text><xsl:apply-templates select="align" /><xsl:text>;</xsl:text>
             </xsl:attribute>
           </xsl:if>
-          <xsl:if test="string-length(cssclass) > 0">
-            <xsl:attribute name="class">
-              <xsl:apply-templates select="cssclass" />
-            </xsl:attribute>
-          </xsl:if>
+		  <xsl:choose>
+			  <xsl:when test="string-length(cssclass) > 0">
+				<xsl:attribute name="class">
+				  <xsl:apply-templates select="cssclass" />
+				</xsl:attribute>
+			  </xsl:when>
+			  <xsl:otherwise>
+				<xsl:attribute name="class">
+				  <xsl:text>alert alert-info</xsl:text>
+				</xsl:attribute>
+			  </xsl:otherwise>
+		  </xsl:choose>
           <xsl:apply-templates select="text" />
       </xsl:if>
 

@@ -3,6 +3,7 @@
 %><%@ taglib uri="http://www.iknow.pt/jsp/jstl/iflow" prefix="if" 
 %><%@ page import="org.apache.commons.collections15.map.ListOrderedMap"
 %><%@ page import="org.apache.commons.collections15.OrderedMap"
+%><%@ page import="pt.iflow.api.presentation.DateUtility"
 %><%@ include file = "inc/defs.jsp" 
 %><%
 int ITEMS_PAGE = 20;
@@ -133,8 +134,13 @@ if (searchType == null){
 String searchText = fdFormData.getParameter(searchTextParameter);
 if (StringUtils.isEmpty(searchText))searchText = ""; 
 
-sBeforeHtml = Utils.genFormDate(response, userInfo, "dtbefore", dtBefore, "f_up_date_a");
-sAfterHtml = Utils.genFormDate(response, userInfo, "dtafter", dtAfter, "f_up_date_c");
+if (dtBefore != null) {
+	sBeforeHtml = DateUtility.formatFormDate(userInfo, dtBefore);	
+}
+
+if (dtAfter != null) {
+	sAfterHtml = DateUtility.formatFormDate(userInfo, dtAfter);	
+}
 
 String showflowidselection = "onchange=\"getSearchQuery(this, '" + response.encodeURL("user_proc_search_filter.jsp") + "', 'searchForm');" + sTargetUpdate + "\"";
 
@@ -149,10 +155,15 @@ request.setAttribute("flow_type", FlowType.WORKFLOW);
 
 //check if it's simple search
 %>
-	<form id="search_simple_form" class="menu" name="user_procs_filter" method="post" style="display:block;">
+<style type="text/css">
+	p {
+		font-size: 0.8m;
+	}
+</style>
+	<form id="search_simple_form" class="form-horizontal" name="user_procs_filter" method="post" style="display:block;">
 		<ul class="menu">
 			<li>
-				<a id="searchlink" title="<%=messages.getString("user_procs_filtro.simplesearch.tooltip")%>" class="toolTipItemLink li_link" href= "#"><%=messages.getString("user_procs_filtro.simplesearch")%></a>
+				<a id="searchlink" title="<%=messages.getString("user_procs_filtro.simplesearch.tooltip")%>" class="" href= "#"><%=messages.getString("user_procs_filtro.simplesearch")%></a>
 				<ul>
 					<li>
 						<div class="greybox" style="margin-left:10px;padding-bottom: 10px">
@@ -170,38 +181,70 @@ request.setAttribute("flow_type", FlowType.WORKFLOW);
 										<input type="hidden" name="<%=inputFlow%>" id="<%=inputFlow%>" value="">
 								<%	}
 							    if(fda.length > 0) { %>
-									<p class="item"><if:message string="user_procs_filtro.field.select"/>:</p>
-									<p class="item_indent">
+									
+								<div class="item_indent form-group">
+									<div class="col-sm-12">
+									</div>
+								</div>
+								<div class="item_indent form-group">
+									<div class="col-sm-12">
 										<%@ include file="inc/grouped_flow_list.jspf" %>
-									</p>
+									</div>
+								</div>
 								<% } %>
 						
-								<p class="item"><if:message string="user_procs_filtro.field.pnumber"/>:</p>
-								<p class="item_indent"><input type="text" id="pnumber" name="pnumber" size="12" value="<%=pnumber %>" maxlength="1024"/><img class="icon_clear" src="images/icon_delete.png" onclick="javascript:document.getElementById('pnumber').value='';"/></p>
 								
-								<p class="item"><if:message string="user_procs_filtro.field.fromdate"/>:</p>
-								<p class="item_indent"><%=sAfterHtml%></p>
+								<div class="form-group">
+									<div class="col-sm-9">
+										<input type="text" id="pnumber" class="form-control" placeholder="<if:message string="user_procs_filtro.field.pnumber"/>" name="pnumber" size="12" value="<%=pnumber %>" maxlength="1024" style="height:25px"/>
+									</div>
+									<div class="col-sm-1">
+										<img class="control-label pull-left" src="images/icon_delete.png" onclick="javascript:document.getElementById('pnumber').value='';"/>
+									</div>
+								</div>
 								
-								<p class="item"><if:message string="user_procs_filtro.field.todate"/>:</p>
-								<p class="item_indent"><%=sBeforeHtml%></p>
+								<div class="form-group">
+									<div class="col-sm-9">
+										<input class="calendaricon form-control" type="text" size="12"  id="f_up_date_c" placeholder="<if:message string="user_procs_filtro.field.fromdate"/>" name="dtafter" value="<%=sAfterHtml%>" onmouseover="caltasks(this.id);this.onmouseover=null;" style="height:25px"/>
+									</div>
+									<div class="col-sm-1">
+										<img class="control-label pull-left" src="images/icon_delete.png" onclick="javascript:document.getElementById('f_up_date_c').value='';">
+									</div>
+								</div>									
+								
+								<div class="form-group">
+									<div class="col-sm-9">
+										<input class="calendaricon form-control" type="text" size="12"  id="f_up_date_a" name="dtbefore" placeholder="<if:message string="user_procs_filtro.field.todate"/>" value="<%=sBeforeHtml%>" onmouseover="caltasks(this.id);this.onmouseover=null;" style="height:25px"/>
+									</div>
+									<div class="col-sm-1">
+										<img class="control-label pull-left" src="images/icon_delete.png" onclick="javascript:document.getElementById('f_up_date_a').value='';">
+									</div>
+								</div>
+								
 								
 								<p class="item"><if:message string="user_procs_filtro.field.process_status"/>:</p>
 								<p class="item_indent">
-								<if:formSelect name="processStatus" edit="true" value="<%=processStatus %>" noli="true" >
-									<if:formOption value="__OPEN__" labelkey="user_procs_filtro.field.open"/>
-									<if:formOption value="__CLOSED__" labelkey="user_procs_filtro.field.closed"/>
-								</if:formSelect>
-								</p>
-								
+								<div class="form-group">
+									<div class="col-sm-9">
+										<select name="processStatus" class="form-control" style="height:25px;font-size:0.8em;padding: 0 0 0 5px">
+											<option value="__OPEN__"><if:message string="user_procs_filtro.field.open"/></option>
+											<option value="__CLOSED__"><if:message string="user_procs_filtro.field.closed"/></option>
+										</select>
+									</div>
+								</div>
+
 								<p class="item"><%=messages.getString("user_procs_filtro.field.nitems")%>:</p>
 								<p class="item_indent">
-								    <select name="numitemspage" id="items_page" onchange="<%=filterAction %>">
-								       <option value="5">5</option>
-								       <option value="20" selected="selected">20</option>
-								       <option value="50">50</option>
-								       <option value="100">100</option>
-								    </select>
-								</p>
+								<div class="item_indent form-group">
+									<div class="col-sm-9">
+										<select name="numitemspage" id="items_page" class="form-control" onchange="<%=filterAction %>" style="height:25px;font-size:0.8em;padding: 0 0 0 5px">
+										   <option value="5">5</option>
+										   <option value="20" selected="selected">20</option>
+										   <option value="50">50</option>
+										   <option value="100">100</option>
+										</select>
+									</div>
+								</div>
 								
 								<!-- "Texto a pesquisar" -->
 								<p class="item" style="display:none"><if:message string="user_procs_filtro.field.searchtext"/>:</p>
@@ -212,36 +255,60 @@ request.setAttribute("flow_type", FlowType.WORKFLOW);
 							   		onclick="proc_sla_execute('<%=ts%>')">
 								</p>
 							   
-								<input type="hidden" name="showUserProcs" value="true" > 
+
+
+								<p class="item"><%=messages.getString("user_procs_filtro.field.nitems")%>:</p>
+								<p class="item_indent">
+								<div class="item_indent form-group">
+									<div class="col-sm-9">
+										<select name="numitemspage" id="items_page" class="form-control" onchange="<%=filterAction %>" style="height:25px;font-size:0.8em;padding: 0 0 0 5px">
+										   <option value="5">5</option>
+										   <option value="20" selected="selected">20</option>
+										   <option value="50">50</option>
+										   <option value="100">100</option>
+										</select>
+									</div>
+								</div>
+
+
+
+
+							   <input type="hidden" name="showUserProcs" value="true" > 
 								<div id="searchForm">
 								<% if (isAdmin || isSearchableByInterv) { %>
 								<p class="item" id="targetuser_label"><if:message string="user_procs_filtro.field.targetuserlabel"/>:</p>
-								<p class="item_indent" id="targetuser_body">
-								<if:formSelect name="targetUser" edit="true" value="<%=targetUser %>" noli="true">
-									<if:formOption value="__MY_PROCS__" labelkey="user_procs_filtro.field.mytargetuser"/>
+								<p class="item_indent" id="targetuser_body"/>
+								<div class="item_indent form-group">
+									<div class="col-sm-9">
+										<select name="targetUser" class="form-control" value="<%=targetUser%>" style="height:25px;font-size:0.8em;padding: 0 0 0 5px">
+											<option value="__MY_PROCS__"><if:message string="user_procs_filtro.field.mytargetuser"/></option>
 									<% if (isAdmin) { %>
-									<if:formOption value="__ALL_PROCS__" labelkey="user_procs_filtro.field.alltargetuser"/>
+											<option value="__ALL_PROCS__"><if:message string="user_procs_filtro.field.alltargetuser"/></option>
 									<% } %>
 									<% if (isSearchableByInterv) { %>
-									<if:formOption value="__INT_PROCS__" labelkey="user_procs_filtro.field.inttargetuser"/>
+											<option value="__INT_PROCS__"><if:message string="user_procs_filtro.field.inttargetuser"/></option>
 									<% } %>
-								</if:formSelect>
+										</select>
+									</div>
+								</div>
 								<%} %>
-								</p>
+								
 								<p class="item" id="orderby_label"><if:message string="user_procs_filtro.field.orderbylabel"/>:</p>
-								<p class="item_indent" id="orderby_body">
-								<if:formSelect name="orderby" edit="true" value="<%=orderBy %>" noli="true">
-									<if:formOption value="f.flowname" label="fluxo"/>
-									<if:formOption value="p.pnumber" label="processo"/>
-									<if:formOption value="fs.result" label="estado"/>
-									<if:formOption value="fs.mdate" label="desde"/>
-									<if:formOption value="p.creator" label="dono"/>
-								</if:formSelect>
-								<if:formSelect name="ordertype" edit="true" value="<%=orderType %>" noli="true">
-									<if:formOption value="asc" label="asc"/>
-									<if:formOption value="desc" label="desc"/>
-								</if:formSelect>
-								</p>
+								<p class="item_indent" id="orderby_body"/>
+								<div class="item_indent form-group">
+									<div class="col-sm-9">
+										<select name="orderby" class="form-control" value="<%=orderBy %>" style="height:25px;font-size:0.8em;padding: 0 0 0 5px">
+											<option value="f.flowname">fluxo</option>
+											<option value="p.pnumber">processo</option>
+											<option value="fs.result">estado</option>
+											<option value="fs.mdate">desde</option>
+											<option value="p.creator">dono</option>
+										</select>
+										<select name="ordertype" class="form-control" value="<%=orderType %>" style="height:25px;font-size:0.8em;padding: 0 0 0 5px">
+											<option value="asc">asc</option>
+											<option value="desc">desc</option>
+										</select>								
+									</div>
 								</div>
 						 
 								<div class="button_box">
