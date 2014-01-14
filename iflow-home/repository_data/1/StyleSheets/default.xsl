@@ -573,7 +573,6 @@ label.subheader {
   		<script type="text/javascript" src="{$url_prefix}/javascript/mootools.js"></script>
   		<script type="text/javascript" src="{$url_prefix}/javascript/FormFunctions.js"></script>
   		<script type="text/javascript" src="{$url_prefix}/javascript/Stickman.MultiUpload.js"></script>
-        <script type="text/javascript" src="{$url_prefix}/javascript/livevalidation_standalone.js"> </script>
         <script type="text/javascript" src="{$url_prefix}/Themes/{$theme}/javascript/theme.js"> </script>
         
   		
@@ -1061,11 +1060,16 @@ label.subheader {
                 <xsl:value-of select="dateformat/text()"></xsl:value-of>
                 <xsl:text>');this.onmouseover=null;</xsl:text>
               </xsl:attribute>
-              <xsl:if test="string-length(onchange_submit) > 0">
-                <xsl:attribute name="onChange">
-					ajaxFormRefresh(this);
-				</xsl:attribute>
-              </xsl:if>
+	          <xsl:attribute name="onChange">
+			  	<xsl:choose>
+					<xsl:when test="string-length(onchange_submit) &gt; 0">
+                  		<xsl:apply-templates select="onchange_submit" />
+					</xsl:when>
+			    	<xsl:otherwise>
+						ajaxFormRefresh(this);
+					</xsl:otherwise>
+				</xsl:choose>
+			  </xsl:attribute>
             </input>
           </xsl:otherwise>
         </xsl:choose>
@@ -1221,14 +1225,11 @@ label.subheader {
 		<select class="txt  form-control pull-right combobox" style="width:250px;">
 		<xsl:attribute name="name">
 			<xsl:value-of select="variable/text()" />
-          	</xsl:attribute>
-		<xsl:if test="string-length(onchange_submit) > 0">
-			<xsl:if test="string-length(onchange_submit) &gt; 0">
-				
-			</xsl:if>
-			<!--xsl:attribute name="onChange">
+        </xsl:attribute>
+		<xsl:if test="string-length(onchange_submit) &gt; 0">
+			<xsl:attribute name="onChange">
 				<xsl:apply-templates select="onchange_submit" />
-			</xsl:attribute-->
+			</xsl:attribute>
 		</xsl:if>
 		<xsl:for-each select="option">
             <option>

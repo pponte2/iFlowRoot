@@ -549,6 +549,7 @@ function tabber(tabnr, navpage, navparam, contentpage, contentparam) {
   var selectedSectionStr = null;
   while (i++ < GLOBAL_MAX_TABS) {
     var section = document.getElementById(sectionDiv + i);
+    if (!section) section = parent.document.getElementById(sectionDiv + i);
     if (section) {
       if (i != tabnr) {
         section.style.display = 'none';
@@ -1619,7 +1620,7 @@ function createLabel(labelid, editname, color) {
 
 function process_detail_new(thePage, ctrl, flowid, pid, subpid, procStatus, uri) {
   var scrollpos = layout.getScrollPosition().toString();
-  var params = '?flowid='+flowid+'&pid='+pid+'&subpid='+subpid+'&procStatus='+procStatus+'&scroll='+scroll+'&uri='+uri;
+  var params = 'flowid='+flowid+'&pid='+pid+'&subpid='+subpid+'&procStatus='+procStatus+'&scroll='+scroll+'&uri='+uri;
   getCtrlFill(thePage, params, ctrl);
 }
 

@@ -38,7 +38,7 @@
 				<a 
 				id="li_a_admin_<%=AdminNavConsts.USER_USERS%>"
 				class="toolTipItemLink li_link"				
-				title="<%=messages.getString("admin_nav.section.users.tooltip.users")%>" href="javascript:selectedItem('admin',<%=AdminNavConsts.USER_USERS%>);tabber_save(4,'Admin/UserManagement/useradm.jsp');">
+				title="<%=messages.getString("admin_nav.section.users.tooltip.users")%>" href="javascript:selectedItem('admin',<%=AdminNavConsts.USER_USERS%>);tabber_save(4, '', '', 'Admin/UserManagement/useradm.jsp');">
 					<%=messages.getString("admin_nav.section.users.link.users")%>
 				</a>
 			</li>
@@ -46,7 +46,7 @@
 				<a
 				id="li_a_admin_<%=AdminNavConsts.USER_PROFILES%>"	
 				class="toolTipItemLink li_link"
-				title="<%=messages.getString("admin_nav.section.users.tooltip.profiles")%>" href="javascript:selectedItem('admin',<%=AdminNavConsts.USER_PROFILES%>);tabber_save(4,'Admin/UserManagement/profileadm.jsp');">
+				title="<%=messages.getString("admin_nav.section.users.tooltip.profiles")%>" href="javascript:selectedItem('admin',<%=AdminNavConsts.USER_PROFILES%>);tabber_save(4, '', '', 'Admin/UserManagement/profileadm.jsp');">
 					<%=messages.getString("admin_nav.section.users.link.profiles")%>
 				</a>
 			</li>
@@ -54,7 +54,7 @@
 				<a 
 				id="li_a_admin_<%=AdminNavConsts.USER_ORGANICAL_UNITS%>"
 				class="toolTipItemLink li_link"
-				title="<%=messages.getString("admin_nav.section.users.tooltip.orgunits")%>" href="javascript:selectedItem('admin',<%=AdminNavConsts.USER_ORGANICAL_UNITS%>);tabber_save(4,'Admin/UserManagement/unitadm.jsp');">
+				title="<%=messages.getString("admin_nav.section.users.tooltip.orgunits")%>" href="javascript:selectedItem('admin',<%=AdminNavConsts.USER_ORGANICAL_UNITS%>);tabber_save(4, '', '', 'Admin/UserManagement/unitadm.jsp');">
 					<%=messages.getString("admin_nav.section.users.link.orgunits")%>
 				</a>
 			</li>
@@ -67,7 +67,7 @@
 			<li>
 				<a id="li_a_admin_<%=AdminNavConsts.USER_USERS%>"
 				class="toolTipItemLink li_link"				
-				title="<%=messages.getString("admin_nav.section.users.tooltip.organizations")%>" href="javascript:selectedItem('admin', <%=AdminNavConsts.USER_ORGANIZATIONS%>);tabber_save(4,'Admin/UserManagement/organizationadm.jsp');">
+				title="<%=messages.getString("admin_nav.section.users.tooltip.organizations")%>" href="javascript:selectedItem('admin', <%=AdminNavConsts.USER_ORGANIZATIONS%>);tabber_save(4, '', '', 'Admin/UserManagement/organizationadm.jsp');">
 					<%=messages.getString("admin_nav.section.users.link.organizations")%>
 				</a>
 			</li>
@@ -81,35 +81,35 @@
 			<li>
 				<a id="li_a_admin_<%=AdminNavConsts.FLOW_CREATE_AND_EDIT%>"
 				class="toolTipItemLink li_link"
-				title="<%=messages.getString("admin_nav.section.flows.tooltip.createAndEdit")%>" href="javascript:selectedItem('admin', <%=AdminNavConsts.FLOW_CREATE_AND_EDIT%>);tabber_save(4,'Admin/flow_editor.jsp');">
+				title="<%=messages.getString("admin_nav.section.flows.tooltip.createAndEdit")%>" href="javascript:selectedItem('admin', <%=AdminNavConsts.FLOW_CREATE_AND_EDIT%>);tabber_save(4, '', '', 'Admin/flow_editor.jsp');">
 					<%=messages.getString("admin_nav.section.flows.link.createAndEdit")%>
 				</a>
 			</li>
 			<li>
 				<a id="li_a_admin_<%=AdminNavConsts.FLOW_PROPERTIES%>" 
 				class="toolTipItemLink li_link"
-				title="<%=messages.getString("admin_nav.section.flows.tooltip.properties")%>" href="javascript:selectedItem('admin', <%=AdminNavConsts.FLOW_PROPERTIES%>);tabber_save(4,'Admin/flow_settings.jsp');">
+				title="<%=messages.getString("admin_nav.section.flows.tooltip.properties")%>" href="javascript:selectedItem('admin', <%=AdminNavConsts.FLOW_PROPERTIES%>);tabber_save(4, '', '', 'Admin/flow_settings.jsp');">
 					<%=messages.getString("admin_nav.section.flows.link.properties")%>
 				</a>
 			</li>
 			<li>
 				<a id="li_a_admin_<%=AdminNavConsts.FLOW_MENUS%>" 
 				class="toolTipItemLink li_link"
-				title="<%=messages.getString("admin_nav.section.flows.tooltip.menus")%>" href="javascript:selectedItem('admin', <%=AdminNavConsts.FLOW_MENUS%>);tabber_save(4,'Admin/flow_menu_edit');">
+				title="<%=messages.getString("admin_nav.section.flows.tooltip.menus")%>" href="javascript:selectedItem('admin', <%=AdminNavConsts.FLOW_MENUS%>);tabber_save(4, '', '', 'Admin/flow_menu_edit');">
 					<%=messages.getString("admin_nav.section.flows.link.menus")%>
 				</a>
 			</li>
 			<li>
 				<a id="li_a_admin_<%=AdminNavConsts.FLOW_SERIES%>" 
 				class="toolTipItemLink li_link"
-				title="<%=messages.getString("admin_nav.section.flows.tooltip.series")%>" href="javascript:selectedItem('admin',<%=AdminNavConsts.FLOW_SERIES%>);tabber_save(4,'Admin/SeriesManagement/series.jsp');">
+				title="<%=messages.getString("admin_nav.section.flows.tooltip.series")%>" href="javascript:selectedItem('admin',<%=AdminNavConsts.FLOW_SERIES%>);tabber_save(4, '', '', 'Admin/SeriesManagement/series.jsp');">
 					<%=messages.getString("admin_nav.section.flows.link.series")%>
 				</a>
 			</li>
 		    <li>
 		        <a id="li_a_admin_<%=AdminNavConsts.FLOW_SCHEDULE%>" 
 				class="toolTipItemLink li_link"
-				title="<%=messages.getString("admin_nav.section.flows.tooltip.flow_schedule")%>" href="javascript:selectedItem('admin',<%=AdminNavConsts.FLOW_SCHEDULE%>);tabber_save(4,'Admin/flowSchedule/flow_schedule_list.jsp');">
+				title="<%=messages.getString("admin_nav.section.flows.tooltip.flow_schedule")%>" href="javascript:selectedItem('admin',<%=AdminNavConsts.FLOW_SCHEDULE%>);tabber_save(4, '', '', 'Admin/flowSchedule/flow_schedule_list.jsp');">
 		       		<%=messages.getString("admin_nav.section.flows.link.flow_schedule")%>
 		       	</a>
 		    </li>
@@ -127,35 +127,35 @@
 			<li>
 				<a  id="li_a_admin_<%=AdminNavConsts.PROCESS_UNDO%>"
 				class="toolTipItemLink li_link"
-				title="<%=messages.getString("admin_nav.section.processes.tooltip.undo")%>" href="javascript:selectedItem('admin', <%=AdminNavConsts.PROCESS_UNDO%>);tabber_save(4,'Admin/ProcManagement/proc_undo_select.jsp');">
+				title="<%=messages.getString("admin_nav.section.processes.tooltip.undo")%>" href="javascript:selectedItem('admin', <%=AdminNavConsts.PROCESS_UNDO%>);tabber_save(4, '', '', 'Admin/ProcManagement/proc_undo_select.jsp');">
 					<%=messages.getString("admin_nav.section.processes.link.undo")%>
 				</a>
 			</li>
 			<li>
 				<a id="li_a_admin_<%=AdminNavConsts.PROCESS_STATE%>" 
 				class="toolTipItemLink li_link"
-				title="<%=messages.getString("admin_nav.section.processes.tooltip.status")%>" href="javascript:selectedItem('admin',<%=AdminNavConsts.PROCESS_STATE%>);tabber_save(4,'Admin/ProcManagement/flow_states.jsp');">
+				title="<%=messages.getString("admin_nav.section.processes.tooltip.status")%>" href="javascript:selectedItem('admin',<%=AdminNavConsts.PROCESS_STATE%>);tabber_save(4, '', '', 'Admin/ProcManagement/flow_states.jsp');">
 					<%=messages.getString("admin_nav.section.processes.link.status")%>
 				</a>
 			</li>
 			<li>
 				<a id="li_a_admin_<%=AdminNavConsts.PROCESS_HISTORY%>" 
 				class="toolTipItemLink li_link"
-				title="<%=messages.getString("admin_nav.section.processes.tooltip.hist")%>" href="javascript:selectedItem('admin',<%=AdminNavConsts.PROCESS_HISTORY%>);tabber_save(4,'Admin/ProcManagement/proc_hist.jsp');">
+				title="<%=messages.getString("admin_nav.section.processes.tooltip.hist")%>" href="javascript:selectedItem('admin',<%=AdminNavConsts.PROCESS_HISTORY%>);tabber_save(4, '', '', 'Admin/ProcManagement/proc_hist.jsp');">
 					<%=messages.getString("admin_nav.section.processes.link.hist")%>
 				</a>
 			</li>
 			<li>
 				<a id="li_a_admin_<%=AdminNavConsts.PROCESS_CANCEL%>" 
 				class="toolTipItemLink li_link"
-				title="<%=messages.getString("admin_nav.section.processes.tooltip.cancel")%>" href="javascript:selectedItem('admin', <%=AdminNavConsts.PROCESS_CANCEL%>);tabber_save(4,'Admin/ProcManagement/proc_cancel.jsp?cancel=true');">
+				title="<%=messages.getString("admin_nav.section.processes.tooltip.cancel")%>" href="javascript:selectedItem('admin', <%=AdminNavConsts.PROCESS_CANCEL%>);tabber_save(4, '', '', 'Admin/ProcManagement/proc_cancel.jsp?cancel=true');">
 					<%=messages.getString("admin_nav.section.processes.link.cancel")%>
 				</a>
 			</li>
 			<li>
 				<a id="li_a_admin_<%=AdminNavConsts.PROCESS_TASK_MANAGEMENT%>" 
 				class="toolTipItemLink li_link"
-				title="<%=messages.getString("admin_nav.section.processes.tooltip.task")%>" href="javascript:selectedItem('admin', <%=AdminNavConsts.PROCESS_TASK_MANAGEMENT%>);tabber_save(4,'Admin/ProcManagement/proc_users.jsp');">
+				title="<%=messages.getString("admin_nav.section.processes.tooltip.task")%>" href="javascript:selectedItem('admin', <%=AdminNavConsts.PROCESS_TASK_MANAGEMENT%>);tabber_save(4, '', '', 'Admin/ProcManagement/proc_users.jsp');">
 					<%=messages.getString("admin_nav.section.processes.link.task")%>
 				</a>
 			</li>
@@ -169,28 +169,28 @@
 			<li>
 				<a id="li_a_admin_<%=AdminNavConsts.RESOURCES_STYLESHEETS%>" 
 				class="toolTipItemLink li_link"
-				title="<%=messages.getString("admin_nav.section.resources.tooltip.stylesheets")%>" href="javascript:selectedItem('admin', <%=AdminNavConsts.RESOURCES_STYLESHEETS%>);tabber_save(4,'Admin/Resources/dolist.jsp?type=<%=ResourceNavConsts.STYLESHEETS%>&ts=<%=ts%>');">
+				title="<%=messages.getString("admin_nav.section.resources.tooltip.stylesheets")%>" href="javascript:selectedItem('admin', <%=AdminNavConsts.RESOURCES_STYLESHEETS%>);tabber_save(4, '', '', 'Admin/Resources/dolist.jsp?type=<%=ResourceNavConsts.STYLESHEETS%>&ts=<%=ts%>');">
 					<%=messages.getString("admin_nav.section.resources.link.stylesheets")%>
 				</a>
 			</li>
 			<li>
 				<a id="li_a_admin_<%=AdminNavConsts.RESOURCES_PRINTING%>" 
 				class="toolTipItemLink li_link"
-				title="<%=messages.getString("admin_nav.section.resources.tooltip.print")%>" href="javascript:selectedItem('admin', <%=AdminNavConsts.RESOURCES_PRINTING%>);tabber_save(4,'Admin/Resources/dolist.jsp?type=<%=ResourceNavConsts.PRINT_TEMPLATES%>&ts=<%=ts%>');">
+				title="<%=messages.getString("admin_nav.section.resources.tooltip.print")%>" href="javascript:selectedItem('admin', <%=AdminNavConsts.RESOURCES_PRINTING%>);tabber_save(4, '', '', 'Admin/Resources/dolist.jsp?type=<%=ResourceNavConsts.PRINT_TEMPLATES%>&ts=<%=ts%>');">
 					<%=messages.getString("admin_nav.section.resources.link.print")%>
 				</a>
 			</li>
 			<li>
 				<a id="li_a_admin_<%=AdminNavConsts.RESOURCES_EMAIL_TEMPLATES%>" 
 				class="toolTipItemLink li_link"
-				title="<%=messages.getString("admin_nav.section.resources.tooltip.email")%>" href="javascript:selectedItem('admin', <%=AdminNavConsts.RESOURCES_EMAIL_TEMPLATES%>);tabber_save(4,'Admin/Resources/dolist.jsp?type=<%=ResourceNavConsts.EMAIL_TEMPLATES%>&ts=<%=ts%>');">
+				title="<%=messages.getString("admin_nav.section.resources.tooltip.email")%>" href="javascript:selectedItem('admin', <%=AdminNavConsts.RESOURCES_EMAIL_TEMPLATES%>);tabber_save(4, '', '', 'Admin/Resources/dolist.jsp?type=<%=ResourceNavConsts.EMAIL_TEMPLATES%>&ts=<%=ts%>');">
 					<%=messages.getString("admin_nav.section.resources.link.email")%>
 				</a>
 			</li>
 			<li>
 				<a id="li_a_admin_<%=AdminNavConsts.RESOURCES_PUBLIC%>" 
 				class="toolTipItemLink li_link"
-				title="<%=messages.getString("admin_nav.section.resources.tooltip.public")%>" href="javascript:selectedItem('admin',<%=AdminNavConsts.RESOURCES_PUBLIC%>);tabber_save(4,'Admin/Resources/dolist.jsp?type=<%=ResourceNavConsts.PUBLIC_FILES%>&ts=<%=ts%>');">
+				title="<%=messages.getString("admin_nav.section.resources.tooltip.public")%>" href="javascript:selectedItem('admin',<%=AdminNavConsts.RESOURCES_PUBLIC%>);tabber_save(4, '', '', 'Admin/Resources/dolist.jsp?type=<%=ResourceNavConsts.PUBLIC_FILES%>&ts=<%=ts%>');">
 					<%=messages.getString("admin_nav.section.resources.link.public")%>
 				</a>
 			</li>
@@ -205,28 +205,28 @@
 			<li>
 				<a  id="li_a_admin_<%=AdminNavConsts.ORGANIZATION_PROPERTIES%>"
 				class="toolTipItemLink li_link"
-				title="<%=messages.getString("admin_nav.section.system.tooltip.properties")%>" href="javascript:selectedItem('admin',<%=AdminNavConsts.ORGANIZATION_PROPERTIES%>);tabber_save(4,'Admin/Organization/organization.jsp');">
+				title="<%=messages.getString("admin_nav.section.system.tooltip.properties")%>" href="javascript:selectedItem('admin',<%=AdminNavConsts.ORGANIZATION_PROPERTIES%>);tabber_save(4, '', '', 'Admin/Organization/organization.jsp');">
 					<%=messages.getString("admin_nav.section.organization.link.properties")%>
 				</a>
 			</li>
 			<li>
 				<a id="li_a_admin_<%=AdminNavConsts.ORGANIZATION_LICENSE%>" 
 				class="toolTipItemLink li_link"
-				title="<%=messages.getString("admin_nav.section.system.tooltip.license")%>" href="javascript:selectedItem('admin',<%=AdminNavConsts.ORGANIZATION_LICENSE%>);tabber_save(4,'Admin/Organization/license.jsp');">
+				title="<%=messages.getString("admin_nav.section.system.tooltip.license")%>" href="javascript:selectedItem('admin',<%=AdminNavConsts.ORGANIZATION_LICENSE%>);tabber_save(4, '', '', 'Admin/Organization/license.jsp');">
 					<%=messages.getString("admin_nav.section.organization.link.license")%>
 				</a>
 			</li>
 			<li>
 				<a id="li_a_admin_<%=AdminNavConsts.ORGANIZATION_INTERFACES%>" 
 				class="toolTipItemLink li_link"
-				title="<%=messages.getString("admin_nav.section.system.tooltip.interface")%>" href="javascript:selectedItem('admin',<%=AdminNavConsts.ORGANIZATION_INTERFACES%>);tabber_save(4,'Admin/UserManagement/interfaceadm.jsp');">
+				title="<%=messages.getString("admin_nav.section.system.tooltip.interface")%>" href="javascript:selectedItem('admin',<%=AdminNavConsts.ORGANIZATION_INTERFACES%>);tabber_save(4, '', '', 'Admin/UserManagement/interfaceadm.jsp');">
 					<%=messages.getString("admin_nav.section.organization.link.interfaces")%>
 				</a>
 			</li>
 			<li>
 				<a id="li_a_admin_<%=AdminNavConsts.ORGANIZATION_PROFILES%>" 
 				class="toolTipItemLink li_link"
-				title="<%=messages.getString("admin_nav.section.system.tooltip.profiles")%>" href="javascript:selectedItem('admin',<%=AdminNavConsts.ORGANIZATION_PROFILES%>);tabber_save(4,'Admin/UserManagement/profilesadm.jsp');">
+				title="<%=messages.getString("admin_nav.section.system.tooltip.profiles")%>" href="javascript:selectedItem('admin',<%=AdminNavConsts.ORGANIZATION_PROFILES%>);tabber_save(4, '', '', 'Admin/UserManagement/profilesadm.jsp');">
 					<%=messages.getString("admin_nav.section.organization.link.profiles")%>
 				</a>
 			</li>

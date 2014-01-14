@@ -8,7 +8,7 @@
 		<ul>
 		#foreach($flow in $appflow.get("flows"))
 			<li>
-				<a title='$appflow.get("tooltip_flow")' href="javascript:openProcess(${flow.id}, 'inicio_flow.jsp', 'flowid=${flow.id}&sel=${flow.id}', false)">${flow.name}</a>
+				<a id="li_a_${tabnr}_${flow.id}" title='$appflow.get("tooltip_flow")' href="javascript:selectedItem(${tabnr}, ${flow.id});openProcess(${flow.id}, 'inicio_flow.jsp', 'flowid=${flow.id}&sel=${flow.id}', false)">${flow.name}</a>
 			</li>
 		#end
 		#foreach($link in $appflow.get("links"))

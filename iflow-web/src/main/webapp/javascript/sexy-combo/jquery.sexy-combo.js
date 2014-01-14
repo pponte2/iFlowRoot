@@ -533,12 +533,14 @@
 	            this.notify("textChange");		          
 	        }
 	        
-	        if (this.input.val() != oldVal && oldVal !=''){
-	        	ajaxFormRefresh(this.selectbox.context);
-	        }	        				
+	        if (this.input.val() != oldVal && oldVal != ''){
+
+	          if (this.selectbox.attr('onChange'))
+	            this.selectbox.trigger("change");
+	          else
+	            ajaxFormRefresh(this.selectbox.context);
+	        }
 	    },
-//	
-	
 	
 	    //sets hidden inputs value
 	    //takes text input's value as a param
@@ -581,8 +583,7 @@
 	        this.notify("change");
 		
 	    this.selectbox.val(this.hidden.val());
-		this.selectbox.trigger("change");
-		//ajaxFormRefresh(this.selectbox.context);
+	    //this.selectbox.trigger("change");
 	},
 	
 	

@@ -37,8 +37,8 @@
 						Nº de processo
 					</label>
 					<div class="btn-group pull-right">
-						<button type="button" class="btn btn-default btn-xs" onclick="javascript:tabber_right(2, 'main_content.jsp', 'orderBy=pid&orderType=asc');"><img src="Themes\newflow\images\up-arrow.png"/></button> 
-						<button type="button" class="btn btn-default btn-xs" onclick="javascript:tabber_right(2, 'main_content.jsp', 'orderBy=pid&orderType=desc');"><img src="Themes\newflow\images\down-arrow.png"/></button> 
+						<button type="button" class="btn btn-default btn-xs" onclick="javascript:tabber_right(2, 'main_content.jsp', 'orderBy=pid&orderType=asc');"><img src="Themes/newflow/images/up-arrow.png"/></button> 
+						<button type="button" class="btn btn-default btn-xs" onclick="javascript:tabber_right(2, 'main_content.jsp', 'orderBy=pid&orderType=desc');"><img src="Themes/newflow/images/down-arrow.png"/></button> 
 					</div>
 					</span>
 				</li>
@@ -47,8 +47,8 @@
 						Utilizador prévio
 					</label>
 					<div class="btn-group pull-right">
-						<button type="button" class="btn btn-default btn-xs" onclick="javascript:tabber_right(2, 'main_content.jsp', 'orderBy=previousUserId&orderType=asc');"><img src="Themes\newflow\images\up-arrow.png"/></button> 
-						<button type="button" class="btn btn-default btn-xs" onclick="javascript:tabber_right(2, 'main_content.jsp', 'orderBy=previousUserId&orderType=desc');"><img src="Themes\newflow\images\down-arrow.png"/></button> 
+						<button type="button" class="btn btn-default btn-xs" onclick="javascript:tabber_right(2, 'main_content.jsp', 'orderBy=previousUserId&orderType=asc');"><img src="Themes/newflow/images/up-arrow.png"/></button> 
+						<button type="button" class="btn btn-default btn-xs" onclick="javascript:tabber_right(2, 'main_content.jsp', 'orderBy=previousUserId&orderType=desc');"><img src="Themes/newflow/images/down-arrow.png"/></button> 
 					</div>
 				</li>
 				<li class="form-group">
@@ -56,8 +56,8 @@
 						Data de criação
 					</label>
 					<div class="btn-group pull-right">
-						<button type="button" class="btn btn-default btn-xs" onclick="javascript:tabber_right(2, 'main_content.jsp', 'orderBy=created&orderType=asc');"><img src="Themes\newflow\images\up-arrow.png"/></button> 
-						<button type="button" class="btn btn-default btn-xs" onclick="javascript:tabber_right(2, 'main_content.jsp', 'orderBy=created&orderType=desc');"><img src="Themes\newflow\images\down-arrow.png"/></button> 
+						<button type="button" class="btn btn-default btn-xs" onclick="javascript:tabber_right(2, 'main_content.jsp', 'orderBy=created&orderType=asc');"><img src="Themes/newflow/images/up-arrow.png"/></button> 
+						<button type="button" class="btn btn-default btn-xs" onclick="javascript:tabber_right(2, 'main_content.jsp', 'orderBy=created&orderType=desc');"><img src="Themes/newflow/images/down-arrow.png"/></button> 
 					</div>
 				</li>
 				<li class="form-group">
@@ -65,8 +65,8 @@
 						Descrição
 					</label>
 					<div class="btn-group pull-right">
-						<button type="button" class="btn btn-default btn-xs" onclick="javascript:tabber_right(2, 'main_content.jsp', 'orderBy=description&orderType=asc');"><img src="Themes\newflow\images\up-arrow.png"/></button> 
-						<button type="button" class="btn btn-default btn-xs" onclick="javascript:tabber_right(2, 'main_content.jsp', 'orderBy=description&orderType=desc');"><img src="Themes\newflow\images\down-arrow.png"/></button> 
+						<button type="button" class="btn btn-default btn-xs" onclick="javascript:tabber_right(2, 'main_content.jsp', 'orderBy=description&orderType=asc');"><img src="Themes/newflow/images/up-arrow.png"/></button> 
+						<button type="button" class="btn btn-default btn-xs" onclick="javascript:tabber_right(2, 'main_content.jsp', 'orderBy=description&orderType=desc');"><img src="Themes/newflow/images/down-arrow.png"/></button> 
 					</div>
 				</li>
 			</ul>  
@@ -194,8 +194,8 @@
 						Nº de processo
 					</label>
 					<div class="btn-group pull-right">
-						<button type="button" class="btn btn-default btn-xs" onclick="javascript:tabber_right(2, 'main_content.jsp', 'orderBy=pid&orderType=asc');"><img src="Themes\newflow\images\up-arrow.png"/></button> 
-						<button type="button" class="btn btn-default btn-xs" onclick="javascript:tabber_right(2, 'main_content.jsp', 'orderBy=pid&orderType=desc');"><img src="Themes\newflow\images\down-arrow.png"/></button> 
+						<button type="button" class="btn btn-default btn-xs" onclick="javascript:tabber_right(2, 'main_content.jsp', 'orderBy=pid&orderType=asc');"><img src="Themes/newflow/images/up-arrow.png"/></button> 
+						<button type="button" class="btn btn-default btn-xs" onclick="javascript:tabber_right(2, 'main_content.jsp', 'orderBy=pid&orderType=desc');"><img src="Themes/newflow/images/down-arrow.png"/></button> 
 					</div>
 					</span>
 				</li>
@@ -204,8 +204,8 @@
 						Utilizador prévio
 					</label>
 					<div class="btn-group pull-right">
-						<button type="button" class="btn btn-default btn-xs" onclick="javascript:tabber_right(2, 'main_content.jsp', 'orderBy=previousUserId&orderType=asc');"><img src="Themes\newflow\images\up-arrow.png"/></button> 
-						<button type="button" class="btn btn-default btn-xs" onclick="javascript:tabber_right(2, 'main_content.jsp', 'orderBy=previousUserId&orderType=desc');"><img src="Themes\newflow\images\down-arrow.png"/></button> 
+						<button type="button" class="btn btn-default btn-xs" onclick="javascript:tabber_right(2, 'main_content.jsp', 'orderBy=previousUserId&orderType=asc');"><img src="Themes/newflow/images/up-arrow.png"/></button> 
+						<button type="button" class="btn btn-default btn-xs" onclick="javascript:tabber_right(2, 'main_content.jsp', 'orderBy=previousUserId&orderType=desc');"><img src="Themes/newflow/images/down-arrow.png"/></button> 
 					</div>
 				</li>
 				<li class="form-group">
@@ -213,8 +213,8 @@
 						Data de criação
 					</label>
 					<div class="btn-group pull-right">
-						<button type="button" class="btn btn-default btn-xs" onclick="javascript:tabber_right(2, 'main_content.jsp', 'orderBy=created&orderType=asc');"><img src="Themes\newflow\images\up-arrow.png"/></button> 
-						<button type="button" class="btn btn-default btn-xs" onclick="javascript:tabber_right(2, 'main_content.jsp', 'orderBy=created&orderType=desc');"><img src="Themes\newflow\images\down-arrow.png"/></button> 
+						<button type="button" class="btn btn-default btn-xs" onclick="javascript:tabber_right(2, 'main_content.jsp', 'orderBy=created&orderType=asc');"><img src="Themes/newflow/images/up-arrow.png"/></button> 
+						<button type="button" class="btn btn-default btn-xs" onclick="javascript:tabber_right(2, 'main_content.jsp', 'orderBy=created&orderType=desc');"><img src="Themes/newflow/images/down-arrow.png"/></button> 
 					</div>
 				</li>
 				<li class="form-group">
@@ -222,8 +222,8 @@
 						Descrição
 					</label>
 					<div class="btn-group pull-right">
-						<button type="button" class="btn btn-default btn-xs" onclick="javascript:tabber_right(2, 'main_content.jsp', 'orderBy=description&orderType=asc');"><img src="Themes\newflow\images\up-arrow.png"/></button> 
-						<button type="button" class="btn btn-default btn-xs" onclick="javascript:tabber_right(2, 'main_content.jsp', 'orderBy=description&orderType=desc');"><img src="Themes\newflow\images\down-arrow.png"/></button> 
+						<button type="button" class="btn btn-default btn-xs" onclick="javascript:tabber_right(2, 'main_content.jsp', 'orderBy=description&orderType=asc');"><img src="Themes/newflow/images/up-arrow.png"/></button> 
+						<button type="button" class="btn btn-default btn-xs" onclick="javascript:tabber_right(2, 'main_content.jsp', 'orderBy=description&orderType=desc');"><img src="Themes/newflow/images/down-arrow.png"/></button> 
 					</div>
 				</li>
 			</ul>  

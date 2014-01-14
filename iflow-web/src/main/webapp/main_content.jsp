@@ -76,6 +76,8 @@ function cleanFilter(){
   String pageContent = "task_list";
 
   String tabnr = (String) fdFormData.getParameter("navtabnr");
+	if (tabnr == null) tabnr= "3";
+
 
   String scroll = (String) fdFormData.getParameter("scroll");
   if(scroll != null) session.setAttribute("filtro_scroll",scroll);
