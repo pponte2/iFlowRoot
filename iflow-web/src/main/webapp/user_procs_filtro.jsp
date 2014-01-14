@@ -370,7 +370,6 @@ request.setAttribute("flow_type", FlowType.WORKFLOW);
 	  ServletUtils.sendEncodeRedirect(response, "user_procs_filtro.jsp?searchtype=ss&ssonly=true");
 	}
   	
-	//Teste vm
 	String tabnr = (String) fdFormData.getParameter("navtabnr");
 	if (tabnr == null) tabnr= "8";
 	String pageContent = "proc_list";
