@@ -110,6 +110,7 @@ try {
   htSubst.put("isProcDetail", "true");
   htSubst.put("inDetail", "true");
   htSubst.put("uri", uri);
+  htSubst.put("error", procData.getError());
   List<Map<String,String>> buttons = new ArrayList<Map<String,String>>(1);
   if (op == 10) {
     Block block = flowBean.getBlock(userInfo, procData); 

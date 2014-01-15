@@ -28,6 +28,31 @@
 <%
   if (userInfo.isOrgAdmin() || userInfo.isProcSupervisor(-1)) {
 %>
+	<ul id="reports_section_body" class="menu">
+		<li>
+			<a class="active" onclick="javascript:this.focus()" href="#">Relatorios Predefinidos</a>
+			<ul>	
+				<li>
+					<a id="li_a_reports_<%=ReportsNavConsts.PERFORMANCE_CHARTS%>"
+					title="<%=messages.getString("reports_nav.section.performance.tooltip")%>"
+					class="toolTipItemLink li_link"
+					href="javascript:selectedItem('reports', <%=ReportsNavConsts.PERFORMANCE_CHARTS%>);getJSP('Reports/proc_perf.jsp')"><%=messages.getString("reports_nav.section.performance.link")%></a>
+				</li>
+				<li>
+					<a id="li_a_reports_<%=ReportsNavConsts.PROCESS_STATISTICS%>"
+					title="<%=messages.getString("reports_nav.section.statistics.tooltip")%>"
+					class="toolTipItemLink li_link"
+					href="javascript:selectedItem('reports', <%=ReportsNavConsts.PROCESS_STATISTICS%>);getJSP('Reports/proc_stats.jsp')"><%=messages.getString("reports_nav.section.statistics.link")%></a>
+				</li>
+				<li>
+					<a id="li_a_reports_<%=ReportsNavConsts.PROCESS_SLA%>"
+					title="<%=messages.getString("reports_nav.section.sla.tooltip")%>"
+					class="toolTipItemLink li_link"
+					href="javascript:selectedItem('reports', <%=ReportsNavConsts.PROCESS_SLA%>);getJSP('Reports/proc_sla.jsp')"><%=messages.getString("reports_nav.section.sla.link")%></a>
+				</li>
+			</ul>
+		</li>			
+	</ul>
 <%  boolean showOnlyFlowsToBePresentInMenu = true;
     if(BeanFactory.getFlowHolderBean().listFlowsOnline(userInfo, FlowType.REPORTS, showOnlyFlowsToBePresentInMenu).length > 0){//show reports_personalized%>
 			<%
