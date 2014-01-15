@@ -1276,6 +1276,8 @@ public class FlowHolderBean implements FlowHolder {
     List<Integer> oldOriginalBlockId = new ArrayList<Integer>(), oldMappedBlockId = new ArrayList<Integer>();
     List<String> subFlowName = new ArrayList<String>();
 
+    if (subFlowBlockMappings==null || subFlowBlockMappings.size() <= 0) return;
+
     try {
       db = Utils.getDataSource().getConnection();
       pst = db
@@ -1338,6 +1340,7 @@ public class FlowHolderBean implements FlowHolder {
       pst.setInt(2, flowId);
       pst.execute();
 
+      if (subFlowBlockMappings==null || subFlowBlockMappings.size() <= 0) return;
       // check if mappings have changed before saving them
       Boolean mappingsChanged = false;
       pst = db

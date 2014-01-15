@@ -42,6 +42,7 @@ public class BlockSQLUpdate extends BlockSQL {
    * @param dataSet a value of type 'DataSet'
    * @return the port to go to the next block
    */
+  @SuppressWarnings("deprecation")
   public Port after(UserInfoInterface userInfo, ProcessData procData) {
     Port outPort = portSuccess;
     StringBuffer logMsg = new StringBuffer();
@@ -61,7 +62,7 @@ public class BlockSQLUpdate extends BlockSQL {
     try{
     	sQuery = this.getAttribute(advancedQuery);
     	 if (StringUtils.isNotEmpty(sQuery)) {
-    		 sQuery = procData.transform(userInfo, sQuery, true);
+    		 sQuery = procData.transformForDB(userInfo, sQuery);
     	 }
          if (StringUtils.isEmpty(sQuery)) sQuery = null;
     }

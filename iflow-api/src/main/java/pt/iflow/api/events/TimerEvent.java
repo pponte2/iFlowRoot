@@ -55,7 +55,8 @@ public class TimerEvent extends AbstractEvent {
       if (bWorkDays) {
         Date dtStartTime = new Date(starttime.longValue());
         Date dtNowTime = Calendar.getInstance().getTime();
-        long diffMinutes = Utils.workMinutesDifference(dtStartTime, dtNowTime);
+        UserInfoInterface userInfoEvent = BeanFactory.getUserInfoFactory().newUserInfoEvent(this, userId);
+        long diffMinutes = Utils.getDurationWorkMinutesDifference(dtStartTime, dtNowTime, fid.intValue(), userInfoEvent);
         if (diffMinutes >= duration) {
           bFire = true;
         }

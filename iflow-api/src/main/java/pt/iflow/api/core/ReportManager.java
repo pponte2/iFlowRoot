@@ -63,4 +63,7 @@ public interface ReportManager {
    * @return Map containing TTL reports for graphic display.
    */
   OrderedMap<String, AuditData[]> getFlowTTLReports(UserInfoInterface userInfo, int flowid, boolean includeOpen,Date[] interval);
+  
+  long getLastDifference(int flowid, int pid, int subpid);
+  void updateReport(int flowid, int pid, int subpid, String codigo);
 }

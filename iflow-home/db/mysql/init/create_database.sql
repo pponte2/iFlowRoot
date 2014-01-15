@@ -1003,7 +1003,9 @@ CREATE TABLE reporting (
   start_reporting DATETIME,
   stop_reporting DATETIME,
   ttl DATETIME,
-  active INT(1) NOT NULL DEFAULT 0
+  active INT(1) NOT NULL DEFAULT 0,
+  time_reporting VARCHAR(1024),
+  calendarid int
 ) 
 ENGINE = INNODB DEFAULT CHARSET=utf8;
 

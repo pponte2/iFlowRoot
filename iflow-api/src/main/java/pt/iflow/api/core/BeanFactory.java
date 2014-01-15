@@ -16,6 +16,7 @@ import pt.iflow.api.utils.Logger;
 import pt.iflow.api.utils.Setup;
 import pt.iflow.api.utils.UserInfoFactory;
 
+
 public abstract class BeanFactory {
 
   private static final class BeanFactoryError extends Error {
@@ -87,6 +88,8 @@ public abstract class BeanFactory {
   protected abstract AdministrationProcessManager doGetAdministrationProcessManagerBean();
 
   protected abstract AdministrationFlowScheduleInterface doGetAdministrationFlowScheduleBean();
+
+  protected abstract CalendarManager doGetCalendarManagerBean();
 
   protected abstract CodeTemplateManager doGetCodeTemplateManager();
 
@@ -186,4 +189,9 @@ public abstract class BeanFactory {
   public static CodeTemplateManager getCodeTemplateManagerBean() {
     return getInstance().doGetCodeTemplateManager();
   }
+
+  public static CalendarManager getCalendarManagerBean() {
+    return getInstance().doGetCalendarManagerBean();
+  }
+
 }

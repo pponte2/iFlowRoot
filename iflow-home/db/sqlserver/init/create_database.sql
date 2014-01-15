@@ -931,7 +931,9 @@ CREATE TABLE reporting (
   start_reporting DATETIME,
   stop_reporting DATETIME,
   ttl DATETIME,
-  active INT NOT NULL DEFAULT 0) 
+  active INT NOT NULL DEFAULT 0),
+  time_reporting VARCHAR(1024),
+  calendarid int
 GO
 
 CREATE TABLE log (

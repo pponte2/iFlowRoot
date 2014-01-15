@@ -1,15 +1,19 @@
 package pt.iflow.blocks;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
 import pt.iflow.api.blocks.Block;
 import pt.iflow.api.blocks.Port;
+import pt.iflow.api.core.BeanFactory;
+import pt.iflow.api.core.ReportManager;
 import pt.iflow.api.processdata.ProcessData;
 import pt.iflow.api.processdata.ProcessSimpleVariable;
 import pt.iflow.api.processtype.DateDataType;
@@ -89,7 +93,11 @@ public class BlockReport extends Block {
     int flowid = procData.getFlowId();
     int pid = procData.getPid();
     int subpid = procData.getSubPid();
-    String codReporting = getAttribute(REPORT);
+    
+    //String codReporting = getAttribute(REPORT);
+    
+    String codReporting = this.getParsedAttribute(userInfo, REPORT, procData);
+    
     Calendar capturedMoment = Calendar.getInstance();
     Timestamp current = new Timestamp(capturedMoment.getTimeInMillis());
     ReportTO report = new ReportTO(flowid, pid, subpid, codReporting, current);
@@ -102,6 +110,23 @@ public class BlockReport extends Block {
       }
     }
     
+    report.setInsert(getAttribute("Insert"));
+    report.setStopBetween(getAttribute("StopBetween"));
+    
+    //Lidar com casos que é para fechar quando chega a um novo
+    if(report.getStopBetween()){
+        ReportManager rm = BeanFactory.getReportManagerBean();
+        List<ReportTO> reports = new ArrayList<ReportTO>();
+        reports = rm.getProcessReports(userInfo, procData);
+        
+        for(int i = 0; i < reports.size(); i++){
+          if(reports.get(i).getStopReporting() == null){
+            reports.get(i).setStopReporting(current);
+            rm.storeReport(userInfo, procData, reports.get(i));
+          }
+        }
+    }
+      
     // handle time-to-live before storing the report
     if (StringUtils.isNotBlank(getAttribute(TTL))) {
       Calendar ttl = incrementTimeFrom((Calendar) capturedMoment.clone());

@@ -4,16 +4,17 @@
 Version 4.2.0 - 
 	New Features:
          - 1224 - Remover Categoria do processo
+         - 1323	- Bloco Relatorio
 	Bug fixes:
 	     - 1401 - Erro no campo advancedquery dos blocos SQL quando existia uma plica
 	Known Issues:
 
 Version 4.2.0 - R20120618
 	New Features:
-		- Inserir marca visual quando o documento já foi assinado
+		- Inserir marca visual quando o documento jÃ¡ foi assinado
 		- Bloco que permite marcar ficheiros para assinar
          - 940 - Obter o userid com base no e-mail;
-         - 870 - Permitir a inserção/visualização de dados em rich text
+         - 870 - Permitir a inserÃ§Ã£o/visualizaÃ§Ã£o de dados em rich text
          - 872 - Apresentar uma lista de resultados dentro de outra janela
          - 937 - Criar entradas de menus
          - 939 - Mensagens de Texto SQL
@@ -21,7 +22,7 @@ Version 4.2.0 - R20120618
          - 975 - Assinatura de Documentos
          - 656 - Placement of transparent overlay while operation triggered by the link is performed.
          - 754 - Bloco "Criar Documento PDF"
-         - 867 - Agendar a execução de processos
+         - 867 - Agendar a execuÃ§Ã£o de processos
          - 1207 - SSO iflow com windows authentication
 	Bug fixes:
 		 - 1208 - Problema no bloco detalhe
@@ -31,15 +32,15 @@ Version 4.2.0 - R20120618
          - 996 - Editor de rich text, problema com alinhamento no IE
          - 1035 - Problema com os blocos de envio email
          - 1040 - Erro no Layout dos Menus de Qualidade
-		 - 1099 - Erro nas etiquetas automáticas
+		 - 1099 - Erro nas etiquetas automÃ¡ticas
  Known Issues:
-         - Há um problema com o uso de fluxos de grandes dimensões como sub fluxo, 
+         - HÃ¡ um problema com o uso de fluxos de grandes dimensÃµes como sub fluxo, 
          registado como (945)
 
 -------------------------------------------------------------------------------
 Version 4.2.0 - R20120424
 	New Features:
-		- Propriedade SAVE_FLOW_STATE_ALLWAYS no iflow.properties para não gravar tudo no flow_state_history
+		- Propriedade SAVE_FLOW_STATE_ALLWAYS no iflow.properties para nÃ£o gravar tudo no flow_state_history
 		
 	Bug fixes:
 		
@@ -55,9 +56,9 @@ Version 4.2.0 - R20120423
 		- Alterar "pasta" para categoria
 		- BugFix dos filtros
 		- BugFix forwardTo faltava labels
-		- Alterar o bloco foward para inserir uma label dependente de uma condição
+		- Alterar o bloco foward para inserir uma label dependente de uma condiÃ§Ã£o
 		- BugFix no filtro da Deadline
-		- BugFix na ordenação das tarefas
+		- BugFix na ordenaÃ§Ã£o das tarefas
 		- BugFix ao remover Deadline
 		
 	Known Issues:
@@ -65,9 +66,9 @@ Version 4.2.0 - R20120423
 -------------------------------------------------------------------------------
 Version 4.0.16 - R20120419
  New Features:
- 		- 959 - Anotações, Comentários, Filtro e Ordenação de Tarefas e Processos
+ 		- 959 - AnotaÃ§Ãµes, ComentÃ¡rios, Filtro e OrdenaÃ§Ã£o de Tarefas e Processos
  			  - Permite inserir as tarefas em pastas
- 			  - Permite inserir comentários, etiquetas e prazos limite aos processos
+ 			  - Permite inserir comentÃ¡rios, etiquetas e prazos limite aos processos
  			  - Permite filtrar pelos novos campos
  Bug fixes:
 
@@ -77,13 +78,13 @@ Version 4.0.16 - R20120419
 
 Version 4.0.15 -
  New Features:
- 		- 966 - Formatar datas em tabelas do formulário
- 		- 965 - Escrever valores monetários por extenso
- 		- 967 - Determinar dinâmicamente modelo de documento
-    	- 982 - Retirar Balão do tutorial
+ 		- 966 - Formatar datas em tabelas do formulÃ¡rio
+ 		- 965 - Escrever valores monetÃ¡rios por extenso
+ 		- 967 - Determinar dinÃ¢micamente modelo de documento
+    	- 982 - Retirar BalÃ£o do tutorial
  Bug fixes:
 		- 779 - Estado de lido de processo iniciados por email
- 		- 964 - Notificações. Consulta de processos
+ 		- 964 - NotificaÃ§Ãµes. Consulta de processos
  		- 775 - Passar parametros para WS iFlow
  		- 985 - Nome dos ficheiros com & impede acesso ao processo
  Known Issues:
@@ -91,7 +92,7 @@ Version 4.0.15 -
 -------------------------------------------------------------------------------
 Version 4.0.15 -
  New Features:
- 		- 935 - Merge da Assinatura (configurável por properties)
+ 		- 935 - Merge da Assinatura (configurÃ¡vel por properties)
  Bug fixes:
 		- 578 - Subfluxo - subprocesso
 		- 547 - Erro ao usar uma string com sinal de menor "<" no beanshel
@@ -102,22 +103,22 @@ Version 4.0.15 -
 
 Version 4.0.14 -
  New Features:
-        - 569 - Manter contexto nas tarefas permitindo navegação sem realinhamento
+        - 569 - Manter contexto nas tarefas permitindo navegaÃ§Ã£o sem realinhamento
         - 670 - Inserir texto (Doc. Assinado digitalmente) junto das rubricas
     
  Bug fixes:
         - 604 - Problemas no WS (funciona para novos WS e para tipos de dados complexos)
-        - Autenticação por Hash no documentServlet com IgnoreCase
+        - AutenticaÃ§Ã£o por Hash no documentServlet com IgnoreCase
         - BugFix no EventManager (virgula colocada nos inteiros dava erro no sql)
         - Melhoramento do tratamento de ficheiros em formularios com tabelas de download
         - 677 - Carregar ficheiros no ALfresco
-		- 605/683 - Rubricar todas o documento fica corrompido (Problemas com versão 6.26 do Java).
-		- Erro ao apagar vários documentos. Quando se seleccionava mais de um documento para apagar dava erro.
+		- 605/683 - Rubricar todas o documento fica corrompido (Problemas com versÃ£o 6.26 do Java).
+		- Erro ao apagar vÃ¡rios documentos. Quando se seleccionava mais de um documento para apagar dava erro.
 		- 683 - Rubricar todas o documento fica corrompido. (solucao temporaria)
-		- 577 - listagem de tarefas das delgações aparecem sempre primeiro no painel
+		- 577 - listagem de tarefas das delgaÃ§Ãµes aparecem sempre primeiro no painel
 		- 918 - 
 		- 917 - Listagem a seguir a Cancelar um processo
-		- 764 - Painel de Administração, opções Cancelar Processos e Gestão de Tarefas
+		- 764 - Painel de AdministraÃ§Ã£o, opÃ§Ãµes Cancelar Processos e GestÃ£o de Tarefas
  		- 923 - Carregamento de ficheiros na intranet
  		- 782 - Problemas com Logins no iFlow
 
@@ -127,44 +128,44 @@ Version 4.0.14 -
 Version 4.0.13 - 
  New Features:
     	550 - Passou a existir no iFlow.properties a propriedade SAVE_PROCESSHISTORY_METHOD que substitui COMPRESS_PROCESS_HISTORY. 
-              Esta nova propriedade permite guardar o procdata completo, comprimido ou não guardar nada.
+              Esta nova propriedade permite guardar o procdata completo, comprimido ou nÃ£o guardar nada.
     	550 - Passou a existir no iFlow.properties a propriedade SAVE_PROCESSHISTORY_WHEN que substitui ALLWAYS_SAVE_PROCESS_HISTORY. 
-              Esta nova propriedade permite guardar o procdata sempre, apenas quando há alterações ou nunca. 	
+              Esta nova propriedade permite guardar o procdata sempre, apenas quando hÃ¡ alteraÃ§Ãµes ou nunca. 	
 		561 - Colocar helps (HOT_FOLDER, EMAIL)
-  		568 - Limite no nº de tarefas para 500
+  		568 - Limite no nÂº de tarefas para 500
 		580 - Link para o processo nas mensagens
-		582 - ordenação de tarefas (permite ordenar pelo PID, Asc e Desc)
+		582 - ordenaÃ§Ã£o de tarefas (permite ordenar pelo PID, Asc e Desc)
 		586 - Rubrica em todas as paginas
 	
  Bug fixes:
 		541 - Fluxos de Pesquisa
 		452 - Areas e Sub-areas nas pesquisas
-		548 - Exportação e impressão
-    	575 - Diacríticos nos nomes dos ficheiros
+		548 - ExportaÃ§Ã£o e impressÃ£o
+    	575 - DiacrÃ­ticos nos nomes dos ficheiros
     	583 - iFlowRemote bugfix nos tipos de dados
   		584 - Subir a imagem da assinatura 3mm
-		585 - Botão para remover ficheiros no IE
+		585 - BotÃ£o para remover ficheiros no IE
 		586 - Rubrica em todas as paginas, no canto inferior esquerdo e alterar label da checkbox	
 		588 - Erro nas Mensagens
 		623 - Bloco Save BD e Text Array
 
 		    
  Known Issues:
-		593 - Anomalia na criação de processos por email
+		593 - Anomalia na criaÃ§Ã£o de processos por email
                 Emails enviados por:
                     @edp.pt  - problema no enconding do nome do anexo impede o arranque.
                     @sapo.pt - erro ao ler o email, estrutura desconhecida.
 				
 -------------------------------------------------------------------------------
 
-Version 4.0.10 - SQL SERVER + COMPACTAÇÃO DO HISTÓRICO
+Version 4.0.10 - SQL SERVER + COMPACTAÃ‡ÃƒO DO HISTÃ“RICO
 
  New Features:
-  - Permite a instalação da Base de Dados do iFlow em SQL Server.
+  - Permite a instalaÃ§Ã£o da Base de Dados do iFlow em SQL Server.
   - Se a property COMPRESS_PROCESS_HISTORY do iFlow.properties estiver a true 
     compacta os dados do process_history.
   - Se a property ALLWAYS_SAVE_PROCESS_HISTORY do iFlow.properties estivera true 
-    apenas guarda no process_history quando existem alterações aos dados do processo.
+    apenas guarda no process_history quando existem alteraÃ§Ãµes aos dados do processo.
   
  Bug fixes:
   - 
@@ -193,17 +194,17 @@ Version 4.0.7 - R20100908
   - 
 
  Bug fixes:
-  - Corrigido início de fluxos por mail
+  - Corrigido inÃ­cio de fluxos por mail
   - Corrigido encaminhamento de fluxos quando iniciado por mail  
  
  Known Issues:
-  - #406: Campo de formulário com moldura mal dimensionada  
-  - Não está a ser validada a existência do fluxo ou o seu estado (online) 
-    quando se importa um fluxo na interface de Administração 
-  - Deploy de fluxos com blocos Fork (Bifurcação)
-  - "user_proc_detail.jsp" esta a chamar a função "calcHeight" presente em 
+  - #406: Campo de formulÃ¡rio com moldura mal dimensionada  
+  - NÃ£o estÃ¡ a ser validada a existÃªncia do fluxo ou o seu estado (online) 
+    quando se importa um fluxo na interface de AdministraÃ§Ã£o 
+  - Deploy de fluxos com blocos Fork (BifurcaÃ§Ã£o)
+  - "user_proc_detail.jsp" esta a chamar a funÃ§Ã£o "calcHeight" presente em 
     "main.vm", tendo sido essa renomeada para "calcFrameHeight", neste 
-    momento ambas as funções estão presentes no vm
+    momento ambas as funÃ§Ãµes estÃ£o presentes no vm
 
 ------------------------------------------------------------------------------
 
@@ -213,13 +214,13 @@ Version 4.0.7 - R20100906
   - 
 
  Bug fixes:
-  - Permitir logout para autenticação HTTP
+  - Permitir logout para autenticaÃ§Ã£o HTTP
  
  Known Issues:
-  - #406: Campo de formulário com moldura mal dimensionada  
-  - Não está a ser validada a existência do fluxo ou o seu estado (online) 
-    quando se importa um fluxo na interface de Administração 
-  - Deploy de fluxos com blocos Fork (Bifurcação)
+  - #406: Campo de formulÃ¡rio com moldura mal dimensionada  
+  - NÃ£o estÃ¡ a ser validada a existÃªncia do fluxo ou o seu estado (online) 
+    quando se importa um fluxo na interface de AdministraÃ§Ã£o 
+  - Deploy de fluxos com blocos Fork (BifurcaÃ§Ã£o)
 
 ------------------------------------------------------------------------------
 
@@ -229,14 +230,14 @@ Version 4.0.7 - R20100810
   - Propriedades extra nos utilizador mapeadas nos ficheiros .properties
 
  Bug fixes:
-  - Corrigido o uso das variáveis de sessão dos processos
-  - Corrigida a obtenção das datas formatadas na pesquisa de documentos
+  - Corrigido o uso das variÃ¡veis de sessÃ£o dos processos
+  - Corrigida a obtenÃ§Ã£o das datas formatadas na pesquisa de documentos
  
  Known Issues:
-  - #406: Campo de formulário com moldura mal dimensionada  
-  - Não está a ser validada a existência do fluxo ou o seu estado (online) 
-    quando se importa um fluxo na interface de Administração 
-  - Deploy de fluxos com blocos Fork (Bifurcação)
+  - #406: Campo de formulÃ¡rio com moldura mal dimensionada  
+  - NÃ£o estÃ¡ a ser validada a existÃªncia do fluxo ou o seu estado (online) 
+    quando se importa um fluxo na interface de AdministraÃ§Ã£o 
+  - Deploy de fluxos com blocos Fork (BifurcaÃ§Ã£o)
 
 ------------------------------------------------------------------------------
 
@@ -244,19 +245,19 @@ Version 4.0.6 - R20100727
 
  New Features:
   - Novos tipos de fluxos: Search e Report.
-  - Execução dos fluxos Search e Report nas tabs de PEsquisa e Report usando
-    novas variáveis de sessão.
+  - ExecuÃ§Ã£o dos fluxos Search e Report nas tabs de PEsquisa e Report usando
+    novas variÃ¡veis de sessÃ£o.
 
  Bug fixes:
-  - DMS Flow Settings: problema quando não tem password
-  - HotFolder: erro ao arrancar listener na alteração das propriedades do fluxo.
+  - DMS Flow Settings: problema quando nÃ£o tem password
+  - HotFolder: erro ao arrancar listener na alteraÃ§Ã£o das propriedades do fluxo.
   - #405: Resize da frame dos processos
  
  Known Issues:
-  - #406: Campo de formulário com moldura mal dimensionada  
-  - Não está a ser validada a existência do fluxo ou o seu estado (online) 
-    quando se importa um fluxo na interface de Administração 
-  - Deploy de fluxos com blocos Fork (Bifurcação)
+  - #406: Campo de formulÃ¡rio com moldura mal dimensionada  
+  - NÃ£o estÃ¡ a ser validada a existÃªncia do fluxo ou o seu estado (online) 
+    quando se importa um fluxo na interface de AdministraÃ§Ã£o 
+  - Deploy de fluxos com blocos Fork (BifurcaÃ§Ã£o)
 
 ------------------------------------------------------------------------------
 
@@ -270,10 +271,10 @@ Version 4.0.5 - R20100609
  
  Known Issues:
   - #405: Resize da frame dos processos
-  - #406: Campo de formulário com moldura mal dimensionada  
-  - Não está a ser validada a existência do fluxo ou o seu estado (online) 
-    quando se importa um fluxo na interface de Administração 
-  - Deploy de fluxos com blocos Fork (Bifurcação)
+  - #406: Campo de formulÃ¡rio com moldura mal dimensionada  
+  - NÃ£o estÃ¡ a ser validada a existÃªncia do fluxo ou o seu estado (online) 
+    quando se importa um fluxo na interface de AdministraÃ§Ã£o 
+  - Deploy de fluxos com blocos Fork (BifurcaÃ§Ã£o)
 
 ------------------------------------------------------------------------------
 
@@ -288,139 +289,139 @@ Version 4.0.5 - R20100528
  
  Known Issues:
   - #405: Resize da frame dos processos
-  - #406: Campo de formulário com moldura mal dimensionada  
-  - Não está a ser validada a existência do fluxo ou o seu estado (online) 
-    quando se importa um fluxo na interface de Administração 
-  - Deploy de fluxos com blocos Fork (Bifurcação)
+  - #406: Campo de formulÃ¡rio com moldura mal dimensionada  
+  - NÃ£o estÃ¡ a ser validada a existÃªncia do fluxo ou o seu estado (online) 
+    quando se importa um fluxo na interface de AdministraÃ§Ã£o 
+  - Deploy de fluxos com blocos Fork (BifurcaÃ§Ã£o)
 
 ------------------------------------------------------------------------------
 
 Version 4.0.4 - R20100525
 
  New Features:
-  - Permite acesso centralizado ao DMS (credenciais de centrais/únicas por fluxo)
+  - Permite acesso centralizado ao DMS (credenciais de centrais/Ãºnicas por fluxo)
   - Upgradables Activados
-  - Flag de configuração para ignorar queries a FLOW_STATE_HISTORY na 
+  - Flag de configuraÃ§Ã£o para ignorar queries a FLOW_STATE_HISTORY na 
     pesquisa de processos
   - Tipo de fluxos: Suporte e Workflow
-  - Pesquisa, tarefas pendentes, delegações e relatórios filtrados por fluxos
+  - Pesquisa, tarefas pendentes, delegaÃ§Ãµes e relatÃ³rios filtrados por fluxos
     do tipo Workflow
-  - Opção para gerar relatórios com fluxos offline
-  - Opção de configuração da organização para esconder menu de fluxos da tab de 
+  - OpÃ§Ã£o para gerar relatÃ³rios com fluxos offline
+  - OpÃ§Ã£o de configuraÃ§Ã£o da organizaÃ§Ã£o para esconder menu de fluxos da tab de 
     Processo
-  - Pedidos de delegação para vários fluxos
-  - Campos novos no bloco de importação de dados:
+  - Pedidos de delegaÃ§Ã£o para vÃ¡rios fluxos
+  - Campos novos no bloco de importaÃ§Ã£o de dados:
     Sheet a importar
-    Formatação de dados das colunas importadas
+    FormataÃ§Ã£o de dados das colunas importadas
     Variavel documento para carregar ficheiro
-  - Bind de objectos UserInfoInterface e ProcessData no contexto de execução
-    da beanshell (script). Ficam associados às variaveis userInfo e procData.
+  - Bind de objectos UserInfoInterface e ProcessData no contexto de execuÃ§Ã£o
+    da beanshell (script). Ficam associados Ã s variaveis userInfo e procData.
   - Nome do ficheiro (save as)
-  - Possibilidade de criar uma caixa de confirmação nos botões dos fluxos
+  - Possibilidade de criar uma caixa de confirmaÃ§Ã£o nos botÃµes dos fluxos
   - Possibilidade de definir uma classe (que implemente FormTableValueFeeder) para
-    alimentar os valores/opções disponíveis nos campos de FormTable (e.g. FormTableSelectBox)
+    alimentar os valores/opÃ§Ãµes disponÃ­veis nos campos de FormTable (e.g. FormTableSelectBox)
   - Suporte para onchange_submit no FormTableSelectBox
-  - Adicionado tipo de dados NIF (nº identificação fiscal) com respectiva validação
-  - Tipo Euro: sufixo alterado para simbolo euro (e não EUR)
+  - Adicionado tipo de dados NIF (nÂº identificaÃ§Ã£o fiscal) com respectiva validaÃ§Ã£o
+  - Tipo Euro: sufixo alterado para simbolo euro (e nÃ£o EUR)
   - Processos mantidos na tabela process
-  - Flag canceled adicionado à tabela process
-  - Removido o trigger associado à tabela flow_state
-  - Adicionado o nome do fluxo nas notificações enviadas aos utilizadores
-    com delegações por aceitar.
-  - Opção para processar agendamentos existentes nos perfis aos utilizadores
+  - Flag canceled adicionado Ã  tabela process
+  - Removido o trigger associado Ã  tabela flow_state
+  - Adicionado o nome do fluxo nas notificaÃ§Ãµes enviadas aos utilizadores
+    com delegaÃ§Ãµes por aceitar.
+  - OpÃ§Ã£o para processar agendamentos existentes nos perfis aos utilizadores
     adicionados/removidos do perfil
-  - Adicionada a coluna Processo (pnumber) em Histórico de Processos, Cancelar Processo
-    e Gestão de Tarefas.
-  - Possibilidade de alterar um formulário inteiro para modo de leitura
-  - Acesso à página de login por templates
-  - Possibilidade de definir um formulário existente no fluxo para formulário de detalhe.
-  - Possibilidade de definir uma classe BshUtils para a organização (repository_data/<orgid>/Classes) que
-    fica disponível no código beanshell com o nome MyBshUtils.
+  - Adicionada a coluna Processo (pnumber) em HistÃ³rico de Processos, Cancelar Processo
+    e GestÃ£o de Tarefas.
+  - Possibilidade de alterar um formulÃ¡rio inteiro para modo de leitura
+  - Acesso Ã  pÃ¡gina de login por templates
+  - Possibilidade de definir um formulÃ¡rio existente no fluxo para formulÃ¡rio de detalhe.
+  - Possibilidade de definir uma classe BshUtils para a organizaÃ§Ã£o (repository_data/<orgid>/Classes) que
+    fica disponÃ­vel no cÃ³digo beanshell com o nome MyBshUtils.
   - Dispatcher: Checksum SHA-1 de resources
   - Dispatcher: Envio de classes e resources disponiveis no repositorio ou classpath
   - Adicionado metodo formatEur(userinfo,double) no BshUtils.
   - Exportacao de resources para internacionalizacao da applet
   - Internacionalizacao das propriedades de fluxos
-  - Possibilidade de filtrar por intervalos de tempo a apresentação dos relatórios
-  - Possibilidade da configuração da apresentação dos tabs/paineis por perfil ou por 
-    organização (default)
-  - Possibilidade de alterar informação do SysAdmin
+  - Possibilidade de filtrar por intervalos de tempo a apresentaÃ§Ã£o dos relatÃ³rios
+  - Possibilidade da configuraÃ§Ã£o da apresentaÃ§Ã£o dos tabs/paineis por perfil ou por 
+    organizaÃ§Ã£o (default)
+  - Possibilidade de alterar informaÃ§Ã£o do SysAdmin
   - Suporte para porto do servidor de smtp (propriedade MAIL_PORT)
-  - Externalização de mensagens: permite "merge" com as mensagens de sistema
-  - Formulário: permite submit on blur nas caixas de texto
-  - Administração de Sistema: Acesso aos Logs
+  - ExternalizaÃ§Ã£o de mensagens: permite "merge" com as mensagens de sistema
+  - FormulÃ¡rio: permite submit on blur nas caixas de texto
+  - AdministraÃ§Ã£o de Sistema: Acesso aos Logs
   - Campo de Data: Permite activar o evento onChange
-  - Campo de Data: Permite definir a introdução de horas
+  - Campo de Data: Permite definir a introduÃ§Ã£o de horas
   - Melhorias no logging e error handling no envio/processamento de emails
-  - Variável pnumber disponível para template de email new_activity.et
+  - VariÃ¡vel pnumber disponÃ­vel para template de email new_activity.et
 
  Bug fixes:
   - Processos duplicados nos resultados da pesquisa de processos
   - Registo de utilizador: Username limitado a 10 caracteres
-  - Remover Organização: Código legacy
+  - Remover OrganizaÃ§Ã£o: CÃ³digo legacy
   - LogTO: Usar DB interface
   - UpdateManager: Artifact Support
   - Listagem de processos como supervisor com resultados indevidos. 
   - Pesquisa de processos: listar apenas fluxos online
-  - Optimização da pesquisa de processos (Inclui novo indice na base de dados)
-  - Remoção de tokens e sessão e colisão com mid
-  - Refresh e autosubmissão de listas de selecção deixam de guardar o processo
+  - OptimizaÃ§Ã£o da pesquisa de processos (Inclui novo indice na base de dados)
+  - RemoÃ§Ã£o de tokens e sessÃ£o e colisÃ£o com mid
+  - Refresh e autosubmissÃ£o de listas de selecÃ§Ã£o deixam de guardar o processo
     na base de dados.
-  - Relatórios devem apresentar apenas fluxos online
+  - RelatÃ³rios devem apresentar apenas fluxos online
   - Mensagem "Datatype.required_field" migrada das resources do API para as
     resources do sistema 
-  - Corrigido bug na aceitação de pedidos de delegação, devido ao facto do 
+  - Corrigido bug na aceitaÃ§Ã£o de pedidos de delegaÃ§Ã£o, devido ao facto do 
     auto_increment do mysql fazer reset do id da tabela activity_hierarchy quando
     esta encolhe
-  - Formulario: validação de dados no select onChange
-  - Delegações: corrigida reatribuição de tarefas (supervisores fazerem delegações
+  - Formulario: validaÃ§Ã£o de dados no select onChange
+  - DelegaÃ§Ãµes: corrigida reatribuiÃ§Ã£o de tarefas (supervisores fazerem delegaÃ§Ãµes
     pelos utilizadores).  
-  - Saída de Texto (text label): apresenta prefixo e sufixo associado ao tipo de dados. 
-  - Corrigido loading panel (activado com click nos botões do formulário).
-  - Janela colocada no topo quando botão pressionado no formulário.  
-  - Reverter Processo: correcção do bug que associava mal os users
+  - SaÃ­da de Texto (text label): apresenta prefixo e sufixo associado ao tipo de dados. 
+  - Corrigido loading panel (activado com click nos botÃµes do formulÃ¡rio).
+  - Janela colocada no topo quando botÃ£o pressionado no formulÃ¡rio.  
+  - Reverter Processo: correcÃ§Ã£o do bug que associava mal os users
   - BlockFormulario: NullPointerException quando se usam fluxos antigos
   - Alfresco: Data parsing legacy code
-  - Alfresco: Consistência de dados entre local/remote
-  - DB Alfresco: Impedir repetições de ficheiros/propriedades
-  - #407: Problema com datas no beanshell (variaveis tipo data não
+  - Alfresco: ConsistÃªncia de dados entre local/remote
+  - DB Alfresco: Impedir repetiÃ§Ãµes de ficheiros/propriedades
+  - #407: Problema com datas no beanshell (variaveis tipo data nÃ£o
     inicializadas)
-  - Bug com tipo de dados nas variáveis de sistema (ex. pid estava como String 
+  - Bug com tipo de dados nas variÃ¡veis de sistema (ex. pid estava como String 
     quando se utilizava no beanshell).
   - Recode do ficheiro calendar-es.js para UTF-8
-  - Anotação incorrecta no Dispatcher do iFlow (listar chart files)Bug Fixes:
-  - Ficheiros: Quando sem assinatura e sem digitalização, mostra versão antiga
-  - Correcção ao nível do fecho de sub-processos.
+  - AnotaÃ§Ã£o incorrecta no Dispatcher do iFlow (listar chart files)Bug Fixes:
+  - Ficheiros: Quando sem assinatura e sem digitalizaÃ§Ã£o, mostra versÃ£o antiga
+  - CorrecÃ§Ã£o ao nÃ­vel do fecho de sub-processos.
   - Ficheiros: limite; apagar; editar
-  - Alfresco: aquisição de credenciais centralizada
-  - Formulário: disable dos campos quando select onsubmit
-  - Formulário: "scroll to top" em IE
-  - Formulário: form mal posicionada em IE
+  - Alfresco: aquisiÃ§Ã£o de credenciais centralizada
+  - FormulÃ¡rio: disable dos campos quando select onsubmit
+  - FormulÃ¡rio: "scroll to top" em IE
+  - FormulÃ¡rio: form mal posicionada em IE
   - #466: Suporte para tecla enter/return no loginBug Fixes:
-  - Formulário em IE: divisão em colunas desaparece quando dentro de tabs
-  - Formulário em IE: botão para submeter fora do local apropriado
-  - Eventos: correcções no processamento e tratamento de eventos
-  - Propriedades do fluxo: configuração de acesso ao DMS perde o valor da password
+  - FormulÃ¡rio em IE: divisÃ£o em colunas desaparece quando dentro de tabs
+  - FormulÃ¡rio em IE: botÃ£o para submeter fora do local apropriado
+  - Eventos: correcÃ§Ãµes no processamento e tratamento de eventos
+  - Propriedades do fluxo: configuraÃ§Ã£o de acesso ao DMS perde o valor da password
   - Duplo click para fazer deploy de fluxos
   - Formulario: Remover ficheiro
-  - Formulario: Layer de desactivação não cobre os campos todos
+  - Formulario: Layer de desactivaÃ§Ã£o nÃ£o cobre os campos todos
   - Formulario: Ficheiros escondidos em IE6
-  - Notificação de nova tarefa: corrigido problema com notificação dos users de 
+  - NotificaÃ§Ã£o de nova tarefa: corrigido problema com notificaÃ§Ã£o dos users de 
     novas tarefas pendentes
-  - Perda de contexto de processo quando se acede a um documento/ficheiro através
+  - Perda de contexto de processo quando se acede a um documento/ficheiro atravÃ©s
   	do detalhe de processo
-  - BlockFormulario: Validação do formulario incorrecto no botão Print
-  - Tarefas anteriores só removidas quando são encontrados users para encaminhar (forward)
+  - BlockFormulario: ValidaÃ§Ã£o do formulario incorrecto no botÃ£o Print
+  - Tarefas anteriores sÃ³ removidas quando sÃ£o encontrados users para encaminhar (forward)
   - Calendario Formulario: CSS estragado
-  - Corrigido erro que impedia a remoção de utilizadores das tarefas/actividades de 
+  - Corrigido erro que impedia a remoÃ§Ã£o de utilizadores das tarefas/actividades de 
   	um processo
  
  Known Issues:
   - #405: Resize da frame dos processos
-  - #406: Campo de formulário com moldura mal dimensionada  
-  - Não está a ser validada a existência do fluxo ou o seu estado (online) 
-    quando se importa um fluxo na interface de Administração 
-  - Deploy de fluxos com blocos Fork (Bifurcação)
+  - #406: Campo de formulÃ¡rio com moldura mal dimensionada  
+  - NÃ£o estÃ¡ a ser validada a existÃªncia do fluxo ou o seu estado (online) 
+    quando se importa um fluxo na interface de AdministraÃ§Ã£o 
+  - Deploy de fluxos com blocos Fork (BifurcaÃ§Ã£o)
 
 ------------------------------------------------------------------------------
 
@@ -432,40 +433,40 @@ Version 4.0.3 - 2009/11/11
  Bug fixes:
   - FlowJob: Guardar jobs agendados em BD
   - Task List: Iniciar processos maximizados
-  - Criação e actualização dos ficheiros chart no repositorio.
-  - #418 Não é possível apagar alguns fluxos
-  - #424 A iFrame apresenta dimensões incorrectas na visualização do detalhe do processo
+  - CriaÃ§Ã£o e actualizaÃ§Ã£o dos ficheiros chart no repositorio.
+  - #418 NÃ£o Ã© possÃ­vel apagar alguns fluxos
+  - #424 A iFrame apresenta dimensÃµes incorrectas na visualizaÃ§Ã£o do detalhe do processo
 
  Known Issues:
   - #405: Resize da frame dos processos
-  - #406: Campo de formulário com moldura mal dimensionada  
-  - #407: Problema com datas no beanshell (variaveis tipo data não
+  - #406: Campo de formulÃ¡rio com moldura mal dimensionada  
+  - #407: Problema com datas no beanshell (variaveis tipo data nÃ£o
     inicializadas)
-  - Não está a ser validada a existência do fluxo ou o seu estado (online) 
-    quando se importa um fluxo na interface de Administração 
+  - NÃ£o estÃ¡ a ser validada a existÃªncia do fluxo ou o seu estado (online) 
+    quando se importa um fluxo na interface de AdministraÃ§Ã£o 
 
 ------------------------------------------------------------------------------
 
 Version 4.0.3 - 2009/11/04
 
  New Features:
-  - Importação de fluxos na interface de Administração
+  - ImportaÃ§Ã£o de fluxos na interface de AdministraÃ§Ã£o
 
  Bug fixes:
-  - #415: Jar do FlowEditor não encontrado pela interface de Administração 
+  - #415: Jar do FlowEditor nÃ£o encontrado pela interface de AdministraÃ§Ã£o 
   - UserInfo: corrigido login por perfil (que permite o agendamento de
     FlowJobs).
-  - #408: Não é possível adicionar documentos a processos em base de dados  
+  - #408: NÃ£o Ã© possÃ­vel adicionar documentos a processos em base de dados  
   - Applet: Corrigido carregamento da applet no IE
   - Alfresco: Resolvido problemas de compatibilidade com Alfresco 3.2
   
  Known Issues:
   - #405: Resize da frame dos processos
-  - #406: Campo de formulário com moldura mal dimensionada  
-  - #407: Problema com datas no beanshell (variaveis tipo data não
+  - #406: Campo de formulÃ¡rio com moldura mal dimensionada  
+  - #407: Problema com datas no beanshell (variaveis tipo data nÃ£o
     inicializadas)
-  - Não está a ser validada a existência do fluxo ou o seu estado (online) 
-    quando se importa um fluxo na interface de Administração 
+  - NÃ£o estÃ¡ a ser validada a existÃªncia do fluxo ou o seu estado (online) 
+    quando se importa um fluxo na interface de AdministraÃ§Ã£o 
 
 -------------------------------------------------------------------------------
 
@@ -476,47 +477,47 @@ Version 4.0.3 - 2009/10/14
 
  Known Issues:
   - #405: Resize da frame dos processos
-  - #406: Campo de formulário com moldura mal dimensionada  
-  - #407: Problema com datas no beanshell (variaveis tipo data não
+  - #406: Campo de formulÃ¡rio com moldura mal dimensionada  
+  - #407: Problema com datas no beanshell (variaveis tipo data nÃ£o
     inicializadas)
-  - #408: Não é possível adicionar documentos a processos em base de dados  
+  - #408: NÃ£o Ã© possÃ­vel adicionar documentos a processos em base de dados  
 
 -------------------------------------------------------------------------------
 
 Version 4.0.3 - 2009/10/07
 
  New Features:
-  - Calculo de hash de jars na assinatura de código da applet.
-  - Suporte ao Cartão de Cidadão em sistemas operativos Linux e Mac OS X
+  - Calculo de hash de jars na assinatura de cÃ³digo da applet.
+  - Suporte ao CartÃ£o de CidadÃ£o em sistemas operativos Linux e Mac OS X
   - 
 
  Bug fixes:
-  - Corrigido bug que fazia com que os botões do detalhe de processo não
+  - Corrigido bug que fazia com que os botÃµes do detalhe de processo nÃ£o
     aparecessem.
-  - Assinatura de código da applet não funciona na versão portable
-  - Actualização dos certificados de assinatura de código da applet.
+  - Assinatura de cÃ³digo da applet nÃ£o funciona na versÃ£o portable
+  - ActualizaÃ§Ã£o dos certificados de assinatura de cÃ³digo da applet.
   - Acesso por guest: ocorria um erro no encaminhamento do processo.
   - Acesso ao detalhe de processos fechados.
 
  Known Issues:
   - #405: Resize da frame dos processos
-  - #406: Campo de formulário com moldura mal dimensionada  
-  - #407: Problema com datas no beanshell (variaveis tipo data não
+  - #406: Campo de formulÃ¡rio com moldura mal dimensionada  
+  - #407: Problema com datas no beanshell (variaveis tipo data nÃ£o
     inicializadas)
-  - #408: Não é possível adicionar documentos a processos em base de dados  
+  - #408: NÃ£o Ã© possÃ­vel adicionar documentos a processos em base de dados  
 
 -------------------------------------------------------------------------------
 
 Version 4.0.3 - 2009/09/30
 
  Bug fixes:
-  - Correcções na applet
-  - Correcções no guest access
+  - CorrecÃ§Ãµes na applet
+  - CorrecÃ§Ãµes no guest access
 
  Known Issues:
   - #405: Resize da frame dos processos
-  - #406: Campo de formulário com moldura mal dimensionada  
-  - #407: Problema com datas no beanshell (variaveis tipo data não
+  - #406: Campo de formulÃ¡rio com moldura mal dimensionada  
+  - #407: Problema com datas no beanshell (variaveis tipo data nÃ£o
     inicializadas) 
 
 -------------------------------------------------------------------------------
@@ -524,42 +525,42 @@ Version 4.0.3 - 2009/09/30
 Version 4.0.3 - 2009/09/21
 
  New Features:
-  - Novo evento Deadline: é lançado quando a data da variável configurada for
+  - Novo evento Deadline: Ã© lanÃ§ado quando a data da variÃ¡vel configurada for
     atingida
   - Nova applet para carregamento de ficheiro e assintauras digitais
   - Assinaturas digitais de PDFs com timestamping
-  - Traduções das ajudas para os outros locales
-  - Series: adicionado tipo Numero/Ano, em que o ano é gerido pela serie (ano
+  - TraduÃ§Ãµes das ajudas para os outros locales
+  - Series: adicionado tipo Numero/Ano, em que o ano Ã© gerido pela serie (ano
     actual);
-    número é re-inicializado a 1 quando o ano muda.
-  - Ecrã de fecho de processo e encaminhamento
-  - Limitação no tamanho do campo username aumentada para 50 caractéres.  
+    nÃºmero Ã© re-inicializado a 1 quando o ano muda.
+  - EcrÃ£ de fecho de processo e encaminhamento
+  - LimitaÃ§Ã£o no tamanho do campo username aumentada para 50 caractÃ©res.  
   
  Bug fixes:
-  - #400: Os timestamps vindos do serviço getUserActivities têm sempre o valor
+  - #400: Os timestamps vindos do serviÃ§o getUserActivities tÃªm sempre o valor
     zero
   - #398: Redireccionamento para janela de login
-  - FlowData: StackOverflowError no método "searchDeep" devido a fluxos
+  - FlowData: StackOverflowError no mÃ©todo "searchDeep" devido a fluxos
     circulares
-  - #396: Falha de segurança nos serviços disponibilizados por
+  - #396: Falha de seguranÃ§a nos serviÃ§os disponibilizados por
     EventManagerRemote
   - #397: EventManagerRemote setReadyToProcess e evento AsyncWait
   - #393: Info de fluxo / processos quando inexistentes
   - SQL function for date conversion issue
   - Reports: Date type issue
-  - Series: adicionada restrição por organização.
-  - Erro do processo não estava a ser guardado na base de dados.
-  - Corrigido erro no cálculo de datas para os eventos.
+  - Series: adicionada restriÃ§Ã£o por organizaÃ§Ã£o.
+  - Erro do processo nÃ£o estava a ser guardado na base de dados.
+  - Corrigido erro no cÃ¡lculo de datas para os eventos.
   - Corrigido bug com processamento de ficheiros declarados como TextArray
-    (de ids), uma vez que os ids dos documentos agora são integers e nao
+    (de ids), uma vez que os ids dos documentos agora sÃ£o integers e nao
     strings
-  - Corrigido erro com verificação de fluxo acessível por guest 
-    (stack overflow em fluxos com ciclos/realimentações)
+  - Corrigido erro com verificaÃ§Ã£o de fluxo acessÃ­vel por guest 
+    (stack overflow em fluxos com ciclos/realimentaÃ§Ãµes)
 
  Known Issues:
   - #405: Resize da frame dos processos
-  - #406: Campo de formulário com moldura mal dimensionada  
-  - #407: Problema com datas no beanshell (variaveis tipo data não
+  - #406: Campo de formulÃ¡rio com moldura mal dimensionada  
+  - #407: Problema com datas no beanshell (variaveis tipo data nÃ£o
     inicializadas)  
 
 -------------------------------------------------------------------------------
@@ -569,79 +570,79 @@ Version 4.0.2 - 2009/07/30
  New Features:
   - Release notes dos blocos separado do projecto web.
   - Tab content script tags are now processed in tab loading.
-  - Possibilidade de iniciar um processo num fluxo atraves da recepção de 
+  - Possibilidade de iniciar um processo num fluxo atraves da recepÃ§Ã£o de 
     email, com processamento de propriedades e ficheiros   
-  - Formulários: adicionada protecção contra double-click em links e botões 
+  - FormulÃ¡rios: adicionada protecÃ§Ã£o contra double-click em links e botÃµes 
     (adicionado "loading panel").
   - Imagem adicionada na lista de tarefas para indicar processos delegados
   - Novo logo para o iflow (logo_iflow.png)
   - Core: added database transactions when moving process states.
-  - Core: é gerado um id de modificação (mid) para cada transição de estado de
-    processo, ficando todas as alterações efectuadas no processo associadas a 
+  - Core: Ã© gerado um id de modificaÃ§Ã£o (mid) para cada transiÃ§Ã£o de estado de
+    processo, ficando todas as alteraÃ§Ãµes efectuadas no processo associadas a 
     esse id.
-  - Histórico de delegações aceites.
-  - Mensajes en Español añadidas
+  - HistÃ³rico de delegaÃ§Ãµes aceites.
+  - Mensajes en EspaÃ±ol aÃ±adidas
   - FlowDocs: Permite buscar documentos ao servidor alfresco
   - FlowDocs: Permite inserir/actualizar documentos no servidor alfresco
   - FlowDocs: Permite listar os documentos presentes no alfresco, utilizando
-    critérios de filtragem
-  - Actividades: Adicionada flag de "lida"; decoração (bold) das actividades
-    não lidas. 
-  - Core: melhorada consistência das actividades (utilização do id de
-    modificação utilizado nas alterações de estado). Esta alteração faz também
+    critÃ©rios de filtragem
+  - Actividades: Adicionada flag de "lida"; decoraÃ§Ã£o (bold) das actividades
+    nÃ£o lidas. 
+  - Core: melhorada consistÃªncia das actividades (utilizaÃ§Ã£o do id de
+    modificaÃ§Ã£o utilizado nas alteraÃ§Ãµes de estado). Esta alteraÃ§Ã£o faz tambÃ©m
     com que ao reverter o estado de um processo, o mesmo fique agendado nos
     utilizadores originais. 
-  - Applet: Reestruturação da applet de carregamento de ficheiros
+  - Applet: ReestruturaÃ§Ã£o da applet de carregamento de ficheiros
   - Applet: Assinatura digital de ficheiros PDF
-  - Core: Servlet especializada na interacção com a applet de documentos
-  - Core: Obtenção do tamanho do documento em base de dados (tamanho do BLOB)
-  - Core: Remoção de elementos de uma lista
-  - Interface: Opção por organização de colocar o menu do lado esquerdo ou
+  - Core: Servlet especializada na interacÃ§Ã£o com a applet de documentos
+  - Core: ObtenÃ§Ã£o do tamanho do documento em base de dados (tamanho do BLOB)
+  - Core: RemoÃ§Ã£o de elementos de uma lista
+  - Interface: OpÃ§Ã£o por organizaÃ§Ã£o de colocar o menu do lado esquerdo ou
     direito
-  - Interface: Opção por organização do tipo de menu de fluxos: lista ou árvore
+  - Interface: OpÃ§Ã£o por organizaÃ§Ã£o do tipo de menu de fluxos: lista ou Ã¡rvore
   - FlowDocs: Permite listar fazer procura por pastas
-  - Meta-informação configurável nos blocos DMSGet e DMSList
+  - Meta-informaÃ§Ã£o configurÃ¡vel nos blocos DMSGet e DMSList
   - Core: obtencao de id de modificacao feita de forma atomica e independente
-    do restante processamento/transaccoes. Detecção de transacção em curso e 
-    apresentação de erro especifico.
-  - Informação adicionada a processos decorrentes que mostra ao utilizador os
-    estados prévios do processo.
-  - Melhorado logging da aplicação.
+    do restante processamento/transaccoes. DetecÃ§Ã£o de transacÃ§Ã£o em curso e 
+    apresentaÃ§Ã£o de erro especifico.
+  - InformaÃ§Ã£o adicionada a processos decorrentes que mostra ao utilizador os
+    estados prÃ©vios do processo.
+  - Melhorado logging da aplicaÃ§Ã£o.
          
  Bug fixes:
-  - ProcessData: passou a ser feito o escape de xml na geração do xml do
+  - ProcessData: passou a ser feito o escape de xml na geraÃ§Ã£o do xml do
     processo.
   - Corrigido tamanho da imagem iFlow logo
-  - Delegações: corrigido erro que impedia agendamento nos users delegados.
-  - Descrição do Block Forward não aparece no Dashboard.
-  - Activides não guarda o dono quando se muda de página.
-  - Paginação da "Pesquisa" busca resultados completos, deveria limitar a
-    pesquisa por página.
-  - Paginação em tarefas/processos corrigida
-  - Manuseamento de delegações corrigido
+  - DelegaÃ§Ãµes: corrigido erro que impedia agendamento nos users delegados.
+  - DescriÃ§Ã£o do Block Forward nÃ£o aparece no Dashboard.
+  - Activides nÃ£o guarda o dono quando se muda de pÃ¡gina.
+  - PaginaÃ§Ã£o da "Pesquisa" busca resultados completos, deveria limitar a
+    pesquisa por pÃ¡gina.
+  - PaginaÃ§Ã£o em tarefas/processos corrigida
+  - Manuseamento de delegaÃ§Ãµes corrigido
   - Corrected flaw in FlowData "searchDeep" where current block node in search
     could be null.
-  - Caixa de selecção em Tarefas/Pesquisa com erro de dimensionamento
-    automático quando o nome dos fluxos é menor que o tamanho por defeito da
+  - Caixa de selecÃ§Ã£o em Tarefas/Pesquisa com erro de dimensionamento
+    automÃ¡tico quando o nome dos fluxos Ã© menor que o tamanho por defeito da
     caixa
-  - Histórico de estados: id de modificação (mid) de estado (e histórico) 
-    consistente com id de modificação geral.
-  - Corrigido terminar de delegações com vários níveis (re-delegações).
-  - Painel principal com espaçamento indevido na secção norte
-  - Propriedades dos fluxos aparecem em posições aleatórias
+  - HistÃ³rico de estados: id de modificaÃ§Ã£o (mid) de estado (e histÃ³rico) 
+    consistente com id de modificaÃ§Ã£o geral.
+  - Corrigido terminar de delegaÃ§Ãµes com vÃ¡rios nÃ­veis (re-delegaÃ§Ãµes).
+  - Painel principal com espaÃ§amento indevido na secÃ§Ã£o norte
+  - Propriedades dos fluxos aparecem em posiÃ§Ãµes aleatÃ³rias
   - Flow settings appear out of order
   - Corrigido erro na pesquisa de processos para todos os utilizadores.
   - #378: Register Organization
-  - #371: Campo email é obrigatório no registo
+  - #371: Campo email Ã© obrigatÃ³rio no registo
   - Corrected language selection fields in login page to display in their
     individual locales
   - IknowTag class: checking if UserInfo is contained in session, if not found
     in page context
   - Limpeza de datas incorrectas no filtro das tarefas pendentes
-  - Formulário: corrigido acesso concorrente ao processo.
+  - FormulÃ¡rio: corrigido acesso concorrente ao processo.
 
  Known Issues:
-  - Formulário: por vezes o redimensionamento da zona do processo não é feito
+  - FormulÃ¡rio: por vezes o redimensionamento da zona do processo nÃ£o Ã© feito
     de forma correcta (maximizando o processo e depois restaurar coloca a zona
     do processo com o tamanho correcto).
   - Sub-Fluxos
@@ -652,53 +653,53 @@ Version 4.0.1
 
  New Features:
   - Guest access: permissao para execucao de fluxos ou parte de fluxos por 
-    utilizadores não autenticados
-  - Mensagens nos blocos: configuração das mensagens a mostrar em determinados 
+    utilizadores nÃ£o autenticados
+  - Mensagens nos blocos: configuraÃ§Ã£o das mensagens a mostrar em determinados 
     blocos (ex. end, forward). 
-  - Reporting: Nova secção de reports adicionada como Estatísticas de Processos
+  - Reporting: Nova secÃ§Ã£o de reports adicionada como EstatÃ­sticas de Processos
   - Reporting: Novos reports
   - Admin/Resources: Permite editar ficheiros de texto directamente a partir do
     browser.
-  - Versionamento: Melhorada informação sobre versões, particularmente na 
+  - Versionamento: Melhorada informaÃ§Ã£o sobre versÃµes, particularmente na 
     interface de system admin.
   
  Bug fixes:
   - #98: Ajuda - terminar textos e disponibilizar pesquisa
-  - #278: Alteração do nome dos perfis não é reflectida nas permissões dos
+  - #278: AlteraÃ§Ã£o do nome dos perfis nÃ£o Ã© reflectida nas permissÃµes dos
     fluxos
-  - #284: Traduções em falta
-  - #293: O botão "Voltar" na configuração de perfis do fluxo não funciona
-  - #271: Botão modificar stylessheet errado
-  - #337: Sessão expirada
-  - #205: Quando série esgota não dá erro e passa a utilizar o PID
+  - #284: TraduÃ§Ãµes em falta
+  - #293: O botÃ£o "Voltar" na configuraÃ§Ã£o de perfis do fluxo nÃ£o funciona
+  - #271: BotÃ£o modificar stylessheet errado
+  - #337: SessÃ£o expirada
+  - #205: Quando sÃ©rie esgota nÃ£o dÃ¡ erro e passa a utilizar o PID
   - #347: Default URL no editor
   - #348: Propriedades dos fluxos com interface menos boa
   - #147: Escolha de fluxo no grupo Processos na Admin
-  - #350: Link para seleccionar todos os perfis/permissões de fluxo modifica
+  - #350: Link para seleccionar todos os perfis/permissÃµes de fluxo modifica
     coluna errada
-  - #352: Ficheiro com licenças
-  - #346: java.lang.OutOfMemoryError na geração da sombra
+  - #352: Ficheiro com licenÃ§as
+  - #346: java.lang.OutOfMemoryError na geraÃ§Ã£o da sombra
   - #333: Propriedade de Fluxo
-  - #361: Indicação do URL a utilizar na página de download do editor
-  - #358: Limitações do tomcat 6.0.18 com valores de atributos de tags
+  - #361: IndicaÃ§Ã£o do URL a utilizar na pÃ¡gina de download do editor
+  - #358: LimitaÃ§Ãµes do tomcat 6.0.18 com valores de atributos de tags
     definidas em taglibs
   - : Cancelar processo do utilizador
-  - #343: As informações de Locale e Timezone não são guardadas no registo de
-    nova organização
+  - #343: As informaÃ§Ãµes de Locale e Timezone nÃ£o sÃ£o guardadas no registo de
+    nova organizaÃ§Ã£o
   - #322: Variaveis reservadas
   - #329: Erro alinhamento
-  - #294: Desligar a confirmação de saida do editor
-  - : Merge com correcoes efectuadas na versão 3 (versão 3.3.4-R20090427): modo
-    manutenção, utilização de forward.jsp nas actividades, outras correcoes.
+  - #294: Desligar a confirmaÃ§Ã£o de saida do editor
+  - : Merge com correcoes efectuadas na versÃ£o 3 (versÃ£o 3.3.4-R20090427): modo
+    manutenÃ§Ã£o, utilizaÃ§Ã£o de forward.jsp nas actividades, outras correcoes.
 
 -------------------------------------------------------------------------------
 
 Version 3.3.3-beta9 - 20081203
 
  Bug fixes:
-  - #34: Erro frequente no iFlow de produção - Erro no forward de processo
-  - #35: TomCat "Pára" mas o serviço fica activo - Queries lentas
-  - #37: AUTO_ARCHIVE_PROCESS não está a funcionar - Queries lentas
+  - #34: Erro frequente no iFlow de produÃ§Ã£o - Erro no forward de processo
+  - #35: TomCat "PÃ¡ra" mas o serviÃ§o fica activo - Queries lentas
+  - #37: AUTO_ARCHIVE_PROCESS nÃ£o estÃ¡ a funcionar - Queries lentas
   - Correccoes no match de campos na tabela de tamanho fixo
   - Ignorar linhas em branco nas tabelas de tamanho fixo
 
@@ -707,9 +708,9 @@ Version 3.3.3-beta9 - 20081203
 Version 3.3.3-beta8 - 20081030
 
  Bug fixes:
-  - Correcção na geração de gráficos
-  - Correcções no ClassLoader do Repositorio 
-  - Correcção na obtenção de ficheiros de gráficos
+  - CorrecÃ§Ã£o na geraÃ§Ã£o de grÃ¡ficos
+  - CorrecÃ§Ãµes no ClassLoader do Repositorio 
+  - CorrecÃ§Ã£o na obtenÃ§Ã£o de ficheiros de grÃ¡ficos
 
 -------------------------------------------------------------------------------
 
@@ -720,15 +721,15 @@ Version 3.3.3-beta7 - 20081001
   
  Bug fixes:
   - #11(bugtracker): Carregamento de fluxo bloqueia a iFlow
-  - : Gráficos não funcionam
+  - : GrÃ¡ficos nÃ£o funcionam
 
 -------------------------------------------------------------------------------
 
 Version 3.3.3-beta6 - 20080923
 
  New Features:
-  - 289: Utilização de arrays com valores em Listas de Selecção
-  - 291: Não efectuar o submit on change em "Estado dos Processos:" e "Para:"
+  - 289: UtilizaÃ§Ã£o de arrays com valores em Listas de SelecÃ§Ã£o
+  - 291: NÃ£o efectuar o submit on change em "Estado dos Processos:" e "Para:"
   
  Bug fixes:
   - 288: PublicFiles com mime type e last modified incorrectos
@@ -743,8 +744,8 @@ Version 3.3.3-beta5 - 20080724
  Bug fixes:
   - 285: Eventos no ForwardTo ficam em ciclo infinito
   - 286: Na pesquisa um utilizador consegue ver processos de outros 
-         utilizadores quando não tem permissão Supervisionador
-  - 287: Permissão de consulta para imprimir?
+         utilizadores quando nÃ£o tem permissÃ£o Supervisionador
+  - 287: PermissÃ£o de consulta para imprimir?
 
 -------------------------------------------------------------------------------
 
@@ -753,8 +754,8 @@ Version 3.3.3-beta4 - 20080722
  New Features:
   
  Bug fixes:
-  - 281: Separação entre SHOW_SCHED_USERS e SHOW_ASSIGNED_TO
-  - 282: Erro nos formulários com ficheiros
+  - 281: SeparaÃ§Ã£o entre SHOW_SCHED_USERS e SHOW_ASSIGNED_TO
+  - 282: Erro nos formulÃ¡rios com ficheiros
 
 -------------------------------------------------------------------------------
 
@@ -764,7 +765,7 @@ Version 3.3.3-beta3 - 20080718
   - 280: Bloco GetUserProfiles
   
  Bug fixes:
-  - 279: Casas decimais desaparecem no formulário
+  - 279: Casas decimais desaparecem no formulÃ¡rio
 
 -------------------------------------------------------------------------------
 
@@ -773,29 +774,29 @@ Version 3.3.3-beta2 - 20080708
  New Features:
   
  Bug fixes:
-  - 275: Join AND origina entradas erróneas na lista de processos do utilizador
+  - 275: Join AND origina entradas errÃ³neas na lista de processos do utilizador
 
 -------------------------------------------------------------------------------
 
 Version 3.3.3-beta1 - 20080707
 
  New Features:
-  - 239: Detalhe de Processo - retirar histórico
-  - 240: Delegações na página de entrada 
-  - 264: Bloco Instanciação de Série
+  - 239: Detalhe de Processo - retirar histÃ³rico
+  - 240: DelegaÃ§Ãµes na pÃ¡gina de entrada 
+  - 264: Bloco InstanciaÃ§Ã£o de SÃ©rie
   - 265: Bloco Users In Profile
   - 266: Arquivo de Processos
   
  Bug fixes:
-  - 241: Erro ao iniciar um fluxo numa nova instalação
+  - 241: Erro ao iniciar um fluxo numa nova instalaÃ§Ã£o
   - 242: Erro no bloco OpenProc
   - 243: Bloco Detalhe de Processo tem que poder aceder a todos os processos
   - 262: fluxo sem erros nao faz deploy
   - 268: Erro no upload de ficheiros sem scanner
-  - 270: Link para documentos nas tabelas não funciona
+  - 270: Link para documentos nas tabelas nÃ£o funciona
   - 272: Hash code no link dos ficheiros
-  - 276: Distinguir códigos de retorno no canProceed dos blocos
-  - 277: subpid e pid não aparece nas tarefas quando se usa o fork
+  - 276: Distinguir cÃ³digos de retorno no canProceed dos blocos
+  - 277: subpid e pid nÃ£o aparece nas tarefas quando se usa o fork
 
 -------------------------------------------------------------------------------
 
@@ -804,7 +805,7 @@ Version 3.3.2-6 -
  New Features:
  
  Bug fixes:
-  - 273: Utilizador não tem privilegios para imprimir detalhe processo
+  - 273: Utilizador nÃ£o tem privilegios para imprimir detalhe processo
 
 -------------------------------------------------------------------------------
 
@@ -813,7 +814,7 @@ Version 3.3.2-5 -
  New Features:
  
  Bug fixes:
-  - 257: Propriedade de fluxo adicionada não é retirada
+  - 257: Propriedade de fluxo adicionada nÃ£o Ã© retirada
   - 260: Download de documentos de processos fechados
 
 -------------------------------------------------------------------------------
@@ -824,19 +825,19 @@ Version 3.3.2-4 - 200800528
  
  Bug fixes:
   - 255: Area de texto limpa ao seleccionar lista com submit
-  - 256: Links para ficheiros não funcionam
+  - 256: Links para ficheiros nÃ£o funcionam
 
 -------------------------------------------------------------------------------
 
 Version 3.3.2-3 - 200800520
 
  New Features:
-  - 239: Detalhe de Processo - retirar histórico (work in progress)
+  - 239: Detalhe de Processo - retirar histÃ³rico (work in progress)
  
  Bug fixes:
-  - 236: Detalhe de Processo não actualiza
+  - 236: Detalhe de Processo nÃ£o actualiza
   - 237: Download de ficheiros com nomes grandes
-  - 238: Opção de apagar ficheiro não funciona correctamente.
+  - 238: OpÃ§Ã£o de apagar ficheiro nÃ£o funciona correctamente.
 
 -------------------------------------------------------------------------------
 
@@ -846,7 +847,7 @@ Version 3.3.2-2 - 200800512
  
  Bug fixes:
   - 234: colocar categorias nas tarefas pendentes do rss
-  - 235: Erro impressão de checkboxes de formulários
+  - 235: Erro impressÃ£o de checkboxes de formulÃ¡rios
 
 -------------------------------------------------------------------------------
 
@@ -855,7 +856,7 @@ Version 3.3.2-1 - 200800506
  New Features:
  
  Bug fixes:
-  - 233: Formulário não actualiza campos com condição "disabled"
+  - 233: FormulÃ¡rio nÃ£o actualiza campos com condiÃ§Ã£o "disabled"
 
 -------------------------------------------------------------------------------
 
@@ -864,8 +865,8 @@ Version 3.3.2 - 200800505
  New Features:
  
  Bug fixes:
-  - 229: Notificação nas delegações
-  - 230: Verificação de username (era Case sensibility in usernames)
+  - 229: NotificaÃ§Ã£o nas delegaÃ§Ãµes
+  - 230: VerificaÃ§Ã£o de username (era Case sensibility in usernames)
   - 231: Erro de javascript no link do feed das tarefas
   - 232: Bloco detalhe de processo incompleto
 
@@ -879,18 +880,18 @@ Version 3.3.2rc4 - 20080429
   - 222: Novo bloco detalhe de processo
  
  Bug fixes:
-  - 138: Novos Perfis adicionados a fluxo com permissões leitura/escrita
-  - 161: Processos fechados não ficam marcados com flag closed=1
-  - 199: Quando se remove um fluxo não redirecciona para a listagem
-  - 217: Registo por sys admin em instalação local
-  - 218: Opções de delegação devem aparecer pré-seleccionadas
-  - 219: Erro na remoção de organizações
-  - 221: Execução de bloco em utilizador indevido (forward apenas efectivado 
+  - 138: Novos Perfis adicionados a fluxo com permissÃµes leitura/escrita
+  - 161: Processos fechados nÃ£o ficam marcados com flag closed=1
+  - 199: Quando se remove um fluxo nÃ£o redirecciona para a listagem
+  - 217: Registo por sys admin em instalaÃ§Ã£o local
+  - 218: OpÃ§Ãµes de delegaÃ§Ã£o devem aparecer prÃ©-seleccionadas
+  - 219: Erro na remoÃ§Ã£o de organizaÃ§Ãµes
+  - 221: ExecuÃ§Ã£o de bloco em utilizador indevido (forward apenas efectivado 
          em bloco interactivo)
-  - 223: No forward para utilizador destinatario (com variável)o processo 
+  - 223: No forward para utilizador destinatario (com variÃ¡vel)o processo 
          corrompe-se
   - 224: Acesso a ficheiros condicionado
-  - 225: Forward Up não funciona correctamente
+  - 225: Forward Up nÃ£o funciona correctamente
   - 227: Erro no feed das tasks
 
 -------------------------------------------------------------------------------
@@ -898,21 +899,21 @@ Version 3.3.2rc4 - 20080429
 Version 3.3.2rc3 - 20080404
 
  Bug fixes:
-  - Remoção do dominio em login AD: considerar separadores / e \
-  - Inclusão da biblioteca Xalan-J para correcto processamento XSLT
-  - Correcções ao javascript de actualização de links na página
-  - Remoção de session-timeout no descriptor web.xml - configurar no tomcat
+  - RemoÃ§Ã£o do dominio em login AD: considerar separadores / e \
+  - InclusÃ£o da biblioteca Xalan-J para correcto processamento XSLT
+  - CorrecÃ§Ãµes ao javascript de actualizaÃ§Ã£o de links na pÃ¡gina
+  - RemoÃ§Ã£o de session-timeout no descriptor web.xml - configurar no tomcat
   
 -------------------------------------------------------------------------------
 
 Version 3.3.2rc2 - 20080402
 
  Bug fixes:
-  - 213: Campos editáveis em tabelas com array de controlo não aparecem
+  - 213: Campos editÃ¡veis em tabelas com array de controlo nÃ£o aparecem
   - 215: Tratamento de links em browsers com cookies desligados
   
  New Features:
-  - 211: Uniformização das tabelas do dashboard e tarefas
+  - 211: UniformizaÃ§Ã£o das tabelas do dashboard e tarefas
   - 214: Login username/dominio em AD
 
 -------------------------------------------------------------------------------
@@ -920,33 +921,33 @@ Version 3.3.2rc2 - 20080402
 Version 3.3.2rc1 - 20080327
 
  Bug fixes:
-  - 197: Blocos sql têm acesso ilimitado à base de dados
-  - 198: Notificação de email desligado
+  - 197: Blocos sql tÃªm acesso ilimitado Ã  base de dados
+  - 198: NotificaÃ§Ã£o de email desligado
   - 201: Possibilidade de atribuir como pai de uma OU a mesma OU
-  - 206: Na tabela de séries o tipo e o estado estão em inglês
+  - 206: Na tabela de sÃ©ries o tipo e o estado estÃ£o em inglÃªs
   - 207: Na pesquisa e nas tarefas falta o caixote do lixo para limpar o 
-         campo no nº de processo
+         campo no nÂº de processo
   - 208: Pesquisa de processos com dados do processo case sensitive
-  - 212: Não é possível alterar o locale na conta pessoal
+  - 212: NÃ£o Ã© possÃ­vel alterar o locale na conta pessoal
 
  New Features:
-  - 200: Nova propriedade nos fluxos - nº de processo
+  - 200: Nova propriedade nos fluxos - nÂº de processo
   - 209: Upgrade da biblioteca PDFs
-  - 210: Notificação para admin quando série esgota
+  - 210: NotificaÃ§Ã£o para admin quando sÃ©rie esgota
 
 -------------------------------------------------------------------------------
 
 Version 3.3.1rc5 - 20080312
 
  Bug fixes:
-  - 176: Fluxo com subfluxo não remove actividades
-  - 194: Acesso a sys admin com modo autenticação http não funciona
+  - 176: Fluxo com subfluxo nÃ£o remove actividades
+  - 194: Acesso a sys admin com modo autenticaÃ§Ã£o http nÃ£o funciona
   - 195: Feed generator para tarefas
   - 196: Detalhe de processo
-  - 198: Registo de utilizadores numa instalação sem email
+  - 198: Registo de utilizadores numa instalaÃ§Ã£o sem email
 
  New Features:
-  - 171: No download de versões de fluxos apresentar inicio do comentário 
+  - 171: No download de versÃµes de fluxos apresentar inicio do comentÃ¡rio 
          no select
  
 -------------------------------------------------------------------------------
@@ -955,24 +956,24 @@ Version 3.3.1rc4 - 20080307
 
  Bug fixes:
   - 179: Link no dashboard para as mensagens
-  - 181: LDAP/Active Directory não funciona após fechar ligação
-  - 182: Forward to não funciona com Active Directory
-  - 183: O fluxo não é redeployed automaticamente quando é carregado 
+  - 181: LDAP/Active Directory nÃ£o funciona apÃ³s fechar ligaÃ§Ã£o
+  - 182: Forward to nÃ£o funciona com Active Directory
+  - 183: O fluxo nÃ£o Ã© redeployed automaticamente quando Ã© carregado 
          pelo editor.
-  - 186: Utilização de Locale e Timezone opcional
-  - 187: Gestão de utilizadores para LDAP não.
-  - 188: Autenticação HTTP (Apenas foi implementato o metodo Basic)
-  - 189: Bloco Notificação não está a notificar intervenientes.
-  - 191: Falha na interpretação da licença
+  - 186: UtilizaÃ§Ã£o de Locale e Timezone opcional
+  - 187: GestÃ£o de utilizadores para LDAP nÃ£o.
+  - 188: AutenticaÃ§Ã£o HTTP (Apenas foi implementato o metodo Basic)
+  - 189: Bloco NotificaÃ§Ã£o nÃ£o estÃ¡ a notificar intervenientes.
+  - 191: Falha na interpretaÃ§Ã£o da licenÃ§a
   - 192: Pesquisa de processos fechado na framework
-  - 193: RSS de notificações
+  - 193: RSS de notificaÃ§Ãµes
   
 -------------------------------------------------------------------------------
 
 Version 3.3.1rc3 - 20080228
 
  New Features:
-  - 174: Bloco importação de dados
+  - 174: Bloco importaÃ§Ã£o de dados
   
 -------------------------------------------------------------------------------
 
@@ -987,7 +988,7 @@ Version 3.3.1rc1 - 20080222
 
  New features:
   - Nova API para DLL
-  - Carregamento de licença
+  - Carregamento de licenÃ§a
   
 -------------------------------------------------------------------------------
 
@@ -995,9 +996,9 @@ Version 3.2.2rc1 - 20080218
 
  Bug Fixes:
   - 165: Fluxo rebenta (ie bug fix no parser de queries SQL Select)
-  - 166: Pesquisas por data não são consideradas em "Pesquisas"
+  - 166: Pesquisas por data nÃ£o sÃ£o consideradas em "Pesquisas"
   - 167: Acesso ao detalhe do processo com SHOW_SCHED_USERS a Nao
-  - 170: Bloco SqlSelect - distinct não é considerado
+  - 170: Bloco SqlSelect - distinct nÃ£o Ã© considerado
   
 -------------------------------------------------------------------------------
 
@@ -1011,26 +1012,26 @@ Version 3.2.2rc0 - 20080215
 Version 3.2.1rc2 - 20080214
 
  Bug Fixes:
-  - 140: Filtros de datas nas tarefas não funcionam
-  - 141: Requisição de delegações
+  - 140: Filtros de datas nas tarefas nÃ£o funcionam
+  - 141: RequisiÃ§Ã£o de delegaÃ§Ãµes
   - 142: Caracteres acentuados errados em popup de "os meus processos"
-  - 143: Nos recursos sysadmin o reverter está sempre disponível
-  - 144: Ecrã de permissões do fluxo
-  - 145: Apresentação de tabelas extrapola limites
-  - 159: Actualização de ecrã do iFlow quando sessão expira
+  - 143: Nos recursos sysadmin o reverter estÃ¡ sempre disponÃ­vel
+  - 144: EcrÃ£ de permissÃµes do fluxo
+  - 145: ApresentaÃ§Ã£o de tabelas extrapola limites
+  - 159: ActualizaÃ§Ã£o de ecrÃ£ do iFlow quando sessÃ£o expira
   - 162: Novo nome para o tab "Os meus Processos"
   
  New Features:
-  - 146: Tooltips nas Tabs de navegação e icons do repositório
+  - 146: Tooltips nas Tabs de navegaÃ§Ã£o e icons do repositÃ³rio
   - 149: User and Organization Locale
   - 150: Organization Time Zone
-  - Suporte para autenticação e dados de organização a partir de Active
+  - Suporte para autenticaÃ§Ã£o e dados de organizaÃ§Ã£o a partir de Active
     Directory
   - 148: Os meus processos para Supervisor
-  - 152: Notificações internas no iFlow
+  - 152: NotificaÃ§Ãµes internas no iFlow
   - 155: Pesquisa de processos na framework
   - 156: Detalhe de Processo em Os Meus Processos
-  - 157: Versões de fluxos no editor
+  - 157: VersÃµes de fluxos no editor
 
 -------------------------------------------------------------------------------
 
@@ -1040,11 +1041,11 @@ Version 3.1.2rc1 - 20080114
   - #120: Supervisor continues to see process after being forwarded to 
     another user.
   - Bug 117 : Unidade Organica na tabela de gestao de utilizadores errada
-  - Bug 121 : Impressão de Formulários
-  - Bug 135 : Lightbox de login não aparece no IE7
-  - Bug 129 : Determinação do nome de variáveis no bloco SQL Select
+  - Bug 121 : ImpressÃ£o de FormulÃ¡rios
+  - Bug 135 : Lightbox de login nÃ£o aparece no IE7
+  - Bug 129 : DeterminaÃ§Ã£o do nome de variÃ¡veis no bloco SQL Select
   - Bug 134 : Acesso ilegal a processo
-  - Bug 133 : Corrigida localização do logotipo para ie7, ie6 e firefox
+  - Bug 133 : Corrigida localizaÃ§Ã£o do logotipo para ie7, ie6 e firefox
   - Bug 136 : Tooltips erradas/desformatadas quando se entra a primeira vez
   - bug 127 : Janela de propridades de fluxos desformatada no IE7
   
@@ -1081,7 +1082,7 @@ Version 3.1.1rc1 - 20071221
     use).
   
  New Features:
-  - #69: Digitalização de documentos.
+  - #69: DigitalizaÃ§Ã£o de documentos.
   - #17: Default stylesheet
   - #86: Notify organization administrator when email changes (web install)
   - Removed ADMIN flow permission.

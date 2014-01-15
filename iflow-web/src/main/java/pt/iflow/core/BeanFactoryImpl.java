@@ -160,4 +160,9 @@ public class BeanFactoryImpl extends BeanFactory {
     return CodeTemplateManagerBean.getInstance();
   }
 
+  @Override
+  protected CalendarManagerBean doGetCalendarManagerBean() {
+    return CalendarManagerBean.getInstance();
+  }
+  
 }

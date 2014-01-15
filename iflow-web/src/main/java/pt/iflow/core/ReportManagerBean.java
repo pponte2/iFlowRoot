@@ -17,6 +17,9 @@ import org.apache.commons.collections15.map.ListOrderedMap;
 import org.apache.commons.lang.StringUtils;
 
 import pt.iflow.api.audit.AuditData;
+import pt.iflow.api.calendar.Calendar;
+import pt.iflow.api.core.BeanFactory;
+import pt.iflow.api.core.CalendarManager;
 import pt.iflow.api.core.ReportManager;
 import pt.iflow.api.db.DatabaseInterface;
 import pt.iflow.api.processdata.ProcessData;
@@ -67,10 +70,16 @@ public class ReportManagerBean implements ReportManager {
       db = ds.getConnection();
       st = db.createStatement();
       StringBuffer sql = new StringBuffer();
-      if (contains(getProcessReports(userInfo, procData), report)) {
-        sql = buildQuerySqlUpdate(report);
-      } else {
-        sql = buildQuerySqlInsert(report);
+
+      //Lidar com casos em que é para fazer insert de relatorios com o mesmo codigo
+      if(report.getInsert() && report.getStopReporting() == null && !containsOpen(getProcessReports(userInfo, procData), report))
+          sql = buildQuerySqlInsert(report);
+      else{
+          if (contains(getProcessReports(userInfo, procData), report)) {
+            sql = buildQuerySqlUpdate(report);
+          } else {
+            sql = buildQuerySqlInsert(report);
+          }
       }
 
       if (Logger.isDebugEnabled()) {
@@ -80,6 +89,10 @@ public class ReportManagerBean implements ReportManager {
       if (StringUtils.isNotBlank(sql.toString())) {
         st.executeUpdate(sql.toString());
       }
+      
+      if(report.getStopReporting() != null)
+        updateReportDifference(userInfo, procData.getFlowId(), procData.getPid(), procData.getSubPid(), report.getStartReporting(), report.getStopReporting(), report.getCodReporting());
+         
     } catch (SQLException sqle) {
       Logger.error(userInfo.getUtilizador(), this, "storeReport", "caught sql exception: " + sqle.getMessage(), sqle);
     } finally {
@@ -87,6 +100,102 @@ public class ReportManagerBean implements ReportManager {
     }
   }
 
+  
+  public void updateReportDifference(UserInfoInterface userInfo, int flowid, int pid, int subpid, Timestamp start, Timestamp stop, String cod) {
+    CalendarManager cm = BeanFactory.getCalendarManagerBean();
+    Calendar cal = cm.getFlowCalendar(userInfo, flowid);
+    int calendarid = 0;
+    long total = 0;
+    //String stotal = "";
+    
+    if(cal != null){
+      calendarid = cal.getCalendar_id();
+      total = Utils.getDurationCalendar(start, stop, cal, userInfo);      
+    }else{
+      total = stop.getTime() - start.getTime();
+    }
+    
+    //stotal = Utils.getDuration(start, stop, flowid, userInfo);
+    
+    String sql = "update reporting set calendarid = "+calendarid+" , time_reporting = '"+total+"' where flowid = "+flowid;
+    sql += " and pid = "+pid+" and subpid = "+subpid+" and stop_reporting is not null";
+    sql += " and cod_reporting = '"+cod+"'";
+    
+    DataSource ds = null;
+    Connection db = null;
+    Statement st = null;
+    ResultSet rs = null;
+    try {
+      ds = Utils.getDataSource();
+      db = ds.getConnection();
+      st = db.createStatement();   
+      if (Logger.isDebugEnabled()) {
+        Logger.debug(userInfo.getUtilizador(), this, "updateReportDifference", "QUERY=" + sql);
+      }
+      if (StringUtils.isNotBlank(sql.toString())) {
+        st.executeUpdate(sql);
+      }
+    } catch (SQLException sqle) {
+      Logger.error(userInfo.getUtilizador(), this, "updateReportDifference", "caught sql exception: " + sqle.getMessage(), sqle);
+    } finally {
+      DatabaseInterface.closeResources(db, st, rs);
+    }
+  }
+  
+  
+  
+  public long getLastDifference(int flowid, int pid, int subpid) {
+    DataSource ds = null;
+    Connection db = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+    Timestamp startReporting = null;
+    long total = 0;
+    
+    try {
+      ds = Utils.getDataSource();
+      db = ds.getConnection();
+      StringBuffer sql = new StringBuffer();
+      sql.append("SELECT start_reporting FROM reporting");
+      sql.append(" WHERE flowid = " + flowid);
+      sql.append(" AND pid = " + pid);
+      sql.append(" AND subpid = " + subpid);
+      sql.append(" AND stop_reporting is null ");
+
+      if (Logger.isDebugEnabled()) {
+        Logger.debug("iFlow Editor", this, "getLastDifference", "QUERY=" + sql);
+      }
+
+      pst = db.prepareStatement(sql.toString());
+      rs = pst.executeQuery();
+      while (rs.next()) {
+        startReporting = rs.getTimestamp("start_reporting");
+      }
+    } catch (SQLException sqle) {
+      Logger.error("iFlow Editor", this, "getLastDifference", "caught sql exception: " + sqle.getMessage(), sqle);
+    } finally {
+      DatabaseInterface.closeResources(db, pst, rs);
+    }
+    
+    if(startReporting != null){
+        java.util.Calendar capturedMoment = java.util.Calendar.getInstance();
+        Timestamp current = new Timestamp(capturedMoment.getTimeInMillis());
+        
+        UserInfoInterface userInfo = BeanFactory.getUserInfoFactory().newGuestUserInfo();
+        
+        CalendarManager cm = BeanFactory.getCalendarManagerBean();
+        Calendar cal = cm.getFlowCalendar(userInfo, flowid);
+       
+        if(cal != null){
+          total = Utils.getDurationCalendar(startReporting, current, cal, userInfo);      
+        }else{
+          total = current.getTime() - startReporting.getTime();
+        }
+    } 
+    
+    return total;
+  }
+  
   /**
    * @see pt.iflow.api.core.ReportManager#getProcessReports(pt.iflow.api.utils.UserInfoInterface,
    *      pt.iflow.api.processdata.ProcessData)
@@ -268,7 +377,8 @@ public class ReportManagerBean implements ReportManager {
         if (end == null) 
           end = new Timestamp(endDate.getTime());
         
-        long value = end.getTime() - start.getTime();
+        //long value = end.getTime() - start.getTime();
+        long value = Utils.getDurationByCalendar(start, end, flowid, userInfo);
         data.setValue("" + (Long.parseLong(data.getValue()) + value));
         counter++;
       }
@@ -355,7 +465,17 @@ public class ReportManagerBean implements ReportManager {
     }
     return false;
   }
-
+  
+  private boolean containsOpen(List<ReportTO> reports, ReportTO report) {
+    for (ReportTO item : reports) {
+      if (item.getFlowId() == report.getFlowId() && item.getPid() == report.getPid() && item.getSubpid() == report.getSubpid()
+          && StringUtils.equals(item.getCodReporting(), report.getCodReporting()) && item.getStopReporting() == null) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
   private StringBuffer buildQuerySqlUpdate(ReportTO report) {
     StringBuffer sql = new StringBuffer("UPDATE " + ReportTO.TABLE_NAME + " SET ");
     for (String column : ReportTO.TABLE_COLUMNS) {
@@ -369,6 +489,7 @@ public class ReportManagerBean implements ReportManager {
     sql.append(" AND " + ReportTO.PID + "=" + report.getPid());
     sql.append(" AND " + ReportTO.SUBPID + "=" + report.getSubpid());
     sql.append(" AND " + ReportTO.COD_REPORTING + " LIKE " + report.getValueOf(ReportTO.COD_REPORTING));
+    sql.append(" AND start_reporting = "+ report.getValueOf(ReportTO.START_REPORTING));
     return sql;
   }
 
@@ -392,4 +513,115 @@ public class ReportManagerBean implements ReportManager {
     sql.append(")");
     return sql;
   }
+
+
+
+  public void updateReport(int flowid, int pid, int subpid, String codigo) {
+    DataSource ds = null;
+    Connection db = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+    Timestamp startReporting = null;
+    long total = 0;
+    int calid = 0;
+    UserInfoInterface userInfo = BeanFactory.getUserInfoFactory().newGuestUserInfo();
+    StringBuffer sql = new StringBuffer();
+    java.util.Calendar capturedMoment = java.util.Calendar.getInstance();
+    Timestamp current = new Timestamp(capturedMoment.getTimeInMillis());
+    
+    //Calculate difference
+    try {
+      ds = Utils.getDataSource();
+      db = ds.getConnection();
+
+      sql.append("SELECT start_reporting FROM reporting");
+      sql.append(" WHERE flowid = " + flowid);
+      sql.append(" AND pid = " + pid);
+      sql.append(" AND subpid = " + subpid);
+      sql.append(" AND stop_reporting is null");
+
+      if (Logger.isDebugEnabled()) {
+        Logger.debug("iFlow Editor", this, "Block BeanShell Update Report", "QUERY=" + sql);
+      }
+
+      pst = db.prepareStatement(sql.toString());
+      rs = pst.executeQuery();
+      while (rs.next()) {
+        startReporting = rs.getTimestamp("start_reporting");
+      }
+    } catch (SQLException sqle) {
+      Logger.error("iFlow Editor", this, "Block BeanShell Update Report", "caught sql exception: " + sqle.getMessage(), sqle);
+    } finally {
+      DatabaseInterface.closeResources(db, pst, rs);
+    }
+    
+    if(startReporting != null){
+
+        CalendarManager cm = BeanFactory.getCalendarManagerBean();
+        Calendar cal = cm.getFlowCalendar(userInfo, flowid);
+       
+        if(cal != null){
+          calid = cal.getCalendar_id();
+          total = Utils.getDurationCalendar(startReporting, current, cal, userInfo);      
+        }else{
+          total = current.getTime() - startReporting.getTime();
+        }
+    } 
+    
+    //Update old report
+    try {
+      ds = Utils.getDataSource();
+      db = ds.getConnection();
+      
+      sql = new StringBuffer();
+      sql.append("UPDATE reporting");
+      sql.append(" SET stop_reporting = '"+current+"'");
+      sql.append(" , calendarid = "+calid);
+      sql.append(" , time_reporting = "+total);
+      sql.append(" WHERE flowid = " + flowid);
+      sql.append(" AND pid = " + pid);
+      sql.append(" AND subpid = " + subpid);
+      sql.append(" AND stop_reporting is null ");
+      
+
+      if (Logger.isDebugEnabled()) {
+        Logger.debug("iFlow Editor", this, "Block BeanShell Update Report", "QUERY=" + sql);
+      }
+      if (StringUtils.isNotBlank(sql.toString())) {
+        pst = db.prepareStatement(sql.toString());
+        pst.executeUpdate();
+      }
+    } catch (SQLException sqle) {
+      Logger.error("iFlow Editor", this, "Block BeanShell Update Report", "caught sql exception: " + sqle.getMessage(), sqle);
+    } finally {
+      DatabaseInterface.closeResources(db, pst, rs);
+    }
+    
+
+    //Insert new Report
+    try {
+      ds = Utils.getDataSource();
+      db = ds.getConnection();
+      
+      sql = new StringBuffer();
+      sql.append("insert into reporting (flowid,pid,subpid,cod_reporting,start_reporting,active) ");
+      sql.append("values ("+flowid+","+pid+","+subpid+",'"+codigo+"','"+current+"',1) ");     
+
+      if (Logger.isDebugEnabled()) {
+        Logger.debug("iFlow Editor", this, "Block BeanShell Update Report", "QUERY=" + sql);
+      }
+      if (StringUtils.isNotBlank(sql.toString())) {
+        pst = db.prepareStatement(sql.toString());
+        pst.execute();
+      }
+    } catch (SQLException sqle) {
+      Logger.error("iFlow Editor", this, "Block BeanShell Update Report", "caught sql exception: " + sqle.getMessage(), sqle);
+    } finally {
+      DatabaseInterface.closeResources(db, pst, rs);
+    }
+  }
+
+
+
+
 }

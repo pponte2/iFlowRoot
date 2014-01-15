@@ -1078,7 +1078,9 @@ create table reporting (
   start_reporting date,
   stop_reporting date,
   ttl date,
-  active number(1) default 0
+  active number(1) default 0,
+  time_reporting VARCHAR2(1024),
+  calendarid int
 );
 
 create table log (

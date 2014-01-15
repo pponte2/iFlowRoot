@@ -83,7 +83,9 @@ public class ReportTO implements DBTransitionObject {
   private Timestamp stopReporting;
   private Timestamp ttl;
   private int active;
-
+  private boolean insert = false;
+  private boolean stopbetween = false;
+  
   /**
    * Overload c'tor. Should never persist a TO initialized this way to DB
    * without first setting appropriate fields.
@@ -222,6 +224,22 @@ public class ReportTO implements DBTransitionObject {
     this.active = isActive ? 1 : 0;
   }
 
+  public void setInsert(String flag) {
+    this.insert = Boolean.parseBoolean(flag);
+  }
+  
+  public void setStopBetween(String flag) {
+    this.stopbetween = Boolean.parseBoolean(flag);
+  }
+  
+  public boolean getInsert() {
+    return insert;
+  }
+  
+  public boolean getStopBetween() {
+    return stopbetween;
+  }
+  
   public String toString() {
     return "{" + this.flowId + "," + this.pid + "," + this.subpid + "," + this.codReporting + "," + this.startReporting + ","
         + this.stopReporting + "," + this.ttl + "," + this.active + "}";
