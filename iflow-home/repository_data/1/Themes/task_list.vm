@@ -307,7 +307,7 @@
 					#set($style_read="font-weight:bold;")
 				#end
 
-	<div  class="process_t3" onclick="javascript:openProcess($act.get("flowid"), '$response.encodeURL($url_prefix,$act.get("uri"))', 'flowid=$act.get("flowid")&pid=$act.get("pid")&subpid=$act.get("subpid")', false);">
+	<div  class="process_t3" onclick="javascript:openProcess($act.get("flowid"), '$response.encodeURL($url_prefix,$act.get("uri"))', 'flowid=$act.get("flowid")&pid=$act.get("pid")&subpid=$act.get("subpid")', false, 3);">
 		<div class="cube" title='$act.get("task_annotation_color_title")' style='background-color:$act.get("task_annotation_color_backgroundColor")'>
 			$act.get("pinitials") 
 		</div>

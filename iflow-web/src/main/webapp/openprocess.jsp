@@ -5,6 +5,7 @@
 <%@ include file="inc/defs.jsp"%>
 <%
   String src = fdFormData.getParameter("src");
+  String tab = fdFormData.getParameter("tab");
   String param = URLEncoder.encode(fdFormData.getParameter("param"));
 %>
 <div id="div_proc_menu_colapsed" class="proc_menu_colapsed" style="display:block;">
@@ -23,7 +24,7 @@
 	-->
 	<span id ="process_annotations_span_expanded"></span>
 </div>
-<iframe onload="document.getElementById('open_proc_frame').contentWindow.document.body.scrollTop=0;calcFrameHeight('open_proc_frame');" id="open_proc_frame" name="open_proc_frame"
+<iframe onload="document.getElementById('open_proc_frame_<%=tab%>').contentWindow.document.body.scrollTop=0;calcFrameHeight('open_proc_frame_<%=tab%>');" id="open_proc_frame_<%=tab%>" name="open_proc_frame_<%=tab%>"
 	frameborder="0" scrolling="auto" marginheight="0" marginwidth="0" width="100%" height="100%"
 	src="<%=src%>?process_url=<%=param%>" class="open_proc_frame_colapsed" style="display: block;"> your
 	browser does not support iframes or they are disabled at this time </iframe>

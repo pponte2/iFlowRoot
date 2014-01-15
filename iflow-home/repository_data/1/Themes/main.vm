@@ -131,20 +131,20 @@
 
 			function initDom() {
 				setHistory(1, '', '', '$response.encodeURL($url_prefix,mainContentJSP)', '');
-				//setHistory(2, '', '', '$response.encodeURL($url_prefix,'actividades.jsp')', 'ts=$ts');
+				setHistory(2, '', '', '', '');
 				setHistory(3, '', '', '','');
 				setHistory(4, '', '', '$response.encodeURL($url_prefix,'Admin/flow_settings.jsp')', 'ts=$ts');
 				setHistory(5, '', '', '$response.encodeURL($url_prefix,'gestao_tarefas.jsp')', 'ts=$ts');        
 				setHistory(6, '', '', '$response.encodeURL('personal_account.jsp')', '');
 				setHistory(7, '', '', '','');
-				//setHistory(8, '', '', '$response.encodeURL($url_prefix,'user_proc_seach.jsp')', 'ts=$ts');
+				setHistory(8, '', '', '', '');
 				setHistory(9, '', '', '','');
-				setHistory(10,'', '', '$response.encodeURL($url_prefix,'Reports/proc_perf.jsp')', 'ts=$ts');        
+				setHistory(10,'', '', '', '');        
 				setHistory(11,'', '', '','');
 
 				getCtrlFill(taskLabelsJSP, '', containerLabels);
 				tabber_right(1, mainContentJSP, '');
-				getCtrlFill(mainContentJSP, 'data=delegs', delegationsForm);
+				getCtrlFill(mainContentJSP, 'data=alerts', delegationsForm);
 				getCtrlFill(mainContentJSP, 'data=procs', containerFlowList);
 				#if("$Tab8" != "no")
 				getCtrlFill(userProcsFiltroJSP, 'searchtype=as', containerSearch);

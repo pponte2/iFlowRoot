@@ -206,7 +206,7 @@ function cleanFilter(){
       }
       pageContent = "deleg_list";
     }
-  else if (data.equals("tasks")){
+  else if (data.equals("tasks") || data.equals("alerts")) {
     // FLOWS, ACTIVITIES AND NOTIFICATIONS
 	int nNEWEST_LIMIT = 10;
 	int nOLDEST_LIMIT = 5;
@@ -739,7 +739,10 @@ function cleanFilter(){
      		  
       hsSubstLocal.put("delegationsMsg", messages.getString("main_content.delegs.delegationsMsg"));
       
-      pageContent = "task_list";
+      if (data.equals("alerts"))
+      	pageContent = "alert_list";
+      else
+      	pageContent = "task_list";
     }
 
     hsSubstLocal.put("data", data);

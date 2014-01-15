@@ -1595,7 +1595,7 @@ function getCtrlFillCallBack(htmltext, ctrl) {
   reloadJS();
 }
 
-function openProcess(flowid, contentpage, contentparam, runMax) {
+function openProcess(flowid, contentpage, contentparam, runMax, tabnr) {
   hidePopup();
   var scrollpos = layout.getScrollPosition().toString();
   var src = processLoadJSP;
@@ -1611,7 +1611,8 @@ function openProcess(flowid, contentpage, contentparam, runMax) {
     if (urlPrefix == null) urlPrefix = parent.URL_PREFIX;
   } catch (err) {}
   if (urlPrefix == null) urlPrefix = '/iFlow';
-  tabber_right(3, urlPrefix+'/openprocess.jsp', 'src=' + src + '&param=' + param);
+  if (!tabnr) tabnr = 3;
+  tabber_right(tabnr, urlPrefix+'/openprocess.jsp', 'src=' + src + '&tab=' + tabnr + '&param=' + param);
 }
 
 function createLabel(labelid, editname, color) {
