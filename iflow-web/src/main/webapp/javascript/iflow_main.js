@@ -1592,7 +1592,7 @@ function getCtrlFillCallBack(htmltext, ctrl) {
     if (aux == null) aux = parent.document.getElementById(ctrl);
     if (aux != null) aux.innerHTML = htmltext;
   }
-  reloadJS(closeMenus  && !ctrl.startsWith('section_div_'));
+  reloadJS(closeMenus  && ctrl.substring(0, 12) != 'section_div_');
 }
 
 function openProcess(flowid, contentpage, contentparam, runMax, tabnr) {
