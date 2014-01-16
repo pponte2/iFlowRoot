@@ -628,9 +628,10 @@
 	<script type="text/javascript" src="javascript/ajax_processing.js"></script>
 	<script type="text/javascript" src="javascript/iflow_main.js"></script>
 	<script type="text/javascript" src="$response.encodeURL('javascript/encodedURLS.jsp')"></script>
+	<script type="text/javascript" src="javascript/css.js"></script>
 	<script type="text/javascript" src="javascript/tutorial.js"></script>
 	<script type="text/javascript" src="javascript/processAnnotations.js"></script>
-
+	<script type="text/javascript" src="$response.encodeURL('javascript/applet.js')"></script>
     <script type="text/javascript" src="javascript/applet_functions.js"></script>
 
 	<script language="JavaScript">
@@ -725,12 +726,11 @@
 			#if ($openTutorial == "yes")
 			  openTutorial('$current_option', 'false');
 			#end
-<!--
+
 			#* Inject applet inside element body (right here...) *#
 			setApplet('div_applet');
 			getAppletElem();
- -->			
-		}
+ 		}
 	</script>  
    
 </head>
