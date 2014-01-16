@@ -28,7 +28,8 @@ import pt.iflow.api.utils.Utils;
 public class BlockSQLInsert extends BlockSQL {
 
   private static final String advancedQuery = "advancedQuery";	
-	
+  private static final String sTransform = "TRANSFORMTODB";
+  
   public BlockSQLInsert(int anFlowId,int id, int subflowblockid, String filename) {
     super(anFlowId,id, subflowblockid, filename);
     hasInteraction = false;
@@ -55,13 +56,24 @@ public class BlockSQLInsert extends BlockSQL {
     String sNames = null;
     String sValues = null;
     String sQuery = null;
+    String transform = null;
     
     try{
-    	sQuery = this.getAttribute(advancedQuery);
-    	 if (StringUtils.isNotEmpty(sQuery)) {
-    		 sQuery = procData.transform(userInfo, sQuery, true);
-    	 }
-         if (StringUtils.isEmpty(sQuery)) sQuery = null;
+      transform = this.getAttribute(sTransform);
+    }catch (Exception e) {
+      transform = "true";
+    }
+    
+    try{
+          sQuery = this.getAttribute(advancedQuery);
+          if (StringUtils.isNotEmpty(sQuery)) {
+            if(!StringUtils.isNotEmpty(transform) || transform.equals("true")){
+              sQuery = Utils.transformStringAndPrepareForDB(userInfo, sQuery, procData);
+            }else{
+              sQuery = procData.transform(userInfo, sQuery, true);
+            }
+          }
+          if (StringUtils.isEmpty(sQuery)) sQuery = null;
     }
     catch (Exception e) {
     	sQuery = null;
@@ -105,8 +117,12 @@ public class BlockSQLInsert extends BlockSQL {
         String escChar = this.getAttribute(BlockSQL.ESCAPE_CHARACTER);
         if(escChar != null) {
           sValues = Utils.transformStringAndPrepareForDB(userInfo, sValues, procData, escChar);
-        } else {
-          sValues = Utils.transformStringAndPrepareForDB(userInfo, sValues, procData);
+        } else {      
+              if(!StringUtils.isNotEmpty(transform) || transform.equals("true")){
+                sValues = Utils.transformStringAndPrepareForDB(userInfo, sValues, procData);
+              }else{
+                sValues = procData.transform(userInfo, sValues, true);
+              }
         }
       } catch (Exception e) {
         sValues = null;

@@ -29,7 +29,8 @@ import pt.iflow.api.utils.Utils;
 public class BlockSQLUpdate extends BlockSQL {
 	
   private static final String advancedQuery = "advancedQuery";	
-
+  private static final String sTransform = "TRANSFORMTODB";
+  
   public BlockSQLUpdate(int anFlowId,int id, int subflowblockid, String filename) {
     super(anFlowId,id, subflowblockid, filename);
     hasInteraction = false;
@@ -58,11 +59,22 @@ public class BlockSQLUpdate extends BlockSQL {
     String sSet = null;
     String sWhere = null;
     String sQuery = null;
+    String transform = null;
+    
+    try{
+      transform = this.getAttribute(sTransform);
+    }catch (Exception e) {
+      transform = "true";
+    }
     
     try{
     	sQuery = this.getAttribute(advancedQuery);
     	 if (StringUtils.isNotEmpty(sQuery)) {
-    		 sQuery = procData.transformForDB(userInfo, sQuery);
+    	   if(!StringUtils.isNotEmpty(transform) || transform.equals("true")){
+    		 sQuery = Utils.transformStringAndPrepareForDB(userInfo, sQuery, procData);
+    	   }else{
+    	     sQuery = procData.transform(userInfo, sQuery, true);
+    	   }
     	 }
          if (StringUtils.isEmpty(sQuery)) sQuery = null;
     }
@@ -100,15 +112,26 @@ public class BlockSQLUpdate extends BlockSQL {
     	}
     	try {
     		sSet = this.getAttribute(BlockSQL.sSET);
-    		sSet = Utils.transformStringAndPrepareForDB(userInfo, sSet, procData);
+    		
+            if(!StringUtils.isNotEmpty(transform) || transform.equals("true")){
+              sSet = Utils.transformStringAndPrepareForDB(userInfo, sSet, procData);
+            }else{
+              sSet = procData.transform(userInfo, sSet, true);
+            }
+
     	}
     	catch (Exception e) {
     		sSet = null;
     	}
     	try {
     		sWhere = this.getAttribute(BlockSQL.sWHERE);
-    		if (StringUtils.isNotEmpty(sWhere)) {
-    			sWhere = procData.transform(userInfo, sWhere, true);
+    		if (StringUtils.isNotEmpty(sWhere)) {   			
+                if(!StringUtils.isNotEmpty(transform) || transform.equals("true")){
+                  sWhere = Utils.transformStringAndPrepareForDB(userInfo, sWhere, procData);
+                }else{
+                  sWhere = procData.transform(userInfo, sWhere, true);
+                }
+    			
     		}
     		if (sWhere.equals("")) sWhere = null;
     	}

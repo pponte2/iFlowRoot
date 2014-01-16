@@ -21,6 +21,7 @@ import java.util.Map;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -52,7 +53,8 @@ public class AlteraAtributosSQL extends AlteraAtributos {
   private static final String advancedQuery = "advancedQuery";
   protected static final String sJNDIName = "JNDIName";
   protected static final String sUnitResult = "ResultadoUnitario";
-
+  protected static final String sTransform = "TRANSFORMTODB";
+  
   private JTabbedPane jTabbedPane = new JTabbedPane();
   private JComboBox jcbDataSources;
   private JTextArea jtfQuery = new JTextArea();
@@ -60,6 +62,8 @@ public class AlteraAtributosSQL extends AlteraAtributos {
   private JScrollPane jWizardPanel = new JScrollPane();
   private boolean isWizard = false;
 
+  JCheckBox jcbPlica = null;
+  
   public AlteraAtributosSQL(FlowEditorAdapter adapter) {
     super(adapter);
     initJNDIComboBox();
@@ -112,6 +116,11 @@ public class AlteraAtributosSQL extends AlteraAtributos {
     dsLabel.setHorizontalAlignment(JLabel.LEFT);
     jHeaderPanel.add(dsLabel, BorderLayout.WEST);
     jHeaderPanel.add(jcbDataSources, BorderLayout.CENTER);
+
+    
+    //Criar Interface para o tratamento das plicas -----------------------------------------
+    jHeaderPanel.add(jcbPlica, BorderLayout.SOUTH);
+    
     getContentPane().add(jHeaderPanel, BorderLayout.NORTH);
 
     if (isWizard) {
@@ -152,7 +161,11 @@ public class AlteraAtributosSQL extends AlteraAtributos {
         if(a.getNome().equals(advancedQuery)){
           jtfQuery.setText(a.getValor());
           atributoQuery = a;
-          break;
+          //break;
+        }
+        
+        if(a.getNome().equals(sTransform) && StringUtils.isNotEmpty(a.getValor())){
+          jcbPlica.setSelected(Boolean.parseBoolean(a.getValor()));
         }
       }
       if(atributoQuery != null ) {
@@ -175,7 +188,6 @@ public class AlteraAtributosSQL extends AlteraAtributos {
       String[] item = extra.get(i);
       newAtributos[atributos.length + i] = item;
     }
-    
     return newAtributos;
   }
   
@@ -231,7 +243,7 @@ public class AlteraAtributosSQL extends AlteraAtributos {
         retObj.add(wizardCond);
       }
     }
-    
+    retObj.add(new String [] {sTransform,""+jcbPlica.isSelected()});
     return retObj;
   }
   
@@ -270,7 +282,10 @@ public class AlteraAtributosSQL extends AlteraAtributos {
         } catch (Exception ex) {
         }
         DBTableHelper.addItem(virtualDBTable, name, value, pos);
-      } else {
+      }else if(StringUtils.equalsIgnoreCase(sTransform, at.getNome())){
+          if(!StringUtils.isEmpty(at.getValor()))
+            jcbPlica.setSelected(Boolean.valueOf(at.getValor()));
+      }else {
         retObj.add(at);
       }
     }
@@ -320,6 +335,11 @@ public class AlteraAtributosSQL extends AlteraAtributos {
         }
       });
     }
+    //Criar Interface para o tratamento das plicas -----------------------------------------
+    jcbPlica = new JCheckBox();
+    jcbPlica.setText( adapter.getString("AlteraAtributosSQL.transformtodb"));
+    jcbPlica.setSelected(true);
+    
   }
   
   private JComponent getWizardPanel() {
