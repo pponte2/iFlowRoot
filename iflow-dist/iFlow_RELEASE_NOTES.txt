@@ -4,40 +4,41 @@
 Version 4.2.0
 [Actual]
 	New Features:
-		 - Possibilidade de escolher uma lÃ­ngua de defeito para o iFlow (diferente da lÃ­ngua do servidor)
+		 - Possibilidade de escolher uma lÃƒÂ­ngua de defeito para o iFlow (diferente da lÃƒÂ­ngua do servidor)
          - 1224 - Remover Categoria do processo
          - 1323	- Bloco Relatorio
+	     - 1397	- Carregamento de ficheiros (Nome)
 	Bug fixes:
    		 - 1296 - Erro ao abrir um ficheiro a partir do email
-   		 - 1305 - Erro na configuraÃ§Ã£o do DS gera log infinito
-         - 1369 - Erro na ordenaÃ§Ã£o de tarefas com etiquetas.
-         - 1368 - Erro nos GrÃ¡ficos com caracteres especiais
+   		 - 1305 - Erro na configuraÃƒÂ§ÃƒÂ£o do DS gera log infinito
+         - 1369 - Erro na ordenaÃƒÂ§ÃƒÂ£o de tarefas com etiquetas.
+         - 1368 - Erro nos GrÃƒÂ¡ficos com caracteres especiais
 	Known Issues:
 	
 [R20120927]
 		- Compatibilidade com Tomcat 7. Incompatibilidade com Java 5.
-		- Possibilidade de nÃ£o validar licenÃ§as.
+		- Possibilidade de nÃƒÂ£o validar licenÃƒÂ§as.
 			
 [R20120618]
 	New Features:
 		- 1207 - SSO iflow com windows authentication
 		- 1063 - Retirar System.out.print
-		- Inserir marca visual quando o documento jÃ¡ foi assinado
+		- Inserir marca visual quando o documento jÃƒÂ¡ foi assinado
 		- Bloco que permite marcar ficheiros para assinar
-		- 544 - Envio de SMS (passou a funcionar com o serviÃ§o tmn sms express)
-		- 950 - AutenticaÃ§Ã£o AD - Dados dos users BD
+		- 544 - Envio de SMS (passou a funcionar com o serviÃƒÂ§o tmn sms express)
+		- 950 - AutenticaÃƒÂ§ÃƒÂ£o AD - Dados dos users BD
 	Bug fixes:
 	    - 1208 - Problema no bloco detalhe
 		- 1060 - Erro ao criar categoria nova
-		- 1099 - Erro nas etiquetas automï¿½ticas
+		- 1099 - Erro nas etiquetas automÃ¯Â¿Â½ticas
 		- 976 - Tamanho das Tabelas na pesquisa 
 	Known Issues:
 		- 976 - Tamanho das Tabelas na pesquisa
-			Erro (Strings de grande dimensÃ£o sem espaÃ§os) continua a manifestar-se no Mozilla firefox
+			Erro (Strings de grande dimensÃƒÂ£o sem espaÃƒÂ§os) continua a manifestar-se no Mozilla firefox
 
 [R20120423]
 	New Features: 
-		- Propriedade SAVE_FLOW_STATE_ALLWAYS no iflow.properties para nï¿½o gravar tudo no flow_state_history
+		- Propriedade SAVE_FLOW_STATE_ALLWAYS no iflow.properties para nÃ¯Â¿Â½o gravar tudo no flow_state_history
 
 [R20120423]
 	New Features:
@@ -48,9 +49,9 @@ Version 4.2.0
 		- Alterar "pasta" para categoria
 		- BugFix dos filtros
 		- BugFix forwardTo faltava labels
-		- Alterar o bloco foward para inserir uma label dependente de uma condiï¿½ï¿½o
+		- Alterar o bloco foward para inserir uma label dependente de uma condiÃ¯Â¿Â½Ã¯Â¿Â½o
 		- BugFix no filtro da Deadline
-		- BugFix na ordenaï¿½ï¿½o das tarefas
+		- BugFix na ordenaÃ¯Â¿Â½Ã¯Â¿Â½o das tarefas
 		- BugFix ao remover Deadline
 		
 	Known Issues:
@@ -69,9 +70,9 @@ Version 4.0.16
 Version 4.0.16 
 [R20120416]
 	New Features:
- 		- 959 - AnotaÃ§Ãµes, ComentÃ¡rios, Filtro e OrdenaÃ§Ã£o de Tarefas e Processos
+ 		- 959 - AnotaÃƒÂ§ÃƒÂµes, ComentÃƒÂ¡rios, Filtro e OrdenaÃƒÂ§ÃƒÂ£o de Tarefas e Processos
  			  - Permite inserir as tarefas em pastas
- 			  - Permite inserir comentÃ¡rios, etiquetas e prazos limite aos processos
+ 			  - Permite inserir comentÃƒÂ¡rios, etiquetas e prazos limite aos processos
  			  - Permite filtrar pelos novos campos
 	Bug fixes:
 
@@ -81,9 +82,9 @@ Version 4.0.16
 Version 4.0.15 
 [R20120328]
 	New Features:
-		- 1037 - Bloco Multi-CondiÃ§Ã£o
+		- 1037 - Bloco Multi-CondiÃƒÂ§ÃƒÂ£o
 	Bug fixes:
-		- 982 - Retirar BalÃ£o do tutorial
+		- 982 - Retirar BalÃƒÂ£o do tutorial
 		- 985 -	Nome dos ficheiros com & impede acesso ao processo
 		
 	Known Issues:
@@ -91,13 +92,13 @@ Version 4.0.15
 
 [R20120308]
 	New Features:
- 		- 966 - Formatar datas em tabelas do formulÃ¡rio
- 		- 965 - Escrever valores monetÃ¡rios por extenso
- 		- 967 - Determinar dinÃ¢micamente modelo de documento
- 		- 982 - Retirar BalÃ£o do tutorial
+ 		- 966 - Formatar datas em tabelas do formulÃƒÂ¡rio
+ 		- 965 - Escrever valores monetÃƒÂ¡rios por extenso
+ 		- 967 - Determinar dinÃƒÂ¢micamente modelo de documento
+ 		- 982 - Retirar BalÃƒÂ£o do tutorial
 	Bug fixes:
  		- 779 - Estado de lido de processo iniciados por email
- 		- 964 - NotificaÃ§Ãµes. Consulta de processos
+ 		- 964 - NotificaÃƒÂ§ÃƒÂµes. Consulta de processos
 	Known Issues:
 
 
@@ -106,7 +107,7 @@ Version 4.0.15
 
 [R20120123]
 	New Features:
-	 	- 935 - Merge da Assinatura (configurÃ¡vel por properties)
+	 	- 935 - Merge da Assinatura (configurÃƒÂ¡vel por properties)
 	Bug fixes:
 		- 578 - Subfluxo - subprocesso
 		- 547 - Erro ao usar uma string com sinal de menor "<" no beanshel
@@ -114,7 +115,7 @@ Version 4.0.15
 	Known Issues:
 
  		- 779 - Estado de lido de processo iniciados por email
- 		- 964 - NotificaÃ§Ãµes. Consulta de processos
+ 		- 964 - NotificaÃƒÂ§ÃƒÂµes. Consulta de processos
 -------------------------------------------------------------------------------
 Version 4.0.14 - (5211 - 5198)
 
@@ -122,65 +123,65 @@ Version 4.0.14 - (5211 - 5198)
 	New Features:
 
 	Bug fixes:
-		- Erro ao apagar vÃ¡rios documentos. Quando se seleccionava mais de um documento para apagar dava erro.
+		- Erro ao apagar vÃƒÂ¡rios documentos. Quando se seleccionava mais de um documento para apagar dava erro.
 		- 683 - Rubricar todas o documento fica corrompido. (solucao temporaria)
 	Known Issues:
 
  [R20111222]
 	New Features:
-		- Permite rubricar todas as pÃ¡ginas de um documento, excepto a Ãºltima.
-		- Passou a mostar o botÃ£o de imprimir (apenas o de imprimir) quando mostra o detalhe do processo na pesquisa.
+		- Permite rubricar todas as pÃƒÂ¡ginas de um documento, excepto a ÃƒÂºltima.
+		- Passou a mostar o botÃƒÂ£o de imprimir (apenas o de imprimir) quando mostra o detalhe do processo na pesquisa.
   		- Permite fazer o merge de PDFs.
   		- Popup de assinatura.
   		- XML para Weblogic
   		- Rss para as tarefas no formato ATOM
-  		- Permite que um user pesquise todos os processos, nÃ£o obrigando a limitar por fluxo.
-  		- Passou a ser possÃ­vel configurar qual o modo de comunicar (mail, notificaÃ§Ã£o, ambos ou nenhum) 
-  		  cada uma das acÃ§Ãµes das delegaÃ§Ãµes (requisitar, confirmar, terminar, reatribuir)
+  		- Permite que um user pesquise todos os processos, nÃƒÂ£o obrigando a limitar por fluxo.
+  		- Passou a ser possÃƒÂ­vel configurar qual o modo de comunicar (mail, notificaÃƒÂ§ÃƒÂ£o, ambos ou nenhum) 
+  		  cada uma das acÃƒÂ§ÃƒÂµes das delegaÃƒÂ§ÃƒÂµes (requisitar, confirmar, terminar, reatribuir)
   		- Permite que todos os intervenientes dos processos pesquisem esses processos, para fluxos com essa propriedade.
   		- Permite ordenar os resultados da pesquisa
   		- Permite assinar digitalmente os PDFs e escolher o local da imagem da assinatura.
   		- Permite selecionar o metodo de assinatura de PDFs, entre o popup e a applet (parametro no editor).
 
 	Bug fixes:
-  		- CorrecÃ§Ã£o do undoProcess, para permitir anular processos.
-  		- Nos timers quando workdays=true passa a nÃ£o considerar todos minutos e apenas esses que pertencem a um dia de fim de semana.
-  		- Permite usar items de arrays em FormulÃ¡rios, Abrir processo, com a notaÃ§Ã£o array[0].
-  		- CorrecÃ§Ã£o do tamanho mÃ¡ximo do pid na pesquisa de processos para anular, estava limitado a 5.
-  		- CorrecÃ§Ã£o da obtenÃ§Ã£o do procdata. Deixou de usar o process_history quando obtia o procdata.
-  		- Link nas notificaÃ§Ãµes, manter contexto e meter botÃ£o fechar.
-  		- AutenticaÃ§Ã£o por Hash com IgnoreCase.
-  		- CorrecÃ§Ã£o da pesquisa de processos. Quando se fazia seguinte nÃ£o mantinha os critÃ©rios da pesquisa.
+  		- CorrecÃƒÂ§ÃƒÂ£o do undoProcess, para permitir anular processos.
+  		- Nos timers quando workdays=true passa a nÃƒÂ£o considerar todos minutos e apenas esses que pertencem a um dia de fim de semana.
+  		- Permite usar items de arrays em FormulÃƒÂ¡rios, Abrir processo, com a notaÃƒÂ§ÃƒÂ£o array[0].
+  		- CorrecÃƒÂ§ÃƒÂ£o do tamanho mÃƒÂ¡ximo do pid na pesquisa de processos para anular, estava limitado a 5.
+  		- CorrecÃƒÂ§ÃƒÂ£o da obtenÃƒÂ§ÃƒÂ£o do procdata. Deixou de usar o process_history quando obtia o procdata.
+  		- Link nas notificaÃƒÂ§ÃƒÂµes, manter contexto e meter botÃƒÂ£o fechar.
+  		- AutenticaÃƒÂ§ÃƒÂ£o por Hash com IgnoreCase.
+  		- CorrecÃƒÂ§ÃƒÂ£o da pesquisa de processos. Quando se fazia seguinte nÃƒÂ£o mantinha os critÃƒÂ©rios da pesquisa.
   		- Passou a apagar os eventos dos processos que foram fechados.
-  		- CorrecÃ§Ã£o da pesquisa por datas.
-  		- CorrecÃ§Ã£o ao acesso aos eventos da BD. O pid estava fomatado com ###.### o que dava erro no where da query.
-  		- CorrecÃ§Ãµes Ã s clausulas where dos blocos SQL. Quando o where estava errado ignorava o where e executava sem condiÃ§Ã£o.
-  		- CorrecÃ§Ã£o para obter tabs_regeitadas quando o useid Ã© uma string (ex: ldap).
-  		- CorrecÃ§Ã£o da obtenÃ§Ã£o dos documentos. Foi retirado o pid, o flowid e o subpid do where da query de pesquisa de documentos.
-  		- CorrecÃ§Ã£o para novos WebServices.
-		- No array de documentos quando se remove, faltava actualizar as posiÃ§Ãµes do array.
-		- Foi corrigida a ReatribuiÃ§Ã£o de tarefas. Dava erro ao obter lista de users quando um perfil nÃ£o tinha nenhum user.
-		- (768) Qdo nÃ£o existe permissÃ£o de "Criar" no processo, o RSS de tarefas pendentes nÃ£o funcion
-		- (605/683) Rubricar todas o documento fica corrompido (Problemas com versÃ£o 6.26 do Java).
-		- (779) O campo read_flag da tabela activity passou a ser marcado a 1 (lido) no form.jsp e nÃ£o no Before do BlockFormulario.
+  		- CorrecÃƒÂ§ÃƒÂ£o da pesquisa por datas.
+  		- CorrecÃƒÂ§ÃƒÂ£o ao acesso aos eventos da BD. O pid estava fomatado com ###.### o que dava erro no where da query.
+  		- CorrecÃƒÂ§ÃƒÂµes ÃƒÂ s clausulas where dos blocos SQL. Quando o where estava errado ignorava o where e executava sem condiÃƒÂ§ÃƒÂ£o.
+  		- CorrecÃƒÂ§ÃƒÂ£o para obter tabs_regeitadas quando o useid ÃƒÂ© uma string (ex: ldap).
+  		- CorrecÃƒÂ§ÃƒÂ£o da obtenÃƒÂ§ÃƒÂ£o dos documentos. Foi retirado o pid, o flowid e o subpid do where da query de pesquisa de documentos.
+  		- CorrecÃƒÂ§ÃƒÂ£o para novos WebServices.
+		- No array de documentos quando se remove, faltava actualizar as posiÃƒÂ§ÃƒÂµes do array.
+		- Foi corrigida a ReatribuiÃƒÂ§ÃƒÂ£o de tarefas. Dava erro ao obter lista de users quando um perfil nÃƒÂ£o tinha nenhum user.
+		- (768) Qdo nÃƒÂ£o existe permissÃƒÂ£o de "Criar" no processo, o RSS de tarefas pendentes nÃƒÂ£o funcion
+		- (605/683) Rubricar todas o documento fica corrompido (Problemas com versÃƒÂ£o 6.26 do Java).
+		- (779) O campo read_flag da tabela activity passou a ser marcado a 1 (lido) no form.jsp e nÃƒÂ£o no Before do BlockFormulario.
   
  [R20111026]
 	Bug fixes:
-		- (791) BUG CrÃ­tico - iFlow. Erro no checknullDocs com docids a null.
-		- CorrecÃ§Ã£o da pesquisa de intervenientes.
+		- (791) BUG CrÃƒÂ­tico - iFlow. Erro no checknullDocs com docids a null.
+		- CorrecÃƒÂ§ÃƒÂ£o da pesquisa de intervenientes.
   
 	Known Issues:
-		- Fork Join nÃ£o funcionam
-		- Existe um problema com as licenÃ§as quando se usa um java de 64 bits. (Problema pouco identificado)
+		- Fork Join nÃƒÂ£o funcionam
+		- Existe um problema com as licenÃƒÂ§as quando se usa um java de 64 bits. (Problema pouco identificado)
 				
 -------------------------------------------------------------------------------
 
 Version 4.0.13 - 
 	New Features:
 		- Passou a existir no iFlow.properties a propriedade SAVE_PROCESSHISTORY_METHOD que substitui COMPRESS_PROCESS_HISTORY. 
-		  Esta nova propriedade permite guardar o prodadat completo, comprimido ou nÃ£o guardar nada.
+		  Esta nova propriedade permite guardar o prodadat completo, comprimido ou nÃƒÂ£o guardar nada.
 		- Passou a existir no iFlow.properties a propriedade SAVE_PROCESSHISTORY_WHEN que substitui ALLWAYS_SAVE_PROCESS_HISTORY. 
-		  Esta nova propriedade permite guardar o prodadat sempre, apenas quando hÃ¡ alteraÃ§Ãµes ou nunca.
+		  Esta nova propriedade permite guardar o prodadat sempre, apenas quando hÃƒÂ¡ alteraÃƒÂ§ÃƒÂµes ou nunca.
   
 	Bug fixes:
 		- 

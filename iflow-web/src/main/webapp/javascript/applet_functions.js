@@ -31,9 +31,9 @@ if(!window['Json']) Json = top.Json;
  * @param flowid Identificador do fluxo
  * @param pid Identificador do processo
  * @param subpid Identificador do subprocesso
- * @param varName Variável onde será guardado o ficheiro
+ * @param varName Variï¿½vel onde serï¿½ guardado o ficheiro
  * @param signatureType Tipo de assinatura a efectuar (NONE, XADES, PDF, PKCS7)
- * @param encryptionType Tipo de encriptação a efectuar (NONE, PKI)
+ * @param encryptionType Tipo de encriptaï¿½ï¿½o a efectuar (NONE, PKI)
  * 
  * @return Identificador do ficheiro carregado
  */
@@ -77,7 +77,7 @@ function updateMax(max) {
  * @param varName Variavel do documento
  * @param fileId Identificador do ficheiro
  * @param signatureType Tipo de assinatura a efectuar (NONE, XADES, PDF, PKCS7)
- * @param encrptionType Tipo de encriptação a efectuar (NONE, PKI)
+ * @param encrptionType Tipo de encriptaï¿½ï¿½o a efectuar (NONE, PKI)
  * 
  * @return Identificador do ficheiro carregado
  */
@@ -104,12 +104,12 @@ function modifyFile(varName, fileId, signatureType, encryptionType) {
 }
 
 /**
- * Substituir ficheiro existente. O ficheiro poderá ser assinado ou encriptado.
+ * Substituir ficheiro existente. O ficheiro poderï¿½ ser assinado ou encriptado.
  * 
  * @param varName Variavel do documento
  * @param fileId Identificador do ficheiro
  * @param signatureType Tipo de assinatura a efectuar (NONE, XADES, PDF, PKCS7)
- * @param encrptionType Tipo de encriptação a efectuar (NONE, PKI)
+ * @param encrptionType Tipo de encriptaï¿½ï¿½o a efectuar (NONE, PKI)
  * 
  * @return Identificador do ficheiro carregado
  */
@@ -143,7 +143,7 @@ function replaceFile(varName, fileId, signatureType, encryptionType) {
  * @param subpid Identificador do subprocesso
  * @param fileId Identificador do ficheiro
  * @param signatureType Tipo de assinatura a efectuar (NONE, XADES, PDF, PKCS7)
- * @param encrptionType Tipo de encriptação a efectuar (NONE, PKI)
+ * @param encrptionType Tipo de encriptaï¿½ï¿½o a efectuar (NONE, PKI)
  * 
  * @return Identificador do ficheiro carregado
  */
@@ -177,7 +177,7 @@ function downloadFile(varName, fileId, signatureType, encryptionType) {
  * @param subpid Identificador do subprocesso
  * @param fileId Identificador do ficheiro
  * 
- * @return Mensagem com resultado da validação
+ * @return Mensagem com resultado da validaï¿½ï¿½o
  */
 function verifiyFile(varName, fileId) {
 	if(!IFLOW_APPLET_ELEM)  {
@@ -205,9 +205,9 @@ function verifiyFile(varName, fileId) {
  * @param flowid Identificador do fluxo
  * @param pid Identificador do processo
  * @param subpid Identificador do subprocesso
- * @param varName Variável onde será guardado o ficheiro
+ * @param varName Variï¿½vel onde serï¿½ guardado o ficheiro
  * @param signatureType Tipo de assinatura a efectuar (NONE, XADES, PDF, PKCS7)
- * @param encrptionType Tipo de encriptação a efectuar (NONE, PKI)
+ * @param encrptionType Tipo de encriptaï¿½ï¿½o a efectuar (NONE, PKI)
  * @param fileFormat Formato do ficheiro (PDF, JPG, TIFF, etc)
  * 
  * @return Identificador do ficheiro carregado
@@ -239,12 +239,12 @@ function scanFile(varName, signatureType, encryptionType, fileFormat, max) {
 	return ret;
 }
 
-// Gestão de certificados
+// Gestï¿½o de certificados
 
 /**
- * Carregamento e/ou substituição de certificados digitais de utilizador
+ * Carregamento e/ou substituiï¿½ï¿½o de certificados digitais de utilizador
  * @param userid Identificador do utilizador
- * @param certificateType Tipo de certificado (autenticação, encriptação, assinatura)
+ * @param certificateType Tipo de certificado (autenticaï¿½ï¿½o, encriptaï¿½ï¿½o, assinatura)
  * 
  * @return 
  */
@@ -337,7 +337,7 @@ function changeFileState(docid) {
 		document.getElementById('lock_'+docid).style.display="inline";
 }
 
-//As funcoes de exemplo nas quais me devo basear são estas:
+//As funcoes de exemplo nas quais me devo basear sï¿½o estas:
 function loadSignedFile(signatureType,varname) {
 	var fileDesc;
 	if(!IFLOW_APPLET_ELEM)  {
@@ -355,7 +355,7 @@ function addFileElem(myObject) {
 	
 	if(!myObject) return;
 	
-	filename = myObject.name;
+	filename = myObject.name.replace('&apos;', '\'');
 	fileid = myObject.id;
 	varname = myObject.varname;
 
@@ -365,9 +365,9 @@ function addFileElem(myObject) {
 		'alt':'Delete',
 		'title':'Delete'
 	});
-//	delete_button.setAttribute('onclick',"removeFile('" + fileid + "','"+varname+"')"); //Não funciona no IE
+//	delete_button.setAttribute('onclick',"removeFile('" + fileid + "','"+varname+"')"); //Nï¿½o funciona no IE
 	
-	delete_button.onclick = function(){ // Solução para IE
+	delete_button.onclick = function(){ // Soluï¿½ï¿½o para IE
 		removeFile(fileid,varname);
 	    return true;
 	};
