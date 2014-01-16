@@ -130,16 +130,24 @@
 			}
 
 			function initDom() {
+				//Tarefas
 				setHistory(1, '', '', '$response.encodeURL($url_prefix,mainContentJSP)', '');
-				setHistory(2, '', '', '', '');
+				//setHistory(2, '', '', '', '');
+				//Processos
 				setHistory(3, '', '', '','');
+				//Admin
 				setHistory(4, '', '', '$response.encodeURL($url_prefix,'Admin/flow_settings.jsp')', 'ts=$ts');
-				setHistory(5, '', '', '$response.encodeURL($url_prefix,'gestao_tarefas.jsp')', 'ts=$ts');        
+				//Delegações
+				setHistory(5, '', '', '$response.encodeURL($url_prefix,'gestao_tarefas.jsp')', 'ts=$ts');
+				//Personal Acount
 				setHistory(6, '', '', '$response.encodeURL('personal_account.jsp')', '');
-				setHistory(7, '', '', '','');
+				//setHistory(7, '', '', '','');
+				//Pesquisa
 				setHistory(8, '', '', '', '');
-				setHistory(9, '', '', '','');
-				setHistory(10,'', '', '', '');        
+				//setHistory(9, '', '', '','');
+				//Relatórios
+				setHistory(10,'', '', '', '');
+				//Input
 				setHistory(11,'', '', '','');
 
 				getCtrlFill(taskLabelsJSP, '', containerLabels);
@@ -278,7 +286,10 @@
 				$('#delegations-form').dialog({
 					autoOpen: false,
 					height: 500,
-					width: 750,
+					width: 300,
+					title: "",
+					position: "right",
+					closeOnEscape: true,
 					modal: false,
 					close: function() {
 					}
@@ -317,9 +328,6 @@
 										
 									</div>
 								</td>
-								<td>
-									<button id="delegButton" onclick="javascript:$('#delegations-form').dialog('open');return false;">Delegações</button>
-								</td>
 							</tr>
 						</table>
 					</form>
@@ -343,8 +351,13 @@
 							#end
 							</a>
 							</td>
-							<td style="padding:5px">
-								<a href ="javascript:tabber_right(11, 'inbox.jsp')"><img src="images/envelope.png" width="20" height="13" alt=""/></a> (1)</td>
+							<td style="padding:5px;text-align:center">
+								<a href ="javascript:tabber_right(11, 'inbox.jsp')"><img width="20" height="16" src="images/envelope.png" alt=""/></a> (1)
+								</td>
+							<td style="padding:5px;text-align:center">
+								<a id="delegButton" onclick="javascript:$('#delegations-form').dialog('open');return false;"><img id="iconAlerts" width="16" height="16" src="Themes/newflow/images/alert-bell.png" alt="Alertas"/></a> (1)
+							</td>
+
 							<td>
 								<form action="$response.encodeURL($url_prefix,'logout.jsp')?ts=$ts">
 									<input type="submit" class="btn btn-default btn-sm" style="margin: 0px;" name="Logout" id="Logout" value="Sair"/>
@@ -361,7 +374,7 @@
 				<div id="Accordion1">
 					#if("$Tab2" != "no")	
 					<h3 class="Acor_01">
-						<a href="" onclick="javascript:tabber_right(2, 'main_content.jsp', 'cleanFilter=1');" title="$field_tasks">	
+						<a href="" onclick="javascript:tabber_right(1, 'main_content.jsp', 'cleanFilter=1');" title="$field_tasks">	
 							<img src="images/tarefas.png" width="24" height="24" alt="" />
 							$field_tasks
 						</a>
@@ -392,7 +405,7 @@
 					#if("$Tab8" != "no")
 					<h3 class="Acor_01">
 						<a href="" onclick="javascript:tabber_load(8, '');">
-						<img src="images/pesquisa.png" width="24" height="24" alt="" /> Pesquisa</a>
+						<img src="images/pesquisa.png" width="24" height="24" alt="" />Pesquisa</a>
 					</h3>
 					<div class="Acor_02" style=" margin: 0 ; padding:20px 0 0 0 ;">
 						<div id="container_search"></div>
@@ -402,7 +415,7 @@
 					#if("$Tab5" != "no")	
 					<h3 class="Acor_01">
 						<a href="" onclick="javascript:tabber_load(5, '');">
-						<img src="images/delegacaoes.png" width="24" height="24" alt="" /> Delegações</a>
+						<img src="images/delegacaoes.png" width="24" height="24" alt="" />Delegações</a>
 					</h3>
 					<div class="Acor_02" style=" margin: 0 ; padding:20px 0 0 0 ;">
 						<div id="container_delegations">
@@ -445,7 +458,7 @@
 					#end
 					#if($org_admin == "yes")
 					<h3 class="Acor_01">
-						<a href="" onclick="javascript:tabber_load(4, '');">
+						<a href="#" onclick="javascript:tabber_load(4, '');">
 						<img src="images/admin.png" width="24" height="24" alt="" /> Admin</a>
 					</h3>
 					<div class="Acor_02" style=" margin: 0 ; padding:20px 0 0 0 ;">
@@ -473,17 +486,17 @@
 			  inbox = 11
 			-->
 			<div id="section_div_1" class="main" style="margin-left: 220px; display: none"></div>
-			<div id="section_div_2" class="main" style="margin-left: 220px; display: none"></div>
+			<!--div id="section_div_2" class="main" style="margin-left: 220px; display: none"></div-->
 			<div id="section_div_3" class="main" style="margin-left: 220px; display: none"></div>
 			<div id="section_div_4" class="main" style="margin-left: 220px; display: none"></div>
 			<div id="section_div_5" class="main" style="margin-left: 220px; display: none"></div>
 			<div id="section_div_6" class="main" style="margin-left: 220px; display: none"></div>
-			<div id="section_div_7" class="main" style="margin-left: 220px; display: none"></div>
+			<!--div id="section_div_7" class="main" style="margin-left: 220px; display: none"></div-->
 			<div id="section_div_8" class="main" style="margin-left: 220px; display: none"></div>
-			<div id="section_div_9" class="main" style="margin-left: 220px; display: none"></div>
+			<!--div id="section_div_9" class="main" style="margin-left: 220px; display: none"></div-->
 			<div id="section_div_10" class="main" style="margin-left: 220px; display: none"></div>
 			<div id="section_div_11" class="main" style="margin-left: 220px; display: none"></div>
-			<div id="delegations-form" title="Delegations"></div>
+			<div id="delegations-form" title="Delegations" style="display:none"></div>
 
 			<div class="yui-skin-sam">
 				<div id="userdialog">

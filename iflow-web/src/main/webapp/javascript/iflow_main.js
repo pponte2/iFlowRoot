@@ -1592,7 +1592,7 @@ function getCtrlFillCallBack(htmltext, ctrl) {
     if (aux == null) aux = parent.document.getElementById(ctrl);
     if (aux != null) aux.innerHTML = htmltext;
   }
-  reloadJS();
+  reloadJS(closeMenus  && !ctrl.startsWith('section_div_'));
 }
 
 function openProcess(flowid, contentpage, contentparam, runMax, tabnr) {
@@ -1694,7 +1694,7 @@ function reloadBootstrapElements(){
 
 }
 
-function reloadJS() {
+function reloadJS(doCloseMenus) {
 
   jscolor.bind();
 
@@ -1746,7 +1746,7 @@ function reloadJS() {
     });
   } catch (err) {}
 
-  if (closeMenus) {
+  if (doCloseMenus) {
     try {
       $( "#Accordion1" ).accordion({ // Accordion template1
         heightStyle:"content",
