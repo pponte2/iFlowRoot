@@ -244,9 +244,12 @@ public class UtilityApplet extends JApplet implements UtilityConstants {
    * 
    * @return Identificador do ficheiro carregado
    */
-  public String uploadFile(final String cookie, final String jsonRequest) {
+  public String uploadFile(final String cookie, final String jsonRequest, final String sig_pos_style_java) {
     log.debug("uploadFile called: "+jsonRequest); //$NON-NLS-1$
     String result = null;
+    log.info("Signature_Position_style from javascript, value: "+sig_pos_style_java);
+    LoadImageAction.setSignature_position_style(sig_pos_style_java);
+    
     try {
       result = AccessController.doPrivileged(new PrivilegedExceptionAction<String>() {
         public String run() {
@@ -312,9 +315,13 @@ public class UtilityApplet extends JApplet implements UtilityConstants {
    * 
    * @return Identificador do ficheiro carregado
    */
-  public String modifyFile(final String cookie, final String jsonRequest) {
+  public String modifyFile(final String cookie, final String jsonRequest, final String sig_pos_style_java) {
     log.debug("modifyFile called: "+jsonRequest); //$NON-NLS-1$
     String result = null;
+    
+    log.info("Signature_Position_style from javascript, value: "+sig_pos_style_java);
+    LoadImageAction.setSignature_position_style(sig_pos_style_java);
+    
     try {
       result = AccessController.doPrivileged(new PrivilegedExceptionAction<String>() {
         public String run() {
@@ -341,9 +348,13 @@ public class UtilityApplet extends JApplet implements UtilityConstants {
    * 
    * @return Identificador do ficheiro carregado
    */
-  public String replaceFile(final String cookie, final String jsonRequest) {
+  public String replaceFile(final String cookie, final String jsonRequest, final String sig_pos_style_java) {
     log.debug("replaceFile called: "+jsonRequest); //$NON-NLS-1$
     String result = null;
+    
+    log.info("Signature_Position_style from javascript, value: "+sig_pos_style_java);
+    LoadImageAction.setSignature_position_style(sig_pos_style_java);
+    
     try {
       result = AccessController.doPrivileged(new PrivilegedExceptionAction<String>() {
         public String run() {
