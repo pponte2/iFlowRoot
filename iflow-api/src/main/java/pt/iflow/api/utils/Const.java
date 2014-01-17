@@ -60,6 +60,11 @@ public class Const {
   public static boolean PROFILESYNC_ON = false;
   public static String PROFILESYNC_ORGID = "1";
 
+  public static int USERSYNC_THREAD_CICLE = -1;
+  public static boolean USERSYNC_ON = false;
+  public static String USERSYNC_ORGID = "1";
+  public static String USERSYNC_UNITID = "1";
+
   public static String sMAIL_ADM_ERROR_NOTIFY = null;
   public static String sMAIL_SERVER = null;
   public static int nMAIL_PORT = 25;

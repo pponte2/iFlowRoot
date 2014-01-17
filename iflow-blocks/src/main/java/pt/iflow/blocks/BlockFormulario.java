@@ -3221,7 +3221,7 @@ public class BlockFormulario extends Block implements FormOperations {
       if (StringUtils.isNotEmpty(showCond)) {
         useIt = false;
         try {
-          useIt = procData.query(userInfo, showCond);
+          useIt = !procData.query(userInfo, showCond);
         }
         catch (Exception ei) {
           useIt = false;

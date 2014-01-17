@@ -1569,7 +1569,7 @@ public class AlteraAtributosJSP extends AbstractAlteraAtributos implements Alter
 
 
     public String[][] exportData() {
-      int nNUM_ATTR = 13;
+      int nNUM_ATTR = 14;
       int pos;
       String[][] retObj = new String[this.getButtonCount()*nNUM_ATTR][2];
 
@@ -1648,6 +1648,11 @@ public class AlteraAtributosJSP extends AbstractAlteraAtributos implements Alter
         pos = 12;
         retObj[j + pos][0] = sPrefix + FormProps.sBUTTON_ATTR_IGNORE_FORM_VALIDATION;
         retObj[j + pos][1] = fb.getIgnoreFormValidation();
+        if (retObj[j + pos][1] == null) retObj[j + pos][1] = ""; //$NON-NLS-1$
+
+        pos = 13;
+        retObj[j + pos][0] = sPrefix + FormProps.sBUTTON_ATTR_SHOW_IN_PREVIEW_COND;
+        retObj[j + pos][1] = fb.getShowInPreviewCond();
         if (retObj[j + pos][1] == null) retObj[j + pos][1] = ""; //$NON-NLS-1$
 
       }
@@ -1741,6 +1746,9 @@ public class AlteraAtributosJSP extends AbstractAlteraAtributos implements Alter
         }
         else if (sName.equals(FormProps.sBUTTON_ATTR_IGNORE_FORM_VALIDATION)) {
           fb.setIgnoreFormValidation(sVal);
+        }
+        else if (sName.equals(FormProps.sBUTTON_ATTR_SHOW_IN_PREVIEW_COND)) {
+            fb.setShowInPreviewCond(sVal);
         }
 
 
@@ -2100,7 +2108,7 @@ public class AlteraAtributosJSP extends AbstractAlteraAtributos implements Alter
     private String _confirmAction = null;
     private String _confirmActionMessage = null;
     private String _ignoreFormValidation = null;
-
+    private String _sShowInPreviewCond = null;
 
     // default constructor
     public FormButton(JPreviewFormButtons aParent) {
@@ -2133,7 +2141,8 @@ public class AlteraAtributosJSP extends AbstractAlteraAtributos implements Alter
       this.setConfirmAction(afb.getConfirmAction());
       this.setConfirmActionMessage(afb.getConfirmActionMessage());
       this.setIgnoreFormValidation(afb.getIgnoreFormValidation());
-
+      this.setShowInPreviewCond(afb.getShowInPreviewCond());
+      
       this.init();
     }
 
@@ -2239,6 +2248,15 @@ public class AlteraAtributosJSP extends AbstractAlteraAtributos implements Alter
       if (this._sShowCond == null) return null;
       return new String(this._sShowCond);
     }
+    
+    public void setShowInPreviewCond(String asShowInPreviewCond) {
+	    this._sShowInPreviewCond = asShowInPreviewCond;
+	  }
+
+      public String getShowInPreviewCond() {
+        if (this._sShowInPreviewCond == null) return null;
+        return new String(this._sShowInPreviewCond);
+      }
 
     public void setIgnoreFormProcessing(String asIgnoreFormProcessing) {
       this._ignoreFormProcessing = asIgnoreFormProcessing;
@@ -2781,6 +2799,15 @@ public class AlteraAtributosJSP extends AbstractAlteraAtributos implements Alter
         }
         this._fb.setShowCond(stmp);
       }
+      
+      if (hmtmp.containsKey("jtfShowInPreviewCond")) { //$NON-NLS-1$
+          jtf = (JTextField)hmtmp.get("jtfShowInPreviewCond"); //$NON-NLS-1$
+          stmp = jtf.getText();
+          if (stmp == null) {
+            stmp = ""; //$NON-NLS-1$
+          }
+          this._fb.setShowInPreviewCond(stmp);
+        }
 
       // ignore processing
       if (hmtmp.containsKey("jcbIgnorePro")) { //$NON-NLS-1$ 
@@ -2944,6 +2971,35 @@ public class AlteraAtributosJSP extends AbstractAlteraAtributos implements Alter
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbl.setConstraints(jtfShowCond,gbc);
         retObj.add(jtfShowCond);
+
+        gbc.gridwidth = 1;
+        
+        // show in Preview cond
+        JTextField jtfShowInPreviewCond = null;
+        JLabel jlShowInPreviewCondLabel = null;
+        jtfShowInPreviewCond = new JTextField(20);
+        jtfShowInPreviewCond.setToolTipText(getAdapter().getString("AlteraAtributosJSP.button.visibleInPreview.cond.tooltip")); //$NON-NLS-1$
+        jlShowInPreviewCondLabel = new JLabel(getAdapter().getString("AlteraAtributosJSP.visibleInPreview.cond") + asTypeText); //$NON-NLS-1$
+        jlShowInPreviewCondLabel.setHorizontalAlignment(JLabel.LEFT);
+        jlShowInPreviewCondLabel.setLabelFor(jtfShowInPreviewCond);
+        gbl.setConstraints(jlShowInPreviewCondLabel,gbc);
+        retObj.add(jlShowInPreviewCondLabel);
+
+        sizer = new JPanel();
+        sizer.setSize(nSPACER_SIZE,1);
+        gbl.setConstraints(sizer,gbc);
+        retObj.add(sizer);
+
+        jtfShowInPreviewCond.setText(""); //$NON-NLS-1$
+        if (abSelected) {
+          if (this._fb.getShowInPreviewCond() != null) {
+            jtfShowInPreviewCond.setText(this._fb.getShowInPreviewCond());
+          }
+        }
+
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbl.setConstraints(jtfShowInPreviewCond,gbc);
+        retObj.add(jtfShowInPreviewCond);
 
         gbc.gridwidth = 1;
 
@@ -3131,6 +3187,8 @@ public class AlteraAtributosJSP extends AbstractAlteraAtributos implements Alter
         hmtmp.put("jlImageLabel", jlImageLabel); //$NON-NLS-1$
         hmtmp.put("jtfShowCond", jtfShowCond); //$NON-NLS-1$
         hmtmp.put("jlShowCondLabel", jlShowCondLabel);       //$NON-NLS-1$
+        hmtmp.put("jtfShowInPreviewCond", jtfShowInPreviewCond); //$NON-NLS-1$
+        hmtmp.put("jlShowInPreviewCondLabel", jlShowInPreviewCondLabel);       //$NON-NLS-1$        
         if (sType.equals(sCUSTOM_TYPE)) {
           hmtmp.put("jlCustomVarLabel", jlCustomVarLabel); //$NON-NLS-1$
           hmtmp.put("jtfCustomVar", jtfCustomVar); //$NON-NLS-1$

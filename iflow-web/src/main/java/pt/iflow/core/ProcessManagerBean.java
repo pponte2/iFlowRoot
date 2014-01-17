@@ -78,6 +78,7 @@ import pt.iflow.api.transition.FlowStateLogTO;
 import pt.iflow.api.transition.LogTO;
 import pt.iflow.api.transition.UpgradeLogTO;
 import pt.iflow.api.userdata.UserData;
+import pt.iflow.api.userdata.views.UserViewInterface;
 import pt.iflow.api.utils.Const;
 import pt.iflow.api.utils.DataSetVariables;
 import pt.iflow.api.utils.Logger;
