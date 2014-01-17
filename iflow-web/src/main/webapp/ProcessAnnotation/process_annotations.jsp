@@ -26,7 +26,7 @@
   String sDeadline = pam.getProcessDeadline(userInfo,flowid,pid,subpid);
   ProcessComment comment = pam.getProcessComment(userInfo,flowid,pid,subpid);
   List<ProcessLabel> labels = pam.getLabelJoin(userInfo,flowid,pid,subpid);
-  java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyyMMdd");
+  java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
   String from = fdFormData.getParameter("from");
   if (from == null) from = "";
   boolean hasAnnottations = ((sDeadline != null && !"".equals(sDeadline)) || 
