@@ -36,6 +36,7 @@
   String sOper = fdFormData.getParameter("operation");
   boolean success = false;
   UserInfoInterface ui = userInfo;
+  String cal = fdFormData.getParameter("calendar");
   
   String infoMsg = null;
 
@@ -62,6 +63,7 @@
   String orgadmOrg = "";
   String password = "";
   String repeatPass = "";
+  String calendId = "";
 
   List<String> lst = AccessControlManager.getUserDataAccess().getListExtraProperties();
   String[] listExtraProperties = lst.toArray(new String[lst.size()]);
@@ -139,8 +141,9 @@
       }
       else { 
         errorHandler = manager.createUser(ui, username, gender, unitId, emailAddress, firstName, lastName, phoneNumber,
-            faxNumber, mobileNumber, companyPhone, orgID, orgadm, password, listExtraProperties, listExtraValues);
+            faxNumber, mobileNumber, companyPhone, orgID, orgadm, password, listExtraProperties, listExtraValues, cal);
       }
+     
     }
    
     ErrorCode errCode = (errorHandler != null)?errorHandler.getErrorCode():null;
@@ -160,7 +163,7 @@
     }
     else { 
       errorHandler = manager.modifyUserAsAdmin(ui, userId, gender, unitId, emailAddress, firstName, lastName, phoneNumber,
-          faxNumber, mobileNumber, companyPhone, orgadm, orgadmUsers, orgadmFlows, orgadmProcesses, orgadmResources, orgadmOrg, password, listExtraProperties, listExtraValues);
+          faxNumber, mobileNumber, companyPhone, orgadm, password, listExtraProperties, listExtraValues, fdFormData.getParameter("calendar"));
       ErrorCode errCode = (errorHandler != null)?errorHandler.getErrorCode():null;
       
       if (UserErrorCode.SUCCESS.equals(errCode)) {
@@ -190,12 +193,31 @@
   catch (Exception e) {
     Logger.errorJsp(userInfo.getUtilizador(), "userform", "unable to get all organizational units", e);
   }
+  
+  List<String[]> calendar = new ArrayList<String[]>(); 
 
   if(StringUtils.isEmpty(userId)) {
     userId = "";
+
+    calendId = "-1";
+    try {
+    	calendar = manager.getCalendars(ui);
+    }
+    catch (Exception e) {
+    	e.printStackTrace();
+    }
   } else {
+    try {
+  	calendar = manager.getCalendars(ui);
+  }
+  catch (Exception e) {
+  	e.printStackTrace();
+  }
+  //get calendar id from db
+    
     userView = manager.getUser(ui, userId);
     username = userView.getUsername();
+  	calendId = manager.getUserCalendarId(username, userId);
     gender = userView.getGender();
     unitId = userView.getUnitId();
     emailAddress = userView.getEmail();
@@ -238,6 +260,8 @@
     bEdit = true;
     jspBack = "userform.jsp";
   }
+
+  
 %>
 
 
@@ -274,12 +298,22 @@
     <if:formOption value="F" labelkey="userform.field.gender.female"/>
   </if:formSelect>
   <if:formSelect name="unit" edit="<%=bEdit%>" value='<%=unitId%>' labelkey="userform.field.orgunit" required="true">
+  
   <% for (int i = 0; i < units.length; i++) { %>
     <if:formOption value='<%=units[i].getUnitId()%>' label="<%=units[i].getDescription()%>"/>
   <% } %>
   </if:formSelect>
   
+  <if:formSelect name="calendar" edit="<%=bEdit%>" value='<%=calendId%>' labelkey="admin_nav.section.resources.tooltip.calend" >
+ 
+  <if:formOption value=' ' label= '<%= messages.getString("actividades.folder.change")%>'/>
+  <% for (int i = 0; i < calendar.size(); i++) { %>
+    <if:formOption value='<%=calendar.get(i)[0]%>' label="<%=calendar.get(i)[1]%>"/>
+  <% } %>
+  </if:formSelect>
+  
   <if:formInput name="orgadm" onchange="if ($('orgadm').checked==true) $('orgadmSubPanel').style.display=''; else $('orgadmSubPanel').style.display='none';" labelkey="userform.field.orgadm" type="checkbox" value='<%=orgadm%>' edit="<%=bEdit%>" required="false" />
+
   
     <div id="orgadmSubPanel" style="<%= "true".equals(orgadm)?"":"display : none" %>" >
       <if:formInput name="orgadmUsers" labelkey="userform.field.orgadmusers" type="checkbox" value='<%=orgadmUsers%>' edit="<%=bEdit%>" required="false" />
