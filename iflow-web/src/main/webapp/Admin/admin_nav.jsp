@@ -162,6 +162,10 @@ boolean isClassic = StringUtils.equals("classic", theme);
 		title="<%=messages.getString("admin_nav.section.processes.tooltip.cancel")%>"
 		class="toolTipItemLink li_link"
 		href="javascript:selectedItem('admin', <%=AdminNavConsts.PROCESS_CANCEL%>);tabber_save(4,'','sel=<%=AdminNavConsts.PROCESS_CANCEL%>','<%=response.encodeURL("Admin/ProcManagement/proc_cancel.jsp") %>','ts=<%=ts%>&cancel=true');"><%=messages.getString("admin_nav.section.processes.link.cancel")%></a></li>
+	<li><a id="li_a_admin_<%=AdminNavConsts.PROCESS_HIDE%>"
+		title="<%=messages.getString("admin_nav.section.processes.tooltip.hide")%>"
+		class="toolTipItemLink li_link"
+		href="javascript:selectedItem('admin', <%=AdminNavConsts.PROCESS_HIDE%>);tabber_save(4,'','sel=<%=AdminNavConsts.PROCESS_HIDE%>','<%=response.encodeURL("Admin/ProcManagement/proc_hide.jsp") %>','ts=<%=ts%>&cancel=true&first=true');"><%=messages.getString("admin_nav.section.processes.link.hide")%></a></li>
 	<li><a id="li_a_admin_<%=AdminNavConsts.PROCESS_TASK_MANAGEMENT%>"
 		title="<%=messages.getString("admin_nav.section.processes.tooltip.task")%>"
 		class="toolTipItemLink li_link"

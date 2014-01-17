@@ -147,15 +147,23 @@
 			</li>
 			<li>
 				<a id="li_a_admin_<%=AdminNavConsts.PROCESS_CANCEL%>" 
-				class="toolTipItemLink li_link"
-				title="<%=messages.getString("admin_nav.section.processes.tooltip.cancel")%>" href="javascript:selectedItem('admin', <%=AdminNavConsts.PROCESS_CANCEL%>);tabber_save(4, '', '', 'Admin/ProcManagement/proc_cancel.jsp?cancel=true');">
+						class="toolTipItemLink li_link"
+						title="<%=messages.getString("admin_nav.section.processes.tooltip.cancel")%>"
+						href="javascript:selectedItem('admin', <%=AdminNavConsts.PROCESS_CANCEL%>);tabber_save(4, '', '', 'Admin/ProcManagement/proc_cancel.jsp?cancel=true');">
 					<%=messages.getString("admin_nav.section.processes.link.cancel")%>
 				</a>
 			</li>
 			<li>
+				<a id="li_a_admin_<%=AdminNavConsts.PROCESS_HIDE%>"
+						class="toolTipItemLink li_link"
+						title="<%=messages.getString("admin_nav.section.processes.tooltip.hide")%>"
+						href="javascript:selectedItem('admin', <%=AdminNavConsts.PROCESS_HIDE%>);tabber_save(4,'','sel=<%=AdminNavConsts.PROCESS_HIDE%>','<%=response.encodeURL("Admin/ProcManagement/proc_hide.jsp") %>','ts=<%=ts%>&cancel=true&first=true');">
+					<%=messages.getString("admin_nav.section.processes.link.hide")%></a></li>
+			<li>
 				<a id="li_a_admin_<%=AdminNavConsts.PROCESS_TASK_MANAGEMENT%>" 
-				class="toolTipItemLink li_link"
-				title="<%=messages.getString("admin_nav.section.processes.tooltip.task")%>" href="javascript:selectedItem('admin', <%=AdminNavConsts.PROCESS_TASK_MANAGEMENT%>);tabber_save(4, '', '', 'Admin/ProcManagement/proc_users.jsp');">
+						class="toolTipItemLink li_link"
+						title="<%=messages.getString("admin_nav.section.processes.tooltip.task")%>"
+						href="javascript:selectedItem('admin', <%=AdminNavConsts.PROCESS_TASK_MANAGEMENT%>);tabber_save(4, '', '', 'Admin/ProcManagement/proc_users.jsp');">
 					<%=messages.getString("admin_nav.section.processes.link.task")%>
 				</a>
 			</li>

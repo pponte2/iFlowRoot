@@ -68,7 +68,8 @@ public class ProcessData {
   private boolean isPopupOpened = false;
   private boolean openPopup = false;
   private boolean closePopup = false;
-
+  
+  int hidden = 0;
   /*
    * Default constructor
    */
@@ -1475,6 +1476,13 @@ public class ProcessData {
       return true;
     }
     return false;
+  }
+  
+  public void setHidden(int hidden){
+    this.hidden = hidden;
+  }
+  public int getHidden(){
+    return hidden;
   }
 }
 

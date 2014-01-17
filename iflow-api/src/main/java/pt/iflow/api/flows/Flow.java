@@ -1,6 +1,7 @@
 package pt.iflow.api.flows;
 
 import java.io.PrintStream;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.ServletRequest;
@@ -433,5 +434,5 @@ public interface Flow {
      * @return
      */
     public abstract boolean setFlowType(UserInfoInterface userInfo, int flowid, FlowType flowType);
-
+    public void hideProc(UserInfoInterface userInfo, ProcessData procData, int hidden) throws SQLException;
 }

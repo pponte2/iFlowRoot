@@ -1369,6 +1369,7 @@ public class ProcessManagerBean implements ProcessManager {
         // avoid error trying to set closed on readonly process
         procData.setClosed(rs.getInt("closed") == 1);
       }
+      procData.setHidden(rs.getInt("hidden"));
       procs.add(procData);
     }
     rs.close();
@@ -2682,6 +2683,9 @@ public ListIterator<Activity> getUserActivities(UserInfoInterface userInfo, int 
       sQueryDelegated.append(" and upper(p.pnumber) like upper('%").append(escapeSQL(filter.getPnumber())).append("%')");
     }
 
+    sQuery.append(" and p.hidden = 0 ");
+    sQueryDelegated.append(" and p.hidden = 0 ");
+    
     if(filter.getOrderType() != null && filter.getOrderType().equals("desc")){
         sQuery.append(" order by a.created desc");
         sQueryDelegated.append(" order by a.created desc"); 

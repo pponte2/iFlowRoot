@@ -662,6 +662,7 @@ create table process (
 	idx17       varchar2(1024),
 	idx18       varchar2(1024),
 	idx19       varchar2(1024),
+	hidden      number(1) default 0,
 	constraint process_pk primary key (flowid, pid, subpid)
 );
 

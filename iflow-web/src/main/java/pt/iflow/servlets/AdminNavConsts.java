@@ -36,6 +36,7 @@ public abstract class AdminNavConsts {
   public static final int PROCESS_STATE = 42;
   public static final int PROCESS_HISTORY = 43;
   public static final int PROCESS_CANCEL = 44;
+  public static final int PROCESS_HIDE = 46;
   public static final int PROCESS_TASK_MANAGEMENT = 45;
   
   public static final int RESOURCES_STYLESHEETS = 50;
