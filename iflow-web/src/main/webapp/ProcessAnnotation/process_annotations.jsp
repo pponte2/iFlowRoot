@@ -26,7 +26,7 @@
   String sDeadline = pam.getProcessDeadline(userInfo,flowid,pid,subpid);
   ProcessComment comment = pam.getProcessComment(userInfo,flowid,pid,subpid);
   List<ProcessLabel> labels = pam.getLabelJoin(userInfo,flowid,pid,subpid);
-  java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+  java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyyMMdd");
   String from = fdFormData.getParameter("from");
   if (from == null) from = "";
   boolean hasAnnottations = ((sDeadline != null && !"".equals(sDeadline)) || 
@@ -40,7 +40,7 @@
 %>
 
     <%if (!"forward".equals(from)){ %>
-    <a href="javascript:menuonoff('verAnotacoes',1);" class="apt_link" id="butinfocol">Ver Comentários</a>
+    <div onclick="javascript:menuonoff('verAnotacoes',1);" class="apt_link btn btn-default" id="butinfocol">Ver Comentários</div>
     <%} %>
 
     <div id="verAnotacoes" 
@@ -72,7 +72,7 @@
         
     </div>
     <%if (!"forward".equals(from)){ %>
-  	<a href="javascript:menuonoff('anotacoes',1);" class="apt_link" id="butinfocol">Anota&ccedil;&atilde;o</a>
+  	<div onclick="javascript:menuonoff('anotacoes',1);" class="apt_link btn btn-default" id="butinfocol">Anota&ccedil;&atilde;o</div>
 	<%}%>
 	<div id="anotacoes" 
 		style="<%if (!"forward".equals(from) || !hasAnnottations){%>display:none;position:absolute;z-index:1;border:1px solid gray;top:10px;<%} else {%>position:relative;z-index:0;bottom:10px;<%}%>background:none repeat scroll 0 0 #FFFFFF;

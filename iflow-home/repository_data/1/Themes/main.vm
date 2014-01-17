@@ -175,6 +175,9 @@
 				mainResize();
 				#if($sys_admin != "no")
 				#end
+				
+				// jcosta colocar aqui teste se há novos alertas
+				$('#delegations-form').dialog('open');
 			}
 
 			YAHOO.util.Event.onDOMReady(initDom);	
@@ -318,11 +321,14 @@
 						<table width="390px" border="0" cellspacing="0" cellpadding="0">
 							<tr>
 								<td>
-									<input type="text" class="form-control" id="nl" placeholder="Nº de Processo" title="Pesquisa" onkeydown="if (event.keyCode == 13) { pesquisarPnumber(document.nlsearch.nl.value); return false; }"/>
+									<input type="text" class="form-control" id="nl" placeholder="Nº de Processo" title="Pesquisa" onkeydown="if (event.keyCode == 13) { pesquisarPnumber(document.nlsearch.nl.value); return false; }">
+									</input>
 								</td>
 								<td>
 									<div class="div_BTNL">
+				
 										<input style=" margin: 0px;" type="button" name="Send" id="Send" class="btn btn-default btn-sm" value="Pesquisar" onclick="pesquisarPnumber(document.nlsearch.nl.value); return false;"/>
+										
 									</div>
 								</td>
 							</tr>
@@ -352,7 +358,7 @@
 								<a href ="javascript:tabber_right(11, 'inbox.jsp')"><img width="20" height="16" src="images/envelope.png" alt=""/></a> ($nMsgs)
 								</td>
 							<td style="padding:5px;text-align:center">
-								<a id="delegButton" onclick="javascript:$('#delegations-form').dialog('open');return false;"><img id="iconAlerts" width="16" height="16" src="Themes/newflow/images/alert-bell.png" alt="Alertas"/></a>($nAlerts)
+								<a id="delegButton" onclick="javascript:$('#delegations-form').dialog('open');return false;"><img id="iconAlerts" width="16" height="16" src="Themes/newflow/images/alert-bell.png" alt="Alertas"/></a> ($nAlerts)
 							</td>
 
 							<td>
@@ -428,6 +434,7 @@
 										</li>
 									</ul>
 								</li>
+								</li>
 							</ul>
 						</div>
 					</div>
@@ -492,7 +499,7 @@
 			<!--div id="section_div_9" class="main" style="margin-left: 220px; display: none"></div-->
 			<div id="section_div_10" class="main" style="margin-left: 220px; display: none"></div>
 			<div id="section_div_11" class="main" style="margin-left: 220px; display: none"></div>
-			<div id="delegations-form" title="Delegations" style="display:none"></div>
+			<div id="delegations-form" title="Alertas" style="display:none"></div>
 
 			<div class="yui-skin-sam">
 				<div id="userdialog">
@@ -730,7 +737,8 @@
 			#* Inject applet inside element body (right here...) *#
 			setApplet('div_applet');
 			getAppletElem();
- 		}
+
+		}
 	</script>  
    
 </head>

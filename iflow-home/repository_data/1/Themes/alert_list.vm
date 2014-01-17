@@ -1,5 +1,5 @@
 #if("$Tab12" != "no")
-<h1 id="title_msgs">$notes_title</h1>
+<h1>$notes_title</h1>
 	#if($notifications.size()> 0)
 		#set($msg_display="")
 		#set($msg_empty_display="none")
@@ -8,8 +8,8 @@
 		#set($msg_empty_display="")
 	#end
 <div class="table_inc" id="msg_table" style="display:$msg_display">
-	<p>$notificationsMsg</p>
-	<table class="item_list">
+	<div class="alert alert-info">$notificationsMsg</div>
+	<table class="item_list table">
 		<tr class="tab_header">
 			<td></td>
 			<td>$notes_from</td>
@@ -52,14 +52,15 @@
 	</div>    
 	#end
 </div>
-<div class="info_msg" id="msg_empty_div" style="display:$msg_empty_display">
-	${notes_empty}.
-	<a class="toolTipImg" href="javascript:tabber('inbox','','',inboxJSP,'ts=$ts');" title="$tooltip_inbox">$notes_empty_link_text</a>.
+<div id="msg_empty_div" style="display:$msg_empty_display">
+	<div class="info_msg alert alert-info small">
+		${notes_empty}. <br/><a class="toolTipImg" style="color:#666;" href="javascript:tabber('inbox','','',inboxJSP,'ts=$ts');" title="$tooltip_inbox">$notes_empty_link_text</a>.
+	</div>
 </div>
 #end
 
 #if("$Tab5" != "no")
-<h1 id="title_delegations">$delegs_title</h1>
+<h1>$delegs_title</h1>
 	  
 	#if($hasDelegs)
 <div class="table_inc">	  
@@ -95,8 +96,13 @@
 	</table>
 </div>    
 	#else
-<div class="info_msg">
-	${no_delegs}.<a class="toolTipImg" href="javascript:tabber(5, gestaoTarefasNavJSP, '', gestaoTarefasJSP, 'ts=$ts');" title="$tooltip_delegs">$no_delegs_link_text</a>.
-</div>
+	
+	<div id="msg_empty_div" style="display:$msg_empty_display">
+		<div class="info_msg alert alert-info small">
+			${no_delegs}.<br/><a class="toolTipImg" style="color:#666;" href="javascript:tabber(5, gestaoTarefasNavJSP, '', gestaoTarefasJSP, 'ts=$ts');" title="$tooltip_delegs">$no_delegs_link_text</a>.
+		</div>
+	</div>
+
+
 	#end
 #end

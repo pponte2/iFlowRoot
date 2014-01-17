@@ -391,16 +391,11 @@ function open_process_report_exec(contentpage, contentparam) {
 }
 
 function close_process(tabnr) {
-  if(gOldTabNr == 2 && gTabNr == 3){
-    this.blur();
-    tabber_load(2,actividadesFiltroJSP);
-  } else {
-    colapse();
-    myframe = document.getElementById('open_proc_frame');
-    myframe.style.display = "none";
-    myframe.src = '';
-    tabber(1, mainContentJSP , 'data=procs', mainContentJSP, 'data=tasks');
-  }
+  var section = document.getElementById(sectionDiv + tabnr);
+  if(section){
+    section.innerHTML == '';
+  } 
+  tabber(1, mainContentJSP , 'data=procs', mainContentJSP, 'data=tasks');
 }
 
 function showLoading(eid) {
@@ -1592,7 +1587,7 @@ function getCtrlFillCallBack(htmltext, ctrl) {
     if (aux == null) aux = parent.document.getElementById(ctrl);
     if (aux != null) aux.innerHTML = htmltext;
   }
-  reloadJS(closeMenus  && ctrl.substring(0, 12) != 'section_div_');
+  reloadJS(closeMenus  && ctrl.substring(0, 12) != sectionDiv);
 }
 
 function openProcess(flowid, contentpage, contentparam, runMax, tabnr) {
