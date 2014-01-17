@@ -622,4 +622,11 @@ public interface ProcessManager extends UserProcsConst {
   public abstract ListIterator<Activity> getUserActivitiesOrderFilters(UserInfoInterface userInfo, int anFlowId, FlowFilter filter);
   
   public abstract ListIterator<Activity> getUserAndSubordinatesActivities(UserInfoInterface ui);
+
+  public String getProcdataString(UserInfoInterface userInfo, String pidS, String SubpidS);
+  public String setProcdataString(UserInfoInterface userInfo, String pidS, String SubpidS, String procData);
+  public String getMinPidNonEncrypted(UserInfoInterface userInfo);
+  public String getMaxPidNonEncrypted(UserInfoInterface userInfo);
+  public String ProcessEncryptEB(UserInfoInterface userInfo, String pidB, String pidE);
+  public void ProcessEncryptEBUpdate(UserInfoInterface userInfo, String pid, String procdata, String subpid, int table);
 }

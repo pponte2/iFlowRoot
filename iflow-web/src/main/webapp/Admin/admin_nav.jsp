@@ -172,6 +172,24 @@ boolean isClassic = StringUtils.equals("classic", theme);
   }
 %>
 
+<h2><%=messages.getString("admin_nav.section.processes.title")%></h2>
+
+<% if (userInfo.isSysAdmin()) { %>
+<ul>
+<li>
+<a id="li_a_admin_<%=AdminNavConsts.SYSTEM_PROPERTIES%>"
+		title="<%=messages.getString("admin_nav.section.system.tooltip.alterprocdata")%>"
+		class="toolTipItemLink li_link"
+		href="javascript:selectedItem('admin',<%=AdminNavConsts.SYSTEM_PROPERTIES%>);tabber_save(4,'<%=response.encodeURL("Admin/admin_nav.jsp") %>','sel=<%=AdminNavConsts.SYSTEM_PROPERTIES%>','<%=response.encodeURL("Admin/alterProcdata.jsp") %>','ts=<%=ts%>');"><%=messages.getString("admin_nav.section.system.tooltip.alterprocdata")%></a></li>
+
+<li>
+<a id="li_a_admin_<%=AdminNavConsts.SYSTEM_PROPERTIES%>"
+		title="<%=messages.getString("admin_nav.section.system.tooltip.encryptprocdata")%>"
+		class="toolTipItemLink li_link"
+		href="javascript:selectedItem('admin',<%=AdminNavConsts.SYSTEM_PROPERTIES%>);tabber_save(4,'<%=response.encodeURL("Admin/admin_nav.jsp") %>','sel=<%=AdminNavConsts.SYSTEM_PROPERTIES%>','<%=response.encodeURL("Admin/encryptProcdata.jsp") %>','ts=<%=ts%>');"><%=messages.getString("admin_nav.section.system.tooltip.encryptprocdata")%></a></li>
+</ul>
+<%} %>
+
 <%
   if (userInfo.isOrgAdmin() && userInfo.isOrgAdminResources()) {
 %>

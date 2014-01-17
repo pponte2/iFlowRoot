@@ -192,12 +192,12 @@ public class Const {
   public static final String sFLOW_DATE_FORMAT = "FLOW_DATE_FORMAT";
   public static String sFLOW_DATE_FORMAT_DESC = "Formato para as Datas";
   public static final String sFLOW_INT_FORMAT = "FLOW_INT_FORMAT";
-  public static String sFLOW_INT_FORMAT_DESC = "Formato para Números Inteiros";
+  public static String sFLOW_INT_FORMAT_DESC = "Formato para NÃºmeros Inteiros";
   public static final String sFLOW_FLOAT_FORMAT = "FLOW_FLOAT_FORMAT";
-  public static String sFLOW_FLOAT_FORMAT_DESC = "Formato para Números Decimais";
+  public static String sFLOW_FLOAT_FORMAT_DESC = "Formato para NÃºmeros Decimais";
 
   public static final String sSEARCHABLE_BY_INTERVENIENT = "SEARCHABLE_BY_INTERVENIENT";
-  public static final String sSEARCHABLE_BY_INTERVENIENT_DESC = "Pesquisável pelos intervenientes";
+  public static final String sSEARCHABLE_BY_INTERVENIENT_DESC = "PesquisÃ¡vel pelos intervenientes";
   public static final String sSEARCHABLE_BY_INTERVENIENT_YES = "Sim";
   public static final String sSEARCHABLE_BY_INTERVENIENT_NO = "Nao";
 
@@ -244,7 +244,7 @@ public class Const {
   public static final String sSHOW_ASSIGNED_TO_DESC = "Mostra utilizador(es) onde o processo est&aacute; agendado";
 
   public static final String sGUEST_ACCESSIBLE = "GUEST_ACCESSIBLE";
-  public static final String sGUEST_ACCESSIBLE_DESC = "Permitir acesso a utilizadores não registados.";
+  public static final String sGUEST_ACCESSIBLE_DESC = "Permitir acesso a utilizadores nÃ£o registados.";
   public static final String sGUEST_ACCESSIBLE_YES = "Sim";
   public static final String sGUEST_ACCESSIBLE_NO = "Nao";
   public static boolean GUEST_ACCESSIBLE = false;
@@ -259,6 +259,7 @@ public class Const {
   public static String DEBUG_FORM = null;
   public static boolean DEBUG_PROC_XML = false;
   public static boolean DONT_LOG_IN_DB = false;
+  public static boolean ENCRYPT_XML_TO_DB = false;
   
   public static String USER_DATA_IMPL_CLASS = null;
   public static String USER_DATA_CONFIG = null;
@@ -367,7 +368,7 @@ public class Const {
 
   
   /**
-   * Indicação se fica ou não na página.
+   * IndicaÃ§Ã£o se fica ou nÃ£o na pÃ¡gina.
    * Vai sair daqui e morar para um sitio muito mais bonito.
    */
   public static final String STAY_IN_PAGE   = "__STAY_IN_PAGE__";
@@ -437,6 +438,8 @@ public class Const {
     EVENT_THREAD_CICLE = Setup.getPropertyInt("EVENT_THREAD_CICLE");
     DELEGATION_THREAD_CICLE = Setup.getPropertyInt("DELEGATION_THREAD_CICLE");
     PROFILESYNC_THREAD_CICLE = Setup.getPropertyInt("PROFILESYNC_THREAD_CICLE");
+    USERSYNC_THREAD_CICLE = Setup.getPropertyInt("USERSYNC_THREAD_CICLE");
+    USERSYNC_ON = false;
     PROFILESYNC_ON = false;
     DEBUG_PROC_XML = false;
     DONT_LOG_IN_DB = false;
@@ -452,7 +455,15 @@ public class Const {
     try {
       SEARCH_ALL_USER_PROCS_BY_DEFAULT = Boolean.parseBoolean(Setup.getProperty("SEARCH_ALL_USER_PROCS_BY_DEFAULT"));
     } catch (Exception e) {}
+    try {
+      SEARCH_ALL_USER_PROCS_BY_DEFAULT = Boolean.parseBoolean(Setup.getProperty("SEARCH_ALL_USER_PROCS_BY_DEFAULT"));
+    } catch (Exception e) {}
+    try {
+      ENCRYPT_XML_TO_DB = Boolean.parseBoolean(Setup.getProperty("ENCRYPT_XML_TO_DB"));
+    } catch (Exception e) {}
     PROFILESYNC_ORGID = Setup.getProperty("PROFILESYNC_ORGID");
+    USERSYNC_ORGID = Setup.getProperty("USERSYNC_ORGID");
+    USERSYNC_UNITID = Setup.getProperty("USERSYNC_UNITID");
     sMAIL_ADM_ERROR_NOTIFY = Setup.getProperty("MAIL_ADM_ERROR_NOTIFY");
     sMAIL_SERVER = Setup.getProperty("MAIL_SERVER");
     nMAIL_PORT = Setup.getPropertyInt("MAIL_PORT");
@@ -549,7 +560,7 @@ public class Const {
     else {
       sDEF_INT_FORMAT = "#0";
     }
-    sFLOW_INT_FORMAT_DESC = "Formato para Números Inteiros (" + sDEF_INT_FORMAT + ")";
+    sFLOW_INT_FORMAT_DESC = "Formato para NÃºmeros Inteiros (" + sDEF_INT_FORMAT + ")";
 
     stmp = Setup.getProperty("DEFAULT_FLOAT_FORMAT");
     if (StringUtils.isNotBlank(stmp)) {
@@ -558,7 +569,7 @@ public class Const {
     else {
       sDEF_FLOAT_FORMAT = "#,##0.00";
     }
-    sFLOW_FLOAT_FORMAT_DESC = "Formato para Números Decimais (" + sDEF_FLOAT_FORMAT + ")";
+    sFLOW_FLOAT_FORMAT_DESC = "Formato para NÃºmeros Decimais (" + sDEF_FLOAT_FORMAT + ")";
 
 
     // default is EXCEL
