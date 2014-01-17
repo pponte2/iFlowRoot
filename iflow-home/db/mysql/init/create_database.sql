@@ -602,6 +602,7 @@ CREATE TABLE `organizations` (
   `style_url` VARCHAR(128)  NULL,
   `logo_url` VARCHAR(128)  NULL,
   `locked` INT(1) default 0 not null,
+  `calendid` INT  default 0,
   PRIMARY KEY (`organizationid`),
   UNIQUE INDEX `un_organization_name` (`name`(50))
 )
@@ -613,6 +614,7 @@ CREATE TABLE `organizational_units` (
   `organizationid` INT NOT NULL,
   `name` VARCHAR(50)  NOT NULL,
   `description` VARCHAR(150)  NULL,
+  `calendid` INT  default 0,
   UNIQUE INDEX `un_organizational_units_name` (`name`(50)),
   PRIMARY KEY (`unitid`),
   CONSTRAINT `fk_unit_organization` FOREIGN KEY `fk_unit_organization` (`organizationid`)
