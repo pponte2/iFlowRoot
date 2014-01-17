@@ -4887,8 +4887,8 @@ public ProcessHeader[] findProcesses(UserInfoInterface userInfo, ProcessHeader[]
     db = DatabaseInterface.getConnection(userInfo);
 
     StringBuilder sbQuery = new StringBuilder("select flowid,pid,subpid,pnumber from process");
-    //pponte: por erro na versão 4 deixou de ser possível obter aqui processos fechados
-    //esta alteração corrige essa situação (consultar SVN).
+    //pponte: por erro na versÃ£o 4 deixou de ser possÃ­vel obter aqui processos fechados
+    //esta alteraÃ§Ã£o corrige essa situaÃ§Ã£o (consultar SVN).
     sbQuery.append(" where (? = -1 or flowid=?)");
     sbQuery.append(" and (? = -1 or pid=?)");
     sbQuery.append(" and (? = -1 or subpid=?)");
@@ -5078,7 +5078,7 @@ public Collection<ProcessHeader> listExpiredProcesses(UserInfoInterface adm) {
     // "where a.flowid=? and a.mdate<? and p.closed=1 and a.flowid=p.flowid and a.pid=p.pid and a.subpid=p.subpid and " +
     // "a.mid = (select max(b.mid) from flow_state_history b where b.flowid=a.flowid and b.pid=a.pid and b.subpid=a.subpid)";
 
-    // Esta query é muito mais eficiente. Visitar:
+    // Esta query Ã© muito mais eficiente. Visitar:
     final String sqlExpired = "SELECT a.flowid,a.pid,a.subpid,a.mdate FROM flow_state_history a "
         + "INNER JOIN process_history p ON (a.flowid=p.flowid and a.pid=p.pid and a.subpid=p.subpid and p.closed=1) "
         + "INNER JOIN (SELECT concat_ws(',',c.flowid,c.pid,c.subpid) code, MAX(c.mid) AS mid, c.flowid, c.pid, c.subpid FROM flow_state_history c WHERE c.flowid=? GROUP BY code) b "

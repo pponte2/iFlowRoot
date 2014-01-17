@@ -622,9 +622,9 @@ public class DocumentsBean implements Documents {
       DatabaseInterface.closeResources(st, rs);
     }
     if(retObj == null) 
-    	return new DocumentData(0, "");
+        return new DocumentData(0, "");
     else
-    	return retObj;
+        return retObj;
   }
 
   private Document getDocumentData(UserInfoInterface userInfo, ProcessData procData, Document adoc, Connection db, boolean abFull) {
@@ -811,8 +811,7 @@ public class DocumentsBean implements Documents {
       flowid = procData.getFlowId();
     else if (adoc instanceof DocumentData) 
       flowid = ((DocumentData)adoc).getFlowid();
-    String sUseDocHash = BeanFactory.getFlowSettingsBean().getFlowSetting(flowid, Const.sHASHED_DOCUMENT_URL)
-    .getValue();
+    String sUseDocHash = BeanFactory.getFlowSettingsBean().getFlowSetting(flowid, Const.sHASHED_DOCUMENT_URL).getValue();
     boolean useDocHash = StringUtils.equalsIgnoreCase(Const.sHASHED_DOCUMENT_URL_YES, sUseDocHash);
 
     if (!useDocHash && procData == null) {

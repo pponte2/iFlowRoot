@@ -1,5 +1,6 @@
 package pt.iflow.api.core;
 
+import java.text.ParseException;
 import java.util.List;
 
 import pt.iflow.api.errors.IErrorHandler;
@@ -48,7 +49,9 @@ public interface UserManager {
    * @param listExtraValues - Extra Values
    * @return - true if user was created successfully
    */
-  public IErrorHandler createUser( UserInfoInterface userInfo,String username,String gender,String unit,String emailAddress,String firstName,String lastName,String phoneNumber,String faxNumber,String mobileNumber,String companyPhone,String orgId, String orgAdm, String password, String[] listExtraProperties, String[] listExtraValues);
+  public IErrorHandler createUser( UserInfoInterface userInfo,String username,String gender,String unit,String emailAddress,String firstName,String lastName,String phoneNumber,String faxNumber,String mobileNumber,String companyPhone,String orgId, String orgAdm, String password, String[] listExtraProperties, String[] listExtraValues, String cal);
+  
+
   
   
   /**
@@ -93,7 +96,7 @@ public interface UserManager {
     * @param managerid - Unit manager ID
     * @return - true if organizational unit was created successfully
     */
-   public boolean createOrganizationalUnit( UserInfoInterface userInfo,String organizationid,String name,String description,String parentid,String managerid );
+   public boolean createOrganizationalUnit( UserInfoInterface userInfo,String organizationid,String name,String description,String parentid,String managerid,String calid );
 
    /**
     * Add a new Profile.
@@ -121,10 +124,7 @@ public interface UserManager {
     * @param listExtraValues - Extra Values
     * @return - true if user was created successfully
     */
-  public IErrorHandler modifyUserAsAdmin(UserInfoInterface userInfo, String userId, String gender, String unit,
-      String emailAddress, String firstName, String lastName, String phoneNumber, String faxNumber, String mobileNumber,
-      String companyPhone, String orgAdm, String orgAdmUsers, String orgAdmFlows, String orgAdmProcesses, String orgAdmResources,
-      String orgAdmOrg, String newPassword, String[] listExtraProperties, String[] listExtraValues);
+   public IErrorHandler modifyUserAsAdmin(UserInfoInterface userInfo, String userId, String gender, String unit, String emailAddress, String firstName, String lastName, String phoneNumber, String faxNumber, String mobileNumber, String companyPhone, String orgAdm, String newPassword, String[] listExtraProperties, String[] listExtraValues, String calendarId);
 
    /**
     * Modify an existing user
@@ -164,7 +164,7 @@ public interface UserManager {
     * @param managerid - Unit manager ID
     * @return - true if organizational unit was created successfully
     */
-   public boolean modifyOrganizationalUnit( UserInfoInterface userInfo,String unitId,String organizationid,String name,String description,String parentid,String managerid );
+   public boolean modifyOrganizationalUnit( UserInfoInterface userInfo,String unitId,String organizationid,String name,String description,String parentid,String managerid, String calid );
 
    /**
     * Modify an existing Profile.
@@ -176,6 +176,9 @@ public interface UserManager {
     * @return true if profile was created successfully
     */
    public boolean modifyProfile(UserInfoInterface userInfo, ProfilesTO profile);
+   
+   public String getOrgUnitCalendarId(String username,String unitId);
+   
 
    /**
     * Add a user to a profile
@@ -468,8 +471,32 @@ public interface UserManager {
     * @return true if user is manager of it's organizational unit; false otherwise.
     */
    public boolean isOrganizationalUnitManager(UserInfoInterface userInfo);
+   /**
+    * Retrieves a list of calendars
+    * @param userInfo
+    * @return
+    */
+   public List<String[]> getCalendars(UserInfoInterface userInfo);
+   
+   public int getCalendarId(UserInfoInterface userInfo, String id);
+   
+   public String getUserCalendarId(String user, String usId);
+   
+   public boolean deleteCalendars(UserInfoInterface userInfo, String id);
    
    public List<String> getSystemUsers(UserInfoInterface userInfo);
    
    public int changePasswordAdmin(String username, String oldPassword, String password); 
+   
+   public boolean saveCalendar(UserInfoInterface userInfo,String calendnome,String dias,String feriados,String periodos, String id) throws ParseException;
+   
+   public List<String> getCalendarDays(UserInfoInterface userInfo, String id);
+   
+   public List<String> getHolidays(UserInfoInterface userInfo, String id);
+   
+   public List<String> getPeriods(UserInfoInterface userInfo, String id);
+   
+   public void modifyCalendarOrg(UserInfoInterface userInfo,String orgid,String calendid);
+   
+   public String getOrgCalendar(UserInfoInterface userInfo, String orgid);
 }

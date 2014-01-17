@@ -776,7 +776,7 @@ public class Utils {
     long total = 0;
     String retObj = "";
     
-    //Get do calendário do fluxo
+    //Get do calendÃ¡rio do fluxo
     CalendarManager cmb = BeanFactory.getCalendarManagerBean();
     pt.iflow.api.calendar.Calendar cal = cmb.getFlowCalendar(userInfo, flowid);
     
@@ -812,7 +812,7 @@ public class Utils {
   public static long getDurationByCalendar(Timestamp tsStart, Timestamp tsStop, int flowid, UserInfoInterface userInfo){
     long total = 0;
     
-    //Get do calendário do fluxo
+    //Get do calendï¿½rio do fluxo
     CalendarManager cmb = BeanFactory.getCalendarManagerBean();
     pt.iflow.api.calendar.Calendar cal = cmb.getFlowCalendar(userInfo, flowid);
     
@@ -871,14 +871,14 @@ public class Utils {
     long countToRemove = 0;
     
     CalendarManager cmb = BeanFactory.getCalendarManagerBean();
-    //Dias da semana que não são dias uteis
+    //Dias da semana que nÃ£o sÃ£o dias uteis
     ArrayList<Integer> daysToRemove = cal.getDaysNotToCount();
     //Feriados que calham entre as datas
     ArrayList<Timestamp> holidays = cmb.getHolidaysCalendar(userInfo, cal.getCalendar_id(), tsStart, tsStop);
-    //Horario de trabalho do calendário
+    //Horario de trabalho do calendÃ¡rio
     ArrayList<Time> periods = cmb.getPeriodsCalendar(userInfo, cal.getCalendar_id());
     
-    //Contar dias a remover no periodo de acordo com dias !uteis do calendário
+    //Contar dias a remover no periodo de acordo com dias !uteis do calendÃ¡rio
     for(int i = 0; i < daysToRemove.size(); i++){
       countToRemove = countToRemove + getNumberOfWeekDays(tsStart, tsStop, daysToRemove.get(i));
     }
@@ -899,17 +899,17 @@ public class Utils {
     //Contabilizar horas do dia de acordo com periodos, sendo o mesmo dia, ou dias diferentes
     long horasTemp = 0;
     if( (tsStart.getDate() == tsStop.getDate()) && ((tsStop.getTime()-tsStart.getTime())/86400000) == 0){
-        if(!isDayHolidayOrNotWeekDay(tsStart, holidays, daysToRemove))         //Caso não seja feriado ou fds
+        if(!isDayHolidayOrNotWeekDay(tsStart, holidays, daysToRemove))         //Caso nÃ£o seja feriado ou fds
           horasTemp = getNumberOfHoursSameDay(tsStart, tsStop, periods);
     }else{
         if(!isDayHolidayOrNotWeekDay(tsStart, holidays, daysToRemove))
-          horasTemp = getNumberOfHoursDay(tsStart, periods, true);             //Horas do dia de criação
+          horasTemp = getNumberOfHoursDay(tsStart, periods, true);             //Horas do dia de criaÃ§Ã£o
         if(!isDayHolidayOrNotWeekDay(tsStop, holidays, daysToRemove))
           horasTemp = horasTemp + getNumberOfHoursDay(tsStop, periods, false); //Horas do dia actual
         
     }
     
-    //Tirar dos feriados se calhar no 1º ou 2º dia
+    //Tirar dos feriados se calhar no 1Âº ou 2Âº dia
     if( (tsStart.getDate() == tsStop.getDate()) && ((tsStop.getTime()-tsStart.getTime())/86400000) == 0){
       if(isDayHoliday(tsStart, holidays))         
         holidays.remove(0);
@@ -921,11 +921,11 @@ public class Utils {
     }  
     //Converter para o formato pedido
     try {
-      // Para não contar com o 1º dia
+      // Para nÃ£o contar com o 1Âº dia
       tsStart.setHours(23);
       tsStart.setMinutes(59);
       tsStart.setSeconds(59);
-      // Para não contar o actual
+      // Para nÃ£o contar o actual
       tsStop.setHours(0);
       tsStop.setMinutes(0);
       tsStop.setSeconds(1);
@@ -997,7 +997,7 @@ public class Utils {
     
     java.util.GregorianCalendar calStop = (GregorianCalendar) Calendar.getInstance();
     calStop.setTime(tsStop);
-    calStop.add(Calendar.DATE, -1);    //Para não contar o ultimo como dia a remover   
+    calStop.add(Calendar.DATE, -1);    //Para nÃ£o contar o ultimo como dia a remover   
     calStop.set(Calendar.HOUR, calStart.get(Calendar.HOUR));
     calStop.set(Calendar.MINUTE, calStart.get(Calendar.MINUTE));
     calStop.set(Calendar.SECOND, calStart.get(Calendar.SECOND));
@@ -1005,7 +1005,7 @@ public class Utils {
     
     while (!calStart.after(calStop)) {
       int day = calStart.get(Calendar.DAY_OF_WEEK);
-      if (day == weekDay && !tsStart.equals(new Timestamp(calStart.getTimeInMillis())) ) //Não conta como dia a remover o 1º
+      if (day == weekDay && !tsStart.equals(new Timestamp(calStart.getTimeInMillis())) ) //NÃ£o conta como dia a remover o 1Âº
         number++;
       
       calStart.add(Calendar.DATE, 1);
@@ -1025,7 +1025,7 @@ public class Utils {
       Time start = periods.get(i);
       Time stop = periods.get(i+1);
       
-      if(first){ //Calcula horas do dia de criação
+      if(first){ //Calcula horas do dia de criaÃ§Ã£o
           if(t.before(start) || t.equals(start)){
             number = number + (stop.getTime()-start.getTime());
           } else if(t.after(start) && t.before(stop)){
@@ -1101,7 +1101,7 @@ public class Utils {
   public static long getDurationWorkMinutesDifference(java.util.Date tsStart, java.util.Date tsStop, int flowid, UserInfoInterface userInfo){
     long retObj = 0;
     
-    //Get do calendário do fluxo
+    //Get do calendÃ¡rio do fluxo
     CalendarManager cmb = BeanFactory.getCalendarManagerBean();
     pt.iflow.api.calendar.Calendar cal = cmb.getFlowCalendar(userInfo, flowid);
     

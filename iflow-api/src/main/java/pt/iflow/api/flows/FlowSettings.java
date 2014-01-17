@@ -7,10 +7,12 @@ import java.util.Set;
 import pt.iflow.api.utils.UserInfoInterface;
 
 public interface FlowSettings {
+  
+  public String getFlowCalendarId(UserInfoInterface userInfo,int flowid);
 
-  public void saveFlowSettings(UserInfoInterface userInfo, FlowSetting[] afsaSettings);
+  public void saveFlowSettings(UserInfoInterface userInfo, FlowSetting[] afsaSettings, String calendId);
 
-  public void saveFlowSettings(UserInfoInterface userInfo, FlowSetting[] afsaSettings, boolean abInitSettings);
+  public void saveFlowSettings(UserInfoInterface userInfo, FlowSetting[] afsaSettings, boolean abInitSettings, String calendId);
 
   public void exportFlowSettings(UserInfoInterface userInfo, int flowid, PrintStream apsOut);
 

@@ -175,7 +175,9 @@ public interface Flow {
      * @param afsaSettings
      */
     public abstract void saveFlowSettings(UserInfoInterface userInfo,
-            FlowSetting[] afsaSettings);
+            FlowSetting[] afsaSettings, String calendId);
+    
+    public abstract String getFlowCalendarId(UserInfoInterface userInfo, int flowid);
     
     /**
      * 
