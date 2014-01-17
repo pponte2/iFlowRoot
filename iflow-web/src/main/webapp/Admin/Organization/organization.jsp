@@ -1,12 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/core" prefix="c" %>
 <%@ taglib uri="http://www.iknow.pt/jsp/jstl/iflow" prefix="if" %>
+<%@ page import="pt.iflow.api.utils.UserInfoInterface"%>
 <%@ include file="../../inc/defs.jsp"%><%
 String oper = fdFormData.getParameter("oper");
+String cal = fdFormData.getParameter("calendar");
+
+UserManager manager = BeanFactory.getUserManagerBean();
+UserInfoInterface ui = userInfo;
+String calendId = manager.getOrgCalendar(ui,ui.getOrganization());;
 if(null == oper) oper = "";
 boolean bEdit = "edit".equals(oper);
 if("cache".equals(oper)) {
   FormCache.reloadCaches(userInfo);
+}
+List<String[]> calendar = new ArrayList<String[]>(); 
+try {
+	calendar = manager.getCalendars(ui);
+}
+catch (Exception e) {
+	e.printStackTrace();
 }
 
 Locale orgLocale = BeanFactory.getSettingsBean().getOrganizationLocale(userInfo);
@@ -47,6 +60,12 @@ OrganizationThemeData orgTheme = BeanFactory.getOrganizationThemeBean().getOrgan
 			    <if:formOption labelkey="organization.propertiesform.field.procMenuVisible.label.true" value='<%= String.valueOf(true) %>'/>
 			    <if:formOption labelkey="organization.propertiesform.field.procMenuVisible.label.false" value='<%= String.valueOf(false) %>'/>
 		    </if:formSelect>
+		    <if:formSelect name="calendar" edit="<%=bEdit%>" value='<%=calendId%>' labelkey="admin_nav.section.resources.tooltip.calend" >
+  				<if:formOption value=' ' label= '<%= messages.getString("actividades.folder.change")%>' />
+  				<% for (int i = 0; i < calendar.size(); i++) { %>
+    				<if:formOption value='<%=calendar.get(i)[0]%>' label="<%=calendar.get(i)[1]%>"/>
+  				<% } %>
+  			</if:formSelect>
 			<if:formLocale name="organization_lang" edit="<%= bEdit %>" value='<%=orgLang%>' labelkey="organization.propertiesform.field.lang" />
 			<if:formTimeZone name="organization_timezone" edit="<%= bEdit %>" value='<%=timezone %>' labelkey="organization.propertiesform.field.timezone" />
 			<if:formInput edit="<%= bEdit %>" name="logo" type="logo" value="" labelkey="organization.propertiesform.field.currentlogo" required="false"/>

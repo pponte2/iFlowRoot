@@ -2,10 +2,9 @@
 <%@ taglib uri="http://jakarta.apache.org/taglibs/core" prefix="c" %>
 <%@ taglib uri="http://www.iknow.pt/jsp/jstl/iflow" prefix="if" %>
 <%@ include file = "../inc/defs.jsp" %>
-
 <%
 UserInfoInterface ui = userInfo;
-	String title = messages.getString("flow_settings.title"); 
+String title = messages.getString("flow_settings.title"); 
 String sPage = "Admin/flow_settings";
 
 StringBuffer sbError = new StringBuffer();

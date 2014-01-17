@@ -12,12 +12,14 @@
 %><%
     String title = messages.getString("flow_settings_edit.title");
     String sPage = "Admin/flow_settings_edit";
-    
+    UserManager manager = BeanFactory.getUserManagerBean();
+    Flow flow = BeanFactory.getFlowBean();
     StringBuffer sbError = new StringBuffer();
-    
+    String calendId = "-1";
+	String calid = "";
+    boolean b = false;
     String sSELECT = messages.getString("flow_settings_edit.const.select");
     
-    Flow flow = BeanFactory.getFlowBean();
     
     String sOp = fdFormData.getParameter("op");
     if (sOp == null) {
@@ -46,6 +48,10 @@
 <%
     String sFlowName = fdFormData.getParameter("flowname");
     IFlowData fd = flow.getFlow(userInfo, flowid);
+    
+    
+    
+    
     if (StringUtils.isBlank(sFlowName)) {
       if (fd != null) {
 	      sFlowName = fd.getName();
@@ -286,9 +292,10 @@
                 // error
             }
         } // else if (op == 6)
-        
+          
         if (sbError.length() == 0) {
-            flow.saveFlowSettings(userInfo, fsa);
+          calendId = fdFormData.getParameter("calendar");
+            flow.saveFlowSettings(userInfo, fsa, calendId);
             flow.refreshFlowSettings(userInfo, flowid); // include propagate to flow
 
             sSave = "<div class=\"alert alert-info\">"
@@ -310,6 +317,15 @@
     if (null != cProfiles) {
         saProfiles = (String[]) cProfiles.toArray(new String[cProfiles .size()]);
     }
+    
+    calid = flow.getFlowCalendarId(userInfo,flowid);
+	List<String[]> calendar = new ArrayList<String[]>(); 
+    try {
+  	calendar = manager.getCalendars(userInfo);
+  }
+  catch (Exception e) {
+  	e.printStackTrace();
+  }
     
     // String[] saProfiles = rep.listFilesAllLeaves(userInfo, "Profiles");
 %>
@@ -944,7 +960,24 @@ String sFlowHtml = Utils.genHtmlSelect("flowSelect",
 			</td>
 		</tr>		
 	<% } %>
-	
+
+	<tr class="<%=(i++ % 2 == 0 ? "tab_row_even" : "tab_row_odd")%> " >
+		<td>Calendar</td>
+		<td>Simple</td>
+		<td width="50%" class="txt" align="left">&nbsp;&nbsp;&nbsp;&nbsp;
+	  		<Select name="calendar" id='calendar' onchange="test(this)">
+  				<Option value=' '><%= messages.getString("actividades.folder.change")%></option>
+ 				<% for (int x = 0; x < calendar.size(); x++) { %>
+ 				<option value='<%=calendar.get(x)[0]%>' 
+ 						<%if(calendar.get(x)[0].equals(calid)){%>
+ 							selected
+ 						<%}%>>
+ 					<%=calendar.get(x)[1]%>
+ 				</option>
+  				<% } %>	
+  			</Select>
+  		</td>
+	</tr>
 </table>
 </div>
 <%
