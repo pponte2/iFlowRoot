@@ -43,7 +43,8 @@ public abstract class AdminNavConsts {
   public static final int RESOURCES_PRINTING = 51;
   public static final int RESOURCES_EMAIL_TEMPLATES = 52;
   public static final int RESOURCES_PUBLIC = 53;
-
+  public static final int RESOURCES_CALEND = 54;
+  
   public static final int ORGANIZATION_PROPERTIES = 60;
   public static final int ORGANIZATION_LICENSE = 61;
   public static final int ORGANIZATION_INTERFACES = 62; 

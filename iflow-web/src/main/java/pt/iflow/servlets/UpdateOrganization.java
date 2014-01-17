@@ -159,6 +159,13 @@ public class UpdateOrganization extends HttpServlet {
     OrganizationTheme mng = BeanFactory.getOrganizationThemeBean();
     mng.updateOrganizationData(userInfo, newTheme, null, null, menuLocation, menuStyle, procMenuVisible);
   }
+  
+  private void changeCalendar(UserInfoInterface userInfo, String orgid, String calendid){
+    if (null == calendid || calendid.length() == 0)
+      return;
+    UserManager mng = BeanFactory.getUserManagerBean();
+    mng.modifyCalendarOrg(userInfo,orgid,calendid);
+  }
 
   private void changeOrgName(UserInfoInterface userInfo, String newName) {
     if (null == newName || newName.length() == 0)
@@ -199,6 +206,7 @@ public class UpdateOrganization extends HttpServlet {
     String organizationTimeZone = null;
     String menuLocation = null;
     String menuStyle = null;
+    String calendId = "";
     boolean procMenuVisible = true;
     
     try {
@@ -210,6 +218,8 @@ public class UpdateOrganization extends HttpServlet {
       organizationTimeZone = formData.getParameter("organization_timezone");
       menuLocation = formData.getParameter("menuLocation");
       menuStyle = formData.getParameter("menuStyle");
+      calendId = formData.getParameter("calendar");
+
       procMenuVisible = StringUtils.equals(String.valueOf(true), formData.getParameter("procMenuVisible"));
       
     } catch (Exception e) {
@@ -218,7 +228,7 @@ public class UpdateOrganization extends HttpServlet {
       response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
       return;
     }
-    
+    changeCalendar(userInfo,userInfo.getCompanyID(),calendId);
     changeLogo(userInfo, file);
     changeTheme(userInfo, newTheme, menuLocation, menuStyle, procMenuVisible);
     changeOrgName(userInfo, newName);
