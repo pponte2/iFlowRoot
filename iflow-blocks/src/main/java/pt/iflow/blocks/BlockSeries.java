@@ -121,11 +121,11 @@ public class BlockSeries extends Block {
       String outvar = getAttribute(OUTPUTVAR);
       // Validations
       if (StringUtilities.isEmpty(seriesname)) {
-        Logger.error(login, this, "after", procData.getSignature() + "Series is empty");
+        Logger.error(login, this, "after", procData.getSignature(this.getId()) + "Series is empty");
         outPort = portError;
       } else {
         if (StringUtilities.isEmpty(outvar)) {
-          Logger.error(login,this,"after", procData.getSignature() + "Output var is empty");
+          Logger.error(login,this,"after", procData.getSignature(this.getId()) + "Output var is empty");
           outPort = portError;
         } else {
           SeriesProcessor seriesProcessor = SeriesManager.getSeriesFromName(userInfo, seriesname);
@@ -134,11 +134,11 @@ public class BlockSeries extends Block {
           procData.parseAndSet(outvar, output);
           
           logMsg.append("Set '" + outvar + "' as '" + output + "';");
-          Logger.info(login,this,"after",procData.getSignature() + outvar + "=" + output);
+          Logger.info(login,this,"after",procData.getSignature(this.getId()) + outvar + "=" + output);
         }
       }
     } catch (Exception ee) {
-      Logger.error(login, this, "after", procData.getSignature() + "caught exception", ee);
+      Logger.error(login, this, "after", procData.getSignature(this.getId()) + "caught exception", ee);
       outPort = portError;
     }
     

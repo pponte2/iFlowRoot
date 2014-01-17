@@ -127,7 +127,7 @@ public class BlockGetAuthInfo extends Block {
 
       if (StringUtils.isEmpty(sKeyList)) {
         Logger.error(login, this, "after", 
-            procData.getSignature() + "empty value for key " + sKeyName);
+            procData.getSignature(this.getId()) + "empty value for key " + sKeyName);
         outPort = portError;
       } else {
         AuthProfile ap = BeanFactory.getAuthProfileBean();
@@ -160,7 +160,7 @@ public class BlockGetAuthInfo extends Block {
             break;
           default:
             Logger.error(login, this, "after", 
-                procData.getSignature() + "operation " + this._nOp + " not support.");
+                procData.getSignature(this.getId()) + "operation " + this._nOp + " not support.");
             outPort = portError;
             break;
           }

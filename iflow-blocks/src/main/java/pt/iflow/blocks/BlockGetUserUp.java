@@ -103,7 +103,7 @@ public class BlockGetUserUp extends Block {
           Logger.debug(login,this,"after","going to get userup for user=" + sUser);
         } catch (Exception e) {
           Logger.warning(login, this, "after", 
-              procData.getSignature() + "exception transforming user attr: " + sUserAttr + 
+              procData.getSignature(this.getId()) + "exception transforming user attr: " + sUserAttr + 
               ". Assuming current user: " + login);
         }
       }
@@ -130,7 +130,7 @@ public class BlockGetUserUp extends Block {
       }
     } catch (Exception e) {
       Logger.error(login,this,"after",
-          procData.getSignature() + "exception caught: " + e.getMessage(), e);
+          procData.getSignature(this.getId()) + "exception caught: " + e.getMessage(), e);
       bOk = false;
     }
 

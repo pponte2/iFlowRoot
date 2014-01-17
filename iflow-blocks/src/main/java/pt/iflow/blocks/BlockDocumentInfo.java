@@ -193,7 +193,7 @@ public class BlockDocumentInfo extends Block {
       retObj = portSuccess;
     } catch (Exception ex) {
       Logger.error(userInfo.getUtilizador(), this, "after", 
-          procData.getSignature() + "Unable to perform operation.", ex);
+          procData.getSignature(this.getId()) + "Unable to perform operation.", ex);
       retObj = portError;
     } finally {
       DatabaseInterface.closeResources(db, st, rs);

@@ -87,7 +87,7 @@ public class BlockBifurcacao extends Block {
 
       } else {
         Logger.info(userInfo.getUtilizador(), this, "after", 
-            procData.getSignature() +  "Subprocess started");
+            procData.getSignature(this.getId()) +  "Subprocess started");
         procData.setAppData(SUBPROC_TEMP_VAR,null);
         outPort = portSubProc;
       }

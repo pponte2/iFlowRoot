@@ -143,11 +143,11 @@ public class BlockSQLBatchInsert extends BlockSQL {
     	}
 
     	if (sInto == null || sNames == null || sValues == null || saVars == null) {
-    	  Logger.error(login, this, "after", procData.getSignature() + "empty into or names or values or vars");
+    	  Logger.error(login, this, "after", procData.getSignature(this.getId()) + "empty into or names or values or vars");
     	  outPort = portError;
     	} else {
     		if (this.isSystemTable(sDataSource, sInto)) {
-    		  Logger.error(login, this, "after", procData.getSignature() + "Into '" + sInto + "' is a system table");
+    		  Logger.error(login, this, "after", procData.getSignature(this.getId()) + "Into '" + sInto + "' is a system table");
     		  outPort = portError;
     		} else {
     			int nCols = 0;
@@ -174,7 +174,7 @@ public class BlockSQLBatchInsert extends BlockSQL {
 
     				ds = Utils.getUserDataSource(sDataSource);
     				if (null == ds) {
-    				  Logger.error(login, this, "after", procData.getSignature() + "null datasource " + sDataSource);
+    				  Logger.error(login, this, "after", procData.getSignature(this.getId()) + "null datasource " + sDataSource);
     				  outPort = portError;
     				} else {
     					db = ds.getConnection();
@@ -209,21 +209,21 @@ public class BlockSQLBatchInsert extends BlockSQL {
     					}
 
     					db.commit();
-    					Logger.info(login,this,"after",procData.getSignature() + "connection committed");
+    					Logger.info(login,this,"after",procData.getSignature(this.getId()) + "connection committed");
     					
     					if (nCols == 0) {
     						outPort = portEmpty;
     					}
     				}
     			} catch (Exception e) {
-    				Logger.error(login,this,"after",procData.getSignature() + "caught exception: " + e.getMessage(), e);
+    				Logger.error(login,this,"after",procData.getSignature(this.getId()) + "caught exception: " + e.getMessage(), e);
     				outPort = portError;
                     if (db != null) {
                       try {
                         db.rollback();
                       }
                       catch (Exception ex) {
-                        Logger.error(login,this,"after",procData.getSignature() + "unable to rollback: " + ex.getMessage(), ex);
+                        Logger.error(login,this,"after",procData.getSignature(this.getId()) + "unable to rollback: " + ex.getMessage(), ex);
                       }
                     }
     			} finally {
@@ -239,7 +239,7 @@ public class BlockSQLBatchInsert extends BlockSQL {
     	try{
 			ds = Utils.getUserDataSource(sDataSource);
 			if (null == ds) {
-			  Logger.error(login, this, "after", procData.getSignature() + "null datasource " + sDataSource);
+			  Logger.error(login, this, "after", procData.getSignature(this.getId()) + "null datasource " + sDataSource);
 			  outPort = portError;
 			} else {
 				db = ds.getConnection();
@@ -276,7 +276,7 @@ public class BlockSQLBatchInsert extends BlockSQL {
 			}	
     		
         } catch (Exception e) {
-          Logger.error(login,this,"after",procData.getSignature() + "caught exception: " + e.getMessage(), e);
+          Logger.error(login,this,"after",procData.getSignature(this.getId()) + "caught exception: " + e.getMessage(), e);
           outPort = portError;
 		} finally {
           if (db != null) {
@@ -284,7 +284,7 @@ public class BlockSQLBatchInsert extends BlockSQL {
               db.rollback();
             }
             catch (Exception e) {
-              Logger.error(login,this,"after",procData.getSignature() + "unable to rollback: " + e.getMessage(), e);
+              Logger.error(login,this,"after",procData.getSignature(this.getId()) + "unable to rollback: " + e.getMessage(), e);
             }
           }
 		  DatabaseInterface.closeResources(db,pst);

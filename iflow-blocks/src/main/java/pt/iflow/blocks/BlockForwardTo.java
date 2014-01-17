@@ -129,7 +129,7 @@ public class BlockForwardTo extends Block implements MessageBlock {
                     } catch (Exception e) {
                       // not able to transform.. assume original text
                       Logger.warning(login, this, "after", 
-                          procData.getSignature() + "exception transforming '" + sProfileText + 
+                          procData.getSignature(this.getId()) + "exception transforming '" + sProfileText + 
                           "'. Using " + sProfileText, e);
                       destinationProfile = sProfileText;
                     }
@@ -165,7 +165,7 @@ public class BlockForwardTo extends Block implements MessageBlock {
 
         } catch (Exception e) {
             Logger.error(login, this, "before", 
-                procData.getSignature() + "exception caught: " + e.getMessage(), e);
+                procData.getSignature(this.getId()) + "exception caught: " + e.getMessage(), e);
             bOk = false;
         }
         
@@ -259,11 +259,11 @@ public class BlockForwardTo extends Block implements MessageBlock {
           a.setUnread();
           pm.createActivity(userInfo, a);
         }
-        Logger.info(login, this, "onEventFired", procData.getSignature() + "Regenerated activities");
+        Logger.info(login, this, "onEventFired", procData.getSignature(this.getId()) + "Regenerated activities");
       } 
       catch (Exception e) {
         Logger.warning(login, this, "onEventFired", 
-            procData.getSignature() + "Error regenerating process activities", e);
+            procData.getSignature(this.getId()) + "Error regenerating process activities", e);
         throw e;
       }
     }

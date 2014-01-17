@@ -122,7 +122,7 @@ public class BlockDocumentMerge extends Block {
               // reference file to remove post-processing
               removedDocs.add(docItem);
             } else {
-              Logger.error(login, this, "processForm", procData.getSignature() + "error removing file for var " + newDocVarName);
+              Logger.error(login, this, "processForm", procData.getSignature(this.getId()) + "error removing file for var " + newDocVarName);
               procData.setError("Ocorreu um erro ao remover o ficheiro");
             }
           }
@@ -145,7 +145,7 @@ public class BlockDocumentMerge extends Block {
       retObj = portSuccess;
 
     } catch (Exception e) {
-      Logger.error(login, this, "after", procData.getSignature() + "Exception caught: ", e);
+      Logger.error(login, this, "after", procData.getSignature(this.getId()) + "Exception caught: ", e);
     }
   this.addToLog("Using '" + retObj.getName() + "';");
   this.saveLogs(userInfo, procData, this);

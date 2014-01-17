@@ -156,7 +156,7 @@ public class BlockDocumentGet extends Block {
         }
       }
     } catch (Exception e) {
-      Logger.error(login, this, "after", procData.getSignature() + "Exception caught: ", e);
+      Logger.error(login, this, "after", procData.getSignature(this.getId()) + "Exception caught: ", e);
     }
 
     this.addToLog("Using '" + retObj.getName() + "';");
@@ -186,7 +186,7 @@ public class BlockDocumentGet extends Block {
               .info(login, this, "extractProperties", "Set variable '" + metadata.get(key) + "' as '" + properties.get(key) + "'");
           this.addToLog("Set variable '" + metadata.get(key) + "' as '" + properties.get(key) + "'");
         } catch (ParseException e) {
-          Logger.error(login, this, "extractProperties", procData.getSignature() + "Unable to set variable '" + metadata.get(key)
+          Logger.error(login, this, "extractProperties", procData.getSignature(this.getId()) + "Unable to set variable '" + metadata.get(key)
               + "' as '" + properties.get(key) + "': " + e.toString());
         }
       }
@@ -212,7 +212,7 @@ public class BlockDocumentGet extends Block {
       this.addToLog("Set '" + name + "' as '" + value + "';");
       if (Logger.isDebugEnabled()) {
         Logger
-            .debug(userInfo.getUtilizador(), this, "extractProperty", procData.getSignature() + "Set '" + name + "' as '" + value);
+            .debug(userInfo.getUtilizador(), this, "extractProperty", procData.getSignature(this.getId()) + "Set '" + name + "' as '" + value);
       }
     }
   }

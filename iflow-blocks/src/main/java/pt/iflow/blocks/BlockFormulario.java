@@ -184,7 +184,7 @@ public class BlockFormulario extends Block implements FormOperations {
       pm.updateActivity(userInfo, activity);
 
     } catch (Exception e) {
-      Logger.error(login, this, "before", procData.getSignature() + "Caught an unexpected exception scheduling activities: "
+      Logger.error(login, this, "before", (this==null? procData.getSignature() : procData.getSignature(this.getId())) + "Caught an unexpected exception scheduling activities: "
           + e.getMessage(), e);
     }
 
@@ -369,8 +369,8 @@ public class BlockFormulario extends Block implements FormOperations {
         bForceDisabled = Boolean.valueOf(String.valueOf(procData.eval(userInfo, abBlock.getAttribute(FormProps.READ_ONLY))));
       }
 
-      Logger.debug(sLogin,abBlock,"generateForm",procData.getSignature() +"block xsl name=" + sXslName);
-      Logger.debug(sLogin,abBlock,"generateForm",procData.getSignature() +"block print xsl name=" + sPrintStyleSheet);
+      Logger.debug(sLogin,abBlock,"generateForm",(abBlock==null? procData.getSignature() : procData.getSignature(abBlock.getId())) +"block xsl name=" + sXslName);
+      Logger.debug(sLogin,abBlock,"generateForm",(abBlock==null? procData.getSignature() : procData.getSignature(abBlock.getId())) +"block print xsl name=" + sPrintStyleSheet);
 
       String sJSP = abBlock.getJSP(procData);
       if(StringUtils.isNotEmpty(jspOverride)) sJSP = jspOverride;
@@ -484,7 +484,7 @@ public class BlockFormulario extends Block implements FormOperations {
         }
 
         Logger.debug(userInfo.getUtilizador(),abBlock,"generateForm",
-            procData.getSignature() + "Processing field " + fieldNumber + " of type " + fi.getClass().getName());
+            (abBlock==null? procData.getSignature() : procData.getSignature(abBlock.getId())) + "Processing field " + fieldNumber + " of type " + fi.getClass().getName());
 
         
         // update field counter
@@ -614,7 +614,7 @@ public class BlockFormulario extends Block implements FormOperations {
           NameValuePair<Boolean, TabContainerWrapper> tabattr = tabStack.peek();
           if (!tabattr.getName()) {
             Logger.debug(sLogin,abBlock,"generateForm",
-                procData.getSignature() +"field " + fieldNumber + " (type: " + fi.getClass().getName() + ") is inside disabled tab");
+                procData.getSignature(abBlock.getId()) +"field " + fieldNumber + " (type: " + fi.getClass().getName() + ") is inside disabled tab");
             continue;
           }
         }
@@ -674,7 +674,7 @@ public class BlockFormulario extends Block implements FormOperations {
             NameValuePair<Boolean, MenuContainerWrapper> menuattr = menuStack.peek();
             if (!menuattr.getName()) {
               Logger.debug(sLogin,abBlock,"generateForm",
-                  procData.getSignature() +"field " + fieldNumber + " (type: " + fi.getClass().getName() + ") is inside disabled menu");
+                  (abBlock==null? procData.getSignature() : procData.getSignature(abBlock.getId())) +"field " + fieldNumber + " (type: " + fi.getClass().getName() + ") is inside disabled menu");
               continue;
             }
           }
@@ -687,7 +687,7 @@ public class BlockFormulario extends Block implements FormOperations {
         // check if field is disabled
         if (abBlock.checkDisabledField(userInfo, procData, props)) {
           Logger.debug(sLogin,abBlock,"generateForm",
-              procData.getSignature() +"field " + fieldNumber + " (type: " + fi.getClass().getName() + ") is disabled");
+              (abBlock==null? procData.getSignature() : procData.getSignature(abBlock.getId())) +"field " + fieldNumber + " (type: " + fi.getClass().getName() + ") is disabled");
           continue;          
         }
 
@@ -696,13 +696,13 @@ public class BlockFormulario extends Block implements FormOperations {
         props.put(FormProps.sOBLIGATORY_PROP, 
             String.valueOf(FormUtils.checkRequiredField(userInfo, procData, props)));
         Logger.debug(sLogin,abBlock,"generateForm",
-            procData.getSignature() +"field " + fieldNumber + " (type: " + fi.getClass().getName() + ") is obligatory ? " + props.getProperty(FormProps.sOBLIGATORY_PROP));
+            (abBlock==null? procData.getSignature() : procData.getSignature(abBlock.getId())) +"field " + fieldNumber + " (type: " + fi.getClass().getName() + ") is obligatory ? " + props.getProperty(FormProps.sOBLIGATORY_PROP));
 
         // Inicializa o field interface
         fi.setup(userInfo, procData, props, response);
 
         Logger.debug(sLogin,abBlock,"generateForm",
-            procData.getSignature() +"field " + fieldNumber + " setup (type: " + fi.getClass().getName() + ")");               
+            (abBlock==null? procData.getSignature() : procData.getSignature(abBlock.getId())) +"field " + fieldNumber + " setup (type: " + fi.getClass().getName() + ")");               
         
         
         // now set "value" field (if applicable) as well as form suffix
@@ -743,7 +743,7 @@ public class BlockFormulario extends Block implements FormOperations {
               }
               value.setValue(o);
             } catch (Exception e) {
-              Logger.error(sLogin,abBlock,"generateForm", procData.getSignature() +"Error evaluating: " + varName);
+              Logger.error(sLogin,abBlock,"generateForm", (abBlock==null? procData.getSignature() : procData.getSignature(abBlock.getId())) +"Error evaluating: " + varName);
             }
           }
           
@@ -758,7 +758,7 @@ public class BlockFormulario extends Block implements FormOperations {
             
             fieldContent = dtiSimple.format(userInfo, procData, anService, fieldNumber, varName, value, props, response);
             Logger.debug(sLogin,abBlock,"generateForm",
-                procData.getSignature() +"format(" + varName + ")=" + fieldContent);
+                (abBlock==null? procData.getSignature() : procData.getSignature(abBlock.getId())) +"format(" + varName + ")=" + fieldContent);
           }
 
           // HTML PARSING
@@ -839,7 +839,7 @@ public class BlockFormulario extends Block implements FormOperations {
               
               fieldContent = dtiMultiple.formatRow(userInfo, procData, anService, fieldNumber, i, listVarName, row, rowValue, props, response);
               Logger.debug(sLogin,abBlock,"generateForm",
-                  procData.getSignature() +
+                  (abBlock==null? procData.getSignature() : procData.getSignature(abBlock.getId())) +
                   "List formatRow(" + listVarName + ")[" + row + "]=" + fieldContent);
               
               if(rowValue != null && rowValue.getValue() != null && rowValue.getValue().getClass().equals(String.class))
@@ -1023,7 +1023,7 @@ public class BlockFormulario extends Block implements FormOperations {
         }
         else {
           Logger.warning(sLogin,abBlock,"generateForm",
-              procData.getSignature() + "null generated xml for field "
+              (abBlock==null? procData.getSignature() : procData.getSignature(abBlock.getId())) + "null generated xml for field "
               + fieldNumber + " (" + fi.getClass().getName() + ")");
         }
 
@@ -1072,7 +1072,7 @@ public class BlockFormulario extends Block implements FormOperations {
                 catch (Exception ei2) {
                   useIt = false;
                   Logger.error(sLogin,abBlock,"generateForm",
-                      procData.getSignature() +
+                      (abBlock==null? procData.getSignature() : procData.getSignature(abBlock.getId())) +
                       "caught exception evaluation beanshell condition for "
                       + "main and detailed processes <cond>"
                       + showCond + "</cond> (assuming false): "
@@ -1082,7 +1082,7 @@ public class BlockFormulario extends Block implements FormOperations {
               else {
                 useIt = false;
                 Logger.error(sLogin,abBlock,"generateForm",
-                    procData.getSignature() +
+                    (abBlock==null? procData.getSignature() : procData.getSignature(abBlock.getId())) +
                     "caught exception evaluation beanshell condition <cond>"
                     + showCond + "</cond> (assuming false): "
                     + ei.getMessage());
@@ -1149,7 +1149,7 @@ public class BlockFormulario extends Block implements FormOperations {
                 catch (Exception ei) {
                   btmp = false;
                   Logger.error(sLogin,abBlock,"generateForm",
-                      procData.getSignature() + 
+                      (abBlock==null? procData.getSignature() : procData.getSignature(abBlock.getId())) + 
                       "caught exception evaluation beanshell condition <cond>"
                       + showCond2 + "</cond> (assuming false): "
                       + ei.getMessage());
@@ -1164,7 +1164,7 @@ public class BlockFormulario extends Block implements FormOperations {
               String image = formButton.getAttribute(FormButton.ATTR_IMAGE);
               if (StringUtils.isEmpty(image) && StringUtils.isEmpty(text)) {
                 Logger.warning(sLogin,abBlock, "generateForm",
-                    procData.getSignature() +
+                    (abBlock==null? procData.getSignature() : procData.getSignature(abBlock.getId())) +
                     "No text nor image defined for custom button " + formButton.getId() + ".");
               }
               else {                
@@ -1186,7 +1186,7 @@ public class BlockFormulario extends Block implements FormOperations {
             break;
             default:
               Logger.warning(sLogin,abBlock, "generateForm",
-                  procData.getSignature() +
+                  (abBlock==null? procData.getSignature() : procData.getSignature(abBlock.getId())) +
                   "button type " + type.name() + " not supported!!");              
           }
       
@@ -1278,7 +1278,7 @@ public class BlockFormulario extends Block implements FormOperations {
     }
     catch (Throwable t) {
       retObj = "<div style=\"margin-top:30px;font-family:verdana;font-size:11pt;font-color:red\">Ocorreu um erro a gerar a p&aacute;gina.</div>";
-      Logger.error(sLogin,abBlock,"generateForm",procData.getSignature() +"caught exception: " + t.getMessage(), t);
+      Logger.error(sLogin,abBlock,"generateForm",(abBlock==null? procData.getSignature() : procData.getSignature(abBlock.getId())) +"caught exception: " + t.getMessage(), t);
     }
     return retObj;
   }
@@ -1333,7 +1333,7 @@ public class BlockFormulario extends Block implements FormOperations {
         datatypeName = pt.iflow.api.datatypes.Date.class.getName();
         props.setProperty(propName, datatypeName);
         Logger.debug(userInfo.getUtilizador(),this,"getDataType",
-            procData.getSignature() + "Forced date datatype for DateCal var " + varName);
+            procData.getSignature(this.getId()) + "Forced date datatype for DateCal var " + varName);
       }
       else if (fi instanceof pt.iflow.blocks.form.Selection 
           || fi instanceof pt.iflow.blocks.form.TextArea) {      
@@ -1341,14 +1341,14 @@ public class BlockFormulario extends Block implements FormOperations {
         datatypeName = pt.iflow.api.datatypes.Text.class.getName();    
         props.setProperty(propName, datatypeName);
         Logger.debug(userInfo.getUtilizador(),this,"getDataType",
-            procData.getSignature() + "Forced text datatype for "
+            procData.getSignature(this.getId()) + "Forced text datatype for "
             + fi.getClass().getName() + " var " + varName);
       }
       else if (fi instanceof pt.iflow.blocks.form.File) {
         datatypeName = pt.iflow.api.datatypes.Text.class.getName();    
         props.setProperty(propName, datatypeName);
         Logger.debug(userInfo.getUtilizador(),this,"getDataType",
-            procData.getSignature() + "Forced text datatype for "
+            procData.getSignature(this.getId()) + "Forced text datatype for "
             + fi.getClass().getName() + " var " + varName);        
       }
     }
@@ -1356,7 +1356,7 @@ public class BlockFormulario extends Block implements FormOperations {
     if (StringUtils.isNotEmpty(datatypeName)) {
 
       Logger.debug(userInfo.getUtilizador(),this,"getDataType",
-          procData.getSignature() + "Datatype: " + datatypeName + " for var " + varName);
+          procData.getSignature(this.getId()) + "Datatype: " + datatypeName + " for var " + varName);
 
       Class<? extends DataTypeInterface> cClass = 
         (Class<? extends DataTypeInterface>)Class.forName(datatypeName);
@@ -1367,7 +1367,7 @@ public class BlockFormulario extends Block implements FormOperations {
     }
     else {
       Logger.debug(userInfo.getUtilizador(),this,"getDataType",
-          procData.getSignature() + "Empty datatype for var " + varName);
+          procData.getSignature(this.getId()) + "Empty datatype for var " + varName);
     }
 
     return dti;
@@ -1580,7 +1580,7 @@ public class BlockFormulario extends Block implements FormOperations {
           DataTypeInterface dti = block.getDataType(userInfo, procData, varname, i, props, null);
           if (dti != null && dti instanceof pt.iflow.api.datatypes.Link) {
             Logger.debug(login, block, "preProcessMultipleVars", 
-                procData.getSignature() + varname + " is link.. assuming null values");
+                (block==null? procData.getSignature() : procData.getSignature(block.getId())) + varname + " is link.. assuming null values");
             
             List<ProcessVariableValue> values = new ArrayList<ProcessVariableValue>();
             for (int ii=0; ii < nMaxRow; ii++) {
@@ -1592,7 +1592,7 @@ public class BlockFormulario extends Block implements FormOperations {
           }
         } catch (Exception e) {
           Logger.warning(login, block, "preProcessMultipleVars", 
-              procData.getSignature() + "exception getting datatype... ignoring var " + varname);
+              (block==null? procData.getSignature() : procData.getSignature(block.getId())) + "exception getting datatype... ignoring var " + varname);
         }
       }
 
@@ -1680,7 +1680,7 @@ public class BlockFormulario extends Block implements FormOperations {
         if (procData.isListVar(sRowControlList)) {
           if (procData.getList(sRowControlList) == null) {
             Logger.warning(login,block,"handleRowControlList",
-                procData.getSignature() + "ROWCONTROLLIST VAR " + sRowControlList + " IS NULL (perhaps not defined in catalogue)!");                  
+                (block==null? procData.getSignature() : procData.getSignature(block.getId())) + "ROWCONTROLLIST VAR " + sRowControlList + " IS NULL (perhaps not defined in catalogue)!");                  
           }
           else {
             for (int rcl=0; rcl < procData.getList(sRowControlList).size(); rcl++) {
@@ -1741,7 +1741,7 @@ public class BlockFormulario extends Block implements FormOperations {
           }
         } else {
           Logger.warning(login,block,"handleRowControlList",
-              procData.getSignature() +
+              (block==null? procData.getSignature() : procData.getSignature(block.getId())) +
               "ROW_CONTROL_LIST attribute (" + sRowControlList + 
               ") is not an array in procdata for field " + fieldNumber + "... ignoring");
         }
@@ -1758,7 +1758,7 @@ public class BlockFormulario extends Block implements FormOperations {
       }
       catch (Exception eeval) {
         Logger.warning(userInfo.getUtilizador(), this, "checkDisabledField", 
-            procData.getSignature() + "Error evaluating disable condition " + disableCond, eeval);
+            (this==null? procData.getSignature() : procData.getSignature(this.getId())) + "Error evaluating disable condition " + disableCond, eeval);
       }
     }
     return disableField;
@@ -1934,12 +1934,12 @@ public class BlockFormulario extends Block implements FormOperations {
 
       if (fi == null) {
         Logger.warning(sLogin, this, "processForm", 
-            retObj.getSignature() + "Field '" + String.valueOf(field) + "' is null... Ignoring...");
+          (this==null? retObj.getSignature() : retObj.getSignature(this.getId())) + "Field '" + String.valueOf(field) + "' is null... Ignoring...");
         continue;
       }
 
       Logger.debug(userInfo.getUtilizador(),this,"processForm",
-          retObj.getSignature() + "Link processing: field " + field + " of type " + fi.getClass().getName());
+          (this==null? retObj.getSignature() : retObj.getSignature(this.getId()))+ "Link processing: field " + field + " of type " + fi.getClass().getName());
 
       try {
         Properties props = getFieldProperties(userInfo, field);
@@ -1967,7 +1967,7 @@ public class BlockFormulario extends Block implements FormOperations {
                 retObj.parseAndSet(buttonVariable, buttonValue);
                 this.addToLog("Field button " + buttonId + " set '" + buttonVariable + "' with '" + buttonValue + "';");
               } catch (ParseException e) {
-                Logger.error(userInfo.getUtilizador(), this, "resetFormButtons",  retObj.getSignature() + "caught exception in button with var " + buttonVariable + " and value " + buttonValue + ": ", e);
+                Logger.error(userInfo.getUtilizador(), this, "resetFormButtons",   (this==null? retObj.getSignature() : retObj.getSignature(this.getId())) + "caught exception in button with var " + buttonVariable + " and value " + buttonValue + ": ", e);
               }
             }
           }
@@ -2131,7 +2131,7 @@ public class BlockFormulario extends Block implements FormOperations {
         }
       } catch (Exception e) {
         Logger.error(sLogin, this, "processForm", 
-            retObj.getSignature() + "caught exception processing links in field "
+            (this==null? retObj.getSignature() : retObj.getSignature(this.getId())) + "caught exception processing links in field "
             + fi.getDescription() + ": " + e.getMessage(), e);
         continue;
       }
@@ -2142,7 +2142,7 @@ public class BlockFormulario extends Block implements FormOperations {
       this.addToLog("Link Clicked... Exit Form Processing;");
       this.saveLogs(userInfo, pdProcData, this);
       Logger.info(sLogin, this, "processForm", 
-          retObj.getSignature() + "link pressed... early exit");
+          (this==null? retObj.getSignature() : retObj.getSignature(this.getId())) + "link pressed... early exit");
       return retObj;
     }
 
@@ -2150,7 +2150,7 @@ public class BlockFormulario extends Block implements FormOperations {
       this.addToLog("Button clicked with ignore form processing flag... Exit Form Processing;");
       this.saveLogs(userInfo, pdProcData, this);
       Logger.info(sLogin, this, "processForm", 
-          retObj.getSignature() + "Button clicked with ignore form processing flag... early exit");
+          (this==null? retObj.getSignature() : retObj.getSignature(this.getId())) + "Button clicked with ignore form processing flag... early exit");
       return retObj;      
     }
 
@@ -2166,7 +2166,7 @@ public class BlockFormulario extends Block implements FormOperations {
       }
 
       Logger.debug(userInfo.getUtilizador(),this,"processForm",
-          retObj.getSignature() + "Processing field " + field + " of type " + fi.getClass().getName());
+          (this==null? retObj.getSignature() : retObj.getSignature(this.getId())) + "Processing field " + field + " of type " + fi.getClass().getName());
 
       try {
 
@@ -2334,13 +2334,13 @@ public class BlockFormulario extends Block implements FormOperations {
           if (FormUtils.checkOutputField(props)) {
             // output/disabled field... DO NOT PROCESS
             Logger.debug(sLogin, this, "processForm", 
-                pdProcData.getSignature() + "Single var " + varName + " is output only or disabled.." + " continuing to next one");
+                pdProcData.getSignature(this.getId()) + "Single var " + varName + " is output only or disabled.." + " continuing to next one");
             continue;
           }
-
+         
           if (Logger.isDebugEnabled()) {
             Logger.debug(sLogin, this, "processForm", 
-                pdProcData.getSignature() + "processing simple var " + varName);
+                pdProcData.getSignature(this.getId()) + "processing simple var " + varName);
           }
 
           // process first special fields
@@ -2351,8 +2351,8 @@ public class BlockFormulario extends Block implements FormOperations {
             // FILE
 
             Logger.debug(sLogin, this, "processForm", 
-                retObj.getSignature() + "processing file var: " + varName);
-
+                (this==null? retObj.getSignature() : retObj.getSignature(this.getId())) + "processing file var: " + varName);
+        
             ProcessListVariable docsVar = retObj.getList(varName);
             ListIterator<ProcessListItem> docs = docsVar != null ? docsVar.getItemIterator() : null;
             List<ProcessListItem> removedDocs = new ArrayList<ProcessListItem>();
@@ -2381,7 +2381,7 @@ public class BlockFormulario extends Block implements FormOperations {
                   removedDocs.add(docItem);
                 } else {
                   Logger.error(sLogin, this, "processForm", 
-                      retObj.getSignature() + "error removing file for var " + varName);
+                      (this==null? retObj.getSignature() : retObj.getSignature(this.getId())) + "error removing file for var " + varName);
                   retObj.setError("Ocorreu um erro ao remover o ficheiro");
                 }
               } else {
@@ -2398,7 +2398,7 @@ public class BlockFormulario extends Block implements FormOperations {
                     Document doc = new DocumentData(nDocId, fileName, ffFile.getData(), new java.util.Date());
                     doc = docBean.updateDocument(userInfo, pdProcData, doc);
                     Logger.info(sLogin, this, "processForm", 
-                        retObj.getSignature() + "file (" + doc.getFileName() + 
+                        (this==null? retObj.getSignature() : retObj.getSignature(this.getId())) + "file (" + doc.getFileName() + 
                         ") for var " + varName + " updated.");
                   }
                 }
@@ -2429,7 +2429,7 @@ public class BlockFormulario extends Block implements FormOperations {
                   Document doc = new DocumentData(fileName, ffFile.getData());
                   doc = docBean.addDocument(userInfo, pdProcData, doc);
                   Logger.info(sLogin, this, "processForm", 
-                      retObj.getSignature() + "file (" + doc.getFileName() + 
+                      (this==null? retObj.getSignature() : retObj.getSignature(this.getId()))+ "file (" + doc.getFileName() + 
                       ") for var " + varName + " added.");
 
                   // now update process
@@ -2513,12 +2513,12 @@ public class BlockFormulario extends Block implements FormOperations {
             }
             else {
               Logger.debug(sLogin, this, "processForm", 
-                  pdProcData.getSignature() + "var " + varName + " has no datatype associated.. using form value");
+                  pdProcData.getSignature(this.getId()) + "var " + varName + " has no datatype associated.. using form value");
               String formValue = afdFormData.hasParameter(varName) ? afdFormData.getParameter(varName) : null; 
               retObj.parseAndSet(varName, formValue); 
               logBuffer.append("Set '" + varName + "' with '" + formValue + "'");
             }
-
+           
             if (parseResult != null) {
               // format to a more friendly message
               alErrors.add(FormUtils.formatParsingError(props, varName, parseResult));
@@ -2526,7 +2526,7 @@ public class BlockFormulario extends Block implements FormOperations {
             else {
               this.addToLog(logBuffer.toString());
               Logger.debug(sLogin, this, "processForm", 
-                  pdProcData.getSignature() + logBuffer.toString());
+                  pdProcData.getSignature(this.getId()) + logBuffer.toString());
 
               // fields' special cases
               // TODO / FIXME : MOVE TO FIELD IMPLEMENTATION ..
@@ -2549,7 +2549,7 @@ public class BlockFormulario extends Block implements FormOperations {
                   retObj.parseAndSet(addonfull, addonvalue);
                   this.addToLog("Set selection text var '" + addonfull + "' as '" + addonvalue + "';");
                   Logger.debug(sLogin, this, "processForm", 
-                      pdProcData.getSignature() + "setting selection text var: " + addonfull + "=" + addonvalue);
+                      pdProcData.getSignature(this.getId()) + "setting selection text var: " + addonfull + "=" + addonvalue);
 
                 }
               }
@@ -2582,26 +2582,26 @@ public class BlockFormulario extends Block implements FormOperations {
           //                + " marked as disabled. Ignoring....");
           //            continue;
           //          }
-
+          
           if (FormUtils.checkOutputField(props, i)) {
             // output/disabled field.. do not process
             Logger.debug(sLogin, this, "processForm", 
-                retObj.getSignature() + "Multiple var " + i + "_variable=" + listVarName + " is output only or disabled.."
+                (this==null? retObj.getSignature() : retObj.getSignature(this.getId())) + "Multiple var " + i + "_variable=" + listVarName + " is output only or disabled.."
                 + " continuing to next one");
             continue;
           }
 
           if (hsIgnoreColumns.contains(listVarName)) {
             Logger.debug(sLogin, this, "processForm", 
-                retObj.getSignature() + "ignoring column for " + listVarName);
+                (this==null? retObj.getSignature() : retObj.getSignature(this.getId())) + "ignoring column for " + listVarName);
             continue;
           }
 
           if (Logger.isDebugEnabled()) {
             Logger.debug(sLogin, this, "processForm", 
-                pdProcData.getSignature() + "processing list var " + listVarName);
+                pdProcData.getSignature(this.getId()) + "processing list var " + listVarName);
           }
-
+      
           props.setProperty("varIndex", String.valueOf(i));
 
           // DATATYPE
@@ -2614,12 +2614,12 @@ public class BlockFormulario extends Block implements FormOperations {
             }
             if (fi.isArrayTable() && !(dtiMultiple instanceof ArrayTableProcessingCapable)) {
               Logger.warning(sLogin, this, "processForm", 
-                  retObj.getSignature() + "multiple var " + i + "_variable=" + listVarName + 
+                  (this==null? retObj.getSignature() : retObj.getSignature(this.getId())) + "multiple var " + i + "_variable=" + listVarName + 
                   " of datatype " + dtiMultiple.getClass().getName()
                   + " is not capable of processing array table fields.. continuing to next field");
               continue;
             }
-
+           
             Map<String,Object> deps = new HashMap<String, Object>();
 
             String extraProp = i + "_" + FormProps.sEXTRA_PROPS;
@@ -2643,12 +2643,12 @@ public class BlockFormulario extends Block implements FormOperations {
           }
           else {
             Logger.debug(sLogin, this, "processForm", 
-                retObj.getSignature() + "setting list var " + listVarName + " but no datatype defined!!");
+                (this==null? retObj.getSignature() : retObj.getSignature(this.getId())) + "setting list var " + listVarName + " but no datatype defined!!");
             ProcessListVariable listVar = retObj.getList(listVarName); 
             for (int item=0; item < nMaxRow; item++) {
               if (FormUtils.checkOutputField(props, i, item)) {
                 Logger.debug(sLogin, this, "processForm", 
-                    retObj.getSignature() + "Row " + item + " of list var '" + listVarName + " is output only... continuing to next row.");
+                    (this==null? retObj.getSignature() : retObj.getSignature(this.getId())) + "Row " + item + " of list var '" + listVarName + " is output only... continuing to next row.");
                 continue;
               }
               String formName = FormUtils.getListKey(listVarName, item);
@@ -2661,7 +2661,7 @@ public class BlockFormulario extends Block implements FormOperations {
 
         } // for vars
       } catch (Exception e) {
-        Logger.error(sLogin, this, "processForm", retObj.getSignature() + "caught exception in field " + fi.getDescription() + ": "
+        Logger.error(sLogin, this, "processForm",  (this==null? retObj.getSignature() : retObj.getSignature(this.getId())) + "caught exception in field " + fi.getDescription() + ": "
             + e.getMessage(), e);
         alErrors.add("Erro ao processar campo " + fi.getDescription());
 
@@ -2705,7 +2705,7 @@ public class BlockFormulario extends Block implements FormOperations {
             } catch (Exception ei) {
               beval = true;
               Logger.error(sLogin, this, "processForm", 
-                  pdProcData.getSignature()
+                  pdProcData.getSignature(this.getId())
                   + "caught exception evaluation beanshell: " + valExpress + " :assuming true", ei);
             }
             if (beval) {
@@ -2771,7 +2771,7 @@ public class BlockFormulario extends Block implements FormOperations {
             this.addToLog("Button " + formButton.getId() + " set '" + customVar + "' with '" + value + "';");
           } catch (ParseException e) {
             Logger.error(user, this, "resetFormButtons", 
-                procData.getSignature() + "caught exception in button with var " + customVar
+                (this==null? procData.getSignature() : procData.getSignature(this.getId())) + "caught exception in button with var " + customVar
                 + " and value " + value + ": " + e.getMessage(), e);
             continue;
           }
@@ -2804,7 +2804,7 @@ public class BlockFormulario extends Block implements FormOperations {
     try {
       nField = Integer.parseInt(asField);
     } catch (Exception e) {
-      Logger.error(userInfo.getUtilizador(), this, "exportFieldToExcel", procData.getSignature()
+      Logger.error(userInfo.getUtilizador(), this, "exportFieldToExcel", (this==null? procData.getSignature() : procData.getSignature(this.getId()))
           + "caught exception parsing field id=" + asField);
       return "Campo a exportar em falta.";
     }

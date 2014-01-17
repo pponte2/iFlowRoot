@@ -93,7 +93,7 @@ public class BlockGetUserProfiles extends Block {
 
       if (StringUtilities.isEmpty(sUserIDString)) {
         Logger.error(login, this, "after", 
-            procData.getSignature() + "empty value for userid attribute");
+            procData.getSignature(this.getId()) + "empty value for userid attribute");
         outPort = portError;
       } else {
         String sUserID = procData.transform(userInfo, sUserIDString);
@@ -106,13 +106,13 @@ public class BlockGetUserProfiles extends Block {
 
         if (StringUtilities.isEmpty(sUserID)) {
           Logger.error(login, this, "after", 
-              procData.getSignature() + "empty value for parsed userid");
+              procData.getSignature(this.getId()) + "empty value for parsed userid");
           outPort = portError;
         } else {
           Hashtable<String,String> fields = getFields();
           if (fields.size() == 0) {
             Logger.error(login,this,"after",
-                procData.getSignature() + "no output variables configured");  
+                procData.getSignature(this.getId()) + "no output variables configured");  
             outPort = portError;
           } else {
             AuthProfile ap = BeanFactory.getAuthProfileBean();
@@ -147,7 +147,7 @@ public class BlockGetUserProfiles extends Block {
       }
     } catch (Exception e) {
       Logger.error(login, this, "after", 
-          procData.getSignature() + "caught exception: " + e.getMessage(), e);
+          procData.getSignature(this.getId()) + "caught exception: " + e.getMessage(), e);
       outPort = portError;
     }
 

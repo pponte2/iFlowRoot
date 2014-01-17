@@ -57,7 +57,7 @@ public class BlockAdminOperationsRedirectProcessToUser extends BlockAdminOperati
       }
 
       if (currentUser != null && newUser != null) {
-        Logger.debug(login, this, "after", procData.getSignature() + "Attempting to redirect process with flowid [" + flowidStr
+        Logger.debug(login, this, "after", procData.getSignature(this.getId()) + "Attempting to redirect process with flowid [" + flowidStr
             + "], pid [" + pidStr + "], subpid [" + subpidStr + "], from user [" + currentUser + "], to user [" + newUser + "]");
 
         AdministrationProcessManager admProcessManager = BeanFactory.getAdministrationProcessManagerBean();
@@ -66,16 +66,16 @@ public class BlockAdminOperationsRedirectProcessToUser extends BlockAdminOperati
           outPort = portFalse;
         }
       } else {
-        Logger.error(login, this, "after", procData.getSignature()
+        Logger.error(login, this, "after", procData.getSignature(this.getId())
             + "Unable to find parameters activity current user and/or new user");
         outPort = portFalse;
       }
 
     } catch (NumberFormatException e) {
-      Logger.error(login, this, "after", procData.getSignature() + "caught NumberFormatException: invalid entry parameter flowid ["
+      Logger.error(login, this, "after", procData.getSignature(this.getId()) + "caught NumberFormatException: invalid entry parameter flowid ["
           + flowidStr + "], pid [" + pidStr + "], subpid [" + subpidStr + "], final state [" + final_stateStr + "]", e);
     } catch (Exception e) {
-      Logger.error(login, this, "after", procData.getSignature() + "caught exception: " + e.getMessage(), e);
+      Logger.error(login, this, "after", procData.getSignature(this.getId()) + "caught exception: " + e.getMessage(), e);
       outPort = portFalse;
     }
 

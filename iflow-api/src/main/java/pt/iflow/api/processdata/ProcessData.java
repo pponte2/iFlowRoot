@@ -214,6 +214,10 @@ public class ProcessData {
     return _header.getSignature();
   }
   
+  public String getSignature(int blockId) {
+    return _header.getSignature(blockId);
+  }
+  
   public boolean isReadOnly() {
     return _readOnlyMode;
   }

@@ -82,13 +82,13 @@ public class BlockEnd extends Block implements MessageBlock {
               getProcessManagerBean().updateActivity(userInfo, activity);
 
             } catch (Exception ei) {
-              Logger.error(login, this, "before", procData.getSignature() + "Caught an unexpected exception updateing activities: "
+              Logger.error(login, this, "before", procData.getSignature(this.getId()) + "Caught an unexpected exception updateing activities: "
                   + ei.getMessage(), ei);
             }
         
         } catch (Exception e) {
             Logger.error(login, this, "before",
-                procData.getSignature() + "END BLOCK: caught exception unscheduling activities: "
+                procData.getSignature(this.getId()) + "END BLOCK: caught exception unscheduling activities: "
                             + e.getMessage(), e);
         }
         

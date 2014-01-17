@@ -45,11 +45,11 @@ public class BlockNOP extends Block {
       pm.disableActivities(userInfo, procData);
 
       Logger.info(userInfo.getUtilizador(), this, "before",
-          procData.getSignature() + "activities disabled");
+          procData.getSignature(this.getId()) + "activities disabled");
 
     } catch (Exception e) {
       Logger.error(userInfo.getUtilizador(), this, "before",
-          procData.getSignature() + 
+          procData.getSignature(this.getId()) + 
           "Caught an unexpected exception disabling activities" ,e);
     }
 
@@ -86,11 +86,11 @@ public class BlockNOP extends Block {
       pm.enableActivities(userInfo, procData);
 
       Logger.info(userInfo.getUtilizador(), this, "before",
-          procData.getSignature() + "activities enabled");
+          procData.getSignature(this.getId()) + "activities enabled");
 
     } catch (Exception e) {
       Logger.error(userInfo.getUtilizador(), this, "before",
-          procData.getSignature() + 
+          procData.getSignature(this.getId()) + 
           "Caught an unexpected exception enabling activities" ,e);
     }    
   }

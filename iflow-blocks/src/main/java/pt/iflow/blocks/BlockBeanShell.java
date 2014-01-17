@@ -72,11 +72,11 @@ public class BlockBeanShell extends Block {
       if (StringUtils.isNotBlank(sCode)){
         procData.evalAndUpdate(userInfo, sCode);
       } else {
-        Logger.warning(login,this,"after",procData.getSignature() + "empty code");
+        Logger.warning(login,this,"after",procData.getSignature(this.getId()) + "empty code");
       }
     } catch (Exception e) {
       Logger.error(login,this,"after",
-          procData.getSignature() + "caught exception: " + e.getMessage(), e);
+          procData.getSignature(this.getId()) + "caught exception: " + e.getMessage(), e);
       outPort = portError;
     }
 

@@ -117,7 +117,7 @@ public class BlockEmailPerfil extends Block {
         // validations
         if (StringUtils.isEmpty(perfil)) {
           Logger.error(userInfo.getUtilizador(),this,"after",
-              procData.getSignature() + "No perfil defined");
+              procData.getSignature(this.getId()) + "No perfil defined");
           outPort = portError;
         } else {
           if (StringUtils.isEmpty(template) || template.equals(_sSELECT)) {
@@ -126,15 +126,15 @@ public class BlockEmailPerfil extends Block {
 
             if (StringUtils.isEmpty(from)) {
               Logger.error(userInfo.getUtilizador(),this,"after",
-                  procData.getSignature() + "No from defined");
+                  procData.getSignature(this.getId()) + "No from defined");
               outPort = portError;
             } else if (StringUtils.isEmpty(subject)) {
               Logger.error(userInfo.getUtilizador(),this,"after",
-                  procData.getSignature() + "No subject defined");
+                  procData.getSignature(this.getId()) + "No subject defined");
               outPort = portError;
             } else if (StringUtils.isEmpty(message)) {
               Logger.error(userInfo.getUtilizador(),this,"after",
-                  procData.getSignature() + "No message defined");
+                  procData.getSignature(this.getId()) + "No message defined");
               outPort = portError;
             }
           }
@@ -191,7 +191,7 @@ public class BlockEmailPerfil extends Block {
                 if (StringUtils.isEmpty(sMail)) {
                   logMsg.append("Empty email for user " + sUser + ";");
                   Logger.warning(userInfo.getUtilizador(), this, "after", 
-                      procData.getSignature() + "Empty email for user " + sUser);
+                      procData.getSignature(this.getId()) + "Empty email for user " + sUser);
                   continue;
                 }
                 
@@ -212,7 +212,7 @@ public class BlockEmailPerfil extends Block {
         }
       } catch (Exception e) {
         Logger.error(userInfo.getUtilizador(),this,"after",
-            procData.getSignature() + "caught exception: " + e.getMessage(), e);
+            procData.getSignature(this.getId()) + "caught exception: " + e.getMessage(), e);
         outPort = portError;
       }
     }

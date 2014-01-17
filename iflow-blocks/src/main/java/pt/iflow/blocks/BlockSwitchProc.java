@@ -72,16 +72,16 @@ public class BlockSwitchProc extends Block {
       if (a != null) {
         page = a.url;
         Logger.debug(login, this, "before",
-            procData.getSignature() + "Found activity for pid/subpid: " + newpid + "/" + newsubpid);
+            procData.getSignature(this.getId()) + "Found activity for pid/subpid: " + newpid + "/" + newsubpid);
       }
       else {
         Logger.warning(login, this, "before",
-            procData.getSignature() + "No activity found for selected pid/subpid: " + newpid + "/" + newsubpid);	  
+            procData.getSignature(this.getId()) + "No activity found for selected pid/subpid: " + newpid + "/" + newsubpid);	  
       }
     }
     catch (Exception e) {
       Logger.error(login, this, "before",
-          procData.getSignature() + "Caught exception: " + e.getMessage());
+          procData.getSignature(this.getId()) + "Caught exception: " + e.getMessage());
     }
 
     return page;

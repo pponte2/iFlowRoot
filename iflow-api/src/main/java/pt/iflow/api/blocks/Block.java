@@ -648,7 +648,7 @@ public abstract class Block {
           } catch (EvalException e) {
             // not able to transform.. leave it as it is..
             Logger.info(userInfo.getUtilizador(), this, "processText", 
-                procData.getSignature() + 
+                procData.getSignature(this.getId()) + 
                 "assumed text '" + text + "' was transformable.. bad assumption! reverted to original value");
           }
         }            
@@ -688,7 +688,7 @@ public abstract class Block {
 
         if (StringUtils.isEmpty(sCondition)) {
           Logger.warning(login,this,"after", 
-              procData.getSignature() + "empty condition to evaluate!! Assuming false");
+              procData.getSignature(this.getId()) + "empty condition to evaluate!! Assuming false");
           bEvalResult = false;
         }
         else {
@@ -698,7 +698,7 @@ public abstract class Block {
           } catch (Exception ei) {
             bEvalResult = false;
             Logger.error(login,this,"after", 
-                procData.getSignature() + "caught exception evaluation condition (assuming false): " + sCondition, ei);
+                procData.getSignature(this.getId()) + "caught exception evaluation condition (assuming false): " + sCondition, ei);
           }
         }
 
@@ -706,7 +706,7 @@ public abstract class Block {
       }
       catch (Exception e) {
         Logger.error(login,this,"after",
-            procData.getSignature() + "caught exception: " + e.getMessage(), e);
+            procData.getSignature(this.getId()) + "caught exception: " + e.getMessage(), e);
         return false;
       }
     }

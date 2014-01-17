@@ -121,7 +121,7 @@ public class BlockGetUsersInProfile extends Block {
                 ProcessListVariable pvar = procData.getList(var);
                 pvar.clear();
                 Logger.debug(login, this, "after", 
-                    procData.getSignature() + "cleared list var " + var);
+                    procData.getSignature(this.getId()) + "cleared list var " + var);
               }
             }
             
@@ -162,7 +162,7 @@ public class BlockGetUsersInProfile extends Block {
       }
     } catch (Exception e) {
       Logger.error(login, this, "after", 
-          procData.getSignature() + "caught exception: " + e.getMessage(), e);
+          procData.getSignature(this.getId()) + "caught exception: " + e.getMessage(), e);
       outPort = portError;
     }
 

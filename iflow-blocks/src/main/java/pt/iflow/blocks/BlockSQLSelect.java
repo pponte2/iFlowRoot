@@ -192,7 +192,7 @@ public class BlockSQLSelect extends BlockSQL {
         if (sWhere.equals("")) sWhere = null;
       }
       catch (Exception e) {
-        Logger.error(login, this, "after", procData.getSignature() + "Error in where: '"+ sWhere +"'");
+        Logger.error(login, this, "after", procData.getSignature(this.getId()) + "Error in where: '"+ sWhere +"'");
         outPort = portError;
         sWhere = null;
       }
@@ -205,7 +205,7 @@ public class BlockSQLSelect extends BlockSQL {
       }
       catch (Exception e) {
         sGroup = null;
-        Logger.error(login, this, "after", procData.getSignature() + "Error in group: '"+ sGroup +"'");
+        Logger.error(login, this, "after", procData.getSignature(this.getId()) + "Error in group: '"+ sGroup +"'");
         outPort = portError;
       }
       try {
@@ -217,7 +217,7 @@ public class BlockSQLSelect extends BlockSQL {
       }
       catch (Exception e) {
         sOrder = null;
-        Logger.error(login, this, "after", procData.getSignature() + "Error in order: '"+ sOrder +"'");
+        Logger.error(login, this, "after", procData.getSignature(this.getId()) + "Error in order: '"+ sOrder +"'");
         outPort = portError;
       }
       
@@ -246,7 +246,7 @@ public class BlockSQLSelect extends BlockSQL {
 
 
       if (sSel == null || sFrom == null) {
-        Logger.error(login, this, "after", procData.getSignature() + "Empty select or from");
+        Logger.error(login, this, "after", procData.getSignature(this.getId()) + "Empty select or from");
         outPort = portError;
       } else {
         try {
@@ -265,7 +265,7 @@ public class BlockSQLSelect extends BlockSQL {
           String aggregator = selection.getAggregator();
 
           if(null == elems) {
-            Logger.error(login, this, "after", procData.getSignature() + "No elements for parsed selection");            
+            Logger.error(login, this, "after", procData.getSignature(this.getId()) + "No elements for parsed selection");            
             outPort = portError;
           } else {
             String sDateFormat = procData.getFormatted(Const.sFLOW_DATE_FORMAT);
@@ -301,14 +301,14 @@ public class BlockSQLSelect extends BlockSQL {
         }
         catch (Exception e) {
           Logger.error(login,this,"after",
-              procData.getSignature() + "caught exception: " + e.getMessage(), e);
+              procData.getSignature(this.getId()) + "caught exception: " + e.getMessage(), e);
           outPort = portError;
         }
       }
     }
 
     if (outPort != portError && StringUtils.isEmpty(sQuery)) {
-      Logger.error(login, this, "after", procData.getSignature() + "Empty query string");
+      Logger.error(login, this, "after", procData.getSignature(this.getId()) + "Empty query string");
       outPort = portError;
     }
     
@@ -318,7 +318,7 @@ public class BlockSQLSelect extends BlockSQL {
         ds = Utils.getUserDataSource(sDataSource);
         if (null == ds) {
           outPort = portError;
-          Logger.error(login, this, "after", procData.getSignature() + "Unable to get user datasource " + sDataSource);
+          Logger.error(login, this, "after", procData.getSignature(this.getId()) + "Unable to get user datasource " + sDataSource);
         } else {
           db = ds.getConnection();
           st = db.createStatement();
@@ -483,12 +483,12 @@ public class BlockSQLSelect extends BlockSQL {
       } 
       catch (SQLException sqle) {
         Logger.error(login,this,"after",
-            procData.getSignature() + "caught sql exception: " + sqle.getMessage(), sqle);
+            procData.getSignature(this.getId()) + "caught sql exception: " + sqle.getMessage(), sqle);
         outPort = portError;
       }
       catch (Exception e) {
         Logger.error(login,this,"after",
-            procData.getSignature() + "caught exception: " + e.getMessage(), e);
+            procData.getSignature(this.getId()) + "caught exception: " + e.getMessage(), e);
         outPort = portError;
       }
       finally {

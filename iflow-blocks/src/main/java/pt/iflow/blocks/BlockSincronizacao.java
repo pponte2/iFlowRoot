@@ -134,7 +134,7 @@ public class BlockSincronizacao extends Block {
       }
       catch (SQLException sqle) {
           Logger.error(login,this,"canProceed",
-              procData.getSignature() + "caught sql exception: " + sqle.getMessage(), sqle);
+              procData.getSignature(this.getId()) + "caught sql exception: " + sqle.getMessage(), sqle);
       }
       finally {
           DatabaseInterface.closeResources(db,st,rs);
@@ -261,7 +261,7 @@ public class BlockSincronizacao extends Block {
       catch (Exception e) {
           errorManager.fire(errorKey);
           Logger.error(login, this, "after", 
-              procData.getSignature() + "Exception joining processes", e);
+              procData.getSignature(this.getId()) + "Exception joining processes", e);
           return null;
       }
       errorManager.close(errorKey);

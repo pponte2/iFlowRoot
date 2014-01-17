@@ -104,7 +104,7 @@ public class BlockCheckAuthentication extends Block {
     }
     catch (Exception e) {
       Logger.error(userInfo.getUtilizador(),this,"after",
-          procData.getSignature() + "Exception caught: " + e.getMessage());
+          procData.getSignature(this.getId()) + "Exception caught: " + e.getMessage());
       e.printStackTrace();
     }
 

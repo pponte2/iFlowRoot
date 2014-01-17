@@ -115,7 +115,7 @@ public class BlockForwardUp extends Block implements MessageBlock {
             }
         } catch (Exception e) {
             Logger.error(login, this, "before", 
-                procData.getSignature() + "exception caught: " + e.getMessage(), e);
+                procData.getSignature(this.getId()) + "exception caught: " + e.getMessage(), e);
             bOk = false;
         }
         

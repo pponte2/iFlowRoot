@@ -185,7 +185,7 @@ public class BlockDateOperation extends Block {
     }
     catch (Exception e) {
       Logger.error(login, this, "after", 
-          procData.getSignature() + "Error performing date operation: " + e.getMessage(), e);
+          procData.getSignature(this.getId()) + "Error performing date operation: " + e.getMessage(), e);
       return portError;
     }
     

@@ -58,7 +58,7 @@ public class BlockAdminOperationsUndoProcess extends BlockAdminOperations {
       if (flow_stateStr != null && midStr != null) {
         int flow_state = Integer.parseInt(flow_stateStr);
         int mid = Integer.parseInt(midStr);
-        Logger.debug(login, this, "after", procData.getSignature() + "Attempting to undo process with flowid [" + flowidStr
+        Logger.debug(login, this, "after", procData.getSignature(this.getId()) + "Attempting to undo process with flowid [" + flowidStr
             + "], pid [" + pidStr + "], subpid [" + subpidStr + "], to flowstate [" + flow_stateStr + "], and mid [" + mid
             + "]");
 
@@ -71,16 +71,16 @@ public class BlockAdminOperationsUndoProcess extends BlockAdminOperations {
           outPort = portTrue;
         }
       } else {
-        Logger.error(login, this, "after", procData.getSignature() + "Unable to find parameters flow_state and/or mid");
+        Logger.error(login, this, "after", procData.getSignature(this.getId()) + "Unable to find parameters flow_state and/or mid");
         outPort = portFalse;
       }
 
     } catch (NumberFormatException e) {
-      Logger.error(login, this, "after", procData.getSignature() + "caught NumberFormatException: invalid entry parameter flowid ["
+      Logger.error(login, this, "after", procData.getSignature(this.getId()) + "caught NumberFormatException: invalid entry parameter flowid ["
           + flowidStr + "], pid [" + pidStr + "], subpid [" + subpidStr + "], final state [" + final_stateStr + "]", e);
       outPort = portFalse;
     } catch (Exception e) {
-      Logger.error(login, this, "after", procData.getSignature() + "caught exception: " + e.getMessage(), e);
+      Logger.error(login, this, "after", procData.getSignature(this.getId()) + "caught exception: " + e.getMessage(), e);
       outPort = portFalse;
     }
 

@@ -117,12 +117,12 @@ public class BlockEventTrigger extends Block {
 
             if (flowid == null || pid == null || subpid == null || Integer.parseInt(flowid) < 0
                     || Integer.parseInt(pid) < 0 || Integer.parseInt(subpid) < 0) {
-                Logger.error(login, this, "after", procData.getSignature() + "Error in flowid, pid, subpid: " + flowid
+                Logger.error(login, this, "after", procData.getSignature(this.getId()) + "Error in flowid, pid, subpid: " + flowid
                         + "," + pid + "," + subpid);
                 outPort = portError;
             }
         } catch (Exception e) {
-            Logger.error(login, this, "after", procData.getSignature() + "Error getting flowid, pid, subpid");
+            Logger.error(login, this, "after", procData.getSignature(this.getId()) + "Error getting flowid, pid, subpid");
             outPort = portError;
         }
 
@@ -131,7 +131,7 @@ public class BlockEventTrigger extends Block {
             try {
                 ds = Utils.getDataSource();
                 if (null == ds) {
-                    Logger.error(login, this, "after", procData.getSignature() + "null datasource for " + sDataSource);
+                    Logger.error(login, this, "after", procData.getSignature(this.getId()) + "null datasource for " + sDataSource);
                     outPort = portError;
                 } else {
                     db = ds.getConnection();

@@ -98,7 +98,7 @@ public class FlowBean implements Flow {
     long start = System.currentTimeMillis();
     String retObj = this.nextBlock(userInfo, procData, true, 0, false);
     long end = System.currentTimeMillis();
-    Logger.trace("FlowBean", "eventNextBlock", "Block transition took " + (end - start) + " ms");
+    Logger.trace("FlowBean","eventNextBlock", "Block transition took "+(end-start)+" ms");
     return retObj;
   }
 
@@ -113,7 +113,7 @@ public class FlowBean implements Flow {
     long start = System.currentTimeMillis();
     String retObj = this.nextBlock(userInfo, procData, false, jumpToBlockId, false);
     long end = System.currentTimeMillis();
-    Logger.trace("FlowBean", "jumpToBlock", "Block transition took " + (end - start) + " ms");
+    Logger.trace("FlowBean","jumpToBlock", "Block transition took "+(end-start)+" ms");
     return retObj;
   }
 
@@ -128,7 +128,7 @@ public class FlowBean implements Flow {
     long start = System.currentTimeMillis();
     String retObj = this.nextBlock(userInfo, procData, false, 0, false);
     long end = System.currentTimeMillis();
-    Logger.trace("FlowBean", "nextBlock", "Block transition took " + (end - start) + " ms");
+    Logger.trace("FlowBean","nextBlock", "Block transition took "+(end-start)+" ms");
     return retObj;
   }
 
@@ -136,7 +136,7 @@ public class FlowBean implements Flow {
     long start = System.currentTimeMillis();
     String retObj = this.nextBlock(userInfo, procData, false, 0, useExistingTransaction);
     long end = System.currentTimeMillis();
-    Logger.trace("FlowBean", "nextBlock", "Block transition took " + (end - start) + " ms");
+    Logger.trace("FlowBean","nextBlock", "Block transition took "+(end-start)+" ms");
     return retObj;
   }
 
@@ -149,7 +149,8 @@ public class FlowBean implements Flow {
     int pid = procData.getPid();
     String login = userInfo.getUtilizador();
 
-    Logger.trace(this, "nextBlock", login + " call with " + procData.getSignature());
+    Logger.trace(this,"nextBlock",login + " call with " + procData.getSignature());
+
 
     // check if user has write permissions to move process
     if (!this.checkUserFlowRoles(userInfo, flowId, "" + FlowRolesTO.WRITE_PRIV)) { // XXX AGON
@@ -191,6 +192,7 @@ public class FlowBean implements Flow {
           Logger.debug(login, this, "nextBlock", procData.getSignature() + "MID: " + mid);
         }
 
+
         nextURL = null;
         saveData = true;
 
@@ -198,11 +200,7 @@ public class FlowBean implements Flow {
         int blockIdOld = blockId;
         String subflowMapping = checkSubFlowMapping(procData.getFlowId(), blockId);
 
-        Logger.info(login, this, "nextBlock",
- procData.getSignature()
-            + "processing BlockId: "
-            + blockId
- + subflowMapping);
+        Logger.info(login, this, "nextBlock", procData.getSignature() + "processing BlockId: " + blockId);
 
         block = this.getBlockById(userInfo, procData.getProcessHeader(), blockId);
         Port outPort;
@@ -210,7 +208,8 @@ public class FlowBean implements Flow {
         procData.setOnPopup(block.isBlockRunningInPopup());
 
         if (block == null) {
-          Logger.error(login, this, "nextBlock", procData.getSignature() + "block is null for blockId=" + blockId);
+          Logger.error(login, this, "nextBlock", 
+              procData.getSignature() + "block is null for blockId=" + blockId);
           break;
         }
 
@@ -238,22 +237,23 @@ public class FlowBean implements Flow {
 
             outPort = block.getEventPort();
             if (outPort == null) {
-              Logger.error(login, this, "nextBlock", procData.getSignature() + "eventPort is NULL for blockId=" + blockId
-                  + "... aborting.");
-              throw new Exception(procData.getSignature() + "eventPort is null for blockId " + block.getId());
+              Logger.error(login, this, "nextBlock", 
+                  procData.getSignature(blockId) + "eventPort is NULL for blockId=" + blockId + "... aborting.");
+              throw new Exception(procData.getSignature() + 
+                  "eventPort is null for blockId " + block.getId());
             }
 
             // block hanling of event
-            block.onEventFired(userInfo, procData);
+            block.onEventFired(userInfo, procData);              
 
-            Logger.debug(login, this, "nextBlock", procData.getSignature() + "called block's onEventFired");
+            Logger.debug(login, this, "nextBlock", 
+                procData.getSignature() + "called block's onEventFired");
 
-            Logger.logFlowState(userInfo, procData, block, "Event triggered, reverting out port to '" + outPort.getName()
-                + "' and switching to block event;");
+            Logger.logFlowState(userInfo, procData, block, "Event triggered, reverting out port to '" + outPort.getName() + "' and switching to block event;");
 
-            // switch to block event
-            Logger.debug(login, this, "nextBlock", procData.getSignature() + "switching from block " + blockId + " to event block "
-                + outPort.getConnectedBlockId());
+            // switch to block event 
+            Logger.debug(login, this, "nextBlock", 
+                procData.getSignature() + "switching from block " + blockId + " to event block " + outPort.getConnectedBlockId());
 
             blockId = outPort.getConnectedBlockId();
             block = this.getBlockById(userInfo, procData.getProcessHeader(), blockId);
@@ -261,7 +261,8 @@ public class FlowBean implements Flow {
         }
 
         if (block.canProceed(userInfo, procData) == false) {
-          Logger.info(login, this, "nextBlock", procData.getSignature() + "canProceed=FALSE for blockId=" + blockId);
+          Logger.info(login, this, "nextBlock", 
+              procData.getSignature() + "canProceed=FALSE for blockId=" + blockId);
 
           if (block.hasInteraction()) {
             // tell proc to stay in same page
@@ -283,15 +284,15 @@ public class FlowBean implements Flow {
         // Call the after method of the current block
         outPort = block.after(userInfo, procData);
 
-        if (block instanceof pt.iflow.blocks.BlockSincronizacao) {
+        if (block instanceof pt.iflow.blocks.BlockSincronizacao){
           procData = pm.getProcessData(userInfo, new ProcessHeader(procData.getFlowId(), procData.getPid(), procData.getSubPid()));
         }
 
         if (outPort == null) {
-          Logger.error(login, this, "nextBlock", procData.getSignature() + "outPort is NULL for blockId=" + blockId
-              + "... aborting.");
-          throw new Exception(procData.getSignature() + "outport is null for blockId " + block.getId()
-              + " after block's after call");
+          Logger.error(login, this, "nextBlock", 
+              procData.getSignature() + "outPort is NULL for blockId=" + blockId + "... aborting.");
+          throw new Exception(procData.getSignature() + 
+              "outport is null for blockId " + block.getId() + " after block's after call");
         }
 
         // Get the next blockId
@@ -305,19 +306,23 @@ public class FlowBean implements Flow {
 
         // Save the flow state to store state result
         if (!saveFlowState(userInfo, procData, block, false, mid, outPort)) {
-          Logger.error(login, this, "nextBlock", "Unable to SAVE after FLOW STATE (" + blockId + ") for proc "
-              + procData.getFlowId() + "-" + procData.getPid() + "-" + procData.getSubPid());
+          Logger.error(login, this, "nextBlock", "Unable to SAVE after FLOW STATE ("
+              + blockId + ") for proc " 
+              + procData.getFlowId() + "-" 
+              + procData.getPid() + "-" + procData.getSubPid());
           nextURL = getErrorUrl(saveFlowStateErrorKey);
-          throw new Exception(procData.getSignature() + "unable to save flow state after block " + block.getId() + " after call");
+          throw new Exception(procData.getSignature(blockId) + 
+              "unable to save flow state after block " + block.getId() + " after call");
         }
 
-        Logger.info(login, this, "nextBlock", procData.getSignature() + "Going from: " + block.getId() + " to: "
-            + outPort.getConnectedBlockId() + " (using " + outPort.getName() + ")");
+        Logger.info(login, this, "nextBlock",
+            procData.getSignature() + "Going from: " + block.getId() 
+            + " to: " + outPort.getConnectedBlockId() + " (using " + outPort.getName() + ")");
 
         // Call the before method of the next block
         Block blockNext = getBlockById(userInfo, procData.getProcessHeader(), blockId);
 
-        if (procData.isOnPopup() && !blockNext.canRunInPopupBlock()) {
+        if (procData.isOnPopup() && !blockNext.canRunInPopupBlock()){
           StringBuffer popupErrorLink = new StringBuffer();
 
           popupErrorLink.append("Form/closePopup.jsp?");
@@ -359,7 +364,7 @@ public class FlowBean implements Flow {
 
         if (block.isProcInDBRequired() && !procData.isInDB() && !procData.isOnPopup()) {
 
-          Logger.info(login, this, "nextBlock", procData.getSignature() + "Going to prepare Proc in DB");
+          Logger.info(login, this, "nextBlock",procData.getSignature() + "Going to prepare Proc in DB");
 
           if (pm.prepareProcInDB(userInfo, procData, block.isForwardBlock())) {
             pid = procData.getPid();
@@ -388,7 +393,7 @@ public class FlowBean implements Flow {
           // Port portEvent = eventOP[eventOP.length-1];
           if (portEvent != null) {
             Block blockEvent = this.getBlockById(userInfo, procData.getProcessHeader(), portEvent.getConnectedBlockId());
-            if (!blockEvent.isDisabled(userInfo, procData)) {
+            if(!blockEvent.isDisabled(userInfo, procData)) {
               HashMap<String, String> attributes = blockEvent.getAttributeMap();
 
               for (int i = 0; i < attributes.size() / 2; i++) {
@@ -407,15 +412,18 @@ public class FlowBean implements Flow {
         if (StringUtils.isNotEmpty(nextURL) && !block.hasInteraction() && !block.isEndBlock()) {
           // overwrite url to generic/forward
           if (Logger.isDebugEnabled()) {
-            Logger.debug(login, this, "nextBlock", "pid=" + pid + ", subpid=" + procData.getSubPid() + ": overwriting NEXT URL: "
+            Logger.debug(login, this, "nextBlock", "pid=" + pid 
+                + ", subpid="+procData.getSubPid()+": overwriting NEXT URL: " 
                 + nextURL + " to default url");
           }
           nextURL = Block.getDefaultUrl(userInfo, procData);
         }
 
+
         if (Logger.isDebugEnabled()) {
-          Logger.debug(login, this, "nextBlock", procData.getSignature() + "NEXT URL: " + nextURL + "; block desc: "
-              + block.getDescription(userInfo, procData));
+          Logger.debug(login, this, "nextBlock", 
+              procData.getSignature() + "NEXT URL: " + nextURL
+              + "; block desc: " + block.getDescription(userInfo, procData));
         }
 
         // Save the flow state
@@ -428,7 +436,7 @@ public class FlowBean implements Flow {
         if (procData.isInDB() && !procData.getCachedReports().isEmpty() && !procData.isOnPopup()) {
           Logger.debug(login, this, "nextBlock", "Storing cached reports in DB");
           ReportManager rm = BeanFactory.getReportManagerBean();
-          for (ReportTO report : procData.getCachedReports().values()) {
+          for(ReportTO report : procData.getCachedReports().values()) {
             report.setPid(procData.getPid());
             report.setSubpid(procData.getSubPid());
             rm.storeReport(userInfo, procData, report);
@@ -436,21 +444,22 @@ public class FlowBean implements Flow {
         } else if (block.isEndBlock()) {
           Logger.debug(login, this, "nextBlock", "Making sure all reports in DB have been closed");
           ReportManager rm = BeanFactory.getReportManagerBean();
-          for (ReportTO report : rm.getProcessReports(userInfo, procData)) {
+          for(ReportTO report : rm.getProcessReports(userInfo, procData)) {
             boolean store = false;
-            if (report.isActive()) {
+            if(report.isActive()) {
               report.setActive(false);
               store = true;
             }
-            if (report.getStopReporting() == null) {
+            if(report.getStopReporting() == null) {
               report.setStopReporting(new Timestamp(Calendar.getInstance().getTimeInMillis()));
               store = true;
             }
-            if (store) {
-              rm.storeReport(userInfo, procData, report);
+            if(store) {
+              rm.storeReport(userInfo, procData, report);                      
             }
           }
         }
+
 
         callNextBlock = (blockId != blockIdOld) && !block.isEndBlock() && !block.hasInteraction();
         Logger.info(login, this, "nextBlock", procData.getSignature() + ": Block id=" + blockId + " next block's flag: "
@@ -464,7 +473,7 @@ public class FlowBean implements Flow {
           if (nextURL == null) {
             if (callNextBlock) {
               // if here, block does not have interaction and user does
-              // not have process access (no user process url), which means that we
+              // not have process access (no user process url), which means that we 
               // must stop calling next block and show info page.
               Logger.info(login, this, "nextBlock", procData.getSignature() + ": Block id=" + blockId
                   + " user does not have process in his activities... setting next block's flag off.");
@@ -479,18 +488,19 @@ public class FlowBean implements Flow {
           }
         }
 
-        if (!procData.isOnPopup()) {
+        if (!procData.isOnPopup()){
           saveDataSet(userInfo, procData, null, mid);
         }
         saveData = false;
 
         Logger.debug(login, this, "nextBlock", procData.getSignature() + "going to commit iteration " + blockIdOld + "->" + blockId
-            + " (mid: " + mid + ")");
+            + " (mid: " + mid + ")"); 
 
         DatabaseInterface.commitConnection(conn);
-        Logger.info(login, this, "nextBlock", procData.getSignature() + "db connection committed for iteration " + blockIdOld
-            + "->" + blockId + " (mid: " + mid + ")");
-      } while (callNextBlock);
+        Logger.info(login, this, "nextBlock", procData.getSignature() + 
+            "db connection committed for iteration " + blockIdOld + "->" + blockId + " (mid: " + mid + ")"); 
+      }
+      while (callNextBlock);
 
       if (saveData) {
         saveDataSet(userInfo, procData, null, mid);
@@ -498,20 +508,20 @@ public class FlowBean implements Flow {
       checkFlowEnd(userInfo, procData, block, false);
 
       DatabaseInterface.commitConnection(conn);
-      Logger.info(login, this, "nextBlock", procData.getSignature() + "db connection committed (mid: " + mid + ")");
+      Logger.info(login, this, "nextBlock", procData.getSignature() + "db connection committed (mid: " + mid + ")"); 
 
     } catch (ExistingTransactionException e) {
-      Logger.error(login, this, "nextBlock", procData.getSignature() + "already in a transaction", e);
+      Logger.error(login, this, "nextBlock", procData.getSignature() + "already in a transaction", e); 
       nextURL = getErrorUrl("flow_error.existing_transaction");
     } catch (Throwable t) {
-      Logger.error(login, this, "nextBlock", procData.getSignature() + "caught exception", t);
+      Logger.error(login, this, "nextBlock",  procData.getSignature() + "caught exception", t); 
       if (conn != null) {
         try {
           DatabaseInterface.rollbackConnection(conn);
-          Logger.warning(login, this, "nextBlock", procData.getSignature() + "db connection rollback");
+          Logger.warning(login, this, "nextBlock", procData.getSignature() + "db connection rollback"); 
 
         } catch (Exception ec) {
-          Logger.error(login, this, "nextBlock", procData.getSignature() + "rolling back transaction", ec);
+          Logger.error(login, this, "nextBlock", procData.getSignature() + "rolling back transaction", ec); 
         }
       }
       nextURL = getErrorUrl("flow_error.generic_error");
@@ -522,7 +532,7 @@ public class FlowBean implements Flow {
           try {
             userInfo.unregisterTransaction(transactionId);
           } catch (IllegalAccessException e) {
-            Logger.error(login, this, "nextBlock", procData.getSignature() + "unregistering transaction in userinfo", e);
+            Logger.error(login, this, "nextBlock", procData.getSignature() + "unregistering transaction in userinfo", e); 
 
             NotificationManager notificationManager = BeanFactory.getNotificationManagerBean();
             notificationManager.notifySystemError(userInfo, "nextBlock@FlowBean", procData.getSignature()
@@ -535,7 +545,7 @@ public class FlowBean implements Flow {
         DatabaseInterface.closeResources(conn);
       }
     }
-    // Update Folder
+    //Update Folder
     getFowardBlockUpdateFolderParams(userInfo, block, procData);
     return nextURL;
   }
@@ -596,7 +606,7 @@ public class FlowBean implements Flow {
 
   private String getFowardBlockUpdateLabelParams(UserInfoInterface userInfo, Block block, ProcessData procData) {
     String forwardBlockUpdateLabelParams = "";
-    if (block.isForwardBlock()) {
+    if (block.isForwardBlock()){
       String updateTaskAnnotationLabelCond = block.getAttribute(BlockForwardTo.sFORWARD_TO_UPDATE_LABEL_COND);
       String updateTaskAnnotationLabel = block.getAttribute(BlockForwardTo.sFORWARD_TO_UPDATE_LABEL);
 
@@ -608,28 +618,26 @@ public class FlowBean implements Flow {
       try {
         isUpdateLabel = procData.query(userInfo, updateTaskAnnotationLabelCond);
       } catch (EvalException e) {
-        Logger.warning(userInfo.getUtilizador(), this, "getFowardBlockUpdateLabelParams",
-            "Unable to process update label condition, assuming false", e);
+        Logger.warning(userInfo.getUtilizador(), this, "getFowardBlockUpdateLabelParams", "Unable to process update label condition, assuming false", e);
         isUpdateLabel = false;
       }
-      if (isUpdateLabel) {
+      if (isUpdateLabel){
         ProcessAnnotationManager processAnnotationManager = BeanFactory.getProcessAnnotationManagerBean();
         List<ProcessLabel> dbLabels = processAnnotationManager.getLabelList(userInfo);
 
-        for (ProcessLabel label : dbLabels) {
-          String dbLabelKey = label.getName() + " - " + label.getDescription();
-          if (updateTaskAnnotationLabel.equals(dbLabelKey)) {
-            forwardBlockUpdateLabelParams = "&labelid=" + label.getId() + "&labelname=" + label.getName();
+        for (ProcessLabel label: dbLabels) {
+          String dbLabelKey = label.getName()+" - " + label.getDescription();
+          if (updateTaskAnnotationLabel.equals(dbLabelKey)){
+            forwardBlockUpdateLabelParams = "&labelid="+label.getId()+"&labelname="+label.getName();
           }
         }
       }
     }
     return forwardBlockUpdateLabelParams;
   }
-
   private void getFowardBlockUpdateFolderParams(UserInfoInterface userInfo, Block block, ProcessData procData) {
 
-    if (block.isForwardBlock()) {
+    if (block.isForwardBlock()){
       String updateTaskFolderCond = block.getAttribute(BlockForwardTo.sFORWARD_TO_UPDATE_FOLDER_COND);
       String updateTaskFolder = block.getAttribute(BlockForwardTo.sFORWARD_TO_UPDATE_FOLDER);
 
@@ -641,20 +649,19 @@ public class FlowBean implements Flow {
       try {
         isUpdateFolder = procData.query(userInfo, updateTaskFolderCond);
       } catch (EvalException e) {
-        Logger.warning(userInfo.getUtilizador(), this, "getFowardBlockUpdateFolderParams",
-            "Unable to process update folder condition, assuming false", e);
+        Logger.warning(userInfo.getUtilizador(), this, "getFowardBlockUpdateFolderParams", "Unable to process update folder condition, assuming false", e);
         isUpdateFolder = false;
       }
-      if (isUpdateFolder) {
+      if (isUpdateFolder){
         FolderManager fm = BeanFactory.getFolderManagerBean();
         fm.setActivityToFolderByName(userInfo, updateTaskFolder, procData.getFlowId(), procData.getPid(), procData.getSubPid());
       }
     }
   }
-
   private String getErrorUrl(String msgKey) {
     return "flow_error.jsp?msg_key=" + (StringUtils.isEmpty(msgKey) ? "" : msgKey);
   }
+
 
   public void storeProcess(UserInfoInterface userInfo, ProcessData procData) throws Exception {
     storeProcess(userInfo, procData, true);
@@ -666,7 +673,7 @@ public class FlowBean implements Flow {
       return;
 
     String login = userInfo.getUtilizador();
-    Logger.info(login, this, "storeProcess", procData.getSignature() + "Going to prepare Proc in DB");
+    Logger.info(login, this, "storeProcess",procData.getSignature() + "Going to prepare Proc in DB");
 
     ProcessManager pm = BeanFactory.getProcessManagerBean();
     Block block = this.getBlock(userInfo, procData);
@@ -717,6 +724,7 @@ public class FlowBean implements Flow {
     }
   }
 
+
   /**
    * Saves the dataSet to the database. Calls the saveDataset method of the current block.
    * 
@@ -732,7 +740,7 @@ public class FlowBean implements Flow {
   private int saveDataSet(UserInfoInterface userInfo, ProcessData procData, ServletRequest request, int mid) {
 
     String requestMid = String.valueOf(mid);
-    if (null != request) {
+    if(null != request) {
       requestMid = (String) request.getAttribute(Const.sMID_ATTRIBUTE);
     }
 
@@ -753,8 +761,10 @@ public class FlowBean implements Flow {
             }
 
             if (!saveFlowState(userInfo, procData, block, true, mid, null)) {
-              Logger.error(userInfo.getUtilizador(), this, "saveDataSet", "Unable to SAVE before FLOW STATE (" + block.getId()
-                  + ") for proc " + procData.getFlowId() + "-" + procData.getPid() + "-" + procData.getSubPid());
+              Logger.error(userInfo.getUtilizador(), this, "saveDataSet", 
+                  "Unable to SAVE before FLOW STATE ("
+                      + block.getId() + ") for proc " 
+                      + procData.getFlowId() + "-" + procData.getPid() + "-" + procData.getSubPid());
             }
 
           }
@@ -802,9 +812,11 @@ public class FlowBean implements Flow {
           // first get block to be able to get description and url
           block = this.getBlock(userInfo, procData);
           if (block != null) {
-            if (Logger.isDebugEnabled()) {
-              Logger.debug(login, this, "saveDataSet", "Creating activity for user for subpid=" + subpid + ",pid " + pid
-                  + ", desc=" + block.getDescription(userInfo, procData) + ", url=" + Block.getDefaultUrl(userInfo, procData));
+            if (Logger.isDebugEnabled()) {  
+              Logger.debug(login, this, "saveDataSet",
+                  "Creating activity for user for subpid="+ subpid
+                  + ",pid "+ pid+ ", desc=" + block.getDescription(userInfo,procData) 
+                  + ", url=" + Block.getDefaultUrl(userInfo, procData));
             }
 
             activity = new Activity(login, login, flowId, pid, subpid, 0, 0, block.getDescription(userInfo, procData), Block
@@ -859,12 +871,12 @@ public class FlowBean implements Flow {
           + "where flowid=? and pid=? and undoflag=0 and exit_flag=1 " + "group by state,mid having count(*) > 1");
       st.setInt(1, procData.getFlowId());
       st.setInt(2, procData.getPid());
-      rs = st.executeQuery();
+      rs = st.executeQuery();     
       while (rs.next()) {
         int forkstate = rs.getInt("state");
         int forkmid = rs.getInt("mid");
         forkStates.put(forkstate, forkmid);
-      }
+      }      
       DatabaseInterface.closeResources(rs, st);
 
       st = db.prepareStatement("select f.*,m.muser from flow_state_history f, modification m"
@@ -896,7 +908,8 @@ public class FlowBean implements Flow {
         }
       }
 
-      for (int i = 0; i < retObj.size(); i++) {
+
+      for (int i=0; i < retObj.size(); i++) {
         FlowStateHistoryTO item = retObj.get(i);
         item.setUndoable(item.getMid() >= minmid);
       }
@@ -989,7 +1002,7 @@ public class FlowBean implements Flow {
       // para suportarem tambem os mids
       ProcessData newProcData = pm.undoProcessData(userInfo, flowid, pid, subpid, mid, oldProcData);
 
-      if (pm.undoProcessActivities(userInfo, newProcData, mid, flowState)) {
+      if(pm.undoProcessActivities(userInfo, newProcData, mid, flowState)) {
         pm.notifyProcessUndone(userInfo, newProcData);
       }
 
@@ -1141,7 +1154,7 @@ public class FlowBean implements Flow {
         Logger.error(login, this, "getFlowState", procData.getSignature() + "caught exception: " + e.getMessage(), e);
         throw e;
       } finally {
-        DatabaseInterface.closeResources(db, st, rs);
+        DatabaseInterface.closeResources(db,st,rs);
       }
     }
     return flowState;
@@ -1161,7 +1174,7 @@ public class FlowBean implements Flow {
       return null;
     }
 
-    IFlowData fd = BeanFactory.getFlowHolderBean().getFlow(userInfo, procHeader.getFlowId());
+    IFlowData fd = BeanFactory.getFlowHolderBean().getFlow(userInfo,procHeader.getFlowId());
     Vector<Block> flowVector = null;
 
     if (fd != null && !fd.hasError()) {
@@ -1282,7 +1295,7 @@ public class FlowBean implements Flow {
               query = DBQueryManager.processQuery("Flow.insert_state_history", new Object[] { String.valueOf(flowid),
                   String.valueOf(pid), String.valueOf(subpid), String.valueOf(block.getId()), sResult, String.valueOf(nExitFlag),
                   String.valueOf(mid), outPort == null ? null : "'" + outPort.getName() + "'" });
-              st.executeUpdate(query);
+              st.executeUpdate(query);            
             }
           }
 
@@ -1291,7 +1304,7 @@ public class FlowBean implements Flow {
 
           String query = DBQueryManager.processQuery("Flow.insert_state", new Object[] { String.valueOf(flowid),
               String.valueOf(pid), String.valueOf(subpid), String.valueOf(block.getId()), sResult, String.valueOf(nExitFlag),
-              String.valueOf(mid) });
+              String.valueOf(mid)});
           st.executeUpdate(query);
 
           if (block.isSaveFlowState() && Const.sSAVE_FLOW_STATE_ALLWAYS.equals("true")) {
@@ -1301,21 +1314,22 @@ public class FlowBean implements Flow {
             st.executeUpdate(query);
           }
 
+
           DatabaseInterface.commitConnection(db);
         }
         rs.close();
         rs = null;
       } catch (Exception e) {
         Logger.error(login, this, "saveFlowState", procData.getSignature() + "caught exception: " + e.getMessage(), e);
-        try {
-          DatabaseInterface.rollbackConnection(db);
-        } catch (Exception er) {
+        try { 
+          DatabaseInterface.rollbackConnection(db); 
+        } catch (Exception er) { 
           Logger.error(login, this, "saveFlowState", procData.getSignature() + "exception rolling back connection: "
               + er.getMessage(), er);
         }
         return false;
       } finally {
-        DatabaseInterface.closeResources(db, st, rs);
+        DatabaseInterface.closeResources(db,st,rs);
       }
 
       procData.setTempData(DataSetVariables.FLOW_STATE, null);
@@ -1389,7 +1403,7 @@ public class FlowBean implements Flow {
           try {
             userInfo.unregisterTransaction(transactionId);
           } catch (IllegalAccessException e) {
-            Logger.error(login, this, "checkFlowEnd", "unregistering transaction in userinfo", e);
+            Logger.error(login, this, "checkFlowEnd", "unregistering transaction in userinfo", e); 
 
             NotificationManager notificationManager = BeanFactory.getNotificationManagerBean();
             notificationManager.notifySystemError(userInfo, "checkFlowEnd@FlowBean",
@@ -1432,9 +1446,9 @@ public class FlowBean implements Flow {
       sQuery += " and subpid=" + subpid;
       st.executeUpdate(sQuery);
 
-      Logger.info(login, this, "saveFlowState", procData.getSignature() + "process reached flow end");
+      Logger.info(login,this,"saveFlowState", procData.getSignature() + "process reached flow end");                
     } catch (Exception sqle) {
-      Logger.error(login, this, "endFlow", procData.getSignature() + "Caught exception: " + sqle.getMessage(), sqle);
+      Logger.error(login, this,"endFlow", procData.getSignature() + "Caught exception: " + sqle.getMessage(), sqle);
       throw sqle;
     } finally {
       DatabaseInterface.closeResources(db, st);

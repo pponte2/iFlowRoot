@@ -87,7 +87,7 @@ public class BlockToSignDocs extends Block {
       }
       
       if (StringUtils.isEmpty(sDocs) || StringUtils.isEmpty(sValues) || doclist.size() != valueslist.size()) {
-        Logger.warning(login,this,"after", procData.getSignature() + "empty attribute!!");
+        Logger.warning(login,this,"after", procData.getSignature(this.getId()) + "empty attribute!!");
         bEvalResult = false;
       }
       else {
@@ -99,7 +99,7 @@ public class BlockToSignDocs extends Block {
           Logger.debug(login,this,"after", " Documents mark to Sign successfully!");
         } catch (Exception ei) {
           bEvalResult = false;
-          Logger.error(login,this,"after", procData.getSignature() + "caught exception, mark documents to sign", ei);
+          Logger.error(login,this,"after", procData.getSignature(this.getId()) + "caught exception, mark documents to sign", ei);
         }
       }
       
@@ -111,7 +111,7 @@ public class BlockToSignDocs extends Block {
       
     }
     catch (Exception e) {
-      Logger.error(login,this,"after", procData.getSignature() + "caught exception: " + e.getMessage(), e);
+      Logger.error(login,this,"after", procData.getSignature(this.getId()) + "caught exception: " + e.getMessage(), e);
       outPort = portFalse;
     }
     

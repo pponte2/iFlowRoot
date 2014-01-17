@@ -98,7 +98,7 @@ public class BlockMultiCondition extends Block {
         if (bEvalResult == false){
           if (StringUtils.isEmpty(sConditions [i])) {
             Logger.warning(login,this,"after", 
-                procData.getSignature() + " Condition ["+(i+1)+"] is empty!! Assuming false");
+                procData.getSignature(this.getId()) + " Condition ["+(i+1)+"] is empty!! Assuming false");
             bEvalResult = false;
           } else {
             try {
@@ -107,12 +107,12 @@ public class BlockMultiCondition extends Block {
             } catch (Exception ei) {
               bEvalResult = false;
               Logger.error(login,this,"after", 
-                  procData.getSignature() + "caught exception evaluation condition (assuming false): " + sConditions [i], ei);
+                  procData.getSignature(this.getId()) + "caught exception evaluation condition (assuming false): " + sConditions [i], ei);
             }
 
             if (bEvalResult) {
               Logger.info(login,this,"after", 
-                  procData.getSignature() + "Condition ["+i+"] - ["+sConditions [i]+"], evaluated as true");
+                  procData.getSignature(this.getId()) + "Condition ["+i+"] - ["+sConditions [i]+"], evaluated as true");
               outPort = conditionPorts[i];
             }
           }
@@ -122,7 +122,7 @@ public class BlockMultiCondition extends Block {
 
       this.addToLog("Evaluated all conditions using " + outPort.getName());
     } catch (Exception e) {
-      Logger.error(login,this,"after", procData.getSignature() + "caught exception: " + e.getMessage(), e);
+      Logger.error(login,this,"after", procData.getSignature(this.getId()) + "caught exception: " + e.getMessage(), e);
       outPort = portFalse;
     }
 

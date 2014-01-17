@@ -138,7 +138,7 @@ public class BlockSQLBatchUpdate extends BlockSQL {
      	}
     }
     catch (Exception e) {
-      Logger.error(login, this, "after", procData.getSignature() + "Error in where: '"+ saWhereVars +"'");
+      Logger.error(login, this, "after", procData.getSignature(this.getId()) + "Error in where: '"+ saWhereVars +"'");
       outPort = portError;
     	saWhereVars = null;
     }
@@ -174,18 +174,18 @@ public class BlockSQLBatchUpdate extends BlockSQL {
          	sWhere = Utils.transformStringAndPrepareForDB(userInfo, sWhere, procData);
         }
         catch (Exception e) {
-          Logger.error(login, this, "after", procData.getSignature() + "Error in where: '"+ sWhere +"'");
+          Logger.error(login, this, "after", procData.getSignature(this.getId()) + "Error in where: '"+ sWhere +"'");
           outPort = portError;
         	sWhere = null;
         }
 
      	if (sTable == null || sSet == null || saSetVars == null
      			|| sWhere == null || saWhereVars== null) {
-     	  Logger.error(login, this, "after", procData.getSignature() + "empty table or set or vars or where or wherevars");
+     	  Logger.error(login, this, "after", procData.getSignature(this.getId()) + "empty table or set or vars or where or wherevars");
      	  return portError;
      	}
      	if (this.isSystemTable(sDataSource, sTable)) {
-     	  Logger.error(login, this, "after", procData.getSignature() + "Table '" + sTable + "' is a system table");
+     	  Logger.error(login, this, "after", procData.getSignature(this.getId()) + "Table '" + sTable + "' is a system table");
      	  return portError;
      	}
      	
@@ -283,7 +283,7 @@ public class BlockSQLBatchUpdate extends BlockSQL {
 	    		  }
 	    	  }
 	    	  Logger.info(login, this, "after", 
-	    			  procData.getSignature() + "Going to execute update " + (row+1) + " of " + nTotalUpdates);
+	    			  procData.getSignature(this.getId()) + "Going to execute update " + (row+1) + " of " + nTotalUpdates);
 
 	    	  pstmt.executeUpdate();
 	    	  nCols += pstmt.executeUpdate();
@@ -291,7 +291,7 @@ public class BlockSQLBatchUpdate extends BlockSQL {
 	      }
 
 	      connection.commit();
-          Logger.info(login,this,"after",procData.getSignature() + "connection committed");
+          Logger.info(login,this,"after",procData.getSignature(this.getId()) + "connection committed");
 	      	
 	      if (nCols == 0) {
 	    	  outPort = portEmpty;
@@ -299,14 +299,14 @@ public class BlockSQLBatchUpdate extends BlockSQL {
 	      
       }catch (Exception e) {
     	  Logger.error(login, this, "after", 
-                 procData.getSignature() + "caught exception: " + e.getMessage(), e);
+                 procData.getSignature(this.getId()) + "caught exception: " + e.getMessage(), e);
           outPort = portError;
           if (connection != null) {
             try {
               connection.rollback();
             }
             catch (Exception ex) {
-              Logger.error(login,this,"after",procData.getSignature() + "unable to rollback: " + ex.getMessage(), ex);
+              Logger.error(login,this,"after",procData.getSignature(this.getId()) + "unable to rollback: " + ex.getMessage(), ex);
             }
           }
       }finally {
@@ -407,7 +407,7 @@ public class BlockSQLBatchUpdate extends BlockSQL {
 	    		  }
 	    	  }
 	    	  Logger.info(login, this, "after", 
-	    			  procData.getSignature() + "Going to execute update " + (row+1) + " of " + nTotalUpdates);
+	    			  procData.getSignature(this.getId()) + "Going to execute update " + (row+1) + " of " + nTotalUpdates);
 
 	    	  pstmt.executeUpdate();
 	    	  nCols += pstmt.executeUpdate();
@@ -420,7 +420,7 @@ public class BlockSQLBatchUpdate extends BlockSQL {
     	}
     	catch (Exception e) {
     		Logger.error(login, this, "after", 
-               procData.getSignature() + "caught exception: " + e.getMessage());
+               procData.getSignature(this.getId()) + "caught exception: " + e.getMessage());
     		outPort = portError;
     	}finally {
     		DatabaseInterface.closeResources(connection, pstmt);

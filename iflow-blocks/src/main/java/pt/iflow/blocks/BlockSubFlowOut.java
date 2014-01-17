@@ -108,7 +108,7 @@ public class BlockSubFlowOut extends Block {
     }
     catch (SQLException sqle) {
       Logger.error(login,this,"canProceed",
-          procData.getSignature() + "caught sql exception: " + sqle.getMessage(), sqle);
+          procData.getSignature(this.getId()) + "caught sql exception: " + sqle.getMessage(), sqle);
     }
     finally {
       DatabaseInterface.closeResources(db,st,rs);
@@ -254,7 +254,7 @@ public class BlockSubFlowOut extends Block {
     } catch (Exception e) {
       errorManager.fire(errorKey);
       Logger.error(userInfo.getUtilizador(),this,"after",
-          procData.getSignature() + "Exception updating activities " + e.getMessage(), e);
+          procData.getSignature(this.getId()) + "Exception updating activities " + e.getMessage(), e);
       retObj = portError;
     }
     errorManager.close(errorKey);

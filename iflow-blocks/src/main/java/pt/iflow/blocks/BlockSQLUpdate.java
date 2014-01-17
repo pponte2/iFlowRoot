@@ -95,7 +95,7 @@ public class BlockSQLUpdate extends BlockSQL {
     
     if (StringUtils.isEmpty(sDataSource)) {
       Logger.warning(login,this,"after", 
-          procData.getSignature() + "NO DATASOURCE SPECIFIED !!!!!!!!!!!");
+          procData.getSignature(this.getId()) + "NO DATASOURCE SPECIFIED !!!!!!!!!!!");
     }
     
    
@@ -136,17 +136,17 @@ public class BlockSQLUpdate extends BlockSQL {
     		if (sWhere.equals("")) sWhere = null;
     	}
     	catch (Exception e) {
-          Logger.error(login, this, "after", procData.getSignature() + "Error in where: '"+ sWhere +"'");
+          Logger.error(login, this, "after", procData.getSignature(this.getId()) + "Error in where: '"+ sWhere +"'");
           outPort = portError;
           sWhere = null;
     	}
 
     	if (sTable == null || sSet == null) {
-          Logger.error(login, this, "after", procData.getSignature() + "Empty table or set");            
+          Logger.error(login, this, "after", procData.getSignature(this.getId()) + "Empty table or set");            
           outPort = portError;
     	} else {
     		if (this.isSystemTable(sDataSource, sTable)) {
-    		  Logger.error(login, this, "after", procData.getSignature() + "Table '"+ sTable +"'is a system table");
+    		  Logger.error(login, this, "after", procData.getSignature(this.getId()) + "Table '"+ sTable +"'is a system table");
     			outPort = portError;
     		} else {
     			if (sWhere == null) {
@@ -175,14 +175,14 @@ public class BlockSQLUpdate extends BlockSQL {
     }
     if (outPort != portError) {
       if (StringUtils.isEmpty(sQuery)) {
-        Logger.error(login, this, "after", procData.getSignature() + "Empty query");
+        Logger.error(login, this, "after", procData.getSignature(this.getId()) + "Empty query");
         outPort = portError;
       }
       else {
         try {
           ds = Utils.getUserDataSource(sDataSource);
           if (null == ds) {
-            Logger.error(login, this, "after", procData.getSignature() + "null datasource for " + sDataSource);
+            Logger.error(login, this, "after", procData.getSignature(this.getId()) + "null datasource for " + sDataSource);
             outPort = portError;
           } else {
             db = ds.getConnection();

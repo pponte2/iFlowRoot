@@ -102,7 +102,7 @@ public class BlockEmailIntervenientes extends Block {
         // validations
         if (to == null || to.equals("")) {
           Logger.error(userInfo.getUtilizador(),this,"after",
-              procData.getSignature() + "No to defined");
+              procData.getSignature(this.getId()) + "No to defined");
           outPort = portError;
         } else {
           if (template == null || template.equals("") || template.equals(_sSELECT)) {
@@ -111,15 +111,15 @@ public class BlockEmailIntervenientes extends Block {
 
             if (from == null || from.equals("")) {
               Logger.error(userInfo.getUtilizador(),this,"after",
-                  procData.getSignature() + "No from defined");
+                  procData.getSignature(this.getId()) + "No from defined");
               outPort = portError;
             } else if (subject == null || subject.equals("")) {
               Logger.error(userInfo.getUtilizador(),this,"after",
-                  procData.getSignature() + "No subject defined");
+                  procData.getSignature(this.getId()) + "No subject defined");
               outPort = portError;
             } else if (message == null || message.equals("")) {
               Logger.error(userInfo.getUtilizador(),this,"after",
-                  procData.getSignature() + "No message defined");
+                  procData.getSignature(this.getId()) + "No message defined");
               outPort = portError;
             }
           }
@@ -213,14 +213,14 @@ public class BlockEmailIntervenientes extends Block {
               }
             } else {
               Logger.error(userInfo.getUtilizador(),this,"after",
-                  procData.getSignature() + "email is null");
+                  procData.getSignature(this.getId()) + "email is null");
               outPort = portError;
             }
           }
         }
       } catch (Exception e) {
         Logger.error(userInfo.getUtilizador(),this,"after",
-            procData.getSignature() + "caught exception: " + e.getMessage());
+            procData.getSignature(this.getId()) + "caught exception: " + e.getMessage());
         outPort = portError;
       }
     }

@@ -17,7 +17,7 @@ import pt.iflow.api.utils.Const;
 public class ProcessHeader {
 
     private static final String SIGNATURE_FORMAT = "[{0}:{1}:{2}] ";
-  
+    private static final String SIGNATURE_WITH_BLOCKID_FORMAT = "[{0}:{1}:{2}:{3}] ";
     private int _flowid = -1;
 	private int _pid = -1;
 	private int _subpid = -1;
@@ -139,11 +139,16 @@ public class ProcessHeader {
 		return _subpid;
 	}
 
-	public String getSignature() {
-	    return MessageFormat.format(SIGNATURE_FORMAT, 
-	        String.valueOf(_flowid), String.valueOf(_pid), String.valueOf(_subpid));
-	}	  
-	
+    public String getSignature() {
+      return MessageFormat.format(SIGNATURE_FORMAT, 
+          String.valueOf(_flowid), String.valueOf(_pid), String.valueOf(_subpid));
+  }     
+  
+    public String getSignature(int blockId) {
+      return MessageFormat.format(SIGNATURE_WITH_BLOCKID_FORMAT, 
+          String.valueOf(_flowid), String.valueOf(_pid), String.valueOf(_subpid), blockId);
+  }     
+  
 	public String getPNumber() {
 		return _pnumber;
 	}

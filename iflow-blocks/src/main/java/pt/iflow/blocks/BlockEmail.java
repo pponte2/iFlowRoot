@@ -94,7 +94,7 @@ public class BlockEmail extends Block {
     if(!Const.bUSE_EMAIL) {
       outPort = portError;
       Logger.warning(user, this, "after", 
-          procData.getSignature() + 
+          procData.getSignature(this.getId()) + 
           "email use is disabled by configuration... going to exit through port error.");
     } else {
       try {
@@ -118,28 +118,28 @@ public class BlockEmail extends Block {
           tos = Utils.tokenize(to, EmailManager.sSEPARATOR);
         } catch (Exception e) {
           Logger.warning(user, this, "after", 
-              procData.getSignature() + "exception transforming to: " + aTo);
+              procData.getSignature(this.getId()) + "exception transforming to: " + aTo);
         }
         String from = aFrom;
         try {
           from = procData.transform(userInfo, aFrom);
         } catch (Exception e) {
           Logger.warning(user, this, "after", 
-              procData.getSignature() + "exception transforming from: " + aFrom);
+              procData.getSignature(this.getId()) + "exception transforming from: " + aFrom);
         }
         String subject = aSubject;
         try {
           subject = procData.transform(userInfo, aSubject);
         } catch (Exception e) {
           Logger.warning(user, this, "after", 
-              procData.getSignature() + "exception transforming subject: " + aSubject);
+              procData.getSignature(this.getId()) + "exception transforming subject: " + aSubject);
         }
         String message = aMessage;
         try {
           message = procData.transform(userInfo, aMessage);
         } catch (Exception e) {
           Logger.warning(user, this, "after", 
-              procData.getSignature() + "exception transforming message: " + aMessage);
+              procData.getSignature(this.getId()) + "exception transforming message: " + aMessage);
         }
 
         if (Logger.isDebugEnabled()) {        
@@ -155,7 +155,7 @@ public class BlockEmail extends Block {
 
         // validations
         if (tos == null || tos.isEmpty()) {
-          Logger.error(user,this,"after", procData.getSignature() + "No to defined");
+          Logger.error(user,this,"after", procData.getSignature(this.getId()) + "No to defined");
           outPort = portError;
         } else {
           
@@ -166,7 +166,7 @@ public class BlockEmail extends Block {
             }
             catch (AddressException ae) {
               errorAddresses = true;
-              Logger.error(user,this,"after", procData.getSignature() + "Invalid to address: " + mailto);
+              Logger.error(user,this,"after", procData.getSignature(this.getId()) + "Invalid to address: " + mailto);
             }
           }
           if (errorAddresses) {
@@ -176,13 +176,13 @@ public class BlockEmail extends Block {
             // if no template defined, subject, message and from have to be defined
             // otherwise leave it probably for the template
             if (from == null || from.equals("")) {
-              Logger.error(user,this,"after",procData.getSignature() + "No from defined");
+              Logger.error(user,this,"after",procData.getSignature(this.getId()) + "No from defined");
               outPort = portError;
             } else if (subject == null || subject.equals("")) {
-              Logger.error(user,this,"after",procData.getSignature() + "No subject defined");
+              Logger.error(user,this,"after",procData.getSignature(this.getId()) + "No subject defined");
               outPort = portError;
             } else if (message == null || message.equals("")) {
-              Logger.error(user,this,"after",procData.getSignature() + "No message defined");
+              Logger.error(user,this,"after",procData.getSignature(this.getId()) + "No message defined");
               outPort = portError;
             }
           }
@@ -231,14 +231,14 @@ public class BlockEmail extends Block {
                 
                 if (email.sendMsg()) {
                   logMsg.append("Mail sent To: " + mailto + ";");
-                  Logger.info(user,this,"after",procData.getSignature() + "email sent to " + mailto);
+                  Logger.info(user,this,"after",procData.getSignature(this.getId()) + "email sent to " + mailto);
                 } else {
-                  Logger.error(user,this,"after",procData.getSignature() + "email NOT sent to " + mailto);
+                  Logger.error(user,this,"after",procData.getSignature(this.getId()) + "email NOT sent to " + mailto);
                 }
               }
               outPort = portSuccess;
             } else {
-              Logger.error(user,this,"after",procData.getSignature() + "email is null");
+              Logger.error(user,this,"after",procData.getSignature(this.getId()) + "email is null");
               outPort = portError;
             }
           }
@@ -246,7 +246,7 @@ public class BlockEmail extends Block {
       } catch (Exception e) {
         e.printStackTrace();
         Logger.error(user,this,"after",
-            procData.getSignature() + "caught exception: " + e.getMessage(), e);
+            procData.getSignature(this.getId()) + "caught exception: " + e.getMessage(), e);
         outPort = portError;
       }
     }

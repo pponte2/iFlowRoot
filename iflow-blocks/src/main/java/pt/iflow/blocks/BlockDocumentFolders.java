@@ -87,7 +87,7 @@ public class BlockDocumentFolders extends Block {
     Port outPort = portError;
     String login = userInfo.getUtilizador();
     if (Logger.isDebugEnabled()) {
-      Logger.debug(login, this, "after", procData.getSignature() + "Entered method!");
+      Logger.debug(login, this, "after", procData.getSignature(this.getId()) + "Entered method!");
     }
     try {
       int depth;
@@ -118,7 +118,7 @@ public class BlockDocumentFolders extends Block {
             ProcessListItem item = varList.addNewItem(value);
             this.addToLog("Set '" + variable + "[" + item.getPosition() + "]" + "' as '" + item.getValue() + "';");
             if (Logger.isDebugEnabled()) {
-              Logger.debug(userInfo.getUtilizador(), this, procData.getSignature() + "outputValues", "Set '" + variable + "["
+              Logger.debug(userInfo.getUtilizador(), this, procData.getSignature(this.getId()) + "outputValues", "Set '" + variable + "["
                   + item.getPosition() + "]" + "' as '" + item.getValue());
             }
           }
@@ -126,12 +126,12 @@ public class BlockDocumentFolders extends Block {
         }
       }
     } catch (Exception e) {
-      Logger.error(login, this, "after", procData.getSignature() + "Exception caught: ", e);
+      Logger.error(login, this, "after", procData.getSignature(this.getId()) + "Exception caught: ", e);
     }
     this.addToLog("Using '" + outPort.getName() + "';");
     this.saveLogs(userInfo, procData, this);
     if (Logger.isDebugEnabled()) {
-      Logger.debug(login, this, "after", procData.getSignature() + "Leaving method!");
+      Logger.debug(login, this, "after", procData.getSignature(this.getId()) + "Leaving method!");
     }
     return outPort;
   }

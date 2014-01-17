@@ -726,7 +726,7 @@ public class BlockData extends Block {
     }
     catch (Exception e) {
       Logger.error(login, this, "before", 
-          procData.getSignature() + "Caught an unexpected exception scheduling activities: " + e.getMessage(), e);
+          procData.getSignature(this.getId()) + "Caught an unexpected exception scheduling activities: " + e.getMessage(), e);
     }
 
     return nextPage;

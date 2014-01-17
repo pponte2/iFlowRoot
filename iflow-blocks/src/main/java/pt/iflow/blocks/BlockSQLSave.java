@@ -74,7 +74,7 @@ public class BlockSQLSave extends BlockSQL {
     }
 
     if (StringUtils.isEmpty(sDataSource)) {
-      Logger.warning(login, this, "after", procData.getSignature() + "NO DATASOURCE SPECIFIED !!!!!!!!!!!");
+      Logger.warning(login, this, "after", procData.getSignature(this.getId()) + "NO DATASOURCE SPECIFIED !!!!!!!!!!!");
     }
 
     try {
@@ -89,11 +89,11 @@ public class BlockSQLSave extends BlockSQL {
     }
 
     if (StringUtils.isBlank(sTable)) {
-      Logger.error(login, this, "after", procData.getSignature() + "Empty table");
+      Logger.error(login, this, "after", procData.getSignature(this.getId()) + "Empty table");
       outPort = portError;
     } else {
       if (this.isSystemTable(sDataSource, sTable)) {
-        Logger.error(login, this, "after", procData.getSignature() + "Table '" + sTable + "'is a system table");
+        Logger.error(login, this, "after", procData.getSignature(this.getId()) + "Table '" + sTable + "'is a system table");
         outPort = portError;
       } else {
         dbTable = new DBTable(sTable);
@@ -139,14 +139,14 @@ public class BlockSQLSave extends BlockSQL {
           }
 
           if (Logger.isDebugEnabled()) {
-            Logger.debug(login, this, "after", procData.getSignature() + "QUERY=" + sql);
+            Logger.debug(login, this, "after", procData.getSignature(this.getId()) + "QUERY=" + sql);
           }
 
           if (hasConditions2Check) {
             try {
               ds = Utils.getUserDataSource(sDataSource);
               if (null == ds) {
-                Logger.error(login, this, "after", procData.getSignature() + "null datasource for " + sDataSource);
+                Logger.error(login, this, "after", procData.getSignature(this.getId()) + "null datasource for " + sDataSource);
                 outPort = portError;
               } else {
                 db = ds.getConnection();
@@ -156,9 +156,9 @@ public class BlockSQLSave extends BlockSQL {
                   int count = rs.getInt(1);
                   if (count > 0) {
                     isUpdate = true;
-                    Logger.debug(login, this, "after", procData.getSignature() + "Updating " + count + " rows!");
+                    Logger.debug(login, this, "after", procData.getSignature(this.getId()) + "Updating " + count + " rows!");
                   } else {
-                    Logger.debug(login, this, "after", procData.getSignature() + "Inserting row!");
+                    Logger.debug(login, this, "after", procData.getSignature(this.getId()) + "Inserting row!");
                   }
                 }
               }
@@ -245,22 +245,22 @@ public class BlockSQLSave extends BlockSQL {
       }
     }
     if (sbSet == null || sbSet.length() == 0) {
-      Logger.error(login, this, "after", procData.getSignature() + "Empty set");
+      Logger.error(login, this, "after", procData.getSignature(this.getId()) + "Empty set");
       outPort = portError;
     }
     if (outPort != portError) {
       if (StringUtils.isEmpty(sQuery) || dbTable == null) {
         if (StringUtils.isEmpty(sQuery)) {
-          Logger.error(login, this, "after", procData.getSignature() + "Empty query");
+          Logger.error(login, this, "after", procData.getSignature(this.getId()) + "Empty query");
         } else if (dbTable == null) {
-          Logger.error(login, this, "after", procData.getSignature() + "Unable to parse data");
+          Logger.error(login, this, "after", procData.getSignature(this.getId()) + "Unable to parse data");
         }
         outPort = portError;
       } else {
         try {
           ds = Utils.getUserDataSource(sDataSource);
           if (null == ds) {
-            Logger.error(login, this, "after", procData.getSignature() + "null datasource for " + sDataSource);
+            Logger.error(login, this, "after", procData.getSignature(this.getId()) + "null datasource for " + sDataSource);
             outPort = portError;
           } else {
             db = ds.getConnection();

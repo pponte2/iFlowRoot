@@ -151,7 +151,7 @@ public class BlockDocumentUpdate extends Block {
             + path + ")");
       }
     } catch (Exception e) {
-      Logger.error(login, this, "after", procData.getSignature() + "Exception caught: ", e);
+      Logger.error(login, this, "after", procData.getSignature(this.getId()) + "Exception caught: ", e);
     }
     this.addToLog("Using '" + retObj.getName() + "';");
     this.saveLogs(userInfo, procData, this);

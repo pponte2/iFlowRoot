@@ -46,7 +46,7 @@ public class BlockAdminOperationsTerminateProcess extends BlockAdminOperations {
       int pid = Integer.parseInt(pidStr);
       int subpid = Integer.parseInt(subpidStr);
 
-      Logger.debug(login, this, "after", procData.getSignature() + "Attempting to cancel process with flowid [" + flowidStr
+      Logger.debug(login, this, "after", procData.getSignature(this.getId()) + "Attempting to cancel process with flowid [" + flowidStr
           + "], pid [" + pidStr + "], subpid [" + subpidStr + "]");
 
       AdministrationProcessManager admProcessManager =  BeanFactory.getAdministrationProcessManagerBean();
@@ -56,10 +56,10 @@ public class BlockAdminOperationsTerminateProcess extends BlockAdminOperations {
       }
 
     } catch (NumberFormatException e) {
-      Logger.error(login, this, "after", procData.getSignature() + "caught NumberFormatException: invalid entry parameter flowid ["
+      Logger.error(login, this, "after", procData.getSignature(this.getId()) + "caught NumberFormatException: invalid entry parameter flowid ["
           + flowidStr + "], pid [" + pidStr + "], subpid [" + subpidStr + "], final state [" + final_stateStr + "]", e);
     } catch (Exception e) {
-      Logger.error(login, this, "after", procData.getSignature() + "caught exception: " + e.getMessage(), e);
+      Logger.error(login, this, "after", procData.getSignature(this.getId()) + "caught exception: " + e.getMessage(), e);
       outPort = portFalse;
     }
 

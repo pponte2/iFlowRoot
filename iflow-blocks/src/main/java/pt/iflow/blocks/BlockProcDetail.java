@@ -72,7 +72,7 @@ public class BlockProcDetail extends BlockFormulario {
     }
     catch (Throwable e) {
       Logger.error(login, this, "before",
-          procData.getSignature() + "Caught an unexpected exception updating activities: ", e);
+          procData.getSignature(this.getId()) + "Caught an unexpected exception updating activities: ", e);
     }
 
     String procNotInCreator = procData.getAppData(DataSetVariables.PROCESS_NOT_IN_CREATOR);
@@ -98,7 +98,7 @@ public class BlockProcDetail extends BlockFormulario {
         }
         catch (Throwable e) {
           Logger.warning(login, this, "before", 
-              procData.getSignature() + "Caught exception checking activities: ", e);
+              procData.getSignature(this.getId()) + "Caught exception checking activities: ", e);
         }
       }
     }

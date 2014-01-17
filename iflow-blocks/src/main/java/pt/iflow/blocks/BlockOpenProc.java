@@ -448,8 +448,8 @@ public class BlockOpenProc extends Block implements OpenProc {
                           this.saveDataSet(newUserInfo, newProcData);
 
                           Logger.info(userInfo.getUtilizador(), this, "after", 
-                              procData.getSignature() + 
-                              "created process " + newProcData.getSignature() + " with mid " + newProcData.getMid() + 
+                              procData.getSignature(this.getId()) + 
+                              "created process " + newProcData.getSignature(this.getId()) + " with mid " + newProcData.getMid() + 
                               " for user " + newUserInfo.getUtilizador());
 
                           
@@ -519,7 +519,7 @@ public class BlockOpenProc extends Block implements OpenProc {
                             }
 
                             Logger.info(userInfo.getUtilizador(), this, "after", 
-                                procData.getSignature() + "created process " + newProcData.getSignature() + " stopped execution.");
+                                procData.getSignature(this.getId()) + "created process " + newProcData.getSignature(this.getId()) + " stopped execution.");
                             
                             // now schedule process in user
                             try {
@@ -570,7 +570,7 @@ public class BlockOpenProc extends Block implements OpenProc {
                           }
                         } catch(Exception e) {
                           Logger.error(userInfo.getUtilizador(), this, "after", 
-                              procData.getSignature() + "Could not create an UserInfo for user=" + sCreator, e);
+                              procData.getSignature(this.getId()) + "Could not create an UserInfo for user=" + sCreator, e);
                           outPort = portError;
                         }
                       }
@@ -584,7 +584,7 @@ public class BlockOpenProc extends Block implements OpenProc {
       }
     } catch (Exception e) {
       Logger.error(userInfo.getUtilizador(), this, "after", 
-          procData.getSignature() + "Caught Exception: " + e.getMessage(), e);
+          procData.getSignature(this.getId()) + "Caught Exception: " + e.getMessage(), e);
       outPort = portError;
     }
 

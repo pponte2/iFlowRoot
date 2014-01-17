@@ -138,7 +138,7 @@ public class BlockSubFlowIn extends Block {
         catch (Exception e) {
           e.printStackTrace();
           Logger.error(userid, this, "after", 
-              procData.getSignature() + "caught exception: " + e.getMessage());
+              procData.getSignature(this.getId()) + "caught exception: " + e.getMessage());
           retObj = portError;
         }
 

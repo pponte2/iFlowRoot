@@ -86,7 +86,7 @@ public class BlockDocumentList extends Block {
     Port retObj = portError;
     String login = userInfo.getUtilizador();
     if (Logger.isDebugEnabled()) {
-      Logger.debug(login, this, "after", procData.getSignature() + "Entered method!");
+      Logger.debug(login, this, "after", procData.getSignature(this.getId()) + "Entered method!");
     }
     try {
       StringBuffer filter = new StringBuffer();
@@ -178,12 +178,12 @@ public class BlockDocumentList extends Block {
       }
       retObj = portSuccess;
     } catch (Exception e) {
-      Logger.error(login, this, "after", procData.getSignature() + "Exception caught: ", e);
+      Logger.error(login, this, "after", procData.getSignature(this.getId()) + "Exception caught: ", e);
     }
     this.addToLog("Using '" + retObj.getName() + "';");
     this.saveLogs(userInfo, procData, this);
     if (Logger.isDebugEnabled()) {
-      Logger.debug(login, this, "after", procData.getSignature() + "Leaving method!");
+      Logger.debug(login, this, "after", procData.getSignature(this.getId()) + "Leaving method!");
     }
     return retObj;
   }
@@ -197,7 +197,7 @@ public class BlockDocumentList extends Block {
           ProcessListItem item = varList.addNewItem(value);
           this.addToLog("Set '" + variable + "[" + item.getPosition() + "]" + "' as '" + item.getValue() + "';");
           if (Logger.isDebugEnabled()) {
-            Logger.debug(userInfo.getUtilizador(), this, "outputValues", procData.getSignature() + "Set '" + variable + "["
+            Logger.debug(userInfo.getUtilizador(), this, "outputValues", procData.getSignature(this.getId()) + "Set '" + variable + "["
                 + item.getPosition() + "]" + "' as '" + item.getValue());
           }
         }

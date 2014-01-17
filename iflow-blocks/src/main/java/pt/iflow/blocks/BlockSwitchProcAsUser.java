@@ -76,7 +76,7 @@ public class BlockSwitchProcAsUser extends Block {
       }
       catch (Exception e2) {
         Logger.error(login, this, "before",
-            procData.getSignature() + "Caught exception processing FlowID variable: "
+            procData.getSignature(this.getId()) + "Caught exception processing FlowID variable: "
             + e2.getMessage(), e2);
       }
 
@@ -87,7 +87,7 @@ public class BlockSwitchProcAsUser extends Block {
       }
       catch (Exception e2) {
         Logger.error(login, this, "before",
-            procData.getSignature() + "Caught exception processing PID variable: "
+            procData.getSignature(this.getId()) + "Caught exception processing PID variable: "
             + e2.getMessage(), e2);
       }
 
@@ -98,7 +98,7 @@ public class BlockSwitchProcAsUser extends Block {
       }
       catch (Exception e2) {
         Logger.error(login, this, "before",
-            procData.getSignature() + "Caught exception processing SUBPID variable: "
+            procData.getSignature(this.getId()) + "Caught exception processing SUBPID variable: "
             + e2.getMessage(), e2);
       }
 
@@ -140,14 +140,14 @@ public class BlockSwitchProcAsUser extends Block {
         }
         else {
           Logger.warning(login, this, "before",
-              procData.getSignature() + 
+              procData.getSignature(this.getId()) + 
               "No activity found for selected flow and pid: " + newfid + ";" + newpid + ";" + newsubpid);	  
         }
       }
     }
     catch (Exception e) {
       Logger.error(login, this, "before",
-          procData.getSignature() + "Caught exception: " + e.getMessage(), e);
+          procData.getSignature(this.getId()) + "Caught exception: " + e.getMessage(), e);
     }
 
     return page;

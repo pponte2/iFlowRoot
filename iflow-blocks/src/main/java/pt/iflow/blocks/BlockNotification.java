@@ -182,7 +182,7 @@ public class BlockNotification extends Block {
       }
     } catch (Exception e) {
       Logger.error(login, this, "after", 
-          procData.getSignature() + "caught exception: " + e.getMessage(), e);
+          procData.getSignature(this.getId()) + "caught exception: " + e.getMessage(), e);
       outPort = portError;
     }
 

@@ -130,11 +130,11 @@ public class BlockSQLInsert extends BlockSQL {
       }
 
       if (sInto == null || sNames == null || sValues == null) {
-        Logger.error(login, this, "after", procData.getSignature() + "Empty into or names or values");
+        Logger.error(login, this, "after", procData.getSignature(this.getId()) + "Empty into or names or values");
         outPort = portError;
       } else {
         if (this.isSystemTable(sDataSource, sInto)) {
-          Logger.error(login, this, "after", procData.getSignature() + "Into '" + sInto + "' is a system table");
+          Logger.error(login, this, "after", procData.getSignature(this.getId()) + "Into '" + sInto + "' is a system table");
           outPort = portError;
         } else {
           sbQuery = new StringBuffer("insert into ");
@@ -152,7 +152,7 @@ public class BlockSQLInsert extends BlockSQL {
 
     if (outPort != portError) {
       if (StringUtils.isEmpty(sQuery)) {
-        Logger.error(login, this, "after", procData.getSignature() + "Empty query");
+        Logger.error(login, this, "after", procData.getSignature(this.getId()) + "Empty query");
         outPort = portError;
       }
       else {
@@ -160,7 +160,7 @@ public class BlockSQLInsert extends BlockSQL {
 
           ds = Utils.getUserDataSource(sDataSource);
           if (null == ds) {
-            Logger.error(login, this, "after", procData.getSignature() + "null datasource " + sDataSource);
+            Logger.error(login, this, "after", procData.getSignature(this.getId()) + "null datasource " + sDataSource);
             outPort = portError;
           } else {
             db = ds.getConnection();

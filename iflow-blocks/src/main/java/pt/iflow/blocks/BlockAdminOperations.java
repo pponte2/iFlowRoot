@@ -94,7 +94,7 @@ public class BlockAdminOperations extends Block {
       ProcessManager pm = BeanFactory.getProcessManagerBean();
 
       if (OPERATION_CANCEL_PROCESS.equals(operation)) {
-        Logger.debug(login, this, "after", procData.getSignature() + "Attempting to cancel process with flowid [" + flowidStr
+        Logger.debug(login, this, "after", procData.getSignature(this.getId()) + "Attempting to cancel process with flowid [" + flowidStr
             + "], pid [" + pidStr + "], subpid [" + subpidStr + "]");
         ProcessData processData = pm.getProcessDataToBlock(userInfo, flowid, pid, subpid);
 
@@ -108,7 +108,7 @@ public class BlockAdminOperations extends Block {
       } else if (OPERATION_UNDO_HIST.equals(operation)) {
         final_stateStr = this.getAttribute("final_state");
 
-        Logger.debug(login, this, "after", procData.getSignature() + "Attempting to cancel process with flowid [" + flowidStr
+        Logger.debug(login, this, "after", procData.getSignature(this.getId()) + "Attempting to cancel process with flowid [" + flowidStr
             + "], pid [" + pidStr + "], subpid [" + subpidStr + "], final state [" + final_stateStr + "]");
 
         boolean undoProcessResult = false;
@@ -124,7 +124,7 @@ public class BlockAdminOperations extends Block {
         String user = this.getAttribute("user");
 
         if (user != null && !"".equals(user)){
-          Logger.debug(login, this, "after", procData.getSignature() + "Attempting to cancel process with flowid [" + flowidStr
+          Logger.debug(login, this, "after", procData.getSignature(this.getId()) + "Attempting to cancel process with flowid [" + flowidStr
               + "], pid [" + pidStr + "], subpid [" + subpidStr + "], user [" + user + "]");
 
           user = user.trim();
@@ -133,7 +133,7 @@ public class BlockAdminOperations extends Block {
           Activity activity = null;
 
         } else {
-          Logger.error(login, this, "after", procData.getSignature() + "Invalid user for operation [" + flowidStr
+          Logger.error(login, this, "after", procData.getSignature(this.getId()) + "Invalid user for operation [" + flowidStr
               + "], pid [" + pidStr + "], subpid [" + subpidStr + "], user [" + user + "]");
         }
 
@@ -142,10 +142,10 @@ public class BlockAdminOperations extends Block {
 
       outPort = portTrue;
     } catch (NumberFormatException e) {
-      Logger.error(login, this, "after", procData.getSignature() + "caught NumberFormatException: invalid entry parameter flowid ["
+      Logger.error(login, this, "after", procData.getSignature(this.getId()) + "caught NumberFormatException: invalid entry parameter flowid ["
           + flowidStr + "], pid [" + pidStr + "], subpid [" + subpidStr + "], final state [" + final_stateStr + "]", e);
     } catch (Exception e) {
-      Logger.error(login, this, "after", procData.getSignature() + "caught exception: " + e.getMessage(), e);
+      Logger.error(login, this, "after", procData.getSignature(this.getId()) + "caught exception: " + e.getMessage(), e);
       outPort = portFalse;
     }
 
