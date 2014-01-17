@@ -206,7 +206,6 @@
 	</li>
 <% } %>
 
-<h2><%=messages.getString("admin_nav.section.processes.title")%></h2>
 
 <% if (userInfo.isSysAdmin()) { %>
 <ul>
