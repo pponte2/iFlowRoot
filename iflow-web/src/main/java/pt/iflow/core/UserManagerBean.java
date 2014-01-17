@@ -552,7 +552,7 @@ public class UserManagerBean implements UserManager {
    * @return - true if user was modified successfully
    */
 
-  public IErrorHandler modifyUserAsAdmin(UserInfoInterface userInfo, String userId, String gender, String unit, String emailAddress, String firstName, String lastName, String phoneNumber, String faxNumber, String mobileNumber, String companyPhone, String orgAdm, String newPassword, String[] listExtraProperties, String[] listExtraValues, String calendarId) {
+  public IErrorHandler modifyUserAsAdmin(UserInfoInterface userInfo, String userId, String gender, String unit, String emailAddress, String firstName, String lastName, String phoneNumber, String faxNumber, String mobileNumber, String companyPhone, String orgAdm, String orgAdmUsers, String orgAdmFlows, String orgAdmProcesses, String orgAdmResources, String orgAdmOrg, String newPassword, String[] listExtraProperties, String[] listExtraValues, String calendarId) {
     IErrorHandler result = new ErrorHandler(ErrorCode.FAILURE);
     // check self data
     if (!(userInfo.isOrgAdmin() || userInfo.isSysAdmin())) {

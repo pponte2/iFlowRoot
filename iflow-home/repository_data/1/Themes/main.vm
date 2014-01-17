@@ -349,10 +349,10 @@
 							</a>
 							</td>
 							<td style="padding:5px;text-align:center">
-								<a href ="javascript:tabber_right(11, 'inbox.jsp')"><img width="20" height="16" src="images/envelope.png" alt=""/></a> (1)
+								<a href ="javascript:tabber_right(11, 'inbox.jsp')"><img width="20" height="16" src="images/envelope.png" alt=""/></a> ($nMsgs)
 								</td>
 							<td style="padding:5px;text-align:center">
-								<a id="delegButton" onclick="javascript:$('#delegations-form').dialog('open');return false;"><img id="iconAlerts" width="16" height="16" src="Themes/newflow/images/alert-bell.png" alt="Alertas"/></a>(0)
+								<a id="delegButton" onclick="javascript:$('#delegations-form').dialog('open');return false;"><img id="iconAlerts" width="16" height="16" src="Themes/newflow/images/alert-bell.png" alt="Alertas"/></a>($nAlerts)
 							</td>
 
 							<td>

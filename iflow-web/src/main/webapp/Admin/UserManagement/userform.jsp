@@ -163,7 +163,7 @@
     }
     else { 
       errorHandler = manager.modifyUserAsAdmin(ui, userId, gender, unitId, emailAddress, firstName, lastName, phoneNumber,
-          faxNumber, mobileNumber, companyPhone, orgadm, password, listExtraProperties, listExtraValues, fdFormData.getParameter("calendar"));
+          faxNumber, mobileNumber, companyPhone, orgadm, orgadmUsers, orgadmFlows, orgadmProcesses, orgadmResources, orgadmOrg, password, listExtraProperties, listExtraValues, fdFormData.getParameter("calendar"));
       ErrorCode errCode = (errorHandler != null)?errorHandler.getErrorCode():null;
       
       if (UserErrorCode.SUCCESS.equals(errCode)) {
