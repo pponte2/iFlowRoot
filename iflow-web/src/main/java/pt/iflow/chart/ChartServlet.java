@@ -181,7 +181,7 @@ public class ChartServlet extends HttpServlet {
     
     msg = userInfo.getMessages();
     
-    ProcessManager pm = (ProcessManager) session.getAttribute("pm"); //$NON-NLS-1$
+    ProcessManager pm = BeanFactory.getProcessManagerBean();
 
     if (userInfo != null)
       username = userInfo.getUtilizador();

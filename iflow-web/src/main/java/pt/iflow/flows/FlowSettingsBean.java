@@ -56,12 +56,12 @@ public class FlowSettingsBean implements FlowSettings {
   }
 
   public void saveFlowSettings(UserInfoInterface userInfo,
-      FlowSetting[] afsaSettings) {
-    saveFlowSettings(userInfo, afsaSettings, false);
+      FlowSetting[] afsaSettings, String calendId) {
+    saveFlowSettings(userInfo, afsaSettings, false, calendId);
   }
 
   public void saveFlowSettings(UserInfoInterface userInfo,
-      FlowSetting[] afsaSettings, boolean abInitSettings) {
+      FlowSetting[] afsaSettings, boolean abInitSettings, String calendId) {
     DataSource ds = null;
     Connection db = null;
     Statement st = null;
@@ -203,6 +203,19 @@ public class FlowSettingsBean implements FlowSettings {
         
       } // for
       db.commit();
+      
+      //TODO associate calendar to flow
+      boolean b = false;
+      boolean a = false;
+      int id = fs.getFlowId();
+      
+      if(!calendId.equals("") || !calendId.isEmpty()){
+        //delete old record from this flow id
+        b = deleteFlowCalendar(userInfo, id);
+        // insert new ones
+        a = assFlowCalendar(userInfo, id, calendId);
+      }
+      
     } catch (Exception e) {
       try {
         if (db != null)
@@ -216,6 +229,75 @@ public class FlowSettingsBean implements FlowSettings {
       DatabaseInterface.closeResources(db, cst, rs);
     }
     
+  }
+  
+  public String getFlowCalendarId(UserInfoInterface userInfo,int flowid){
+    Connection db = null;
+    PreparedStatement st = null;
+    ResultSet rs = null;
+    int id = 0;
+    try{
+      db = Utils.getDataSource().getConnection();
+      st = db.prepareStatement("select calendar_id from flow_calendar where flowid = ?");
+      st.setInt(1, flowid);
+      rs = st.executeQuery();
+      if(rs.next())
+        id = rs.getInt("calendar_id");
+      rs.close();
+      } catch (Exception e) {
+        Logger.error(userInfo.getUtilizador(), this, "readFlow", "exception caught", e);
+        e.printStackTrace();
+      }finally {
+        DatabaseInterface.closeResources(rs, db, st);
+      }
+      return "" + id;
+  }
+  
+  private boolean assFlowCalendar(UserInfoInterface userInfo, int id, String calendId){
+
+    if(StringUtils.isEmpty(calendId))
+      return false;
+    
+    Connection db = null;
+    PreparedStatement st = null;
+    ResultSet rs = null;
+    boolean c = false;    
+    try{
+      db = Utils.getDataSource().getConnection();
+      st = db.prepareStatement("Insert into flow_calendar (flowid,calendar_id) values (?,"+calendId+")");
+      st.setInt(1, id);
+      st.execute();
+      c = true;
+    } catch (Exception e) {
+      c = false;
+      Logger.error(userInfo.getUtilizador(), this, "readFlow", "exception caught", e);
+      e.printStackTrace();
+    }finally {
+      DatabaseInterface.closeResources(rs, db, st);
+    }  
+    return c;
+  }
+  
+  private boolean deleteFlowCalendar(UserInfoInterface userInfo,int id){
+      
+    Connection db = null;
+    PreparedStatement st = null;
+    ResultSet rs = null;
+    boolean b = false;
+    try{
+      db = Utils.getDataSource().getConnection();
+      st = db.prepareStatement("delete from flow_calendar where flowid = ?");
+      st.setInt(1, id);
+      st.execute();
+      b = true;
+      } catch (Exception e) {
+        b = false;
+        Logger.error(userInfo.getUtilizador(), this, "readFlow", "exception caught", e);
+        e.printStackTrace();
+      }finally {
+        DatabaseInterface.closeResources(rs, db, st);
+      }
+      return b;
   }
 
   public void exportFlowSettings(UserInfoInterface userInfo, int flowid,
@@ -422,7 +504,7 @@ public class FlowSettingsBean implements FlowSettings {
 
       retObj = "erro ao guardar propriedades importadas";
 
-      saveFlowSettings(userInfo, fsa);
+      saveFlowSettings(userInfo, fsa, "");
 
       retObj = null;
     } catch (Exception e) {

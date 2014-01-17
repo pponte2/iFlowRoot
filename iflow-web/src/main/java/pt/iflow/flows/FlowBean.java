@@ -1522,8 +1522,8 @@ public class FlowBean implements Flow {
     return BeanFactory.getFlowHolderBean().undeployFlow(userInfo, asFile);
   }
 
-  public void saveFlowSettings(UserInfoInterface userInfo, FlowSetting[] afsaSettings) {
-    BeanFactory.getFlowSettingsBean().saveFlowSettings(userInfo, afsaSettings);
+  public void saveFlowSettings(UserInfoInterface userInfo, FlowSetting[] afsaSettings, String calendId) {
+    BeanFactory.getFlowSettingsBean().saveFlowSettings(userInfo, afsaSettings, calendId);
   }
 
   public void exportFlowSettings(UserInfoInterface userInfo, int flowid, PrintStream apsOut) {
@@ -1550,6 +1550,10 @@ public class FlowBean implements Flow {
     return BeanFactory.getFlowHolderBean().isOnline(userInfo, anFlowId);
   }
 
+  public String getFlowCalendarId(UserInfoInterface userInfo,int flowid) {
+    return BeanFactory.getFlowSettingsBean().getFlowCalendarId(userInfo,flowid);
+  }
+    
   public FlowRolesTO[] getFlowRoles(UserInfoInterface userInfo, int anFlowId) {
     FlowRolesTO[] retObj = null;
 

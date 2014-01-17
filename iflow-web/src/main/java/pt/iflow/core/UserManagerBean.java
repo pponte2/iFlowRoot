@@ -5,14 +5,19 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 import java.util.TreeSet;
 
 import javax.sql.DataSource;
@@ -83,13 +88,13 @@ public class UserManagerBean implements UserManager {
   public IErrorHandler inviteUser(UserInfoInterface userInfo, String username, String gender, String unit, String emailAddress,
       String firstName, String lastName, String phoneNumber, String faxNumber, String mobileNumber, String companyPhone,
       String orgId, String orgAdm, String[] listExtraProperties, String[] listExtraValues) {
-    return createUser(userInfo, username, gender, unit, emailAddress, firstName, lastName, phoneNumber, faxNumber, mobileNumber, companyPhone, orgId, orgAdm, true, null, listExtraProperties, listExtraValues);
+    return createUser(userInfo, username, gender, unit, emailAddress, firstName, lastName, phoneNumber, faxNumber, mobileNumber, companyPhone, orgId, orgAdm, true, null, listExtraProperties, listExtraValues, "");
   }
 
   public IErrorHandler createUser(UserInfoInterface userInfo, String username, String gender, String unit, String emailAddress,
       String firstName, String lastName, String phoneNumber, String faxNumber, String mobileNumber, String companyPhone,
-      String orgId, String orgAdm, String password, String[] listExtraProperties, String[] listExtraValues) {
-    return createUser(userInfo, username, gender, unit, emailAddress, firstName, lastName, phoneNumber, faxNumber, mobileNumber, companyPhone, orgId, orgAdm, false, password, listExtraProperties, listExtraValues);
+      String orgId, String orgAdm, String password, String[] listExtraProperties, String[] listExtraValues, String cal) {
+    return createUser(userInfo, username, gender, unit, emailAddress, firstName, lastName, phoneNumber, faxNumber, mobileNumber, companyPhone, orgId, orgAdm, false, password, listExtraProperties, listExtraValues, cal);
   }
 
 
@@ -129,7 +134,8 @@ public class UserManagerBean implements UserManager {
       boolean invite,
       String password,
       String[] listExtraProperties,
-      String[] listExtraValues) {
+      String[] listExtraValues,
+      String cal) {
 
     boolean result = false;
 
@@ -257,6 +263,12 @@ public class UserManagerBean implements UserManager {
       }
 
       db.commit();
+    //associar user a calend
+      if(!cal.equals(" ")){
+        result = assUserCalend(userInfo,cal,userId);
+      }
+      else
+        result = true;
     }
     catch (SQLException e) {
       result = false;
@@ -296,6 +308,29 @@ public class UserManagerBean implements UserManager {
     }
 
     return new ErrorHandler(ErrorCode.SUCCESS);
+  }
+  
+  private boolean assUserCalend(UserInfoInterface userInfo, String cal, int userId){
+    
+    
+    Connection db = null;
+    PreparedStatement st = null;
+    ResultSet rs = null;
+    boolean c = false;    
+    try{
+      db = Utils.getDataSource().getConnection();
+      st = db.prepareStatement("Insert into user_calendar (userid,calendar_id)values (?,"+cal+")");
+      st.setInt(1, userId);
+      st.execute();
+      c = true;
+    } catch (Exception e) {
+      c = false;
+      Logger.error(userInfo.getUtilizador(), this, "readFlow", "exception caught", e);
+      e.printStackTrace();
+    }finally {
+      DatabaseInterface.closeResources(rs, db, st);
+    }  
+    return c;
   }
 
   /**
@@ -357,7 +392,7 @@ public class UserManagerBean implements UserManager {
    * @return - true if organizational unit was created successfully
    * @ejb.interface-method view-type = "remote"
    */
-  public boolean createOrganizationalUnit(UserInfoInterface userInfo, String organizationid, String name, String description, String parentid, String managerid) {
+  public boolean createOrganizationalUnit(UserInfoInterface userInfo, String organizationid, String name, String description, String parentid, String managerid, String calid) {
     boolean result = false;
 
     DataSource ds = null;
@@ -385,8 +420,11 @@ public class UserManagerBean implements UserManager {
       ds = Utils.getDataSource();
       db = ds.getConnection();
       db.setAutoCommit(false);
+      
+      if(calid.equals(" "))
+        calid=0+"";
 
-      pst = db.prepareStatement("insert into organizational_units (ORGANIZATIONID,PARENT_ID,NAME,DESCRIPTION) values (?,?,?,?)", new String[]{"unitid"});
+      pst = db.prepareStatement("insert into organizational_units (ORGANIZATIONID,PARENT_ID,NAME,DESCRIPTION,calendid) values (?,?,?,?,"+calid+")", new String[]{"unitid"});
 
       pst.setString(1, organizationid);
       pst.setString(2, parentid);
@@ -514,11 +552,7 @@ public class UserManagerBean implements UserManager {
    * @return - true if user was modified successfully
    */
 
-  public IErrorHandler modifyUserAsAdmin(UserInfoInterface userInfo, String userId, String gender, String unit,
-      String emailAddress, String firstName, String lastName, String phoneNumber, String faxNumber, String mobileNumber,
-      String companyPhone, String orgAdm, String orgAdmUsers, String orgAdmFlows, String orgAdmProcesses, String orgAdmResources,
-      String orgAdmOrg, String newPassword, String[] listExtraProperties, String[] listExtraValues) {
-
+  public IErrorHandler modifyUserAsAdmin(UserInfoInterface userInfo, String userId, String gender, String unit, String emailAddress, String firstName, String lastName, String phoneNumber, String faxNumber, String mobileNumber, String companyPhone, String orgAdm, String newPassword, String[] listExtraProperties, String[] listExtraValues, String calendarId) {
     IErrorHandler result = new ErrorHandler(ErrorCode.FAILURE);
     // check self data
     if (!(userInfo.isOrgAdmin() || userInfo.isSysAdmin())) {
@@ -622,8 +656,7 @@ public class UserManagerBean implements UserManager {
       }
 
       int pos = 0;
-      pst = db
-          .prepareStatement("update users set GENDER=?,EMAIL_ADDRESS=?,FIRST_NAME=?,LAST_NAME=?,PHONE_NUMBER=?,FAX_NUMBER=?,MOBILE_NUMBER=?,COMPANY_PHONE=?,ORGADM=?,ORGADM_USERS=?,ORGADM_FLOWS=?,ORGADM_PROCESSES=?,ORGADM_RESOURCES=?,ORGADM_ORG=?"
+      pst = db.prepareStatement("update users set GENDER=?,EMAIL_ADDRESS=?,FIRST_NAME=?,LAST_NAME=?,PHONE_NUMBER=?,FAX_NUMBER=?,MOBILE_NUMBER=?,COMPANY_PHONE=?,ORGADM=?,ORGADM_USERS=?,ORGADM_FLOWS=?,ORGADM_PROCESSES=?,ORGADM_RESOURCES=?,ORGADM_ORG=?"
               + setUnitId + setExtras + setPassword + " where USERID=?");
       pst.setString(++pos, gender);
       pst.setString(++pos, emailAddress);
@@ -651,6 +684,7 @@ public class UserManagerBean implements UserManager {
       pst.setString(++pos, userId);
       pst.executeUpdate();
       db.commit();
+      boolean b = updateCalendId(userInfo,userId,calendarId);
       result = new ErrorHandler(ErrorCode.SUCCESS);
     }
     catch (SQLException e) {
@@ -668,7 +702,37 @@ public class UserManagerBean implements UserManager {
 
     return result;
   }
-
+  private boolean updateCalendId(UserInfoInterface UserInfo,String userId, String calendId){
+    Connection db = null;
+    PreparedStatement st = null;
+    ResultSet rs = null;
+    boolean b = false;
+    int id = 0;
+    try{
+      db = Utils.getDataSource().getConnection();
+      if(calendId.equals(" ")){
+        st = db.prepareStatement("delete from user_calendar where userid="+userId+"");
+        st.executeUpdate();
+        b = true;
+      }
+      else{
+      st = db.prepareStatement("UPDATE user_calendar SET calendar_id="+calendId+" WHERE userid="+userId+"");
+      int i = st.executeUpdate();
+      if(i == 0)
+        b = assUserCalend(UserInfo,calendId,Integer.parseInt(userId));
+      b = true;
+      }
+      } catch (Exception e) {
+        b = false;
+        Logger.error(UserInfo.getUtilizador(), this, "readFlow", "exception caught", e);
+        e.printStackTrace();
+      }finally {
+        DatabaseInterface.closeResources(rs, db, st);
+      }
+      return b;
+  }
+  
+  
   public IErrorHandler modifyUserAsSelf(UserInfoInterface userInfo, String password, String gender, String emailAddress, String firstName, String lastName, String phoneNumber, String faxNumber, String mobileNumber, String companyPhone, String[] listExtraProperties, String[] listExtraValues) {
     IErrorHandler result = new ErrorHandler(ErrorCode.FAILURE);
 
@@ -910,7 +974,7 @@ public class UserManagerBean implements UserManager {
    * @return - true if organizational unit was created successfully
    * @ejb.interface-method view-type = "remote"
    */
-  public boolean modifyOrganizationalUnit(UserInfoInterface userInfo, String unitId, String organizationid, String name, String description, String parentid, String managerid) {
+  public boolean modifyOrganizationalUnit(UserInfoInterface userInfo, String unitId, String organizationid, String name, String description, String parentid, String managerid, String calid) {
     boolean result = false;
 
     DataSource ds = null;
@@ -937,8 +1001,11 @@ public class UserManagerBean implements UserManager {
       ds = Utils.getDataSource();
       db = ds.getConnection();
       db.setAutoCommit(false);
+      
+      if(calid.equals(" "))
+        calid = 0+"";
 
-      pst = db.prepareStatement("update organizational_units set ORGANIZATIONID=?,PARENT_ID=?,NAME=?,DESCRIPTION=? "
+      pst = db.prepareStatement("update organizational_units set ORGANIZATIONID=?,PARENT_ID=?,NAME=?,DESCRIPTION=?, calendid = "+calid+" "
           + "where UNITID=?");
 
       pst.setString(1, organizationid);
@@ -1174,6 +1241,10 @@ public class UserManagerBean implements UserManager {
       
       UserViewInterface user = getUser(userInfo, userid);
       String username = user.getUsername();
+      
+      pst = db.prepareStatement("delete from user_calendar where userid = "+userid+"");
+      pst.executeUpdate();
+      pst.close();
       
       pst = db.prepareStatement("delete from activity where userid=?");
       pst.setString(1, username);
@@ -1550,6 +1621,10 @@ public class UserManagerBean implements UserManager {
       ds = Utils.getDataSource();
       db = ds.getConnection();
       db.setAutoCommit(false);
+      
+      pst = db.prepareStatement("delete from profiles_calendar where profileid=?");
+      pst.setString(1, profileId);
+      pst.executeUpdate();
 
       pst = db.prepareStatement("delete from profiles where PROFILEID=? and ORGANIZATIONID=?");
       pst.setString(1, profileId);
@@ -3011,6 +3086,489 @@ public class UserManagerBean implements UserManager {
     pst.setString(1, organizationId);
     pst.executeUpdate();
   }
+  // get calendars
+  public List<String[]> getCalendars(UserInfoInterface userInfo){
+    List<String[]> calendars = new ArrayList<String[]>();
+    
+    Connection db = null;
+    PreparedStatement st = null;
+    ResultSet rs = null;
+    try{
+    db = Utils.getDataSource().getConnection();
+    st = db.prepareStatement("select id, name from calendar");
+    rs = st.executeQuery();
+    while(rs.next())     
+      calendars.add(new String[] {"" + rs.getInt("id"), rs.getString("name")} ); 
+    rs.close();
+    } catch (Exception e) {
+      Logger.error(userInfo.getUtilizador(), this, "readFlow", "exception caught", e);
+      e.printStackTrace();
+    }finally {
+      DatabaseInterface.closeResources(rs, db, st);
+    }
+    return calendars;
+  }
+  //delete calendars
+  private boolean deleteCalendarHolidays(UserInfoInterface userInfo, String id){
+    Connection db = null;
+    PreparedStatement st = null;
+    ResultSet rs = null;
+    boolean b = false;
+    try{
+      db = Utils.getDataSource().getConnection();
+      st = db.prepareStatement("delete from calendar_holidays where calendar_id = ?");
+      st.setString(1, id);
+      st.execute();
+      b = true;
+      } catch (Exception e) {
+        b = false;
+        Logger.error(userInfo.getUtilizador(), this, "readFlow", "exception caught", e);
+        e.printStackTrace();
+      }finally {
+        DatabaseInterface.closeResources(rs, db, st);
+      }
+      return b;
+  }
+  private boolean deleteCalendarPeriods(UserInfoInterface userInfo, String id){
+    Connection db = null;
+    PreparedStatement st = null;
+    ResultSet rs = null;
+    boolean b = false;
+    try{
+      db = Utils.getDataSource().getConnection();
+      st = db.prepareStatement("delete from calendar_periods where calendar_id = ?");
+      st.setString(1, id);
+      st.execute();
+      b = true;
+      } catch (Exception e) {
+        b = false;
+        Logger.error(userInfo.getUtilizador(), this, "readFlow", "exception caught", e);
+        e.printStackTrace();
+      }finally {
+        DatabaseInterface.closeResources(rs, db, st);
+      }
+    return b;
+  }
+  private boolean deleteFlowCalendar(UserInfoInterface userInfo, String id){
+    Connection db = null;
+    PreparedStatement st = null;
+    ResultSet rs = null;
+    boolean b  =false;
+    try{
+      db = Utils.getDataSource().getConnection();
+      st = db.prepareStatement("delete from flow_calendar where calendar_id = ?");
+      st.setString(1, id);
+      st.execute();
+      b = true;
+      } catch (Exception e) {
+        b = false;
+        Logger.error(userInfo.getUtilizador(), this, "readFlow", "exception caught", e);
+        e.printStackTrace();
+      }finally {
+        DatabaseInterface.closeResources(rs, db, st);
+      }
+    return b;
+  }
+  public boolean deleteCalendars(UserInfoInterface userInfo, String id){
+    Connection db = null;
+    PreparedStatement st = null;
+    ResultSet rs = null;
+    boolean b = false;
+    boolean h = false;
+    boolean p = false;
+    boolean c = false;
+    boolean f = false;
+    h = deleteCalendarHolidays(userInfo,id);
+    p = deleteCalendarPeriods(userInfo,id);
+    c = deleteFlowCalendar(userInfo,id);
+    //delete all associates
+    f = deleteAllCalendars(userInfo,id);
+    try{
+      db = Utils.getDataSource().getConnection();
+      st = db.prepareStatement("delete from calendar where id = ?");
+      st.setString(1, id);
+      st.execute();
+      b=true;
+      } catch (Exception e) {
+        b=false;
+        Logger.error(userInfo.getUtilizador(), this, "readFlow", "exception caught", e);
+        e.printStackTrace();
+      }finally {
+        DatabaseInterface.closeResources(rs, db, st);
+      }
+      if(b && h && p && c)
+        return true;
+      else
+        return false;
+    
+  }
+  
+  public boolean deleteAllCalendars(UserInfoInterface userInfo, String id){
+    Connection db = null;
+    PreparedStatement st = null;
+    ResultSet rs = null;
+    boolean b= false;
+    String[] tabs = {"flow_calendar", "user_calendar", "organizations", "organizational_units"}; 
+    for(int i = 0; i < 4; i++){
+      if(i<2){
+        try{
+          db = Utils.getDataSource().getConnection();
+          st = db.prepareStatement("delete from "+tabs[i]+" where calendar_id = ?");
+          st.setString(1, id);
+          st.execute();
+          b=true;
+          } catch (Exception e) {
+            b=false;
+            Logger.error(userInfo.getUtilizador(), this, "readFlow", "exception caught", e);
+            e.printStackTrace();
+          }finally {
+            DatabaseInterface.closeResources(rs, db, st);
+          }
+      } 
+      if(i == 2) {
+        String calendid = 0+"";
+        try{
+          db = Utils.getDataSource().getConnection();
+          st = db.prepareStatement("update "+tabs[i]+" set calendid="+calendid+" where organizationid = "+userInfo.getOrganization()+"");
+          st.execute();
+        } catch (Exception e) {
+          Logger.error(userInfo.getUtilizador(), this, "readFlow", "exception caught", e);
+          e.printStackTrace();
+        }finally {
+          DatabaseInterface.closeResources(rs, db, st);
+        }
+      }
+      if(i == 3){
+        String calendid = 0+"";
+        try{
+          db = Utils.getDataSource().getConnection();
+          st = db.prepareStatement("update "+tabs[i]+" set calendid="+calendid+" where unitid = "+userInfo.getOrgUnitID()+"");
+          st.execute();
+        } catch (Exception e) {
+          Logger.error(userInfo.getUtilizador(), this, "readFlow", "exception caught", e);
+          e.printStackTrace();
+        }finally {
+          DatabaseInterface.closeResources(rs, db, st);
+        }
+      }
+    }
+    if(b)
+      return true;
+    else
+      return false;
+  }
+  
+  public String getOrgUnitCalendarId(String username,String unitId){
+    Connection db = null;
+    PreparedStatement st = null;
+    ResultSet rs = null;
+    int id = 0;
+    try{
+      db = Utils.getDataSource().getConnection();
+      st = db.prepareStatement("select calendid from organizational_units where unitid = "+ unitId +"");
+      rs = st.executeQuery();
+      if(rs.next())
+        id = rs.getInt("calendid");
+      rs.close();
+      } catch (Exception e) {
+        Logger.error(username, this, "readFlow", "exception caught", e);
+        e.printStackTrace();
+      }finally {
+        DatabaseInterface.closeResources(rs, db, st);
+      }
+      return "" + id;
+  }
+  
+//get user's calendar id
+  public String getUserCalendarId(String user, String usId){
+    Connection db = null;
+    PreparedStatement st = null;
+    ResultSet rs = null;
+    int id = 0;
+    try{
+      db = Utils.getDataSource().getConnection();
+      st = db.prepareStatement("select calendar_id from user_calendar where userid = "+ usId +"");
+      rs = st.executeQuery();
+      if(rs.next())
+        id = rs.getInt("calendar_id");
+      rs.close();
+      } catch (Exception e) {
+        Logger.error(user, this, "readFlow", "exception caught", e);
+        e.printStackTrace();
+      }finally {
+        DatabaseInterface.closeResources(rs, db, st);
+      }
+      return "" + id;
+  }
+  
+  //get calendar id
+  public int getCalendarId(UserInfoInterface userInfo, String name){
+    Connection db = null;
+    PreparedStatement st = null;
+    ResultSet rs = null;
+    int id = 0;
+    try{
+      db = Utils.getDataSource().getConnection();
+      st = db.prepareStatement("select id from calendar where name = ?");
+      st.setString(1, name);
+      rs = st.executeQuery();
+      if(rs.next())
+        id = rs.getInt("id");
+      rs.close();
+      } catch (Exception e) {
+        Logger.error(userInfo.getUtilizador(), this, "readFlow", "exception caught", e);
+        e.printStackTrace();
+      }finally {
+        DatabaseInterface.closeResources(rs, db, st);
+      }
+      return id;
+  }
+  
+  public int getLastCalendarId(UserInfoInterface userInfo){
+    Connection db = null;
+    PreparedStatement st = null;
+    ResultSet rs = null;
+    int id = 0;
+    try{
+      db = Utils.getDataSource().getConnection();
+      st = db.prepareStatement("select id from calendar ORDER BY id DESC LIMIT 1");
+      rs = st.executeQuery();
+      if(rs.next())
+        id = rs.getInt("id");
+      rs.close();
+      } catch (Exception e) {
+        Logger.error(userInfo.getUtilizador(), this, "readFlow", "exception caught", e);
+        e.printStackTrace();
+      }finally {
+        DatabaseInterface.closeResources(rs, db, st);
+      }
+      return id;
+  }
+  //save calendar to db
+  public boolean saveCalendar(UserInfoInterface userInfo,String calendnome,String dias,String feriados,String periodos, String id) throws ParseException{
+    Connection db = null;
+    PreparedStatement st = null;
+    ResultSet rs = null;
+    boolean c = false;
+    
+    ArrayList<String> days = new ArrayList<String>();
+    StringTokenizer diastkn = new StringTokenizer(dias, ",");
+    while (diastkn.hasMoreElements()) {
+      days.add(diastkn.nextElement().toString());
+    }
+    
+    try{
+      db = Utils.getDataSource().getConnection();
+      st = db.prepareStatement("Insert into calendar (version,name, monday, tuesday, wednesday, thursday, friday, saturday, sunday, valid, day_hours, week_hours, month_hours, create_date)values (1,'"+calendnome+"',?,?,?,?,?,?,?,1,8,40,160,now())");
+      if(days.get(0).equals("monday"))
+        st.setInt(1, 1);
+      else
+        st.setInt(1, 0);        
+      if(days.contains("tuesday"))
+        st.setInt(2, 1);
+      else
+        st.setInt(2, 0); 
+      if(days.contains("wednsday"))
+        st.setInt(3, 1);
+      else
+        st.setInt(3, 0);
+      if(days.contains("thursday"))
+        st.setInt(4, 1);
+      else
+        st.setInt(4, 0); 
+      if(days.contains("friday"))
+        st.setInt(5, 1);
+      else
+        st.setInt(5, 0); 
+      if(days.contains("saturday"))
+        st.setInt(6, 1);
+      else
+        st.setInt(6, 0); 
+      if(days.contains("sunday"))
+        st.setInt(7, 1);
+      else
+        st.setInt(7, 0);      
+      st.execute();
+      c = true;
+    } catch (Exception e) {
+      c = false;
+      Logger.error(userInfo.getUtilizador(), this, "readFlow", "exception caught", e);
+      e.printStackTrace();
+    }finally {
+      DatabaseInterface.closeResources(rs, db, st);
+    }
+   if(id.equals("0")){
+     int i = getLastCalendarId(userInfo);
+     id = ""+i;
+   }
+
+   ArrayList<String> hol = new ArrayList<String>();
+   StringTokenizer holtkn = new StringTokenizer(feriados, ",");
+   boolean h = false;
+   boolean p = false;
+   while (holtkn.hasMoreElements()) {
+     hol.add(holtkn.nextElement().toString());
+   }
+   for(int x = 0 ; x < hol.size(); x++){
+     hol.get(x).replace(",", "");
+     h = insertHolidays(userInfo,hol.get(x),id);
+   }
+   ArrayList<String> per = new ArrayList<String>();
+   StringTokenizer pertkn = new StringTokenizer(periodos, ",");
+   while (pertkn.hasMoreElements()) {
+     per.add(pertkn.nextElement().toString());
+   }
+   for(int x = 0 ; x < per.size(); x++){
+     per.get(x).replace(",", "");
+     p = insertPeriods(userInfo,per.get(x), id);
+   }
+   
+   if (c)
+    return true;
+   else
+     return false;
+  }
+  //insert holidays
+  private boolean insertHolidays(UserInfoInterface userInfo, String feriado, String id) throws ParseException{
+    Connection db = null;
+    PreparedStatement st = null;
+    ResultSet rs = null;
+    boolean b = false;
+    
+    try{
+      db = Utils.getDataSource().getConnection();
+      st = db.prepareStatement("insert into calendar_holidays values (? , '"+parseDate(feriado)+" 23:59:59')");
+      st.setString(1, id);
+      st.execute();
+      b = true;
+    } catch (Exception e) {
+      b = false;
+      Logger.error(userInfo.getUtilizador(), this, "readFlow", "exception caught", e);
+      e.printStackTrace();
+    }finally {
+      DatabaseInterface.closeResources(rs, db, st);
+    }
+    
+    return b;
+  }
+  
+  private String parseDate(String date)
+  {
+    String[] valores = date.split("/");
+    return valores[2] + "-"+ valores[1]+ "-"+valores[0];
+  }
+  
+  //insert periodos
+  private boolean insertPeriods(UserInfoInterface userInfo, String periodo, String id){
+    Connection db = null;
+    PreparedStatement st = null;
+    ResultSet rs = null;
+    boolean b = false;
+   
+    String[] valores = periodo.split("-");
+    String init =  valores[0];
+    String end = valores[1];
+    try{
+      db = Utils.getDataSource().getConnection();
+      st = db.prepareStatement("insert into `iflow`.`calendar_periods` values (?,'"+init+"','"+end+"')");
+      st.setString(1, id);
+      st.execute();
+      b = true;
+    } catch (Exception e) {
+      b = false;
+      Logger.error(userInfo.getUtilizador(), this, "readFlow", "exception caught", e);
+      e.printStackTrace();
+    }finally {
+      DatabaseInterface.closeResources(rs, db, st);
+    }
+    
+    return b;
+  }
+  
+  //get data from db
+  public List<String> getCalendarDays(UserInfoInterface userInfo, String id){
+    List<String> days = new ArrayList<String>();
+    
+    Connection db = null;
+    PreparedStatement st = null;
+    ResultSet rs = null;
+    try{
+      db = Utils.getDataSource().getConnection();
+      st = db.prepareStatement("select monday,tuesday,wednesday,thursday,friday,saturday,sunday from calendar where id = ?");
+      st.setString(1, id);
+      rs = st.executeQuery();
+      if(rs.next())
+          if(rs.getInt("monday")==1)
+            days.add("monday");
+          if(rs.getInt("tuesday")==1)
+            days.add("tuesday");
+          if(rs.getInt("wednesday")==1)
+            days.add("wednesday");
+          if(rs.getInt("thursday")==1)
+            days.add("thursday");
+          if(rs.getInt("friday")==1)
+            days.add("friday");
+          if(rs.getInt("saturday")==1)
+            days.add("saturday");
+          if(rs.getInt("sunday")==1)
+            days.add("sunday");
+      rs.close();
+      } catch (Exception e) {
+        Logger.error(userInfo.getUtilizador(), this, "readFlow", "exception caught", e);
+        e.printStackTrace();
+      }finally {
+        DatabaseInterface.closeResources(rs, db, st);
+      }    
+    return days;   
+  }
+  
+  public List<String> getHolidays(UserInfoInterface userInfo, String id){
+    List<String> holidays = new ArrayList<String>();
+    
+    Connection db = null;
+    PreparedStatement st = null;
+    ResultSet rs = null;
+    try{
+      db = Utils.getDataSource().getConnection();
+      st = db.prepareStatement("select holiday from calendar_holidays where calendar_id = ?");
+      st.setString(1, id);
+      rs = st.executeQuery();
+      while(rs.next()){
+        holidays.add(rs.getString("holiday"));
+      }
+      rs.close();
+      } catch (Exception e) {
+        Logger.error(userInfo.getUtilizador(), this, "readFlow", "exception caught", e);
+        e.printStackTrace();
+      }finally {
+        DatabaseInterface.closeResources(rs, db, st);
+      }    
+    return holidays;   
+  }
+  
+  public List<String> getPeriods(UserInfoInterface userInfo, String id){
+    List<String> periods = new ArrayList<String>();
+    
+    Connection db = null;
+    PreparedStatement st = null;
+    ResultSet rs = null;
+    try{
+      db = Utils.getDataSource().getConnection();
+      st = db.prepareStatement("select period_start, period_end from calendar_periods where calendar_id = ?");
+      st.setString(1, id);
+      rs = st.executeQuery();
+      while(rs.next()){
+        periods.add(rs.getString("period_start")+"-"+rs.getString("period_end"));
+      }
+      rs.close();
+      } catch (Exception e) {
+        Logger.error(userInfo.getUtilizador(), this, "readFlow", "exception caught", e);
+        e.printStackTrace();
+      }finally {
+        DatabaseInterface.closeResources(rs, db, st);
+      }    
+    return periods;   
+  }
 
   //
   // Dummy event to create a delegated user info.
@@ -3029,5 +3587,45 @@ public class UserManagerBean implements UserManager {
     public Integer initialEventCode() {
       return new Integer(EventManager.READY_TO_PROCESS);
     }
+  }
+  
+  public String getOrgCalendar(UserInfoInterface userInfo, String orgid){
+    Connection db = null;
+    PreparedStatement st = null;
+    ResultSet rs = null;
+    int id = 0;
+    try{
+      db = Utils.getDataSource().getConnection();
+      st = db.prepareStatement("select calendid from organizations where organizationid = "+orgid+"");
+      rs = st.executeQuery();
+      if(rs.next())
+        id = rs.getInt("calendid");
+      rs.close();
+      } catch (Exception e) {
+        Logger.error(userInfo.getUtilizador(), this, "readFlow", "exception caught", e);
+        e.printStackTrace();
+      }finally {
+        DatabaseInterface.closeResources(rs, db, st);
+      }
+      return id + "";
+  }
+
+  public void modifyCalendarOrg(UserInfoInterface userInfo, String orgid, String calendid) {
+    Connection db = null;
+    PreparedStatement st = null;
+    ResultSet rs = null;  
+    if (calendid.equals(" "))
+      calendid = 0+"";
+    try{
+      db = Utils.getDataSource().getConnection();
+      st = db.prepareStatement("update organizations set calendid="+calendid+" where organizationid = "+orgid+"");
+      st.execute();
+    } catch (Exception e) {
+      Logger.error(userInfo.getUtilizador(), this, "readFlow", "exception caught", e);
+      e.printStackTrace();
+    }finally {
+      DatabaseInterface.closeResources(rs, db, st);
+    }  
+    
   }
 }
