@@ -59,12 +59,12 @@ function showAnnotationDialogDashboard() {
 function showAnnotationDialog(location) {
 	annotDialog = new YAHOO.widget.Dialog(location, {
 		fixedcenter : false,
-		underlay: 'shadow',
+		underlay: 'mate',
 		width: '360px',
 		visible : true, 
 		modal: false, 
 		constraintoviewport : true,
-		close : true,
+		close : false,
 		draggable: true
 	} );
 			

@@ -1656,6 +1656,12 @@ function reloadBootstrapElements(){
 
   //accordion
   try {
+    $jQuery('.accordion').accordion({
+      collapsible:true,
+      animate:{easing: "swing"}
+    }); 
+  } catch (err) {}
+  try {
     $jQuery( ".PanelCollapse" ).accordion({
       collapsible:true,
       animate:{easing: "swing"}

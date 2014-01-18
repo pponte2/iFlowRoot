@@ -196,7 +196,7 @@ request.setAttribute("flow_type", FlowType.WORKFLOW);
 								
 								<div class="form-group">
 									<div class="col-sm-9">
-										<input type="text" id="pnumber" class="form-control" placeholder="<if:message string="user_procs_filtro.field.pnumber"/>" name="pnumber" size="12" value="<%=pnumber %>" maxlength="1024" style="height:25px"/>
+										<input type="text" id="pnumber" class="form-control" placeholder="<if:message string="user_procs_filtro.field.pnumber"/>" name="pnumber" size="12" value="<%=pnumber %>" maxlength="1024" style="height:25px;font-size:0.8em;padding:0"/>
 									</div>
 									<div class="col-sm-1">
 										<img class="control-label pull-left" src="images/icon_delete.png" onclick="javascript:document.getElementById('pnumber').value='';"/>
@@ -205,7 +205,7 @@ request.setAttribute("flow_type", FlowType.WORKFLOW);
 								
 								<div class="form-group">
 									<div class="col-sm-9">
-										<input class="calendaricon form-control" type="text" size="12"  id="f_up_date_c" placeholder="<if:message string="user_procs_filtro.field.fromdate"/>" name="dtafter" value="<%=sAfterHtml%>" onmouseover="caltasks(this.id);this.onmouseover=null;" style="height:25px"/>
+										<input class="calendaricon form-control" type="text" size="12"  id="f_up_date_c" placeholder="<if:message string="user_procs_filtro.field.fromdate"/>" name="dtafter" value="<%=sAfterHtml%>" onmouseover="caltasks(this.id);this.onmouseover=null;" style="height:25px;font-size:0.8em;padding:0"/>
 									</div>
 									<div class="col-sm-1">
 										<img class="control-label pull-left" src="images/icon_delete.png" onclick="javascript:document.getElementById('f_up_date_c').value='';">
@@ -214,7 +214,7 @@ request.setAttribute("flow_type", FlowType.WORKFLOW);
 								
 								<div class="form-group">
 									<div class="col-sm-9">
-										<input class="calendaricon form-control" type="text" size="12"  id="f_up_date_a" name="dtbefore" placeholder="<if:message string="user_procs_filtro.field.todate"/>" value="<%=sBeforeHtml%>" onmouseover="caltasks(this.id);this.onmouseover=null;" style="height:25px"/>
+										<input class="calendaricon form-control" type="text" size="12"  id="f_up_date_a" name="dtbefore" placeholder="<if:message string="user_procs_filtro.field.todate"/>" value="<%=sBeforeHtml%>" onmouseover="caltasks(this.id);this.onmouseover=null;" style="height:25px;font-size:0.8em;padding:0"/>
 									</div>
 									<div class="col-sm-1">
 										<img class="control-label pull-left" src="images/icon_delete.png" onclick="javascript:document.getElementById('f_up_date_a').value='';">
@@ -255,25 +255,7 @@ request.setAttribute("flow_type", FlowType.WORKFLOW);
 							   		onclick="proc_sla_execute('<%=ts%>')">
 								</p>
 							   
-
-
-								<p class="item"><%=messages.getString("user_procs_filtro.field.nitems")%>:</p>
-								<p class="item_indent">
-								<div class="item_indent form-group">
-									<div class="col-sm-9">
-										<select name="numitemspage" id="items_page" class="form-control" onchange="<%=filterAction %>" style="height:25px;font-size:0.8em;padding: 0 0 0 5px">
-										   <option value="5">5</option>
-										   <option value="20" selected="selected">20</option>
-										   <option value="50">50</option>
-										   <option value="100">100</option>
-										</select>
-									</div>
-								</div>
-
-
-
-
-							   <input type="hidden" name="showUserProcs" value="true" > 
+							   <input type="hidden" name="showUserProcs" value="true"/> 
 								<div id="searchForm">
 								<% if (isAdmin || isSearchableByInterv) { %>
 								<p class="item" id="targetuser_label"><if:message string="user_procs_filtro.field.targetuserlabel"/>:</p>

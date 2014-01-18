@@ -21,6 +21,7 @@
 <input id="usersStr" type="hidden" value="$allUsers"></input>
 <input id="datesStr" type="hidden" value="$allDates"></input>
 
+	<div id ="view_proc_annotation_dashboard"></div>
 
 <div id="taskbar" class="slide02">
 

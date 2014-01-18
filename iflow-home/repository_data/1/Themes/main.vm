@@ -176,8 +176,6 @@
 				#if($sys_admin != "no")
 				#end
 				
-				// jcosta colocar aqui teste se há novos alertas
-				
 			}
 
 			YAHOO.util.Event.onDOMReady(initDom);	
