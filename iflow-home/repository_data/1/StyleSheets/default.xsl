@@ -681,7 +681,6 @@ label.subheader {
 		</xsl:choose>
 	</xsl:variable>
     <xsl:if test="count(tabdivision|field) &gt; 0">
-
       <!-- aplicar apenas ao caso multicoluna -->
       <xsl:choose>
         <xsl:when test="count(../columndivision) &gt; 1">
@@ -721,7 +720,7 @@ label.subheader {
                       <xsl:text>innertab</xsl:text>
                    </xsl:attribute>
                     </xsl:if>
-                    <xsl:apply-templates select="field" /><!-- then the others -->
+                    <xsl:apply-templates /><!-- then the others -->
                   </ol>
               </xsl:when>
               <xsl:otherwise>
@@ -757,26 +756,26 @@ label.subheader {
     <xsl:choose>
 	<xsl:when test="type = 'textmessage' or type = 'textlabel' or type = 'textbox' or type = 'textlabel' or type = 'password' or type = 'datecal' or type = 'textarea' or type = 'rich_textarea' or type = 'button' or type = 'popup_field'">
     <li id="{generate-id()}" class="fieldDiv">
-		<xsl:attribute name="class">
-			<xsl:value-of select="type" />
-			<xsl:text> </xsl:text>
-			<xsl:if test="name(../../..) = 'tab'">
-				<xsl:text> innertab</xsl:text>
-			</xsl:if>
-			<xsl:choose>
-				<xsl:when test="$multicol &gt; 1">
-					<xsl:text> field_multicol</xsl:text>
-				</xsl:when>
-				<xsl:otherwise>
-					<xsl:text> field</xsl:text>				
-				</xsl:otherwise>
-			</xsl:choose>
-		</xsl:attribute>
-		<xsl:attribute name="style">
-			<xsl:if test="type = 'textarea'">
-					<xsl:text>height:</xsl:text><xsl:value-of select="rows/text()*20+25"/><xsl:text>px;</xsl:text>
-			</xsl:if>
-		</xsl:attribute>
+	<xsl:attribute name="class">
+		<xsl:value-of select="type" />
+		<xsl:text> </xsl:text>
+		<xsl:if test="name(../../..) = 'tab'">
+			<xsl:text> innertab</xsl:text>
+		</xsl:if>
+		<xsl:choose>
+			<xsl:when test="$multicol &gt; 1">
+				<xsl:text> field_multicol</xsl:text>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:text> field</xsl:text>				
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:attribute>
+	<xsl:attribute name="style">
+		<xsl:if test="type = 'textarea'">
+				<xsl:text>height:</xsl:text><xsl:value-of select="rows/text()*20+25"/><xsl:text>px;</xsl:text>
+		</xsl:if>
+	</xsl:attribute>
       <xsl:if test="type = 'textmessage'">
 		  <xsl:if test="string-length(align) &gt; 0">
             <xsl:attribute name="align">

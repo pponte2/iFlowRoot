@@ -68,9 +68,9 @@
                 else {
                   sbHtml.append("<br/>");
                 }
-                sbHtml.append(messages.getString("proc_info.msg.fwshownuser"));                
+                sbHtml.append("<div class=\"alert alert-info\">").append(messages.getString("proc_info.msg.fwshownuser")).append("</div>");                
                 sbHtml.append("</div><div class=\"table_inc\">");
-                sbHtml.append("<table class=\"item_list\">");
+                sbHtml.append("<table class=\"item_list table\">");	
                 
                 AuthProfile aptmp = BeanFactory.getAuthProfileBean();
                 
@@ -101,8 +101,8 @@
         
         sColspan = "colspan=\"5\"";
         
-        sTDBefore = "<td width=\"20%\">&nbsp;</td>";
-        sTDBefore += "<td width=\"20%\" class=\"v10bAZUdec\" align=\"center\" valign=\"middle\">";
+        sTDBefore = "<td>&nbsp;</td>";
+        sTDBefore += "<td class=\"v10bAZUdec\" align=\"center\" valign=\"middle\">";
         
         sBatchLink = "<td width=\"20%\">&nbsp;</td>";
         sBatchLink += "<td width=\"20%\" class=\"v10bAZUdec\" align=\"center\" valign=\"middle\"><a href=\"" + response.encodeURL("processBatchProc.jsp") + "\" class=\"v10bAZUdec\"><img src=\"images/setaon.gif\" width=\"19\" height=\"19\" border=\"0\"><br>Pr&oacute;ximo Processo Lote</a></td>";
@@ -112,7 +112,7 @@
 %>
 <%@ include file="inc/process_top.jspf"%>
 
-<div class="alert alert-info" style="font-family: Verdana,Arial,sans-serif;"><%=sbHtml%></div>
+<div style="font-family: Verdana,Arial,sans-serif;"><%=sbHtml%></div>
 
 <%  String sFrom = fdFormData.getParameter("from");
     if (sFrom == null){
@@ -132,6 +132,7 @@
   <script language="JavaScript" type="text/javascript">
 	if (parent.showProcessFowardAnnotations)
 	  parent.showProcessFowardAnnotations(<%=flowid%>,<%=pid%>,<%=subpid%>,'<%=sFrom%>', '<%=labelId%>', '<%=labelName%>');
+	 
   </script>
 <% } %>
 

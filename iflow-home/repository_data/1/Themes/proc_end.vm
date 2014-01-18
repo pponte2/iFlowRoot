@@ -1,7 +1,12 @@
 #if($hasActivities)
+	<style type="text/css">
+		table {
+			font-size: 1em;	
+		}
+	</style>
 	<div class="table_inc">
       	<p>$label</p>
-        <table class="item_list">
+        <table class="item_list table">
           <tr class="tab_header_ng">
 		#if($has_appname)
 			<td>$messages.getString("main_content.tasks.field.application")</td>
@@ -45,10 +50,10 @@
   		</table>	
 	</div>
 	#if($hasMoreActivities)
-	    <div class="button_box">
-	    	<input class="regular_button_00" type="button" name="more" value="$messages.getString("button.more")" 
+	    <!--div class="button_box">
+	    	<input class="regular_button_00 btn btn-default" type="button" name="more" value="$messages.getString("button.more")" 
 				onClick="javascript:if(parent && parent.close_process) parent.close_process(3); parent.tabber(2, '$response.encodeURL($url_prefix,'actividades_filtro.jsp')','$moreParams','$response.encodeURL($url_prefix,'actividades.jsp')','$moreParams');"
 			/>
-		</div>
+		</div-->
 	#end
 #end

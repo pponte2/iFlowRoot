@@ -57,6 +57,22 @@ function showAnnotationDialogDashboard() {
 }
 
 function showAnnotationDialog(location) {
+/*
+    			$('#view_proc_annotation_dashboard').dialog({
+					autoOpen: false,
+					height: 400,
+					width: 200,
+					title: "",
+					position: "",
+					closeOnEscape: true,
+					modal: false,
+					close: function() {
+						
+					}
+				});
+	$('#view_proc_annotation_dashboard').dialog('open');
+
+*/
 	annotDialog = new YAHOO.widget.Dialog(location, {
 		fixedcenter : false,
 		underlay: 'mate',
@@ -75,6 +91,7 @@ function showAnnotationDialog(location) {
 
     YAHOO.util.Event.addListener("hide_annotation_dashboard", "click", annotDialog.hide, annotDialog, true);
 	YAHOO.util.Event.addListener("hide_annotation", "click", annotDialog.hide, annotDialog, true);
+	
 }
 
 
@@ -119,7 +136,7 @@ function showEndOfProcessAnnotationsCallBack(htmltext) {
   } else if (htmltext.indexOf("session-reload") > 0) {
     pageReload(gotoPersonalAccount);
   } else {
-    var open_proc_frame = document.getElementById('open_proc_frame');
+    var open_proc_frame = document.getElementById('open_proc_frame_3');
     if(open_proc_frame) {
       var innerDoc = open_proc_frame.contentDocument || open_proc_frame.contentWindow.document;
       if(innerDoc) {

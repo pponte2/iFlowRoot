@@ -40,7 +40,7 @@
 %>
 
     <%if (!"forward".equals(from)){ %>
-    <div onclick="javascript:menuonoff('verAnotacoes',1);" class="apt_link btn btn-default" id="butinfocol">Ver Comentários</div>
+    <div onclick="javascript:menuonoff('verAnotacoes',1);" class="apt_link btn btn-default btn-sm" id="butinfocol">Ver Comentários</div>
     <%} %>
 
     <div id="verAnotacoes" 
@@ -72,7 +72,7 @@
         
     </div>
     <%if (!"forward".equals(from)){ %>
-  	<div onclick="javascript:menuonoff('anotacoes',1);" class="apt_link btn btn-default" id="butinfocol">Anota&ccedil;&atilde;o</div>
+  	<div onclick="javascript:menuonoff('anotacoes',1);" class="apt_link btn btn-default btn-sm" id="butinfocol">Anota&ccedil;&atilde;o</div>
 	<%}%>
 	<div id="anotacoes" 
 		style="<%if (!"forward".equals(from) || !hasAnnottations){%>display:none;position:absolute;z-index:1;border:1px solid gray;top:10px;<%} else {%>position:relative;z-index:0;bottom:10px;<%}%>background:none repeat scroll 0 0 #FFFFFF;
@@ -94,36 +94,36 @@
         <%if ("forward".equals(from)){ %>
             <p style="padding-left:10px;12px;">Se o desejar poderá ainda enviar nota associada ao processo</p>
         <%} %>
-		<ul class="apt_reg">
-			<li style="font-size:12px;color:black;margin-left:0px;margin-bottom:10px"><if:message string="process_annotations.field.comment" /></li>
-			<textarea id="comment" rows="4" cols="51"><%=comment.getComment()%></textarea>
+		<ul class="apt_reg form-group">
+			<label class="control-label"><if:message string="process_annotations.field.comment" /></label>
+			<textarea id="comment" class="form-control" rows="4" cols="51"><%=comment.getComment()%></textarea>
 			<input type="hidden" id="old_comment" value="<%=comment.getComment()%>">
 		</ul>
 
 		<hr class="apt_sep"/>
-		<ul class="apt_reg">
-			<li style="font-size:12px;color:black;margin-left:0px;margin-bottom:10px"><if:message string="process_annotations.field.labels" /></li>
+		<ul class="form-group">
+			<label class="control-label"><if:message string="process_annotations.field.labels" /></label><br/>
 			<% for(int i=0; i < labels.size(); i++){ 
 			if(labels.get(i).getCheck()){%>
-				<li class="list-group">
+				
 				<input type="checkbox" onclick="managerLabels(<%=labels.get(i).getId()%>,true)" checked id="checkLabel_<%=labels.get(i).getId()%>" />
 				<img src="AnnotationIconsServlet?label_name='<%=labels.get(i).getName()%>'&ts='+<%=System.currentTimeMillis() %>+'" width="16px" height="16px"/>
-				<%=labels.get(i).getName()%></li>
+				<%=labels.get(i).getName()%><br/>
 			<%}else{ %>
-			    <li>
+			    
 				<input type="checkbox" onclick="managerLabels(<%=labels.get(i).getId()%>,false)" id="checkLabel_<%=labels.get(i).getId()%>" />
 				<img src="AnnotationIconsServlet?label_name='<%=labels.get(i).getName()%>'&ts='+<%=System.currentTimeMillis() %>+'" width="16px" height="16px"/>
-				<%=labels.get(i).getName()%></li>
+				<%=labels.get(i).getName()%><br/>
 			<%}
 			} %>
 		</ul>
 		<hr class="apt_sep"/>
-		<ul class="apt_reg">
-			<li style="font-size:12px;color:black;margin-left:0px;margin-bottom:10px"><if:message string="process_annotations.field.deadline" /></li>
-			<li style="margin-left:20px;margin-top:10px;"><input class="calendaricon" id="deadline" type="text" size="12" name="deadline" 
+		<ul class="apt_reg form.group">
+			<label class="form-label"><if:message string="process_annotations.field.deadline" /></label>
+			<input class="calendaricon" id="deadline" type="text" size="12" name="deadline" 
 		  		value="<%=sDeadline%>" onmouseover="caltasks(this.id);this.onmouseover=null;"/>
 			<img class="icon_clear" src="images/icon_delete.png" onclick="javascript:document.getElementById('deadline').value='';" />
-			<input type="hidden" id="deadlineini" value="<%=sDeadline%>"></li>
+			<input type="hidden" id="deadlineini" value="<%=sDeadline%>">
 		</ul>
 		
 		<%if (!"forward".equals(from)) {%>
