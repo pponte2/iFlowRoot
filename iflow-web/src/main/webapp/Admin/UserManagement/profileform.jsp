@@ -11,6 +11,7 @@
 <%@ include file = "../../inc/defs.jsp" %>
 
 
+
 <if:checkUserAdmin type="org">
 	<div class="error_msg"><if:message string="admin.error.unauthorizedaccess"/></div>
 </if:checkUserAdmin>
