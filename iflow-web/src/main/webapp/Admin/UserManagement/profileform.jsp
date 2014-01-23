@@ -11,7 +11,6 @@
 <%@ include file = "../../inc/defs.jsp" %>
 
 
-
 <if:checkUserAdmin type="org">
 	<div class="error_msg"><if:message string="admin.error.unauthorizedaccess"/></div>
 </if:checkUserAdmin>
@@ -79,7 +78,7 @@
 	String profileDesc = profile != null && profile.getDescription() != null ? profile.getDescription() : "";
 %>
 
-<form method="post" name="formulario" id="formulario">
+<form method="post" name="formulario" id="formulario" class="form-horizontal">
 	<input type="hidden" name="profileid" value="<%=profileId%>" />
 
 	<h1 id="title_admin"><%=titulo%></h1>
@@ -98,9 +97,9 @@
 		</ol>
 	</fieldset>
     <fieldset class="submit">
-        <input class="regular_button_01" type="button" name="back" value="<%=messages.getString("button.back")%>" onClick="javascript:tabber_right(4, '<%=response.encodeURL("Admin/UserManagement/profileadm.jsp")%>');"/>
-		<input class="regular_button_01" type="button" name="clear" value="<%=messages.getString("button.clear")%>" onClick="javascript:document.formulario.reset()"/>
-		<input class="regular_button_01" type="button" name="add" value="<%=botao%>" onClick="javascript:tabber_right(4, '<%=response.encodeURL("Admin/UserManagement/profileform.jsp")%>','oper=add&' + get_params(document.formulario));"/>
+        <input class="regular_button_01 btn btn-default" type="button" name="back" value="<%=messages.getString("button.back")%>" onClick="javascript:tabber_right(4, '<%=response.encodeURL("Admin/UserManagement/profileadm.jsp")%>');"/>
+		<input class="regular_button_01 btn btn-default" type="button" name="clear" value="<%=messages.getString("button.clear")%>" onClick="javascript:document.formulario.reset()"/>
+		<input class="regular_button_01 btn btn-default" type="button" name="add" value="<%=botao%>" onClick="javascript:tabber_right(4, '<%=response.encodeURL("Admin/UserManagement/profileform.jsp")%>','oper=add&' + get_params(document.formulario));"/>
 	</fieldset>
 	
 </form>

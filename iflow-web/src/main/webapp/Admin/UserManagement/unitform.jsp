@@ -115,13 +115,13 @@
     }
 %>
 
-<form method="post" name="formulario" id="formulario">
+<form method="post" name="formulario" id="formulario" class="form-horizontal">
 	<input type="hidden" name="unitid" value="<%=unitId%>" />
 
 	<h1 id="title_admin"><%=titulo%></h1>
 
 <% if (bError) { %>
-	<div class="error_msg">
+	<div class="alert alert-danger">
 		<%=sErrorMsg%>
 	</div>
 <% } %>
@@ -160,8 +160,8 @@
 		</ol>
 	</fieldset>
     <fieldset class="submit">
-        <input class="regular_button_01" type="button" name="back" value="<%=messages.getString("button.back")%>" onClick="javascript:tabber_right(4, '<%=response.encodeURL("Admin/UserManagement/unitadm.jsp")%>');"/>
-		<input class="regular_button_01" type="button" name="clear" value="<%=messages.getString("button.clear")%>" onClick="javascript:document.formulario.reset()"/>
-		<input class="regular_button_01" type="button" name="add" value="<%=botao%>" onClick="javascript:tabber_right(4, '<%=response.encodeURL("Admin/UserManagement/unitform.jsp")%>','oper=add&' + get_params(document.formulario));"/>
+        <input class="regular_button_01 btn btn-default" type="button" name="back" value="<%=messages.getString("button.back")%>" onClick="javascript:tabber_right(4, '<%=response.encodeURL("Admin/UserManagement/unitadm.jsp")%>');"/>
+		<input class="regular_button_01 btn btn-default" type="button" name="clear" value="<%=messages.getString("button.clear")%>" onClick="javascript:document.formulario.reset()"/>
+		<input class="regular_button_01 btn btn-default" type="button" name="add" value="<%=botao%>" onClick="javascript:tabber_right(4, '<%=response.encodeURL("Admin/UserManagement/unitform.jsp")%>','oper=add&' + get_params(document.formulario));"/>
 	</fieldset>
 </form>
