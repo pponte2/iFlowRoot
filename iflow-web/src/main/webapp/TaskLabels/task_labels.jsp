@@ -43,9 +43,9 @@
 		</a>
 		<a id="bt_edit_<%=folder.getFolderid()%>" href="javascript:tabber_right(1, 'main_content.jsp', 'filterfolder=<%= folder.getFolderid()%>');selectedLabel('bt_edit_<%=folder.getFolderid()%>');" 
 				onmousehover="document.getElementById('bte_change_<%=folder.getFolderid()%>').setStyle('display','block');"
-				class="lmenu form-label labellink" ><%=folder.getName()%></a>
+				class="lmenu form-label labellink" title="<%=folder.getName()%>"><%=(folder.getName().length()>12)?(folder.getName().substring(0,11)+"..."):folder.getName()%></a>
 		
-			<img id="cl_edit_bg_<%=folder.getFolderid()%>" title="Alterar" width="15" height="30" src="Themes/newflow/images/img_categ.png" style="float: right; background:<%=folder.getColor()%>;"/>
+		<img id="cl_edit_bg_<%=folder.getFolderid()%>" title="Alterar" width="15" height="30" src="Themes/newflow/images/img_categ.png" style="float: right; background:<%=folder.getColor()%>;"/>
 		
 		<input class="form-control" type="text" value="" id="edit_<%=folder.getFolderid()%>" style="display:none;width:7em;height:25px;" onkeydown="if (event.keyCode == 13) { editLabel('<%=folder.getFolderid()%>','0');}"/>
 		<input id="bt_pickColor_<%=folder.getFolderid()%>" class="color form-control" style="display:none;cursor:pointer;width:15px;height:25px;border: 1px solid #CCCCCC" maxlength="0" title="Escolha a cor"></input>

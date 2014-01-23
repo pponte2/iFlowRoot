@@ -347,11 +347,11 @@ request.setAttribute("flow_type", FlowType.WORKFLOW);
   
 		appFlows.add(hm);
   	}
-
+/* does not work on linux
 	if (appFlows.isEmpty()) {
 	  ServletUtils.sendEncodeRedirect(response, "user_procs_filtro.jsp?searchtype=ss&ssonly=true");
 	}
-  	
+  */	
 	String tabnr = (String) fdFormData.getParameter("navtabnr");
 	if (tabnr == null) tabnr= "8";
 	String pageContent = "proc_list";
