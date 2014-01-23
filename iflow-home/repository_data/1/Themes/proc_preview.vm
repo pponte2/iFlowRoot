@@ -65,9 +65,11 @@
 						$noDetail
 					</div>
 			#else
+				#if (!$error.isEmpty())
 					<div class="alert alert-warning">
 						$error
 					</div>
+				#end
 					<!--table class="table">
 						<thead>
 						<tr class="tab_header" style="background-color:#ddd;">

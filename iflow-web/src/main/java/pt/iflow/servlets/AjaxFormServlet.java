@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -45,7 +46,7 @@ public class AjaxFormServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
-		String varNewValue  = request.getParameter("varNewValue");
+		String varNewValue  = request.getParameter("varNewValue");		
 		String varName  = request.getParameter("varName");
 		Integer flowid  = Integer.parseInt(request.getParameter("flowid"));
 		Integer pid  = Integer.parseInt(request.getParameter("pid"));

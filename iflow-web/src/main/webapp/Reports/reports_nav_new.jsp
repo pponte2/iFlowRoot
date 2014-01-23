@@ -36,19 +36,19 @@
 					<a id="li_a_reports_<%=ReportsNavConsts.PERFORMANCE_CHARTS%>"
 					title="<%=messages.getString("reports_nav.section.performance.tooltip")%>"
 					class="toolTipItemLink li_link"
-					href="javascript:selectedItem('reports', <%=ReportsNavConsts.PERFORMANCE_CHARTS%>);getJSP('Reports/proc_perf.jsp')"><%=messages.getString("reports_nav.section.performance.link")%></a>
+					href="javascript:selectedItem('reports', <%=ReportsNavConsts.PERFORMANCE_CHARTS%>);tabber_save(10,'','','Reports/proc_perf.jsp')"><%=messages.getString("reports_nav.section.performance.link")%></a>
 				</li>
 				<li>
 					<a id="li_a_reports_<%=ReportsNavConsts.PROCESS_STATISTICS%>"
 					title="<%=messages.getString("reports_nav.section.statistics.tooltip")%>"
 					class="toolTipItemLink li_link"
-					href="javascript:selectedItem('reports', <%=ReportsNavConsts.PROCESS_STATISTICS%>);getJSP('Reports/proc_stats.jsp')"><%=messages.getString("reports_nav.section.statistics.link")%></a>
+					href="javascript:selectedItem('reports', <%=ReportsNavConsts.PROCESS_STATISTICS%>);getCtrlFill('Reports/proc_stats.jsp')"><%=messages.getString("reports_nav.section.statistics.link")%></a>
 				</li>
 				<li>
 					<a id="li_a_reports_<%=ReportsNavConsts.PROCESS_SLA%>"
 					title="<%=messages.getString("reports_nav.section.sla.tooltip")%>"
 					class="toolTipItemLink li_link"
-					href="javascript:selectedItem('reports', <%=ReportsNavConsts.PROCESS_SLA%>);getJSP('Reports/proc_sla.jsp')"><%=messages.getString("reports_nav.section.sla.link")%></a>
+					href="javascript:selectedItem('reports', <%=ReportsNavConsts.PROCESS_SLA%>);getCtrlFill('Reports/proc_sla.jsp')"><%=messages.getString("reports_nav.section.sla.link")%></a>
 				</li>
 			</ul>
 		</li>			
