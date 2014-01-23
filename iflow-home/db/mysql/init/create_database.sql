@@ -52,7 +52,7 @@ CREATE TABLE `flow` (
   `name_idx18` varchar(64),
   `name_idx19` varchar(64),
   `seriesid` int,
-  `max_block_id` INT;
+  `max_block_id` INT,
   type_code varchar(1) default 'W',
   PRIMARY KEY (`flowid`),
   INDEX `ind_flow` (`enabled`)
@@ -301,7 +301,7 @@ CREATE TABLE `activity` (
   `profilename` VARCHAR(256),
   `read_flag` INT(1) NULL DEFAULT 1,
   `mid` INT NULL DEFAULT 0,
-  `folderid` INT NULL;
+  `folderid` INT NULL,
   PRIMARY KEY (`flowid`, `pid`, `subpid`, `userid`),
   CONSTRAINT `activity_process_fk` FOREIGN KEY `activity_process_fk` (`flowid`, `pid`, `subpid`)
     REFERENCES `process` (`flowid`, `pid`, `subpid`)
@@ -1924,6 +1924,7 @@ end if;
 END;
 //
 
+DELIMITER ;
 DROP TABLE IF EXISTS `calendar`;
 CREATE TABLE  `calendar` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
