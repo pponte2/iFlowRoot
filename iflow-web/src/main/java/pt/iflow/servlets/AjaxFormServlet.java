@@ -1,10 +1,8 @@
 package pt.iflow.servlets;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,11 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import pt.iflow.api.blocks.Block;
 import pt.iflow.api.core.BeanFactory;
@@ -46,8 +42,6 @@ public class AjaxFormServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
-		String varNewValue  = request.getParameter("varNewValue");		
-		String varName  = request.getParameter("varName");
 		Integer flowid  = Integer.parseInt(request.getParameter("flowid"));
 		Integer pid  = Integer.parseInt(request.getParameter("pid"));
 		Integer subpid  = Integer.parseInt(request.getParameter("subpid"));
@@ -77,19 +71,25 @@ public class AjaxFormServlet extends HttpServlet {
         hmHidden.put("flowid", "" + flowid);
         hmHidden.put(Const.FLOWEXECTYPE, flowExecType);
     	//hmHidden.put(Const.sMID_ATTRIBUTE, currMid);
-        try {
-			procData.parseAndSet(varName, varNewValue);			
-		} catch (ParseException e) {
-			try {
-				Object o = DateUtility.parseFormDate(userInfo, varNewValue);
-				ProcessSimpleVariable psv = new ProcessSimpleVariable(new DateDataType(), varName);
-				psv.setValue(o);
-				procData.set(psv);
-			} catch (ParseException e1) {
-				;
-			}			
-		} 
         
+        Enumeration parameterNames = request.getParameterNames();
+		while(parameterNames.hasMoreElements()){
+			String varName  = parameterNames.nextElement().toString();
+			String varNewValue  = request.getParameter(varName);					
+			try {
+				procData.parseAndSet(varName, varNewValue);			
+			} catch (Exception e) {
+				try {
+					Object o = DateUtility.parseFormDate(userInfo, varNewValue);
+					ProcessSimpleVariable psv = new ProcessSimpleVariable(new DateDataType(), varName);
+					psv.setValue(o);
+					procData.set(psv);
+				} catch (Exception e1) {
+					;
+				}			
+			} 
+		}
+		
 	    Object[] oa = new Object[4];
         oa[0] = userInfo;
         oa[1] = procData;

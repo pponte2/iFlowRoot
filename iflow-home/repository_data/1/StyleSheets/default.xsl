@@ -871,12 +871,13 @@
 			<xsl:attribute name="onchange">
 		<xsl:value-of select="onchange/text()" />
 			</xsl:attribute>
-		</xsl:if>
-		<xsl:if test="string-length(onblur) &gt; 0">
-			<xsl:attribute name="onblur">
-			<xsl:value-of select="onblur/text()" />
-			</xsl:attribute>
-		</xsl:if>
+		</xsl:if>		
+		<xsl:attribute name="onblur">
+			ajaxSaveValueChange(this);
+			<xsl:if test="string-length(onblur) &gt; 0">	
+				<xsl:value-of select="onblur/text()" />
+			</xsl:if>
+		</xsl:attribute>
 		<xsl:if test="string-length(onfocus) &gt; 0">
 			<xsl:attribute name="onfocus">
 			<xsl:value-of select="onfocus/text()" />

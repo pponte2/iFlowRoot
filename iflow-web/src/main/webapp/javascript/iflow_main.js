@@ -75,6 +75,9 @@ var adminNavJSPNew = "Admin/admin_nav_new.jsp";
 var prev_item = new Array();
 GLOBAL_session_config.sel = new Array();
 
+//var to save temporary changes in form before ajax submit
+var ajaxSavedValues = {};
+
 function selectedItem(tabnr, item) {    
   cur_item = 'li_a_' + tabnr + "_"+ item;
   if (document.getElementById((prev_item[tabnr]))) document.getElementById((prev_item[tabnr])).className = 'toolTipItemLink li_link';
@@ -1620,19 +1623,27 @@ function process_detail_new(thePage, ctrl, flowid, pid, subpid, procStatus, uri)
   getCtrlFill(thePage, params, ctrl);
 }
 
+//save temporary changes in form before ajax submit
+function ajaxSaveValueChange(component){
+	var varNewValue=component.value;
+	var varName=component.name;	
+	ajaxSavedValues[varName] = varNewValue;	
+}
+
 function ajaxFormRefresh(component){
   var $jQuery = jQuery.noConflict();
   $jQuery.ajaxSetup ({cache: false});
   $jQuery(component).after('<img src=\'/iFlow//images/loading.gif\'>');
   var varNewValue=component.value;
-  var varName=component.name;
-  var flowid = document.getElementById('flowid').value;
-  var pid = document.getElementById('pid').value;
-  var subpid = document.getElementById('subpid').value;
+  var varName=component.name;  	  
+  ajaxSavedValues[varName] = varNewValue;
+  ajaxSavedValues['flowid'] = document.getElementById('flowid').value;;
+  ajaxSavedValues['pid'] = document.getElementById('pid').value;;
+  ajaxSavedValues['subpid'] = document.getElementById('subpid').value;
+  ajaxSavedValues['contentType'] = 'application/x-www-form-urlencoded;charset=UTF-8';
   $jQuery.getJSON(  
-      '../AjaxFormServlet',
-      {varNewValue: varNewValue, varName: varName,
-        flowid: flowid, pid: pid, subpid:subpid}, 
+      '../AjaxFormServlet',     
+      ajaxSavedValues, 
         function(response){  
           try{
             var main = $jQuery('#main');
@@ -1643,7 +1654,8 @@ function ajaxFormRefresh(component){
           }
 
         }
-  );       	
+  );
+  ajaxSavedValues = {};
 }    
 
 function reloadBootstrapElements(){
