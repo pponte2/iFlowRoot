@@ -1030,12 +1030,13 @@
 			<xsl:attribute name="onChange">
 				<xsl:choose>
 					<xsl:when test="string-length(onchange_submit) &gt; 0">
-						<xsl:apply-templates select="onchange_submit" />
-					</xsl:when>
-					<xsl:otherwise>
 						ajaxFormRefresh(this);
-					</xsl:otherwise>
+						<!--  xsl:apply-templates select="onchange_submit" / -->
+					</xsl:when>
 				</xsl:choose>
+			</xsl:attribute>
+			<xsl:attribute name="onblur">
+				ajaxSaveValueChange(this);				
 			</xsl:attribute>
 			</input>
 		</xsl:otherwise>
@@ -1083,6 +1084,9 @@
 				<xsl:text>readonly</xsl:text>
 			</xsl:attribute>
 		</xsl:if>
+		<xsl:attribute name="onblur">
+			ajaxSaveValueChange(this);				
+		</xsl:attribute>
 		<xsl:apply-templates select="value/text()" />
 		</textarea>
 		<xsl:apply-templates select="suffix" />
