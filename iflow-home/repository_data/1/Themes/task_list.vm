@@ -147,7 +147,7 @@
 				
 				#end
 				<br/>
-				$act.get("desc")
+				$act.get("shortDesc")
 			</div>
 			<div class="right" style="$style_read;">
 				<div>

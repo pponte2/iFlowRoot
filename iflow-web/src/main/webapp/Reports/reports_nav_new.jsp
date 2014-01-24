@@ -42,13 +42,13 @@
 					<a id="li_a_reports_<%=ReportsNavConsts.PROCESS_STATISTICS%>"
 					title="<%=messages.getString("reports_nav.section.statistics.tooltip")%>"
 					class="toolTipItemLink li_link"
-					href="javascript:selectedItem('reports', <%=ReportsNavConsts.PROCESS_STATISTICS%>);getCtrlFill('Reports/proc_stats.jsp')"><%=messages.getString("reports_nav.section.statistics.link")%></a>
+					href="javascript:selectedItem('reports', <%=ReportsNavConsts.PROCESS_STATISTICS%>);tabber_save(10,'','','Reports/proc_stats.jsp')"><%=messages.getString("reports_nav.section.statistics.link")%></a>
 				</li>
 				<li>
 					<a id="li_a_reports_<%=ReportsNavConsts.PROCESS_SLA%>"
 					title="<%=messages.getString("reports_nav.section.sla.tooltip")%>"
 					class="toolTipItemLink li_link"
-					href="javascript:selectedItem('reports', <%=ReportsNavConsts.PROCESS_SLA%>);getCtrlFill('Reports/proc_sla.jsp')"><%=messages.getString("reports_nav.section.sla.link")%></a>
+					href="javascript:selectedItem('reports', <%=ReportsNavConsts.PROCESS_SLA%>);tabber_save(10,'','','Reports/proc_sla.jsp')"><%=messages.getString("reports_nav.section.sla.link")%></a>
 				</li>
 			</ul>
 		</li>			

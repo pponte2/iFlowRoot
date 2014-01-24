@@ -39,7 +39,7 @@
 				<div  class="loginbar_left"><a href="http://www.iflowbpm.com/" target="_blank"  class="linklogin">iflowbpm.com</a> 
 				| <a href="register"  class="linklogin">$msg.get('login.link.register')</a> 
 				#if ($useEmail)
-				| <a href="register"  class="resetPassword">$msg.get('login.link.passwordRecover')</a> 
+				| <a href="register"  class="linklogin">$msg.get('login.link.passwordRecover')</a> 
 				#end
 				#if ($isInstallDemo)
 				| <a href="Admin/login.jsp"  class="linklogin">Administrar</a>
