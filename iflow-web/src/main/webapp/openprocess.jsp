@@ -11,7 +11,7 @@
 <div id="div_proc_menu_colapsed" class="proc_menu_colapsed" style="display:block;">
 	
 	<!--img id="butclose" class="proc_menu_button pull-right" src="images/close.png" onclick="javascript:close_process(3);" title="Fechar::Fechar o form"/-->
-	<div id="butclose" class="proc_menu_button btn btn-default pull-right" src="images/close.png" onclick="javascript:close_process(3);" title="Fechar::Fechar o form"><if:message string="button.close"/></div>
+	<div id="butclose" class="proc_menu_button btn btn-default btn-sm pull-right" src="images/close.png" onclick="javascript:close_process(3);changeColor(document.getElementById('ptc_<%=23%>'));" title="Fechar::Fechar o form"><if:message string="button.close"/></div>
 	<!--
 	<img id="butexpand" class="proc_menu_button"  src="images/detach.png" onclick="expand();"/>
 	<img id="butinfocol" class="proc_menu_button" style="width:auto; display:none;" src="images/info.png" onclick="info();"/>

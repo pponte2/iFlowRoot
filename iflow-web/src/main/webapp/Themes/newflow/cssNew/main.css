@@ -294,9 +294,10 @@ background-image: url(../images/arrow_sbmenu_open.png);
 }
 .process {
 	font-size: 11px;
-	height: 60px;	
+	min-height: 60px;	
 	padding: 5px;
 	border-bottom: 1px solid #cccccc;
+	float:left;
 }
 .process .left {
 	float: left;

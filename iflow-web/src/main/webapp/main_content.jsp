@@ -206,7 +206,7 @@ try {
     pageContent = "deleg_list";
   } else if (data.equals("tasks") || data.equals("alerts")) {
     // FLOWS, ACTIVITIES AND NOTIFICATIONS
-    int nNEWEST_LIMIT = 10;
+    int nNEWEST_LIMIT = 20;
     int nOLDEST_LIMIT = 5;
     int nNOTIFICATION_LIMIT = 5;
     int nAll_Tasks = 0;
@@ -588,6 +588,11 @@ try {
     hsSubstLocal.put("newact", alNew);
     hsSubstLocal.put("actsize", alNew.size());
    
+    int startTask = (previousIndex.intValue() == -1)?1:(previousIndex.intValue() + nNEWEST_LIMIT+1);
+    int endTask = (nextIndex.intValue() == 0)? (startTask + alNew.size() - 1):(startTask + nNEWEST_LIMIT-1);
+    hsSubstLocal.put("startTask", String.valueOf(startTask));
+    hsSubstLocal.put("endTask", String.valueOf(endTask));
+
     // check if contains appname
     {
       boolean contains = false;

@@ -116,7 +116,9 @@
 		#end
 			</div>
 		</form>
-		
+		<div class="btn-group">
+<div>$startTask - $endTask </div>
+		</div>		
 		#if(!$cleanFilter)
 				
 		<div style="height:30px;clear:both;padding-right: 10px;">
@@ -136,7 +138,7 @@
 					#set($style_read="font-weight:bold;")
 				#end
 
-		<div class="process draggable activity" valToAssign='$act.get("flowid")_$act.get("pid")_$act.get("subpid")' onclick='javascript:process_detail_new("user_proc_detail.jsp", "div_process_preview", $act.get("flowid"), $act.get("pid"), $act.get("subpid"), -4, "$act.get("uri")");changeColor(this);'>
+		<div id="ptc_$act.get("pid")" class="process draggable activity" valToAssign='$act.get("flowid")_$act.get("pid")_$act.get("subpid")' onclick='javascript:process_detail_new("user_proc_detail.jsp", "div_process_preview", $act.get("flowid"), $act.get("pid"), $act.get("subpid"), -4, "$act.get("uri")");changeColor(this);'>
 			<div class="cube" title='$act.get("task_annotation_color_title")' style='background-color:$act.get("task_annotation_color_backgroundColor")'>
 				$act.get("pinitials") 
 			</div>
@@ -274,7 +276,11 @@
 				<button type="button" disabled="disabled" class="btn btn-default btn-sm" onClick="javascript:tabber_right(2, 'main_content.jsp', 'startindex=$nextIndex');">&gt;</button>
 		#end
 			</div>
+
 		</form>
+		<div class="btn-group">
+<div>$startTask - $endTask</div>
+		</div>		
 
 	</div>
 
@@ -308,7 +314,7 @@
 					#set($style_read="font-weight:bold;")
 				#end
 
-	<div  class="process_t3" onclick="javascript:openProcess($act.get("flowid"), '$response.encodeURL($url_prefix,$act.get("uri"))', 'flowid=$act.get("flowid")&pid=$act.get("pid")&subpid=$act.get("subpid")', false, 3);">
+	<div id="pte_$act.get("pid")" class="process_t3" onclick="javascript:openProcess($act.get("flowid"), '$response.encodeURL($url_prefix,$act.get("uri"))', 'flowid=$act.get("flowid")&pid=$act.get("pid")&subpid=$act.get("subpid")', false, 3);">
 		<div class="cube" title='$act.get("task_annotation_color_title")' style='background-color:$act.get("task_annotation_color_backgroundColor")'>
 			$act.get("pinitials") 
 		</div>
