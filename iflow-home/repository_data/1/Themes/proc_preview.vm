@@ -117,7 +117,8 @@
 					#set($buttonimagealt=$button.get("buttonimagealt"))
 					#set($hiddenfield=$button.get("hiddenfield"))
 					&nbsp;
-					<button type="submit" align="center" valign="center" class="btn btn-default" name="$name" value="$text" id="$id" onClick="$operation;" title="&tooltip">
+					<button type="submit" align="center" valign="center" class="btn btn-default" name="$name" value="$text" id="$id" 
+						onClick="$operation;" title="&tooltip">
 						$text 
 					</button>
 					#if ($hiddenfield != "")
@@ -148,11 +149,12 @@
 					url : formURL,
 					type: "POST",
 					data : postData,
-					success:function(data, textStatus, jqXHR) {location.reload();},
-					error: function(jqXHR, textStatus, errorThrown){location.reload();}
+					success:function(data, textStatus, jqXHR) {openProcess($procFlowid, '$response.encodeURL($url_prefix,$uri)', 'flowid=$procFlowid&pid=$procPid&subpid=$procSubpid', false, 3);},
+					error: function(jqXHR, textStatus, errorThrown){openProcess($procFlowid, '$response.encodeURL($url_prefix,$uri)', 'flowid=$procFlowid&pid=$procPid&subpid=$procSubpid', false, 3);}
 				});
 			    e.preventDefault();	
 			});
+			
     	</script>
 		</body>
 

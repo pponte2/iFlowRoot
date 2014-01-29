@@ -1141,7 +1141,7 @@
 		</xsl:if>
 
 		<xsl:if test="type='rich_textarea'">
-			<div class="yui-skin-sam" align="left">
+			<div class="yui-skin-sam" align="right">
 				<textarea name="{variable}" rows="{rows}">
 					<xsl:attribute name="id">
 						<xsl:value-of select="variable/text()" />

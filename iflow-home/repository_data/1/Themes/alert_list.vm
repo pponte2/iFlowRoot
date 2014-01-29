@@ -82,8 +82,8 @@
 			
 			<td>
 				$received.get("Expires")<br>
-				<a class="cell_button" href="javascript:tabber(5, gestaoTarefasNavJSP, '', '$response.encodeURL($url_prefix,'confirmar_agendamento.jsp')', 'id=$received.get("HierarchyID")&owner=$received.get("OwnerID")&dkey=$received.get("AcceptKey")&ts=$ts');getCtrlFill(mainContentJSP, 'data=alerts', delegationsForm);getCtrlFill(mainContentJSP, 'data=procs', containerFlowList);">$delegs_title_accept</a>
-				<a class="cell_button" href="javascript:tabber(5, gestaoTarefasNavJSP, '', '$response.encodeURL($url_prefix,'confirmar_agendamento.jsp')', 'id=$received.get("HierarchyID")&owner=$received.get("OwnerID")&dkey=$received.get("RejectKey")&ts=$ts');getCtrlFill(mainContentJSP, 'data=alerts', delegationsForm);getCtrlFill(mainContentJSP, 'data=procs', containerFlowList);">$delegs_title_refuse</a>				
+				<a class="cell_button" onclick="document.getElementById('delegButtonCount').text= document.getElementById('delegButtonCount').text-1;" href="javascript:tabber(5, gestaoTarefasNavJSP, '', '$response.encodeURL($url_prefix,'confirmar_agendamento.jsp')', 'id=$received.get("HierarchyID")&owner=$received.get("OwnerID")&dkey=$received.get("AcceptKey")&ts=$ts');getCtrlFill(mainContentJSP, 'data=alerts', delegationsForm);getCtrlFill(mainContentJSP, 'data=procs', containerFlowList);">$delegs_title_accept</a>
+				<a class="cell_button" onclick="document.getElementById('delegButtonCount').text= document.getElementById('delegButtonCount').text-1;" href="javascript:tabber(5, gestaoTarefasNavJSP, '', '$response.encodeURL($url_prefix,'confirmar_agendamento.jsp')', 'id=$received.get("HierarchyID")&owner=$received.get("OwnerID")&dkey=$received.get("RejectKey")&ts=$ts');getCtrlFill(mainContentJSP, 'data=alerts', delegationsForm);getCtrlFill(mainContentJSP, 'data=procs', containerFlowList);">$delegs_title_refuse</a>				
 			</td>
 			
 		</tr>

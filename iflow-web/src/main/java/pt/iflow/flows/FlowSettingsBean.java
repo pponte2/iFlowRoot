@@ -782,6 +782,7 @@ public class FlowSettingsBean implements FlowSettings {
     altmp.add(new FlowSetting(anFlowId, Const.sFLOW_INT_FORMAT, Const.sFLOW_INT_FORMAT_DESC));
     altmp.add(new FlowSetting(anFlowId, Const.sFLOW_DATE_FORMAT, Const.sFLOW_DATE_FORMAT_DESC));
     altmp.add(new FlowSetting(anFlowId, Const.sSEARCHABLE_BY_INTERVENIENT, Const.sSEARCHABLE_BY_INTERVENIENT_DESC));
+    altmp.add(new FlowSetting(anFlowId, Const.sFLOW_INITIALS, Const.sFLOW_INITIALS_DESC));
 
     // accessible in menu
     altmp.add(new FlowSetting(anFlowId, Const.sFLOW_MENU_ACCESSIBLE, Const.sFLOW_MENU_ACCESSIBLE_DESC));
