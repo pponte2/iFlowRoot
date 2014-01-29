@@ -77,6 +77,8 @@ GLOBAL_session_config.sel = new Array();
 
 //var to save temporary changes in form before ajax submit
 var ajaxSavedValues = {};
+//var that keeps richtextarea variables to save before ajaxsubmit
+var ajaxSavedRichTextAreaValues = new Array();
 
 function selectedItem(tabnr, item) {    
   cur_item = 'li_a_' + tabnr + "_"+ item;
@@ -1625,6 +1627,10 @@ function process_detail_new(thePage, ctrl, flowid, pid, subpid, procStatus, uri)
 
 //save temporary changes in form before ajax submit
 function ajaxSaveValueChange(component){
+	//save present variable
+	for(var i=0; i<ajaxSavedRichTextAreaValues.length; i++)
+		ajaxSavedValues[ajaxSavedRichTextAreaValues[i]] = document.getElementById(ajaxSavedRichTextAreaValues[i]).value;
+	//save the new value
 	var varNewValue=component.value;
 	var varName=component.name;	
 	ajaxSavedValues[varName] = varNewValue;	

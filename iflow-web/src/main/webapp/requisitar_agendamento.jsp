@@ -269,7 +269,7 @@ return;
 			int flowid = Integer.parseInt(sflowid);
 			
 			TreeSet<String> users = new TreeSet<String>();
-			TreeSet<String> usersToDelegate = new TreeSet<String>();
+			ArrayList<String> usersToDelegate = new ArrayList<String>();
 			Map<Character, Boolean> allprivs = new HashMap<Character, Boolean>();
 			allprivs.put(FlowRolesTO.CREATE_PRIV, false);
 			allprivs.put(FlowRolesTO.READ_PRIV, false);
@@ -331,7 +331,13 @@ return;
 						String userid = ud.getUsername();
 						if (userInfo.getUtilizador().equals(userid) || sownerid.equals(userid)) continue;
 						usersToDelegate.add(userid);
-					}				
+					}	
+					for(int i=0; i<(usersToDelegate.size()-1); i++)
+						if(usersToDelegate.get(i).compareTo(usersToDelegate.get(i+1))>0){
+							String aux1=usersToDelegate.get(i);
+							usersToDelegate.set(i, usersToDelegate.get(i+1));
+							usersToDelegate.set(i+1, aux1);
+						}
 				}
 			}
 
@@ -355,7 +361,7 @@ return;
 
 %>
 
-<form name="flowForm" method="post">
+<form name="flowForm" method="post" class="form-horizontal">
   <input type="hidden" name="action" value="<%=sAction%>"/>
   <input type="hidden" name="flowid" value="<%=flowid%>"/>
   <input type="hidden" name="flowname" value="<%= sflowname %>"/>
@@ -405,14 +411,25 @@ return;
 		  		</if:formSelect>
 			<% } %>
 	    <% } %>
-
+		
 	      <% if (!bHidden) { %>
 	      
 		  <% if (bRequest) { %>
             <% Collection<UserData> iflowUsers = BeanFactory.getAuthProfileBean().getAllUsers(userInfo.getOrganization());
+            ArrayList<UserData> iflowUsersOrdered = new ArrayList<UserData>();
+            for (UserData item : iflowUsers)
+            	iflowUsersOrdered.add(item);
+            
+            for(int j=0; j<(iflowUsersOrdered.size()-1); j++)
+            for(int i=0; i<(iflowUsersOrdered.size()-1); i++)
+            	if(iflowUsersOrdered.get(i).getName().compareTo(iflowUsersOrdered.get(i+1).getName())>0){
+            		UserData aux = iflowUsersOrdered.get(i);
+            		iflowUsersOrdered.set(i, iflowUsersOrdered.get(i+1));
+            		iflowUsersOrdered.set(i+1, aux);
+            	}
                if (iflowUsers != null && iflowUsers.size() > 0) { %>
                 <if:formSelect name="user" edit="true" labelkey="requisitar_agendamento.msg.3" value="" required="true" onchange="">
-                    <% for (UserData item : iflowUsers) { %>
+                    <% for (UserData item : iflowUsersOrdered) { %>
                         <if:formOption value="<%=item.getUsername() %>" label="<%=item.getName() %>"/>
                     <% } %>
                 </if:formSelect>

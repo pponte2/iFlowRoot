@@ -410,9 +410,9 @@
 							<a href="" onclick="javascript:editLabel('0','-1'); return false;" class="lmenu" >
 								<img id="bt_cancel_0" title="fechar" width="10" height="10" style="display:none" src="Themes/newflow/images/close.png"/>
 							</a>
-							<input class="form-control" type="text" value="" id="edit_0" style="display:none;width:6em;height:25px;"
+							<input class="form-control" type="text" value="" id="edit_0" style="display:none;width:6em;height:30px;"
 									onkeydown="if (event.keyCode == 13) { editLabel('0','0');}"/>
-							<input id="bt_pickColor_0" class="color form-control" style="display:none;cursor:pointer;width:15px;height:25px;border: 1px solid #CCCCCC;" maxlength="0" title="Escolha a cor"></input>
+							<input id="bt_pickColor_0" class="color form-control" style="display:none; font-size: 0px;cursor:pointer;width:15px;height:25px;border: 1px solid #CCCCCC;" maxlength="0" title="Escolha a cor"></input>
 						</div>
 					</div>
 					#end

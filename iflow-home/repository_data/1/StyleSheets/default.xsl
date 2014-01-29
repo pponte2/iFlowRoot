@@ -1170,6 +1170,9 @@
 					</xsl:if>
 					<xsl:apply-templates select="value/text()" />
 				</textarea>
+				<script type="text/javascript">
+					ajaxSavedRichTextAreaValues.push('<xsl:value-of select="variable/text()" />');					
+				</script>
 			</div>
 			<xsl:if test="string-length(is_rich_text_area) &gt; 0">
 				<script type="text/javascript">
