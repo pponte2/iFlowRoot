@@ -4737,8 +4737,8 @@ var Dom = YAHOO.util.Dom,
                         { type: 'separator' },
                         { group: 'insertitem', label: 'Insert Item',
                             buttons: [
-                                { type: 'push', label: 'HTML Link CTRL + SHIFT + L', value: 'createlink', disabled: true },
-                                { type: 'push', label: 'Insert Image', value: 'insertimage' }
+                                { type: 'push', label: 'HTML Link CTRL + SHIFT + L', value: 'createlink', disabled: true }
+                                //{ type: 'push', label: 'Insert Image', value: 'insertimage' }
                             ]
                         }
                     ]
@@ -7773,8 +7773,8 @@ var Dom = YAHOO.util.Dom,
                         { type: 'separator' },
                         { group: 'insertitem', label: 'Insert Item',
                             buttons: [
-                                { type: 'push', label: 'HTML Link CTRL + SHIFT + L', value: 'createlink', disabled: true },
-                                { type: 'push', label: 'Insert Image', value: 'insertimage' }
+                                { type: 'push', label: 'HTML Link CTRL + SHIFT + L', value: 'createlink', disabled: true }
+                                //{ type: 'push', label: 'Insert Image', value: 'insertimage' }
                             ]
                         }
                     ]

@@ -1030,12 +1030,13 @@
 			<xsl:attribute name="onChange">
 				<xsl:choose>
 					<xsl:when test="string-length(onchange_submit) &gt; 0">
-						<xsl:apply-templates select="onchange_submit" />
-					</xsl:when>
-					<xsl:otherwise>
 						ajaxFormRefresh(this);
-					</xsl:otherwise>
+						<!--  xsl:apply-templates select="onchange_submit" / -->
+					</xsl:when>
 				</xsl:choose>
+			</xsl:attribute>
+			<xsl:attribute name="onblur">
+				ajaxSaveValueChange(this);				
 			</xsl:attribute>
 			</input>
 		</xsl:otherwise>
@@ -1083,6 +1084,9 @@
 				<xsl:text>readonly</xsl:text>
 			</xsl:attribute>
 		</xsl:if>
+		<xsl:attribute name="onblur">
+			ajaxSaveValueChange(this);				
+		</xsl:attribute>
 		<xsl:apply-templates select="value/text()" />
 		</textarea>
 		<xsl:apply-templates select="suffix" />
@@ -1137,7 +1141,7 @@
 		</xsl:if>
 
 		<xsl:if test="type='rich_textarea'">
-			<div class="yui-skin-sam" align="left">
+			<div class="yui-skin-sam" align="right">
 				<textarea name="{variable}" rows="{rows}">
 					<xsl:attribute name="id">
 						<xsl:value-of select="variable/text()" />
@@ -1166,6 +1170,9 @@
 					</xsl:if>
 					<xsl:apply-templates select="value/text()" />
 				</textarea>
+				<script type="text/javascript">
+					ajaxSavedRichTextAreaValues.push('<xsl:value-of select="variable/text()" />');					
+				</script>
 			</div>
 			<xsl:if test="string-length(is_rich_text_area) &gt; 0">
 				<script type="text/javascript">

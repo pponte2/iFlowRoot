@@ -208,7 +208,7 @@ function saveProcessAnnotations(saveHistory){
 //saveForwardToProcessAnnotations
 function saveForwardToProcessAnnotations(saveHistory){
   var params = '';
-  var open_proc_frame = document.getElementById('open_proc_frame');
+  var open_proc_frame = document.getElementById('open_proc_frame_3');
   if(open_proc_frame) {
     var innerDoc = open_proc_frame.contentDocument || open_proc_frame.contentWindow.document;
     if(innerDoc) {

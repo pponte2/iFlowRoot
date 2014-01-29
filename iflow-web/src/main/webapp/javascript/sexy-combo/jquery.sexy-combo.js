@@ -537,8 +537,10 @@
 
 	          if (this.selectbox.attr('onChange'))
 	            this.selectbox.trigger("change");
-	          else
-	            ajaxFormRefresh(this.selectbox.context);
+	          else{
+	        	ajaxSaveValueChange(this.selectbox.context);	
+	            ajaxFormRefresh(this.selectbox.context);	            										
+	          }
 	        }
 	    },
 	

@@ -256,7 +256,7 @@ request.setAttribute("flow_type", FlowType.WORKFLOW);
 								</p>
 							   
 							   <input type="hidden" name="showUserProcs" value="true"/> 
-								<div id="searchForm">
+								
 								<% if (isAdmin || isSearchableByInterv) { %>
 								<p class="item" id="targetuser_label"><if:message string="user_procs_filtro.field.targetuserlabel"/>:</p>
 								<p class="item_indent" id="targetuser_body"/>
@@ -297,7 +297,7 @@ request.setAttribute("flow_type", FlowType.WORKFLOW);
 									<input id="link_search_span" class="regular_button_00 btn btn-default btn-xs" type="button" name="filter" value="<%=messages.getString("button.filter")%>" 
 										onClick="<%=filterAction %>" />
 								</div>
-							</div> 
+							
 						</div>
 					</li>
 				</ul>

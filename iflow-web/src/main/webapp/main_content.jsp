@@ -541,8 +541,9 @@ try {
         hm.put("pnumber", pnumber);
         hm.put("previousUserid", sPreviousUserid);
       
-        String pinitials = "iF";
-        if (sFlow != null && sFlow.length()>2) {
+        
+        String pinitials = BeanFactory.getFlowSettingsBean().getFlowSetting(fd.getId(), Const.sFLOW_INITIALS).getValue();
+        if (sFlow != null && sFlow.length()>2 && (pinitials==null || pinitials.length()==0)) {
           String[] words = sFlow.split(" ");
           if (words.length == 1) {
             pinitials = sFlow.substring(0,2);
