@@ -298,7 +298,13 @@ background-image: url(../images/arrow_sbmenu_open.png);
 	padding: 5px;
 	border-bottom: 1px solid #cccccc;
 	float:left;
+	cursor: pointer;
 }
+
+.process:hover {
+	background-color:#ddd;
+}
+
 .process .left {
 	float: left;
 	padding: 5px;
@@ -437,19 +443,29 @@ float: left;
 	/*background: #f9fafe;*/
 	font-size: 12px;
 	min-width: 800px;
-	height: 50px;
+	min-height: 50px;
 	border-bottom: 1px solid #cccccc;
 	padding: 5px;
 		background-image: -webkit-linear-gradient(3deg, rgba(235,236,240,0.32) 0%, rgba(235,236,240,0.54) 100%);
 	background-image: -moz-linear-gradient(3deg, rgba(235,236,240,0.32) 0%, rgba(235,236,240,0.54) 100%);
 	background-image: -o-linear-gradient(3deg, rgba(235,236,240,0.32) 0%, rgba(235,236,240,0.54) 100%);
 	background-image: linear-gradient(87deg, rgba(235,236,240,0.32) 0%, rgba(235,236,240,0.54) 100%);
-	
+	cursor: pointer;
+	float:left;
+	width: 100%
+
+
 }
+
+.process_t3:hover {
+	background-color:#ddd;
+}
+
 .process_t3 .pr01 {
 	float: left;
 	padding: 5px;
 	width: 50px;
+	text-align: right;
 }
 .process_t3 .pr02 {
 	float: left;
