@@ -329,6 +329,9 @@
 			<a href="javascript:tabber_right(2, 'main_content.jsp', 'filterDate=$act.get("createdDate")')">$act.get("createdDate")</a>
 			<br>
 			<img src="images/flag.png" width="12" height="14" alt=""/>
+				<div style="text-align: center">
+					$act.get("task_annotation_icon")
+				</div>
 		</div>
 	</div>
 	
