@@ -45,7 +45,7 @@
 
     <div id="verAnotacoes" 
         style="display:none;position:absolute;z-index:1;background:none repeat scroll 0 0 #FFFFFF;border-color:#888888;
-        border-style:solid;border-width:1px 1px 2px;text-align:left;top:-6px;right:-3px;width:40em;padding:1em">
+        border-style:solid;border-width:1px 1px 2px;text-align:left;top:-6px;right:-3px;width:40em;padding:1em;left:290px;top:100px">
 
 		<div class="yui-skin-sam">
             <div class="container-close" onclick="javascript:menuonoff('verAnotacoes',0);"></div>
@@ -76,7 +76,7 @@
 	<%}%>
 	<div id="anotacoes" 
 		style="<%if (!"forward".equals(from) || !hasAnnottations){%>display:none;position:absolute;z-index:1;border:1px solid gray;top:10px;<%} else {%>position:relative;z-index:0;bottom:10px;<%}%>background:none repeat scroll 0 0 #FFFFFF;
-		text-align:left;right:0px;;width:40em;padding:1em;align:center">
+		text-align:left;right:0px;;width:40em;padding:1em;align:center;left:380px;top:100px">
 		
 		<div class="yui-skin-sam">
             <div class="container-close" onclick="javascript:menuonoff('anotacoes',0);"></div>
