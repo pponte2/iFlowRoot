@@ -22,9 +22,9 @@ div.sexy input {
     height: 34px;
     line-height:18px;
     vertical-align:middle; 
-    left: 0px;
+    left: -100px;
     top: 0px; 
-    width: 126px;  
+    width: 226px;  
 
 }
 
@@ -48,9 +48,11 @@ div.sexy div.list-wrapper {
     background-color: #FFFFFF;
     padding: 0;
     margin: 0;
-    /*width: 246px;*/
+    width: 252px;
     bottom: auto;
-	text-align: left;
+    text-align: left;
+    top: 32px;
+    left: -100px;
 }
 
 div.sexy div.list-wrapper-up {
