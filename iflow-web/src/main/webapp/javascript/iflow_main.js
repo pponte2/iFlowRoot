@@ -1683,20 +1683,6 @@ function reloadBootstrapElements(){
     $jQuery('.combobox').sexyCombo();
   } catch (err) {}
 
-  //accordion
-  try {
-    $jQuery('.accordion').accordion({
-      collapsible:true,
-      animate:{easing: "swing"}
-    }); 
-  } catch (err) {}
-  try {
-    $jQuery( ".PanelCollapse" ).accordion({
-      collapsible:true,
-      animate:{easing: "swing"}
-    }); 
-  } catch (err) {}
-
   //Quickserch
   try {
     var j = 0;
@@ -1721,6 +1707,20 @@ function reloadBootstrapElements(){
       sorttable.makeSortable(table);
     }
   });
+
+  //accordion
+  try {
+    $jQuery('.accordion').accordion({
+      collapsible:true,
+      animate:{easing: "swing"}
+    }); 
+  } catch (err) {}
+  try {
+    $jQuery( ".PanelCollapse" ).accordion({
+      collapsible:true,
+      animate:{easing: "swing"}
+    }); 
+  } catch (err) {}
 
 }
 
