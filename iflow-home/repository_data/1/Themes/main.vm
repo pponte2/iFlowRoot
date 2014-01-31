@@ -374,7 +374,7 @@
 								</td>
 							<td width="34" style="padding:5px;text-align:center">
 								<a id="delegButton" onclick="javascript:$('#delegations-form').dialog('open');return false;"><img id="iconAlerts" width="16" height="16" src="Themes/newflow/images/alert-bell.png" alt="Alertas"/></a> 
-								(<a id="delegButtonCount" onclick="" href="#">$nAlerts</a>)
+								(<a id="delegButtonCount" >$nAlerts</a>)
 							</td>
 
 							<td>
