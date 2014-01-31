@@ -284,7 +284,7 @@
 			$(function() {
 				$('#delegations-form').dialog({
 					autoOpen: 
-						#if($nAlerts > 0)
+						#if(false && $nAlerts > 0)
 							true,
 						#else
 							false,
