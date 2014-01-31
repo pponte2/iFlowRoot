@@ -12,6 +12,7 @@ var GLOBAL_helpDialog;
 var GLOBAL_tutorialDialog;
 var GLOBAL_showInfoDialog;
 var GLOBAL_popupDialog;
+var globalSelectedTask = 0;
 
 var GLOBAL_session_config = {};
 GLOBAL_session_config.sections = new Array(0);
@@ -393,6 +394,16 @@ function open_process_report_exec(contentpage, contentparam) {
   };
 
   makeRequest(pingJSP, '', procCallBack, 'text', 10);
+}
+
+function changeColor(element) {
+   var activities = document.getElementsByClassName("activity");
+
+	for(var i = (activities.length - 1); i >= 0; i--) {
+		activities[i].style.backgroundColor = '#fafafa';
+	}
+	element.style.backgroundColor = '#ddd';
+	globalSelectedTask = element.id;					
 }
 
 function close_process(tabnr) {
@@ -1787,6 +1798,12 @@ function reloadJS(doCloseMenus) {
       }); 
     } catch (err) {}
   }
+
+  var taskId;
+  if (taskId = document.getElementById(globalSelectedTask)) {
+     changeColor(taskId);
+  }
+
 }
 
 

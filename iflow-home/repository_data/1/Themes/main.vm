@@ -95,6 +95,7 @@
 
 		<script language="JavaScript">
 			var URL_PREFIX = '$url_prefix';
+
 			function calcFrameHeight(frameName) {
 				//find the height of the internal page
 				var the_height = document.getElementById(frameName).contentWindow.document.body.scrollHeight + 10; //pp: martelada dos 10 deveria ser corrigida.
@@ -258,14 +259,7 @@
 				}
 			}
 			
-			function changeColor(element) {
-			   var activities = document.getElementsByClassName("activity");
-
-				for(var i = (activities.length - 1); i >= 0; i--) {
-					activities[i].style.backgroundColor = '#fafafa';
-				}
-				element.style.backgroundColor = '#ddd';						
-			}
+			
 			
 			function selectedLabel(element) {
 			   var labels = document.getElementsByClassName("labellink");
