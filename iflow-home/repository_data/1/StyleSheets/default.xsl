@@ -592,6 +592,15 @@
 						font-size: 1.2em;
 						margin-bottom:20px;
 					}
+
+					.ui-accordion-header {
+						text-align:left;
+						background-image: -webkit-linear-gradient(3deg, rgba(235,236,240,0.32) 0%, rgba(235,236,240,0.54) 100%);
+						background-image: -moz-linear-gradient(3deg, rgba(235,236,240,0.32) 0%, rgba(235,236,240,0.54) 100%);
+						background-image: -o-linear-gradient(3deg, rgba(235,236,240,0.32) 0%, rgba(235,236,240,0.54) 100%);
+						background-image: linear-gradient(87deg, rgba(235,236,240,0.32) 0%, rgba(235,236,240,0.54) 100%);
+
+					}
 				</style>
 
 				<xsl:text disable-output-escaping="yes"></xsl:text>
