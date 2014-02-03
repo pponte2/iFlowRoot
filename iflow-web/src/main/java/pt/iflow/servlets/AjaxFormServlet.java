@@ -26,6 +26,7 @@ import pt.iflow.api.processtype.DateDataType;
 import pt.iflow.api.utils.Const;
 import pt.iflow.api.utils.ServletUtils;
 import pt.iflow.api.utils.UserInfoInterface;
+import pt.iknow.utils.html.FormData;
 
 import com.google.gson.Gson;
 
@@ -89,13 +90,22 @@ public class AjaxFormServlet extends HttpServlet {
 				}			
 			} 
 		}
-		
-	    Object[] oa = new Object[4];
+		// 2: processForm
+//		Object[] oa = new Object[5];
+//        oa[0] = userInfo;
+//        oa[1] = procData;
+//        oa[2] = new FormData();
+//        oa[3] = new ServletUtils(request, response);
+//        oa[4] = Boolean.TRUE;		
+//        bBlockJSP.execute(3, oa);
+        
+        // 2: generateForm  
+        Object[] oa = new Object[4];
         oa[0] = userInfo;
         oa[1] = procData;
         oa[2] = hmHidden;
-        oa[3] = new ServletUtils(response);
-        // 2: generateForm
+        oa[3] = new ServletUtils(response);  
+        bBlockJSP.saveDataSet(userInfo, procData);
         String sHtmlNew = (String) bBlockJSP.execute(2, oa);
         String result =extractUpdatedFieldDivsSimple(sHtmlNew);
         
