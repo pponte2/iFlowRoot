@@ -625,3 +625,9 @@ a > img:hover {
   	padding:0;
   	border: 1px solid gray;
   }
+
+.countAlert {
+	color:#cf232f;
+	font-weight:bold;
+}
+

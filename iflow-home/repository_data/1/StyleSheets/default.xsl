@@ -204,6 +204,9 @@
 					.table_sub_header {
 					font-size: 11px;
 					background-color: #858585;
+					cursor: pointer;
+					background:#858585 url('../Themes/newflow/images/up-down-arrow.png') no-repeat;
+					background-position:right;
 					}
 
 					.document_header {
@@ -601,6 +604,10 @@
 						background-image: linear-gradient(87deg, rgba(235,236,240,0.32) 0%, rgba(235,236,240,0.54) 100%);
 
 					}
+
+				
+						
+					
 				</style>
 
 				<xsl:text disable-output-escaping="yes"></xsl:text>
@@ -1063,7 +1070,7 @@
 		<label>
 			<xsl:attribute name="class">
 				<xsl:value-of select="type" />
-								<xsl:text> field col-sm-2 control-label</xsl:text>
+								<xsl:text> field</xsl:text>
 				<xsl:if test="$multicol &gt; 1">
 					<xsl:text> multicol</xsl:text>
 				</xsl:if>
@@ -1441,7 +1448,7 @@
 		<xsl:attribute name="style">
 			text-align:<xsl:apply-templates select="align" />
 				</xsl:attribute>
-		<a>
+		<a style="color:#03679e">
 		<xsl:choose>
 			<xsl:when test="disabled='true'">
 			<xsl:attribute name="href">
