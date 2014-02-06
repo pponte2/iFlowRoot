@@ -1665,6 +1665,7 @@ function ajaxFormRefresh(component){
           try{
             var main = $jQuery('#main');
             main.html(response);
+            $jQuery('#curmid').val(1 + Number($jQuery('#curmid').val())); 
           } catch (err){}
           finally{
             reloadBootstrapElements();
