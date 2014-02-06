@@ -14,6 +14,21 @@
 		padding-right:10px;
 	}
 
+	ul.dropdown-menu li {
+		padding-left:0px;
+		padding-right:0px;
+		padding-bottom: 25px;
+	}
+	ul.dropdown-menu li a {
+		text-decoration:none;
+		padding-left:10px;
+		padding-right:10px;
+		padding-
+	}
+	ul.dropdown-menu {
+		text-decoration:none;
+	}
+
 </style>
 
 	#if($layout==0)
@@ -130,6 +145,7 @@
 		
 	</div>
 
+
 		#if($hasActivities)
 
 			#foreach($act in $newact)
@@ -155,6 +171,13 @@
 				<div>
 					<a href="javascript:tabber_right(2, 'main_content.jsp', 'filterDate=$act.get("createdDate")')">$act.get("createdDate")</a>
 				</div>
+<div class="dropdown">
+			<div class="dropdown-toggle" data-toggle="dropdown" id="dropdownmenu_$act.get('pnumber')" data-toggle="dropdown"><img src="Themes/newflow/images/V.png"/></div>
+			<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownmenu_$act.get('pnumber')" style="top:10px;left:30px">
+				<li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:removeFolder('$act.get("flowid")_$act.get("pid")_$act.get("subpid")');">Retirar da categoria</a></li>
+				<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Marcar como não lido</a></li>
+			</ul>
+</div>	
 				<div style="text-align: center">
 					$act.get("task_annotation_icon")
 				</div>

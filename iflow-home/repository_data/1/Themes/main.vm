@@ -280,6 +280,11 @@
 			    eventFire(document.getElementById('searchlink'),'click');
 				return false;
 			}
+
+			function removeFolder(activity) {
+				tabber_right(1, mainContentJSP, 'removeactivities=' + activity);
+			}
+
 			
 			$(function() {
 				$('#delegations-form').dialog({
