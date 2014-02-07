@@ -90,8 +90,15 @@
 					#end
 					<div class="form-group">
 						<label  class="col-sm-2 control-label">${varName}: </label>
-						<div class="col-sm-8" style=" font-size: 14px; margin-top: 5px"> $!processDetail.get(${varName}) </div>
+						<div class="col-sm-8" style=" font-size: 14px; margin-top: 5px"> 
+							#if ($processDetail.get(${varName})!="")
+								$processDetail.get(${varName})
+							#else
+								&ltn&#227;o dispon&#237;vel&gt
+							#end 
+						</div>
 					</div>
+					
 					<!--
 						<tr class="tab_row_${class_type}">
 							<td style="font-weight:bold;">${varName}</td>

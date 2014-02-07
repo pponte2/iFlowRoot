@@ -76,7 +76,7 @@
 	<%}%>
 	<div id="anotacoes" 
 		style="<%if (!"forward".equals(from) || !hasAnnottations){%>display:none;position:absolute;z-index:1;border:1px solid gray;top:10px;<%} else {%>position:relative;z-index:0;bottom:10px;<%}%>background:none repeat scroll 0 0 #FFFFFF;
-		text-align:left;right:0px;;width:40em;padding:1em;align:center;left:380px;top:100px">
+		text-align:left;right:0px;;width:40em;align:center;left:38px;top:10px">
 		
 		<div class="yui-skin-sam">
             <div class="container-close" onclick="javascript:menuonoff('anotacoes',0);"></div>

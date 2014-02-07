@@ -136,12 +136,14 @@
   </script>
 <% } %>
 
-<div class="button_box">
+<div class="button_box" style="text-align:center">
   <form action="#" onsubmit="return false;">
     <input class="regular_button_01 btn btn-default" <%if (userInfo.isGuest()) {%> type="hidden" <%} else {%> type="button" <%}%> name="close" value="<if:message string="button.close"/>" onclick="if(parent.saveForwardToProcessAnnotations)parent.saveForwardToProcessAnnotations('true');if(parent && parent.close_process) parent.close_process(3); return false;" />
     <% if (pid > 0 && "forward".equals(sFrom)){ %>
     <input id="annotationButton" class="regular_button_02 btn btn-default" <%if (userInfo.isGuest()) {%> type="hidden" <%} else {%> type="button" <%}%> name="close" value="<if:message string="button.send.anottation"/>" onclick="parent.saveForwardToProcessAnnotations('true');if(parent && parent.close_process) parent.close_process(3); return false;" />
   <script language="JavaScript" type="text/javascript">
+  window.frames.frameElement.style.height='800px';	
+  //setTimeout(function(){document.getElementById('open_proc_frame_3').style.height = '800px';alert('done!');}, 1000);  	
 	if (!parent.showProcessFowardAnnotations) //not brilliant... Check if the function is the to know if annotations are to be used
       document.getElementById('annotationButton').style.display = 'none';     
   </script>
