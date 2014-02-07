@@ -181,7 +181,7 @@
 				<div style="text-align: center">
 					$act.get("task_annotation_icon")
 				</div>
-			</div>
+			</div> 
 		</div>
 	
 			#end
