@@ -126,7 +126,9 @@
 	    addClass("pull-right").
 	    addClass(this.config.skin); 
 		
-	    this.input = $("<input type='text' />").
+//	    this.input = $("<input type='text' onfocus=\"this.style.width=((this.value.length+1)*8)+'px'\" />").
+//	    this.input = $("<input type='text' style=\"width:" + this.wrapper.css("width") + ";left:0\" />").
+	    this.input = $("<input type='text'/>").
 	    appendTo(this.wrapper).
 	    attr("autocomplete", "off").
 	    attr("value", "").
@@ -226,9 +228,12 @@
 			
 		}
         
+
 		
+
 	    this.notify("init");
 	    this.initEvents();
+
     };
     
     //shortcuts
@@ -542,6 +547,15 @@
 	            ajaxFormRefresh(this.selectbox.context);	            										
 	          }
 	        }
+
+
+
+this.input.css("width", (this.listWrapper.width() + 40) + 'px');
+this.input.css("left", (89 - this.listWrapper.width()) + 'px');
+this.input.css("font-size", '0.85em');
+
+
+
 	    },
 	
 	    //sets hidden inputs value
