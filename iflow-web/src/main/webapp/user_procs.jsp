@@ -229,12 +229,12 @@
       </p>
 	  <table width="100%" cellpadding="2" class="table sortable">
 	  	<thead>
-		<tr class="tab_header table_sub_header">
-	  		<th class="table_sub_header"/>
-		  	<th><if:message string="user_procs.header.flow" /></th>
-		  	<th><if:message string="user_procs.header.process" /></th>
-		  	<th><if:message string="user_procs.header.status" /></th>
-		  	<th><if:message string="user_procs.header.statusDate" /></th>
+		<tr class="table_sub_header">
+	  		<th width="5%"/>
+		  	<th width="15%"><if:message string="user_procs.header.flow" /></th>
+		  	<th width="15%"><if:message string="user_procs.header.process" /></th>
+		  	<th width="40%"><if:message string="user_procs.header.status" /></th>
+		  	<th width="10%"><if:message string="user_procs.header.statusDate" /></th>
 		  	<th style="min-width: 100px;"><if:message string="user_procs.header.assignedTo" /></th>	  	
 			<%=(StringUtils.isEmpty(targetUser) || isIntervenient) ? "<th>" + messages.getString("user_procs.header.owner") + "</th>" : ""%>
 		</tr>
@@ -308,12 +308,12 @@
 		 }
 			
          %>
-		 <tr class="<%=((row % 2 == 0) ? "tab_row_even" : "tab_row_odd")%> process_t3" <%=myStyle%> <%=onclick%>>
-		 <td></td>
-		<td><%=flowName%></td>
-	  	<td><%=pidShow%></td>
-	  	<td><%=result%></td>
-	  	<td><%=sDate%></td>
+		 <tr style="float:none" class="<%=((row % 2 == 0) ? "tab_row_even" : "tab_row_odd")%> process_t3" <%=myStyle%> <%=onclick%>>
+		 <td width="5%"></td>
+		<td width="15%"><%=flowName%></td>
+	  	<td width="15%"><%=pidShow%></td>
+	  	<td width="40%"><%=result%></td>
+	  	<td width="10%"><%=sDate%></td>
 	    <% if (showAssigned) {
 	          // assigned
 	          Map<String, List<String>> hmPidUsers = new HashMap<String, List<String>>();
@@ -359,14 +359,14 @@
 
 	            }
 	          }
-	          out.print("          <td>");
+	          out.print("          <td style=\"min-width: 100px;\">");
 	          if (sbHtml.length() == 0)
 	            out.print(sPROTECTED);
 	          else
 	            out.print(sbHtml.toString());
 	          out.println("</td>");
 	        } else {
-	          out.print("          <td>");
+	          out.print("          <td style=\"min-width: 100px;\">");
 	          out.print(sPROTECTED);
 	          out.println("</td>");
 	        }

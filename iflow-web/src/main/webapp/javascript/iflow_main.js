@@ -1739,7 +1739,7 @@ function reloadJS(doCloseMenus) {
         sorttable.makeSortable(tables[i]);
       }
     }
-  } catch (err) {alert('error');}
+  } catch (err) {}
 
   $('.donotclosemenu').click(function(e) { e.stopPropagation();});
 
