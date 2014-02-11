@@ -135,8 +135,8 @@
 	 
   </script>
 <% } %>
-
-<div class="button_box" style="text-align:center">
+<hr class="apt_sep">
+<div class="button_box" style="text-align:center; margin-bottom:30px">
   <form action="#" onsubmit="return false;">
     <input class="regular_button_01 btn btn-default" <%if (userInfo.isGuest()) {%> type="hidden" <%} else {%> type="button" <%}%> name="close" value="<if:message string="button.close"/>" onclick="if(parent.saveForwardToProcessAnnotations)parent.saveForwardToProcessAnnotations('true');if(parent && parent.close_process) parent.close_process(3); return false;" />
     <% if (pid > 0 && "forward".equals(sFrom)){ %>

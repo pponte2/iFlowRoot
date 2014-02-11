@@ -4570,11 +4570,14 @@ public UserProcesses getUserProcesses(UserInfoInterface userInfo, int nShowFlowI
         if (StringUtils.isNotEmpty(idx[i]))
           sbQuery.append(" and lower(p.idx" + i + ") like lower('%").append(escapeSQL(idx[i])).append("%')");
       }
-
+      //TODO A query abaixo foi lterado para os SMA para pesquisar por nº de processo igual em vez de semelhante
+      //if (StringUtils.isNotEmpty(filter.getPnumber())) {
+      //  sbQuery.append(" and lower(p.pnumber) like lower('%").append(escapeSQL(filter.getPnumber())).append("%')");
+      //}
       if (StringUtils.isNotEmpty(filter.getPnumber())) {
-        sbQuery.append(" and lower(p.pnumber) like lower('%").append(escapeSQL(filter.getPnumber())).append("%')");
+        sbQuery.append(" and lower(p.pnumber) = lower('").append(escapeSQL(filter.getPnumber())).append("')");
       }
-
+      
       if (filter.getOrderBy()== null || "".equals(filter.getOrderBy())) {
         sbQuery.append(" order by p.pid asc, p.flowid asc");
       } else {
@@ -5771,6 +5774,9 @@ public ListIterator<Activity> getUserActivitiesOrderFilters(UserInfoInterface us
         
          if(!maxDeadline.equals(""))
            sQuery.append(" and a.pid in ( select pid from deadline where deadline < '"+maxDeadline+"' AND deadline != '') ");
+         
+         if(StringUtils.isNotBlank(filter.getSubject()))
+        	 sQuery.append(" and lower(description) like lower('%"+ filter.getSubject() + "%') ");
         
          StringBuilder sQueryDelegated = new StringBuilder(DBQueryManager.processQuery("ProcessManager.get_activity_filters_delegated", new Object[]{ userid }));
 

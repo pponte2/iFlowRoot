@@ -325,6 +325,7 @@
 					<div class="Nl">
 					<form name="nlsearch">
 						<table width="390px" border="0" cellspacing="0" cellpadding="0">
+							#if($org_admin == "yes") 
 							<tr>
 								<td>
 									<input type="text" class="form-control" id="nl" placeholder="Nº de Processo" title="Pesquisa" onkeydown="if (event.keyCode == 13) { pesquisarPnumber(document.nlsearch.nl.value); return false; }">
@@ -338,6 +339,7 @@
 									</div>
 								</td>
 							</tr>
+							#end
 						</table>
 					</form>
 					</div>
@@ -380,7 +382,7 @@
 							<td width="34" style="padding:5px;text-align:center">
 								<a id="delegButton" onclick="javascript:$('#delegations-form').dialog('open');return false;"><img id="iconAlerts" width="16" height="16" src="Themes/newflow/images/alert-bell.png" alt="Alertas"/></a> 
 								#if($nAlerts>0)
-									<span id="delegButtonCount" class="countAlert">$nAlerts</span>
+									<a id="delegButtonCount" class="countAlert">$nAlerts</a>
 								#end
 							</td>
 

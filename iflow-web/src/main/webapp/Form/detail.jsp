@@ -118,6 +118,8 @@ try {
   if (op == 10) {
     Block block = flowBean.getBlock(userInfo, procData); 
     buttons = block.getPreviewButtons(userInfo, procData);
+    if (block instanceof pt.iflow.blocks.BlockForwardTo)
+    	htSubst.put("isForward", Boolean.TRUE);
   } else {
 	  Map<String,String> printButton = new HashMap<String,String>();
 	  buttons.add(printButton);

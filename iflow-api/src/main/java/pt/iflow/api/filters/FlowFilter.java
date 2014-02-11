@@ -18,6 +18,7 @@ public class FlowFilter {
   private String labelid = "0";
   private String deadline = "0";
   private String previousUserid = "";
+  private String subject = "";
   
   public boolean isValid() {
     return StringUtils.isNotEmpty(pnumber) || dateAfter != null || dateBefore != null || hasSizeLimit();
@@ -158,4 +159,13 @@ public class FlowFilter {
   public boolean ignoreFlow(int flowid) {
     return this.getIgnoreFlow() == null ? false : this.getIgnoreFlow().ignoreFlow(flowid);
   }
+
+	public String getSubject() {
+		return subject;
+	}
+	
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+	  
 }

@@ -333,8 +333,8 @@ function updateForm(status) {
 }
 
 function changeFileState(docid) { 
-  if(window.frames['open_proc_frame']) {    // delegate to children frame
-    window.frames['open_proc_frame'].changeFileState(docid);
+  if(window.frames['open_proc_frame_3']) {    // delegate to children frame
+    window.frames['open_proc_frame_3'].changeFileState(docid);
     return;
   }
     document.getElementById('lock_'+docid).src= "/iFlow/images/my_lock.png";
@@ -356,6 +356,9 @@ function loadSignedFile(signatureType,varname) {
 
 function addFileElem(myObject) {
   var filename, fileid, varname, item, delete_button, row_element, insertLocation;
+  
+  window.frames['open_proc_frame_3'].document.getElementById('op').value=2;
+  window.frames['open_proc_frame_3'].document.getElementById('dados').submit();
   
   if(!myObject) return;
   

@@ -99,15 +99,35 @@
 						Utilizador prévio
 					</label>
 					<input type="text" class="form-control donotclosemenu pull-right" id="previousUseridText" title="Utilizador Anterior" value="$filterPreviousUserid"
-							style="display: inline; width: 150px; height: 20px; padding: 0;" onkeydown="javascript:if (event.keyCode == 13) { tabber_right(2, 'main_content.jsp', 'filterPreviousUserid=' + this.value); return false; }">
+							style="display: inline; width: 150px; height: 20px; padding: 0;" 
+							onkeydown="javascript:if (event.keyCode == 13) { tabber_right(2, 'main_content.jsp', 'filterPreviousUserid=' + this.value); return false; }">
 					</input>
 				</li>
 				<li class="form-group">
 					<label class="form-label">
-						Data Criação
+						Assunto
 					</label>
-					<input type="text" class="form-control pull-right donotclosemenu" id="dataCriacaoText" title="Data de Criação"  value="$filterDate"
-							style="display: inline; width: 150px; height: 20px; padding: 0;" onkeydown="javascript:if (event.keyCode == 13) { tabber_right(2, 'main_content.jsp', 'filterDate=' + this.value); return false; }">
+					<input type="text" class="form-control donotclosemenu pull-right" id="filterSubject" title="Assunto" value="$filterSubject"
+							style="display: inline; width: 150px; height: 20px; padding: 0;" 
+							onkeydown="javascript:if (event.keyCode == 13) { tabber_right(2, 'main_content.jsp', 'filterSubject=' + this.value); return false; }">
+					</input>
+				</li>
+				<li class="form-group">
+					<label class="form-label">
+						Data de
+					</label>
+					<input type="text" class="form-control pull-right donotclosemenu" id="dataCriacaoText" title="Data de"  value="$filterDate"
+							onmouseover="caltasks(this.id, '%d/%m/%Y');this.onmouseover=null;" style="display: inline; width: 150px; height: 20px; padding: 0;" 
+							onchange="javascript: tabber_right(2, 'main_content.jsp', 'filterDate=' + this.value); return false; ">
+					</input>
+				</li>
+				<li class="form-group">
+					<label class="form-label">
+						Data ate
+					</label>
+					<input type="text" class="form-control pull-right donotclosemenu" id="dataUltMovText" title="Data ate"  value="$filterLastMoveDate"
+							onmouseover="caltasks(this.id, '%d/%m/%Y');this.onmouseover=null;" style="display: inline; width: 150px; height: 20px; padding: 0;" 
+							onchange="javascript: tabber_right(2, 'main_content.jsp', 'filterLastMoveDate=' + this.value); return false; ">
 					</input>
 				</li>
 

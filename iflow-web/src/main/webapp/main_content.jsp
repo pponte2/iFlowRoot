@@ -261,6 +261,8 @@ try {
       session.removeAttribute("filterdays");
       session.removeAttribute("filterfolder");
       session.removeAttribute("filterPreviousUserid");
+      session.removeAttribute("filterSubject");
+      session.removeAttribute("filterLastMoveDate");
     }
     //FILTER BY FOLDER
     int selectedFolder = 0;
@@ -287,6 +289,13 @@ try {
       session.setAttribute("filterPreviousUserid", filterPreviousUserid); // Utilizador actualizou valor
       selectedPreviousUser = filterPreviousUserid;
     }
+    
+    String selectedSubject = "";    
+    String filterSubject = fdFormData.getParameter("filterSubject");
+    if(filterSubject!=null){
+      session.setAttribute("filterSubject", filterSubject); // Utilizador actualizou valor
+      selectedSubject = filterSubject;
+    }
   
     String selectedDate = "";    
     String filterDate = fdFormData.getParameter("filterDate");
@@ -294,6 +303,14 @@ try {
       session.setAttribute("filterDate", filterDate); // Utilizador actualizou valor
       selectedDate = filterDate;
     }
+    
+    String selectedLastMoveDate = "";    
+    String filterLastMoveDate = fdFormData.getParameter("filterLastMoveDate");
+    if(filterLastMoveDate!=null){
+      session.setAttribute("filterLastMoveDate", filterLastMoveDate); // Utilizador actualizou valor
+      selectedLastMoveDate = filterLastMoveDate;
+    }
+    
     String filterlabel = fdFormData.getParameter("filterlabel");
     if(filterlabel!=null){
       session.setAttribute("filterlabel",filterlabel); // Utilizador actualizou valor
@@ -304,9 +321,18 @@ try {
     } else {
       hsSubstLocal.put("filterPreviousUserid", filterPreviousUserid);
     }
+    if (filterSubject == null){
+    	filterSubject = (String) session.getAttribute("filterSubject");
+        hsSubstLocal.put("filterSubject", "");
+      } else {
+        hsSubstLocal.put("filterSubject", filterSubject);
+      }
     if (filterDate == null){
       filterDate = (String) session.getAttribute("filterDate");
     }
+    if (filterLastMoveDate == null){
+    	filterLastMoveDate = (String) session.getAttribute("filterLastMoveDate");
+      }
     if (filterlabel == null){
       filterlabel = (String) session.getAttribute("filterlabel");
     }
@@ -339,9 +365,11 @@ try {
   
     if (session.getAttribute("filterlabel") != null
       || session.getAttribute("filterDate") != null
+	  || session.getAttribute("filterLastMoveDate") != null
       || session.getAttribute("filterdays") != null
       || session.getAttribute("filterfolder") != null
-      || session.getAttribute("filterPreviousUserid") != null) isCleanFilter = false;
+      || session.getAttribute("filterPreviousUserid") != null
+      || session.getAttribute("filterSubject") != null) isCleanFilter = false;
     
     //ORDER BY
     String orderBy = fdFormData.getParameter("orderBy");
@@ -372,19 +400,31 @@ try {
     filter.setOrderBy(orderBy);
     filter.setOrderType(orderType);
     filter.setPreviousUserid(filterPreviousUserid);
+    filter.setSubject(filterSubject);
     hsSubstLocal.put("filterDate", "");
+    hsSubstLocal.put("filterLastMoveDate", "");
     if (filterDate != null) {
       try{
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date dt = dateFormat.parse(filterDate);
         cal.setTime(dt);
-        filter.setDateBefore(cal.getTime());
         filter.setDateAfter(cal.getTime());
         hsSubstLocal.put("filterDate", filterDate);
       } catch(Exception e) {
       }
     }
+    if (filterLastMoveDate != null) {
+        try{
+          Calendar cal = Calendar.getInstance();
+          SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+          Date dt = dateFormat.parse(filterLastMoveDate);
+          cal.setTime(dt);
+          filter.setDateBefore(cal.getTime());         
+          hsSubstLocal.put("filterLastMoveDate", filterLastMoveDate);
+        } catch(Exception e) {
+        }
+      }
   
     ListIterator<Activity> it = pm.getUserActivitiesOrderFilters(userInfo, -1, filter);
     //PUT TO VM

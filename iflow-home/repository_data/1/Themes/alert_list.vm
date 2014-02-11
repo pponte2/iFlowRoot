@@ -26,14 +26,14 @@
 		#end
 		<tr class="tab_row_$class_type" id='msg_tr_$note.get("id")'>
 			<td class="itemlist_icon">
-				<a href="javascript:markNotification($note.get("id"), 'M');">
+				<a href="javascript: document.getElementById('delegButtonCount').text= document.getElementById('delegButtonCount').text-1; if(document.getElementById('delegButtonCount').text<'0') document.getElementById('delegButtonCount').text=0; markNotification($note.get("id"), 'M');">
 					<img class="toolTipImg" src="images/icon_unread.png" id="msg_img_$note.get("id")"width="16" height="16" border="0" title="$notes_tooltip">
 				</a>
 			</td>
 			<td>
 				$note.get("from")<br>/$note.get("date")
 				#if($note.get("link")!="false")				
-					<br><a href='javascript:process_detail($note.get("link"));'> $notificationitem</a>						
+					<br><a href='javascript:process_detail($note.get("link"));'> $notificationitem </a>						
 				#end
 			</td>
 			<td>$note.get("message")</td>					

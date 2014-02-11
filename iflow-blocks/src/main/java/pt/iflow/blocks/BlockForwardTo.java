@@ -1,8 +1,11 @@
 package pt.iflow.blocks;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -326,4 +329,9 @@ public class BlockForwardTo extends Block implements MessageBlock {
     public boolean hasMessage() {
       return super.hasMessage();
     }
+    
+    public List<Map<String,String>> getPreviewButtons(UserInfoInterface userInfo, ProcessData procData) {
+        List<Map<String,String>> buttons = new ArrayList<Map<String,String>>(0);
+        return buttons;
+      }
 }
