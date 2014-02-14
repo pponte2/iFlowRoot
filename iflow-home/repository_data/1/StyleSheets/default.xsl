@@ -1158,15 +1158,22 @@
 
 		<xsl:if test="type='rich_textarea'">
 			<div class="yui-skin-sam" align="right">
-				<textarea name="{variable}" rows="{rows}">
+				<textarea name="{variable}" >
 					<xsl:attribute name="id">
 						<xsl:value-of select="variable/text()" />
 					</xsl:attribute>
+					<!--
 					<xsl:if test="string-length(cols) &gt; 0">
 						<xsl:attribute name="cols">
 							<xsl:value-of select="cols/text()" />
 						</xsl:attribute>
 					</xsl:if>
+					<xsl:if test="string-length(rows) &gt; 0">
+						<xsl:attribute name="rows">
+							<xsl:value-of select="rows/text()" />
+						</xsl:attribute>
+					</xsl:if>
+					-->
 					<xsl:if test="string-length(width) &gt; 0">
 						<xsl:attribute name="style">
 						<xsl:text>width:</xsl:text><xsl:value-of select="width/text()" />

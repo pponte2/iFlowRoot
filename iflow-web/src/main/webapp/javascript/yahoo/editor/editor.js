@@ -3183,7 +3183,7 @@ var Dom = YAHOO.util.Dom,
                 doc = null;
 
             if (value === '') {
-                value = '<br>';
+                value = '';
             }
 
             var html = Lang.substitute(this.get('html'), {
