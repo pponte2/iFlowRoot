@@ -245,14 +245,9 @@ try {
     }
     hsSubstLocal.put("layout", layout);
   
-    //PAGINAÇÃO
-    Integer startIndex = 0; 
-    try {
-      startIndex = Integer.parseInt(fdFormData.getParameter("startindex"));
-    } catch (Exception e) {}
-  
     //FILTROS
     //CLEAN
+	Integer nShowFlowId = -1;
     String cleanFilter = "0";
     cleanFilter = fdFormData.getParameter("cleanFilter");
     if ("1".equals(cleanFilter)) {
@@ -263,17 +258,93 @@ try {
       session.removeAttribute("filterPreviousUserid");
       session.removeAttribute("filterSubject");
       session.removeAttribute("filterLastMoveDate");
+      session.removeAttribute("filtro_showflowid");
     }
+
+    //PAGINAÇÃO
+    Integer startIndex = 0; 
+    String sStartIndex = fdFormData.getParameter("startindex");
+    if(sStartIndex != null){
+      session.setAttribute("startindexTasks", sStartIndex); // Utilizador actualizou valor
+    } else {
+      sStartIndex = (String)session.getAttribute("startindexTasks");
+    }
+    if(sStartIndex != null){
+        try{
+          startIndex = Integer.parseInt(sStartIndex);
+        }catch(Exception e){ }
+    }
+
+    
+    //FILTER FLOW
+	String sShowFlowId = fdFormData.getParameter("showflowid");
+	if (StringUtils.isEmpty(sShowFlowId))
+		sShowFlowId = (String)session.getAttribute("filtro_showflowid");
+	else {
+      startIndex = 0;
+      session.setAttribute("startindexTasks", startIndex.toString());
+	}
+	if (StringUtils.isEmpty(sShowFlowId)) 
+	  	sShowFlowId = "-1";
+	try {
+		nShowFlowId = Integer.parseInt(sShowFlowId);
+	}catch (Exception e) { }
+    session.setAttribute("filtro_showflowid", sShowFlowId);
+    
+	String showflowidselection = "";
+    List<Map<Object,Object>> appFlows = new ArrayList<Map<Object,Object>>();
+    FlowType type = (FlowType) request.getAttribute("flow_type");
+	FlowMenu flows = BeanFactory.getFlowApplicationsBean().getAllApplicationOnlineMenu(userInfo, FlowApplications.ORPHAN_GROUP_ID, type, new FlowType[0], FlowRolesTO.READ_PRIV);
+
+	Iterator<FlowAppMenu> iter2 = appMenuList.iterator();
+
+    while(iter2 != null && iter2.hasNext()) {
+      FlowAppMenu appMenu = iter2.next();
+	  String sAppName = appMenu.getAppDesc();
+      FlowMenuItems menuPart = appMenu.getMenuItems();
+      HashMap<Object, Object> hm = new HashMap<Object,Object>();
+      hm.put("appname", sAppName);
+      hm.put("flows", menuPart.getFlows());
+      appFlows.add(hm);
+    }
+	    
+	String filterFlowOptions = "";
+	
+	String selectedFlow = "";
+	for(Map<Object,Object> appflow : appFlows) { 
+		String label = appflow.get("appname").toString();
+		if(StringUtils.isBlank(label)) {
+		  label = messages.getString("grouped_flow_list.field.others");
+		}
+		filterFlowOptions += "<optgroup label=\"" + label + "\">";
+		for(FlowData dataFlow : (List <FlowData>) appflow.get("flows")) {
+		  String aux = "";
+		  if (dataFlow.getId() == nShowFlowId) {
+		    aux = "selected";		    
+			selectedFlow = dataFlow.getName();
+		  }
+		  filterFlowOptions += "<option value=\"" + dataFlow.getId() + "\"" + aux + ">&nbsp;&nbsp;" + dataFlow.getName() + "</option>\n";
+		}
+		filterFlowOptions += "</optgroup>\n";
+	}
+	
+	hsSubstLocal.put("labelFilterFlow", messages.getString("actividades_filtro.field.select"));
+	hsSubstLocal.put("selectFlow", messages.getString("user_procs_filtro.field.select"));
+	hsSubstLocal.put("showflowidselection", showflowidselection);
+	hsSubstLocal.put("filterFlowOptions", filterFlowOptions);
+
+    
     //FILTER BY FOLDER
     int selectedFolder = 0;
     String filterfolder = fdFormData.getParameter("filterfolder");
     if(filterfolder!=null){
       session.setAttribute("filterfolder",filterfolder); // Utilizador actualizou valor
-    }
-    if (filterfolder == null){
+      startIndex = 0;
+      session.setAttribute("startindexTasks", startIndex.toString()); // Utilizador actualizou valor
+    } else {
       filterfolder = (String) session.getAttribute("filterfolder");
     }
-    if(filterfolder!=null){
+    if(filterfolder != null){
         try{
           selectedFolder = Integer.parseInt(filterfolder);
         }catch(Exception e){
@@ -283,39 +354,45 @@ try {
     //FILTER BY LABEL
     int selectedLabel = 0;
   
-    String selectedPreviousUser = "";    
     String filterPreviousUserid = fdFormData.getParameter("filterPreviousUserid");
-    if(filterPreviousUserid!=null){
+    if (filterPreviousUserid != null) {
       session.setAttribute("filterPreviousUserid", filterPreviousUserid); // Utilizador actualizou valor
-      selectedPreviousUser = filterPreviousUserid;
+      startIndex = 0;
+      session.setAttribute("startindexTasks", startIndex.toString()); // Utilizador actualizou valor
     }
     
     String selectedSubject = "";    
     String filterSubject = fdFormData.getParameter("filterSubject");
-    if(filterSubject!=null){
+    if (filterSubject != null) {
       session.setAttribute("filterSubject", filterSubject); // Utilizador actualizou valor
       selectedSubject = filterSubject;
+      startIndex = 0;
+      session.setAttribute("startindexTasks", startIndex.toString()); // Utilizador actualizou valor
     }
   
-    String selectedDate = "";    
     String filterDate = fdFormData.getParameter("filterDate");
-    if(filterDate!=null){
+    if (filterDate != null){
       session.setAttribute("filterDate", filterDate); // Utilizador actualizou valor
-      selectedDate = filterDate;
+      startIndex = 0;
+      session.setAttribute("startindexTasks", startIndex.toString()); // Utilizador actualizou valor
     }
     
     String selectedLastMoveDate = "";    
     String filterLastMoveDate = fdFormData.getParameter("filterLastMoveDate");
-    if(filterLastMoveDate!=null){
+    if (filterLastMoveDate != null){
       session.setAttribute("filterLastMoveDate", filterLastMoveDate); // Utilizador actualizou valor
       selectedLastMoveDate = filterLastMoveDate;
+      startIndex = 0;
+      session.setAttribute("startindexTasks", startIndex.toString()); // Utilizador actualizou valor
     }
     
     String filterlabel = fdFormData.getParameter("filterlabel");
-    if(filterlabel!=null){
+    if (filterlabel != null) {
       session.setAttribute("filterlabel",filterlabel); // Utilizador actualizou valor
+      startIndex = 0;
+      session.setAttribute("startindexTasks", startIndex.toString()); // Utilizador actualizou valor
     }
-    if (filterPreviousUserid == null){
+    if (filterPreviousUserid == null) {
       filterPreviousUserid = (String) session.getAttribute("filterPreviousUserid");
       hsSubstLocal.put("filterPreviousUserid", "");
     } else {
@@ -349,6 +426,8 @@ try {
     String filterdays = fdFormData.getParameter("filterdays");
     if(filterdays!=null){
       session.setAttribute("filterdays",filterdays); // Utilizador actualizou valor
+      startIndex = 0;
+      session.setAttribute("startindexTasks", startIndex.toString()); // Utilizador actualizou valor
     }
     if (filterdays == null){
       filterdays = (String) session.getAttribute("filterdays");
@@ -363,18 +442,12 @@ try {
     
     boolean isCleanFilter = true;
   
-    if (session.getAttribute("filterlabel") != null
-      || session.getAttribute("filterDate") != null
-	  || session.getAttribute("filterLastMoveDate") != null
-      || session.getAttribute("filterdays") != null
-      || session.getAttribute("filterfolder") != null
-      || session.getAttribute("filterPreviousUserid") != null
-      || session.getAttribute("filterSubject") != null) isCleanFilter = false;
-    
     //ORDER BY
     String orderBy = fdFormData.getParameter("orderBy");
     if (orderBy != null) {
       session.setAttribute("orderBy",orderBy); // Utilizador actualizou valor
+      startIndex = 0;
+      session.setAttribute("startindexTasks", startIndex.toString()); // Utilizador actualizou valor
     } else if ("".equals(orderBy)) {
       orderBy = null;
       session.removeAttribute("orderBy");
@@ -385,6 +458,8 @@ try {
     String orderType = fdFormData.getParameter("orderType");
     if (orderType != null) {
       session.setAttribute("orderType",orderType); // Utilizador actualizou valor
+      startIndex = 0;
+      session.setAttribute("startindexTasks", startIndex.toString()); // Utilizador actualizou valor
     } else if ("".equals(orderType)) {
       orderType = null;
       session.removeAttribute("orderType");
@@ -426,7 +501,7 @@ try {
         }
       }
   
-    ListIterator<Activity> it = pm.getUserActivitiesOrderFilters(userInfo, -1, filter);
+    ListIterator<Activity> it = pm.getUserActivitiesOrderFilters(userInfo, nShowFlowId, filter);
     //PUT TO VM
     //jcosta: get selectedFolderName
     FolderManager fmFilter = BeanFactory.getFolderManagerBean();
@@ -438,13 +513,18 @@ try {
     } else {
       selectedFolderName = fmFilter.getFolderName(selectedFolder, foldersFilter);    
     }
-  
+
+    if (!StringUtils.isEmpty(selectedFlow) || !StringUtils.isEmpty(selectedFolderName) ||
+        !StringUtils.isEmpty(filterDate) || !StringUtils.isEmpty(filterPreviousUserid))
+      isCleanFilter = false;
+
+    hsSubstLocal.put("selectedFlow", (selectedFlow != null ? selectedFlow : ""));
     hsSubstLocal.put("selectedLabel", selectedLabel);
     hsSubstLocal.put("selectedDays", selectedDays);
     hsSubstLocal.put("selectedFolder", selectedFolder);
-    hsSubstLocal.put("selectedPreviousUser", selectedPreviousUser);
-    hsSubstLocal.put("selectedDate", selectedDate);
-    hsSubstLocal.put("selectedFolderName", selectedFolderName);
+    hsSubstLocal.put("selectedPreviousUser", (filterPreviousUserid != null ? filterPreviousUserid : ""));
+    hsSubstLocal.put("selectedDate", (filterDate != null ? filterDate : ""));
+    hsSubstLocal.put("selectedFolderName", (selectedFolderName != null ? selectedFolderName : ""));
   
     //    now get activities
     Activity a;
@@ -466,7 +546,7 @@ try {
     } else {
       hsSubstLocal.put("hasActivities", Boolean.FALSE);
     }
-    hsSubstLocal.put("cleanFilter", isCleanFilter?Boolean.TRUE:Boolean.FALSE);
+    hsSubstLocal.put("cleanFilter", isCleanFilter ? Boolean.TRUE : Boolean.FALSE);
   
     nAll_Tasks = alAct.size();
     title = messages.getString("main_content.tasks.title")+" ("+nAll_Tasks+")";
@@ -800,4 +880,3 @@ hsSubstLocal.put("css", css);
 hsSubstLocal.put("tabnr", StringUtils.isEmpty(tabnr) ? "" : tabnr);
 out.println(PresentationManager.buildPage(response, userInfo, hsSubstLocal, pageContent));
 %>
-

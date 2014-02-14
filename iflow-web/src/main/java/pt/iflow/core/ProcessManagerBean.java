@@ -6221,7 +6221,6 @@ public String ProcessEncryptEB(UserInfoInterface userInfo, String pidB, String p
   
 }
 
-
 public void ProcessEncryptEBUpdate(UserInfoInterface userInfo, String pid, String procdata, String subpid, int table){
 
   Connection db = null;
@@ -6259,6 +6258,36 @@ public void ProcessEncryptEBUpdate(UserInfoInterface userInfo, String pid, Strin
   finally {
     DatabaseInterface.closeResources(db, pst);
     }
+
+}
+
+public void markActivityReadFlag(UserInfoInterface userInfo, String flowid, String pid, String readFlag) {
+
+  Connection db = null;
+  Statement st = null;
+
+  String userid = userInfo.getUtilizador();
+
+  try {
+    db = DatabaseInterface.getConnection(userInfo);
+    db.setAutoCommit(false);
+
+    String query = DBQueryManager.processQuery("ProcessManager.update_activity_read", new Object[] { readFlag, userid, flowid, pid });
+
+    st = db.createStatement();
+    st.executeUpdate(query);
+
+    DatabaseInterface.commitConnection(db);
+  } catch (Exception e) {
+    Logger.error(userid, this, "markActivityReadFlag", e.getMessage(), e);
+    try {
+      DatabaseInterface.rollbackConnection(db);
+    } catch (SQLException e1) {
+      Logger.error(userid, this, "moveUserProcess", "Exception rolling back" + e.getMessage(), e1);        
+    }
+  } finally {
+    DatabaseInterface.closeResources(db, st);
+  }
 
 }
 

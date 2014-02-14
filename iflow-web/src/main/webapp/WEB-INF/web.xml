@@ -106,6 +106,10 @@ Disabled. Use servlet container defaults
       <servlet-class>pt.iflow.servlets.ProcessAnnotationServlet</servlet-class>
    </servlet>
    <servlet>
+      <servlet-name>TasksServlet</servlet-name>
+      <servlet-class>pt.iflow.servlets.TasksServlet</servlet-class>
+   </servlet>
+   <servlet>
       <servlet-name>FlowServlet</servlet-name>
       <servlet-class>pt.iflow.servlets.FlowServlet</servlet-class>
    </servlet>
@@ -390,6 +394,10 @@ Disabled. Use servlet container defaults
    <servlet-mapping>
       <servlet-name>ProcessAnnotationServlet</servlet-name>
       <url-pattern>/ProcessAnnotation/call/*</url-pattern>
+   </servlet-mapping>
+   <servlet-mapping>
+      <servlet-name>TasksServlet</servlet-name>
+      <url-pattern>/Tasks/call/*</url-pattern>
    </servlet-mapping>
    <servlet-mapping>
       <servlet-name>FlowServlet</servlet-name>

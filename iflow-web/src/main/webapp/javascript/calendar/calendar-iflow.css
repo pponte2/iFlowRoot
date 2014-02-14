@@ -11,7 +11,7 @@ div.calendar { position: relative;}
   cursor: default;
   background: #f0f0f0;
   font-family: tahoma,verdana,sans-serif;
-  z-index: 100;
+  z-index: 1000;
 }
 
 /* Header part -- contains navigation buttons and day names. */

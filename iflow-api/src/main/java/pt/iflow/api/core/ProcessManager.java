@@ -629,4 +629,6 @@ public interface ProcessManager extends UserProcsConst {
   public String getMaxPidNonEncrypted(UserInfoInterface userInfo);
   public String ProcessEncryptEB(UserInfoInterface userInfo, String pidB, String pidE);
   public void ProcessEncryptEBUpdate(UserInfoInterface userInfo, String pid, String procdata, String subpid, int table);
+
+  public void markActivityReadFlag(UserInfoInterface userInfo, String flowid, String pid, String readFlag);
 }

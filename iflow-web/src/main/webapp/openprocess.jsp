@@ -10,6 +10,7 @@
 %>
 <div id="div_proc_menu_colapsed" class="proc_menu_colapsed" style="display:block;">
 	
+	<div class="pull-right" style="display:inline;width:15px;">&nbsp;</div>
 	<!--img id="butclose" class="proc_menu_button pull-right" src="images/close.png" onclick="javascript:close_process(3);" title="Fechar::Fechar o form"/-->
 	<div id="butclose" class="proc_menu_button btn btn-default btn-sm pull-right" src="images/close.png" onclick="javascript:close_process(3);changeColor(document.getElementById('ptc_<%=23%>'));" title="Fechar::Fechar o form"><if:message string="button.close"/></div>
 	<!--

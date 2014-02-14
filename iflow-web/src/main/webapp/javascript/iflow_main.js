@@ -1807,9 +1807,43 @@ function reloadJS(doCloseMenus) {
 
 }
 
-
 function eventFire(el, etype){	 
   var evObj = document.createEvent('Events');
   evObj.initEvent(etype, true, false);
   el.dispatchEvent(evObj);	  
+}
+
+var act_pid ='';
+var act_style = '';
+var displayUnread = '';
+var displayRead = '';
+function markActivityRead(readFlag, flowid, pid) {
+  var call = "Tasks/call/markRead";
+  var params = "flowid=" + flowid + "&pid=" + pid + "&readFlag=" + readFlag;
+  act_pid = '' + pid;
+  if (readFlag == 0) {
+    act_style = 'bold';
+    displayUnread = 'none';
+  } else {
+    act_style = '';
+    displayRead = 'none';
+  }
+    
+  makeRequest(call, params , markActivityReadCallBack, 'text', 0);
+}
+
+function markActivityReadCallBack(error) {
+  if (error != null && error.lenght > 0) {
+    alert(error);
+  } else {
+    var idDiv = 'ptc_' + act_pid;
+    document.getElementById(idDiv).style.fontWeight = act_style;
+    idDiv = 'mread_' + act_pid; 
+    document.getElementById(idDiv).style.display = displayRead;
+    idDiv = 'munread_' + act_pid;
+    document.getElementById(idDiv).style.display = displayUnread;
+  }
+  displayUnread = '';
+  displayRead = '';
+  act_style = '';
 }
