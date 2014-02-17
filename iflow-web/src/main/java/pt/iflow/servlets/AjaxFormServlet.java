@@ -40,8 +40,7 @@ public class AjaxFormServlet extends HttpServlet {
 	public AjaxFormServlet() {
 	}
 
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		Integer flowid  = Integer.parseInt(request.getParameter("flowid"));
 		Integer pid  = Integer.parseInt(request.getParameter("pid"));
@@ -107,7 +106,7 @@ public class AjaxFormServlet extends HttpServlet {
         oa[3] = new ServletUtils(response);  
         bBlockJSP.saveDataSet(userInfo, procData);
         String sHtmlNew = (String) bBlockJSP.execute(2, oa);
-        String result =extractUpdatedFieldDivsSimple(sHtmlNew);
+        String result = extractUpdatedFieldDivsSimple(sHtmlNew);
         
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");

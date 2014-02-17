@@ -284,11 +284,11 @@ request.setAttribute("flow_type", FlowType.WORKFLOW);
 											<option value="p.pnumber">processo</option>
 											<option value="fs.result">estado</option>
 											<option value="fs.mdate">desde</option>
-											<option value="p.creator">dono</option>
+											<option value="p.creator">agendado em</option>
 										</select>
 										<select name="ordertype" class="form-control" value="<%=orderType %>" style="height:25px;font-size:0.8em;padding: 0 0 0 5px">
-											<option value="asc">asc</option>
-											<option value="desc">desc</option>
+											<option value="asc">Ascendente</option>
+											<option value="desc">Descendente</option>
 										</select>								
 									</div>
 								</div>

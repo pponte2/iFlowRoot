@@ -208,7 +208,7 @@
 					<a href="javascript:tabber_right(2, 'main_content.jsp', 'filterDate=$act.get("createdDate")')">$act.get("createdDate")</a>
 				</div>
 				<div class="dropdown">
-					<div class="dropdown-toggle" data-toggle="dropdown" id="dropdownmenu_$act.get('pnumber')" data-toggle="dropdown"><img src="Themes/newflow/images/V.png"/></div>
+					<div class="dropdown-toggle donotpropagate" data-toggle="dropdown" id="dropdownmenu_$act.get('pnumber')" data-toggle="dropdown"><img src="Themes/newflow/images/V.png"/></div>
 					<ul class="dropdown-menu topt-menu" role="menu" aria-labelledby="dropdownmenu_$act.get('pnumber')" style="top:10px;left:30px">
 				#if ($act.get("task_annotation_color_title") != "" )
 						<li role="presentation">
