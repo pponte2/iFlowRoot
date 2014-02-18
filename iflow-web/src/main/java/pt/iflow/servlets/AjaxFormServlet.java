@@ -104,7 +104,7 @@ public class AjaxFormServlet extends HttpServlet {
         oa[1] = procData;
         oa[2] = hmHidden;
         oa[3] = new ServletUtils(response);  
-        bBlockJSP.saveDataSet(userInfo, procData);
+        //bBlockJSP.saveDataSet(userInfo, procData);
         String sHtmlNew = (String) bBlockJSP.execute(2, oa);
         String result = extractUpdatedFieldDivsSimple(sHtmlNew);
         
