@@ -110,6 +110,7 @@ try {
   htSubst.put("isProcDetail", "true");
   htSubst.put("inDetail", "true");
   htSubst.put("uri", uri);
+  htSubst.put("user_name", userInfo.getUtilizador());
   if (procData == null || procData.getError() == null)
     htSubst.put("error", "");
   else

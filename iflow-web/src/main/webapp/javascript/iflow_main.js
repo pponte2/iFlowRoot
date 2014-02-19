@@ -1729,8 +1729,6 @@ function reloadJS(doCloseMenus) {
 
   jscolor.bind();
 
-  //tooltips('div_main');
-
   //sortable
   try {
     var tables = document.getElementsByTagName('table');
@@ -1742,7 +1740,16 @@ function reloadJS(doCloseMenus) {
   } catch (err) {}
 
   $('.donotclosemenu').click(function(e) { e.stopPropagation();});
-
+/*
+  $('.donotpropagate').click(function(e) {
+    e.stopPropagation();
+    Dropdown.prototype.toggle(e);
+    //$(this.parentNode).find('.dropdown-menu')[0].toggle();
+    //$(this.parentNode).find('.dropdown-menu')[0].addClass('active');
+    //$(this.parentNode).addClass('active');
+    return false;
+  });
+*/
   $(".draggable").draggable({revert: "invalid", opacity: 0.7, helper: "clone"});
   $(".droppable").droppable({
     hoverClass: "if-state-active",
