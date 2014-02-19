@@ -123,7 +123,7 @@ String popupReturnBlockId = null;
         
       String formMid = fdFormData.getParameter(Const.sMID_ATTRIBUTE);
       request.setAttribute(Const.sMID_ATTRIBUTE, formMid);
-      boolean procAccessOk = StringUtils.isBlank(formMid) || StringUtils.equals(currMid, formMid) || StringUtils.equals(currMid, "1");
+      boolean procAccessOk = StringUtils.isBlank(formMid) || StringUtils.equals(currMid, formMid) || StringUtils.equals(currMid, "1") || StringUtils.equals(currMid, "0");
       
       if (procAccessOk) {
             oa = new Object[5];
