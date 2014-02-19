@@ -59,6 +59,8 @@ int op = Integer.parseInt(sOp);
 
 Block bBlockJSP = null;
 
+String currMid = String.valueOf(pm.getModificationId(userInfo, procData.getProcessHeader()));
+
 HashMap<String,String> hmHidden = new HashMap<String,String>();
 hmHidden.put("subpid",String.valueOf(subpid));
 hmHidden.put("pid",String.valueOf(pid));
@@ -66,8 +68,11 @@ hmHidden.put("flowid",String.valueOf(flowid));
 hmHidden.put("op",String.valueOf(op));
 hmHidden.put("_serv_field_","-1");
 hmHidden.put("procStatus", status);
-hmHidden.put("isProcDetail", "true");
-hmHidden.put("inDetail", "true");
+//hmHidden.put("isProcDetail", "true");
+//hmHidden.put("inDetail", "true");
+hmHidden.put(Const.sMID_ATTRIBUTE, currMid);
+hmHidden.put(FormProps.sBUTTON_CLICKED, "");
+
 
 Flow flowBean = BeanFactory.getFlowBean();
 IFlowData flow = BeanFactory.getFlowHolderBean().getFlow(userInfo, flowid);
@@ -91,18 +96,21 @@ try {
 
 } catch (Exception e) {
   // this is the default, no block or could not fetch process data.
- 
-  Map<String,String> processDetail = null;
-  if (flow != null && flow.hasDetail())
-    processDetail = ProcessPresentation.getProcessDetail(userInfo, procData);
-  if(null == processDetail) processDetail = new HashMap<String,String>();
+
+  //TODO: colocar tudo no mesmo processDetail
   Hashtable<String,Object> htSubst = new Hashtable<String, Object>();
+  Map<String, String> processDetail = null;
+  Map<String, String> processVarnames = null;
+  processDetail = ProcessPresentation.getProcessDetail(userInfo, procData);
+  if (null == processDetail) processDetail = new HashMap<String,String>();
   htSubst.put("processDetail", processDetail);
+  processVarnames = ProcessPresentation.getProcessDetailVarnames(userInfo, procData);
+  if (null == processVarnames) processVarnames = new HashMap<String,String>();
+  htSubst.put("processVarnames", processVarnames);
   htSubst.put("processKeys", processDetail.keySet());
   htSubst.put("make_head",true);
   htSubst.put("url_prefix", Const.APP_URL_PREFIX);
   htSubst.put("sJSP", "detail.jsp");
-  htSubst.put("hmHidden", hmHidden);
   htSubst.put("procSubpid",String.valueOf(subpid));
   htSubst.put("procPid",String.valueOf(pid));
   htSubst.put("procFlowid",String.valueOf(flowid));
@@ -110,6 +118,7 @@ try {
   htSubst.put("isProcDetail", "true");
   htSubst.put("inDetail", "true");
   htSubst.put("uri", uri);
+  htSubst.put("user_name", userInfo.getUtilizador());
   if (procData == null || procData.getError() == null)
     htSubst.put("error", "");
   else
@@ -118,6 +127,11 @@ try {
   if (op == 10) {
     Block block = flowBean.getBlock(userInfo, procData); 
     buttons = block.getPreviewButtons(userInfo, procData);
+    for (Map<String,String> button: buttons) {
+      if (button.get("hiddenfield") != null && !"".equals(button.get("hiddenfield"))) {
+        hmHidden.put(button.get("hiddenfield"), "");
+      }
+    }
     if (block instanceof pt.iflow.blocks.BlockForwardTo)
     	htSubst.put("isForward", Boolean.TRUE);
   } else {
@@ -126,6 +140,7 @@ try {
 	  printButton.put("type","_imprimir");
 	  printButton.put("text","Imprimir");
   }
+  htSubst.put("hmHidden", hmHidden);
   htSubst.put("buttonList", buttons);
 
   //  messages.....

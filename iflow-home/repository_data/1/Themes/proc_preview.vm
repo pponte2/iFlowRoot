@@ -2,7 +2,6 @@
 	<head>
 		<title>Detail</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<!--link rel="stylesheet" href="${url_prefix}/Themes/${orgTheme}/css/iflow_main.css" type="text/css"-->
 		<link rel="stylesheet" href="${url_prefix}/Themes/${orgTheme}/css/tips.css" type="text/css">
 		<link rel="stylesheet" type="text/css" media="all" href="${url_prefix}/javascript/calendar/calendar-iflow.css" title="cal-iflow" />
 		<link rel="stylesheet" type="text/css" href="${url_prefix}/javascript/yahoo/container/assets/skins/sam/container.css" />
@@ -71,14 +70,6 @@
 						$error
 					</div>
 				#end
-					<!--table class="table">
-						<thead>
-						<tr class="tab_header" style="background-color:#ddd;">
-							<td>$variableLabel</td>
-							<td>$valueLabel</td>
-						</tr>
-						</thead>
-						<tbody-->
 				#set($odd=1)
 				#foreach($varName in $processDetail.keySet())
 				
@@ -99,15 +90,7 @@
 							#end 
 						</div>
 					</div>
-					
-					<!--
-						<tr class="tab_row_${class_type}">
-							<td style="font-weight:bold;">${varName}</td>
-							<td>$!processDetail.get(${varName})</td>
-						</tr> -->
 				#end
-					<!--/tbody>
-					</table-->
 			#end
 			#if($isForward)
 				</div>
