@@ -2,7 +2,6 @@
 	<head>
 		<title>Detail</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<!--link rel="stylesheet" href="${url_prefix}/Themes/${orgTheme}/css/iflow_main.css" type="text/css"-->
 		<link rel="stylesheet" href="${url_prefix}/Themes/${orgTheme}/css/tips.css" type="text/css">
 		<link rel="stylesheet" type="text/css" media="all" href="${url_prefix}/javascript/calendar/calendar-iflow.css" title="cal-iflow" />
 		<link rel="stylesheet" type="text/css" href="${url_prefix}/javascript/yahoo/container/assets/skins/sam/container.css" />
@@ -71,36 +70,13 @@
 						$error
 					</div>
 				#end
-				#if ($user_name == "andre")
-					<select class="txt  form-control pull-right combobox" style="width:250px;" name="t1">
-						<option value="Opção de decisão">Opção de decisão</option>
-						<option value="36">Admitir comunicação prévia</option>
-						<option value="10">Aprovar</option>
-						<option value="12">Autorizar</option>
-						<option value="14">Deferir</option>
-						<option value="34">Definir termos do despacho</option>
-						<option value="16">Homologar</option>
-						<option value="15">Indeferir</option>
-						<option value="35">Informação da chefia</option>
-						<option value="37">Não admitir comunicação prévia</option>
-						<option value="11">Não Aprovar</option>
-						<option value="13">Não Autorizar</option>
-						<option value="17">Não Homologar</option>
-						<option value="18">À reunião para aprovação</option>
-						<option value="22">À reunião para autorização</option>
-						<option value="19">À reunião para conhecimento</option>
-						<option value="23">À reunião para deferimento</option>
-						<option value="25">À reunião para homologação</option>
-						<option value="24">À reunião para indeferimento</option>
-						<option value="20">À reunião para não aprovação</option>
-						<option value="21">À reunião para não autorização</option>
-						<option value="26">À reunião para não homologação</option>
-						<option value="28">À reunião para não ratificação</option>
-						<option value="27">À reunião para ratificação</option>
-					</select>
-				#end
 				#if ($procFlowid == 159)
 					#set ($varName="Área")
+						#set($value = "")
+						#if ($processDetail.get(${varName})!="")
+							#set($value = $processDetail.get(${varName}))
+						#end
+						<input type="hidden" name="$processVarnames.get(${varName})" value="${value}">
 						<div class="form-group">
 							<label  class="col-sm-2 control-label">${varName}: </label>
 							<div class="col-sm-8" style=" font-size: 14px; margin-top: 5px"> 
@@ -112,6 +88,11 @@
 							</div>
 						</div>
 					#set ($varName="Subárea")
+						#set($value = "")
+						#if ($processDetail.get(${varName})!="")
+							#set($value = $processDetail.get(${varName}))
+						#end
+						<input type="hidden" name="$processVarnames.get(${varName})" value="${value}">
 						<div class="form-group">
 							<label  class="col-sm-2 control-label">${varName}: </label>
 							<div class="col-sm-8" style=" font-size: 14px; margin-top: 5px"> 
@@ -123,6 +104,11 @@
 							</div>
 						</div>						
 					#set ($varName="Assunto")
+						#set($value = "")
+						#if ($processDetail.get(${varName})!="")
+							#set($value = $processDetail.get(${varName}))
+						#end
+						<input type="hidden" name="$processVarnames.get(${varName})" value="${value}">
 						<div class="form-group">
 							<label  class="col-sm-2 control-label">${varName}: </label>
 							<div class="col-sm-8" style=" font-size: 14px; margin-top: 5px"> 
@@ -134,6 +120,11 @@
 							</div>
 						</div>	
 					#set ($varName="Nome do Cliente Municipal")
+						#set($value = "")
+						#if ($processDetail.get(${varName})!="")
+							#set($value = $processDetail.get(${varName}))
+						#end
+						<input type="hidden" name="$processVarnames.get(${varName})" value="${value}">
 						<div class="form-group">
 							<label  class="col-sm-2 control-label">${varName}: </label>
 							<div class="col-sm-8" style=" font-size: 14px; margin-top: 5px"> 
@@ -145,6 +136,11 @@
 							</div>
 						</div>	
 					#set ($varName="NIF")
+						#set($value = "")
+						#if ($processDetail.get(${varName})!="")
+							#set($value = $processDetail.get(${varName}))
+						#end
+						<input type="hidden" name="$processVarnames.get(${varName})" value="${value}">
 						<div class="form-group">
 							<label  class="col-sm-2 control-label">${varName}: </label>
 							<div class="col-sm-8" style=" font-size: 14px; margin-top: 5px"> 
@@ -156,6 +152,11 @@
 							</div>
 						</div>	
 					#set ($varName="Tramitação Recente")
+						#set($value = "")
+						#if ($processDetail.get(${varName})!="")
+							#set($value = $processDetail.get(${varName}))
+						#end
+						<input type="hidden" name="$processVarnames.get(${varName})" value="${value}">
 						<div class="form-group">
 							<label  class="col-sm-2 control-label">${varName}: </label>
 							<div class="col-sm-8" style=" font-size: 14px; margin-top: 5px"> 
@@ -166,9 +167,46 @@
 								#end 
 							</div>
 						</div>							
-						
+					#if ($user_name == "presidente")
+						<div class="form-group">
+							<label  class="col-sm-2 control-label">Decisão: </label>
+							<div class="col-sm-8" style=" font-size: 14px; margin-top: 5px"> 
+								<select class="txt  form-control pull-right combobox" style="width:250px;" name="t1">
+									<option value="Opção de decisão">Opção de decisão</option>
+									<option value="36">Admitir comunicação prévia</option>
+									<option value="10">Aprovar</option>
+									<option value="12">Autorizar</option>
+									<option value="14">Deferir</option>
+									<option value="34">Definir termos do despacho</option>
+									<option value="16">Homologar</option>
+									<option value="15">Indeferir</option>
+									<option value="35">Informação da chefia</option>
+									<option value="37">Não admitir comunicação prévia</option>
+									<option value="11">Não Aprovar</option>
+									<option value="13">Não Autorizar</option>
+									<option value="17">Não Homologar</option>
+									<option value="18">À reunião para aprovação</option>
+									<option value="22">À reunião para autorização</option>
+									<option value="19">À reunião para conhecimento</option>
+									<option value="23">À reunião para deferimento</option>
+									<option value="25">À reunião para homologação</option>
+									<option value="24">À reunião para indeferimento</option>
+									<option value="20">À reunião para não aprovação</option>
+									<option value="21">À reunião para não autorização</option>
+									<option value="26">À reunião para não homologação</option>
+									<option value="28">À reunião para não ratificação</option>
+									<option value="27">À reunião para ratificação</option>
+								</select>
+							</div>
+						</div>							
+					#end
 				#else
 					#foreach($varName in $processDetail.keySet())
+						#set($value = "")
+						#if ($processDetail.get(${varName})!="")
+							#set($value = $processDetail.get(${varName}))
+						#end
+						<input type="hidden" name="$processVarnames.get(${varName})" value="${value}">	
 						<div class="form-group">
 							<label  class="col-sm-2 control-label">${varName}: </label>
 							<div class="col-sm-8" style=" font-size: 14px; margin-top: 5px"> 
