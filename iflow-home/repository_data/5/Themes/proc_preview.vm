@@ -70,7 +70,6 @@
 						$error
 					</div>
 				#end
-
 				#if ($procFlowid == 159)
 					#set($varName="Área")
 					#set($value = "")
@@ -191,8 +190,9 @@
 								<div class="form-group">
 									<label  class="col-sm-2 control-label">${varName}: </label>
 									<select class="txt  form-control pull-right combobox" style="width:250px;" name="${varName}"
-											onchange="camouflageForm();document.dados.op.value='16';document.dados.submit();" >
+											onchange="camouflageForm();document.dados.op.value='16';jQuery('#dados').submit();" >
 									#set($idx = 0)
+									<option value="Opção de decisão" >Opção de decisão</option>
 									#foreach($val in $lValues)
 										#if($val.indexOf("<br>") > 0)
 											#set($val = $val.substring(0, $val.indexOf("<br>")))
@@ -201,14 +201,13 @@
 											#if($val == $value)
 												selected= "selected"
 											#end
-											>$listTexts.get($idx) - $val</option>
+											>$listTexts.get($idx)</option>
 											#set($idx = $idx+1)
 										#end
 									#end
 									</select>
 								</div>
 							#end
-
 						#end
 					#end
 				#else
@@ -254,6 +253,7 @@
 					#set($buttonimagealt=$button.get("buttonimagealt"))
 					#set($hiddenfield=$button.get("hiddenfield"))
 					&nbsp;
+
 					<button type="submit" align="center" valign="center" class="btn btn-default" name="$name" value="$text" id="$id" 
 						onClick="$operation;" title="&tooltip">
 						$text 
