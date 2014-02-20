@@ -43,7 +43,7 @@
 		</a>
 		<a id="bt_edit_<%=folder.getFolderid()%>" href="javascript:tabber_right(1, 'main_content.jsp', 'filterfolder=<%= folder.getFolderid()%>');selectedLabel('bt_edit_<%=folder.getFolderid()%>');" 
 				onmousehover="document.getElementById('bte_change_<%=folder.getFolderid()%>').setStyle('display','block');"
-				class="lmenu form-label labellink" title="<%=folder.getName()%>"><%=(folder.getName().length()>12)?(folder.getName().substring(0,11)+"..."):folder.getName()%></a>
+				class="lmenu form-label labellink" title="<%=folder.getName()%>" style="<%=(folder.getName().length()>12)?"font-size:8px":""%>" ><%=(folder.getName().length()>20)?(folder.getName().substring(0,20)+"..."):folder.getName()%></a>
 		
 		<img id="cl_edit_bg_<%=folder.getFolderid()%>" title="Alterar" width="15" height="30" src="Themes/newflow/images/img_categ.png" style="float: right; background:<%=folder.getColor()%>;"/>
 		
