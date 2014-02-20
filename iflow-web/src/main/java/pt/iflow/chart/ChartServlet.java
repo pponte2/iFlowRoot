@@ -162,6 +162,7 @@ public class ChartServlet extends HttpServlet {
     generateChart(req, resp);
   }
 
+
   private void generateChart(HttpServletRequest request, HttpServletResponse response) throws ServletException, java.io.IOException {
     request.setCharacterEncoding("UTF-8");
     Properties props = getRequestAsProperties(request);
@@ -170,6 +171,10 @@ public class ChartServlet extends HttpServlet {
     String username = null;
     ProcessData procData = null;
     IMessages msg = null;
+
+
+    synchronized(this){
+   
 
     if (session != null) {
       userInfo = (UserInfoInterface) session.getAttribute(Const.USER_INFO);
@@ -269,7 +274,7 @@ public class ChartServlet extends HttpServlet {
     response.setContentType("image/png");
     response.setContentLength(bout.size());
     bout.writeTo(response.getOutputStream());
-    
+    }
   }
 
   private static Properties getRequestAsProperties(HttpServletRequest request) {
