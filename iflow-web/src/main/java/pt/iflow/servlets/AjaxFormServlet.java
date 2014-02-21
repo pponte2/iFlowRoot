@@ -56,6 +56,7 @@ public class AjaxFormServlet extends HttpServlet {
 	    ProcessData procData = null;
 	    String flowExecType = "";
 	    //get procdata from SESSION
+	    Boolean procInSession = Boolean.FALSE;
 	    if (pid == Const.nSESSION_PID) {
 	        subpid = Const.nSESSION_SUBPID; // reset subpid to session subpid
 	        procData = (ProcessData)session.getAttribute(Const.SESSION_PROCESS + flowExecType);
@@ -63,6 +64,7 @@ public class AjaxFormServlet extends HttpServlet {
 	    else {
 	    	ProcessHeader procHeader = new ProcessHeader(flowid, pid, subpid);
 	        procData = pm.getProcessData(userInfo, procHeader, true?Const.nALL_PROCS:Const.nOPENED_PROCS);
+	        procInSession = Boolean.TRUE;
         }	    	  
 	    Block bBlockJSP = flow.getBlock(userInfo, procData);	    
 	    HashMap<String, String> hmHidden = new HashMap<String, String>();
@@ -104,7 +106,8 @@ public class AjaxFormServlet extends HttpServlet {
         oa[1] = procData;
         oa[2] = hmHidden;
         oa[3] = new ServletUtils(response);  
-        //bBlockJSP.saveDataSet(userInfo, procData);
+        if (procInSession)
+        	bBlockJSP.saveDataSet(userInfo, procData);
         String sHtmlNew = (String) bBlockJSP.execute(2, oa);
         String result = extractUpdatedFieldDivsSimple(sHtmlNew);
         
