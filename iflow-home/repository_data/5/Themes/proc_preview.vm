@@ -168,10 +168,11 @@
 						</div>
 					</div>							
 					#if ($user_name == "presidente")
+						#set($valueName="Acção a executar")
 						#set($varName="Decisão")
 						#set($value = "")
-						#if ($processDetail.get(${varName})!="")
-							#set($value = $processDetail.get(${varName}))
+						#if ($processDetail.get(${valueName})!="")
+							#set($value = $processDetail.get(${valueName}))
 						#end
 						#set($sValues=$processDetail.get($varName))
 						#set($sTexts=$processDetail.get("Decisão Texto"))
@@ -189,7 +190,7 @@
 							#if ($lValues != "")
 								<div class="form-group">
 									<label  class="col-sm-2 control-label">${varName}: </label>
-									<select class="txt  form-control pull-right combobox" style="width:250px;" name="${varName}"
+									<select class="txt  form-control pull-right combobox" style="width:250px;" name="$processVarnames.get(${valueName})"
 											onchange="camouflageForm();document.dados.op.value='16';jQuery('#dados').submit();" >
 									#set($idx = 0)
 									<option value="Opção de decisão" >Opção de decisão</option>
