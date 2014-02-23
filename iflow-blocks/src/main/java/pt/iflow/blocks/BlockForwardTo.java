@@ -15,6 +15,7 @@ import pt.iflow.api.blocks.Port;
 import pt.iflow.api.core.Activity;
 import pt.iflow.api.core.BeanFactory;
 import pt.iflow.api.core.ProcessManager;
+import pt.iflow.api.flows.Flow;
 import pt.iflow.api.processdata.ProcessData;
 import pt.iflow.api.utils.Logger;
 import pt.iflow.api.utils.UserInfoInterface;
@@ -54,7 +55,10 @@ public class BlockForwardTo extends Block implements MessageBlock {
 
     public final static String sFORWARD_TO_UPDATE_FOLDER_COND = "task_folder_update_condition";
     public final static String sFORWARD_TO_UPDATE_FOLDER = "task_folder_update";
-    
+
+    public final static String sFORWARD_TO_GO_CONDITION = "goCondition";
+    public final static String sFORWARD_TO_GO_ON_PREVIEW_CONDITION = "goOnPreviewCondition";
+
     public BlockForwardTo(int anFlowId, int id, int subflowblockid,
             String filename) {
         super(anFlowId, id, subflowblockid, filename);
@@ -331,7 +335,18 @@ public class BlockForwardTo extends Block implements MessageBlock {
     }
     
     public List<Map<String,String>> getPreviewButtons(UserInfoInterface userInfo, ProcessData procData) {
-        List<Map<String,String>> buttons = new ArrayList<Map<String,String>>(0);
-        return buttons;
+      List<Map<String,String>> buttons = new ArrayList<Map<String,String>>(0);
+      boolean go = false;
+      try {
+        String goCond = this.getAttribute(sFORWARD_TO_GO_ON_PREVIEW_CONDITION); 
+        go = procData.query(userInfo, goCond);
+      } catch (Exception e) {}
+      if (go) {
+        Flow flow = BeanFactory.getFlowBean();
+        flow.nextBlock(userInfo, procData);
+        Block block = flow.getBlock(userInfo, procData);
+        buttons = block.getPreviewButtons(userInfo, procData);
       }
+      return buttons;
+    }
 }

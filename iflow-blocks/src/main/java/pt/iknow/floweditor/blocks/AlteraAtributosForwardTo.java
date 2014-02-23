@@ -101,6 +101,9 @@ public class AlteraAtributosForwardTo extends AbstractAlteraAtributos implements
   private static final String sATTR_FORWARD_TO_TASK_FOLDER_UPDATE_CONDITION = "task_folder_update_condition";
   private static final String sATTR_FORWARD_TO_TASK_FOLDER_UPDATE = "task_folder_update";
   
+  private static final String sATTR_FORWARD_TO_GO_CONDITION = "goCondition";
+  private static final String sATTR_FORWARD_TO_GO_ON_PREVIEW_CONDITION = "goOnPreviewCondition";
+
   private final String sDESC_FORWARD_TO_TYPE;
   private final String sDESC_FORWARD_TO_USER;
   private final String sDESC_FORWARD_TO_PROFILE_TEXT;
@@ -114,6 +117,9 @@ public class AlteraAtributosForwardTo extends AbstractAlteraAtributos implements
 
   private final String sDESC_FORWARD_TO_UPDATE_FOLDER_CONDITION;
   private final String sDESC_FORWARD_TO_UPDATE_FOLDER;
+  
+  private final String sDESC_FORWARD_TO_GO_CONDITION;
+  private final String sDESC_FORWARD_TO_GO_ON_PREVIEW_CONDITION;
   
   // Map between externalized string and property
   private final HashMap<String,String> propToTypeMapping = new HashMap<String, String>();
@@ -153,6 +159,9 @@ public class AlteraAtributosForwardTo extends AbstractAlteraAtributos implements
 
     sDESC_FORWARD_TO_UPDATE_FOLDER_CONDITION = adapter.getString("AlteraAtributosForwardTo.updateTaskFolderCondition");
     sDESC_FORWARD_TO_UPDATE_FOLDER = adapter.getString("AlteraAtributosForwardTo.updateTaskFolder");
+    
+    sDESC_FORWARD_TO_GO_CONDITION = adapter.getString("AlteraAtributosForwardTo.goCondition");
+    sDESC_FORWARD_TO_GO_ON_PREVIEW_CONDITION = adapter.getString("AlteraAtributosForwardTo.goOnPreviewCondition");
     
     initMaps();
     
@@ -202,7 +211,7 @@ public class AlteraAtributosForwardTo extends AbstractAlteraAtributos implements
 
   public String[][] getNewAttributes() {
     String selectedProfiles = ""; //$NON-NLS-1$
-    String[][] newData = new String[11][2];
+    String[][] newData = new String[13][2];
 
     // get selected values to a csv string
     Object[] soSelected = _jlProfiles.getSelectedValues();
@@ -241,11 +250,17 @@ public class AlteraAtributosForwardTo extends AbstractAlteraAtributos implements
     newData[8][0] = sATTR_FORWARD_TO_TASK_FOLDER_UPDATE; // task folder update
     newData[8][1] = (String)data[7][1];
     
+    newData[9][0] = sATTR_FORWARD_TO_GO_CONDITION; // task folder update
+    newData[9][1] = (String)data[8][1];
+    
+    newData[10][0] = sATTR_FORWARD_TO_GO_ON_PREVIEW_CONDITION; // task folder update
+    newData[10][1] = (String)data[9][1];
+    
     // this is common to all blocks, right?
-    newData[9][0] = AlteraAtributos.sDESCRIPTION;
-    newData[9][1] = description;// this.jtfDescription.getText();
-    newData[10][0] = AlteraAtributos.sRESULT;
-    newData[10][1] = result;// this.jtfResult.getText();
+    newData[11][0] = AlteraAtributos.sDESCRIPTION;
+    newData[11][1] = description;// this.jtfDescription.getText();
+    newData[12][0] = AlteraAtributos.sRESULT;
+    newData[12][1] = result;// this.jtfResult.getText();
 
     return newData;
   }
@@ -253,7 +268,7 @@ public class AlteraAtributosForwardTo extends AbstractAlteraAtributos implements
   public void setDataIn(String title, List<Atributo> atributos) {
     setTitle(title);
 
-    data = new String[8][2];
+    data = new String[10][2];
 
     Map<String,String> attr = new HashMap<String, String>();
     for(Atributo a : atributos)
@@ -325,6 +340,21 @@ public class AlteraAtributosForwardTo extends AbstractAlteraAtributos implements
       stmp = "";
     }
     data[7][1] = stmp;
+    
+    // GO CONDITION
+    data[8][0] = sDESC_FORWARD_TO_GO_CONDITION;
+    stmp = attr.get(sATTR_FORWARD_TO_GO_CONDITION);
+    if (StringUtilities.isEmpty(stmp)) {
+      stmp = "";
+    }
+    data[8][1] = stmp;
+    
+    data[9][0] = sDESC_FORWARD_TO_GO_ON_PREVIEW_CONDITION;
+    stmp = attr.get(sATTR_FORWARD_TO_GO_ON_PREVIEW_CONDITION);
+    if (StringUtilities.isEmpty(stmp)) {
+      stmp = "";
+    }
+    data[9][1] = stmp;
     
     this.description = attr.get(AlteraAtributos.sDESCRIPTION);
     if (null == this.description)
@@ -441,7 +471,7 @@ public class AlteraAtributosForwardTo extends AbstractAlteraAtributos implements
       }
     });
 
-    /* criar botões e arranjar dialogo */
+    /* criar botï¿½es e arranjar dialogo */
     jbInit();
 
     toggleEnabledFields();
@@ -454,14 +484,14 @@ public class AlteraAtributosForwardTo extends AbstractAlteraAtributos implements
   }
 
   /**
-   * Iniciar caixa de diálogo
+   * Iniciar caixa de diï¿½logo
    * 
    */
   void jbInit() {
     // configurar
     panel1.setLayout(borderLayout1);
 
-    /* botão OK */
+    /* botï¿½o OK */
     jButton1.setText(adapter.getString("Button.OK")); //$NON-NLS-1$
 
     jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -470,7 +500,7 @@ public class AlteraAtributosForwardTo extends AbstractAlteraAtributos implements
       }
     });
 
-    /* botão cancelar */
+    /* botï¿½o cancelar */
     jButton2.setText(adapter.getString("Button.CANCEL")); //$NON-NLS-1$
     jButton2.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(ActionEvent e) {

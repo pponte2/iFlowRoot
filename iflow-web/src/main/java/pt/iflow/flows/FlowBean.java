@@ -72,8 +72,6 @@ public class FlowBean implements Flow {
   /**
    *
    */
-  private static final long serialVersionUID = 1L;
-
   private static final int nMODE_ADD = 0;
   private static final int nMODE_REMOVE = 1;
   private static final int nMODE_UPDATE = 2;
@@ -144,6 +142,7 @@ public class FlowBean implements Flow {
       boolean useExistingTransaction) {
 
     String nextURL = null;
+    String blockedNextUrl = null;
     LicenseService licenseService = LicenseServiceFactory.getLicenseService();
     int flowId = procData.getFlowId();
     int pid = procData.getPid();
@@ -198,20 +197,19 @@ public class FlowBean implements Flow {
 
         int blockId = this.getFlowState(userInfo, procData);
         int blockIdOld = blockId;
-        String subflowMapping = checkSubFlowMapping(procData.getFlowId(), blockId);
 
         Logger.info(login, this, "nextBlock", procData.getSignature() + "processing BlockId: " + blockId);
 
         block = this.getBlockById(userInfo, procData.getProcessHeader(), blockId);
         Port outPort;
 
-        procData.setOnPopup(block.isBlockRunningInPopup());
-
         if (block == null) {
           Logger.error(login, this, "nextBlock", 
               procData.getSignature() + "block is null for blockId=" + blockId);
           break;
         }
+
+        procData.setOnPopup(block.isBlockRunningInPopup());
 
         if (block.isStartBlock() && procData.isInDB()) {
           // process creation and dataset in db => force creator
@@ -471,6 +469,11 @@ public class FlowBean implements Flow {
           nextURL = pm.getUserProcessUrl(userInfo, procData, nextURL);
 
           if (nextURL == null) {
+            String forwardBlockUpdateLabelParams = getFowardBlockUpdateLabelParams(userInfo, block, procData);
+            // show info page
+            nextURL = "proc_info.jsp?flowid=" + flowId + "&pid=" + pid + "&subpid=" + procData.getSubPid()
+                + (block.isForwardBlock() ? "&from=forward" + forwardBlockUpdateLabelParams : "");
+
             if (callNextBlock) {
               // if here, block does not have interaction and user does
               // not have process access (no user process url), which means that we 
@@ -478,13 +481,32 @@ public class FlowBean implements Flow {
               Logger.info(login, this, "nextBlock", procData.getSignature() + ": Block id=" + blockId
                   + " user does not have process in his activities... setting next block's flag off.");
               callNextBlock = false;
+              if (block instanceof BlockForwardTo) {
+                try {
+                  String username = procData.transform(userInfo, block.getAttribute(BlockForwardTo.sFORWARD_TO_USER));
+                  if (StringUtilities.isNotEmpty(username)) {
+                      String goCond = block.getAttribute(BlockForwardTo.sFORWARD_TO_GO_CONDITION); 
+                      callNextBlock = procData.query(userInfo, goCond);
+                      try {
+                        DatabaseInterface.commitConnection(conn);
+                        userInfo.unregisterTransaction(transactionId);
+                      } catch (IllegalAccessException e) {
+                        Logger.error(login, this, "nextBlock", procData.getSignature() + "unregistering transaction in userinfo", e); 
+  
+                        NotificationManager notificationManager = BeanFactory.getNotificationManagerBean();
+                        notificationManager.notifySystemError(userInfo, "nextBlock@FlowBean", procData.getSignature()
+                            + "illegal access unregistering transaction in userInfo! " + e.getMessage());
+  
+                        return getErrorUrl("flow_error.unregister_transaction");
+                      }
+                      userInfo = BeanFactory.getUserInfoFactory().newUserInfoDelegate(block, username);
+                      transactionId = userInfo.registerTransaction(new DBConnectionWrapper(conn));
+                      if (blockedNextUrl == null) blockedNextUrl = nextURL;
+                  }
+                } catch (Exception e) { }
+              }
             }
 
-            String forwardBlockUpdateLabelParams = getFowardBlockUpdateLabelParams(userInfo, block, procData);
-
-            // show info page
-            nextURL = "proc_info.jsp?flowid=" + flowId + "&pid=" + pid + "&subpid=" + procData.getSubPid()
-                + (block.isForwardBlock() ? "&from=forward" + forwardBlockUpdateLabelParams : "");
           }
         }
 
@@ -547,61 +569,8 @@ public class FlowBean implements Flow {
     }
     //Update Folder
     getFowardBlockUpdateFolderParams(userInfo, block, procData);
+    if (blockedNextUrl != null) nextURL = blockedNextUrl;  
     return nextURL;
-  }
-
-  /**
-   * 
-   * @param flowid
-   *          Main flowid
-   * @param blockid
-   *          id of a block that may belong to a subflow
-   * @return {subflow name, blockid in subflow}, null if the blockid is not in a subflow
-   */
-  private String checkSubFlowMapping(Integer flowid, Integer blockid) {
-    String[] ret = null;
-    String result = "";
-    Connection db = null;
-    PreparedStatement pst = null;
-
-    try {
-      db = Utils.getDataSource().getConnection();
-      pst = db
-          .prepareStatement("SELECT sub_flowname, original_blockid FROM iflow.subflow_block_mapping s, iflow.flow f where f.flowfile=s.flowname and flowid=? and mapped_blockid=? order by id desc");
-      pst.setInt(1, flowid);
-      pst.setInt(2, blockid);
-      ResultSet rs = pst.executeQuery();
-
-      if (rs.next()) {
-        ret = new String[4];
-        ret[0] = rs.getString(1);
-        ret[1] = "" + rs.getInt(2);
-
-        pst.setInt(1, flowid);
-        pst.setInt(2, Integer.parseInt(ret[0].substring(ret[0].lastIndexOf("_") + 1)));
-        rs = pst.executeQuery();
-
-        if (rs.next()) {
-          ret[2] = rs.getString(1);
-          ret[3] = "" + rs.getInt(2);
-        }
-      }
-
-      if (StringUtils.isNotBlank(ret[2]))
-        result = ", original id=" + ret[1] + " of subflow=" + ret[0].substring(0, ret[0].lastIndexOf("_"))
-            + " placed in mainflow at block=" + ret[3] + " of subflow=" + ret[2].substring(0, ret[2].lastIndexOf("_"))
-            + " placed in mainflow at block=" + ret[2].substring(ret[2].lastIndexOf("_") + 1);
-      else
-        result = ", original id=" + ret[1] + " of subflow=" + ret[0].substring(0, ret[0].lastIndexOf("_"))
-            + " placed in mainflow at block=" + ret[0].substring(ret[0].lastIndexOf("_") + 1);
-
-    } catch (Exception e) {
-      result = "";
-    } finally {
-      DatabaseInterface.closeResources(db, pst);
-    }
-
-    return result;
   }
 
   private String getFowardBlockUpdateLabelParams(UserInfoInterface userInfo, Block block, ProcessData procData) {

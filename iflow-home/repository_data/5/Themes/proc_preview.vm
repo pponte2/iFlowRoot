@@ -166,8 +166,9 @@
 								&ltn&#227;o dispon&#237;vel&gt
 							#end 
 						</div>
-					</div>							
-					#if ($user_name == "presidente")
+					</div>
+
+					#if ($user_name == "presidente" && $processDetail.get("Acções")!="" && (!($processDetail.get("Acção escolhida")!="") || $processDetail.get("Acção escolhida")=="pre_decisao" || $processDetail.get("Acção escolhida")=="parecer") )
 						#set($valueName="Acção a executar")
 						#set($varName="Decisão")
 						#set($value = "")
@@ -259,9 +260,6 @@
 						onClick="$operation;" title="&tooltip">
 						$text 
 					</button>
-					#if ($hiddenfield != "")
-					<input type="hidden" name="$hiddenfield" id="$hiddenfield" value=""></input>
-					#end
 					&nbsp;
 				#end
 				</fieldset>

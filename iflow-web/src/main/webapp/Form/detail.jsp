@@ -101,6 +101,24 @@ try {
   Hashtable<String,Object> htSubst = new Hashtable<String, Object>();
   Map<String, String> processDetail = null;
   Map<String, String> processVarnames = null;
+  List<Map<String,String>> buttons = new ArrayList<Map<String,String>>(1);
+  if (op == 10) {
+    Block block = flowBean.getBlock(userInfo, procData); 
+    buttons = block.getPreviewButtons(userInfo, procData);
+    for (Map<String,String> button: buttons) {
+      if (button.get("hiddenfield") != null && !"".equals(button.get("hiddenfield"))) {
+        hmHidden.put(button.get("hiddenfield"), "");
+      }
+    }
+    block = flowBean.getBlock(userInfo, procData); 
+    if (block instanceof pt.iflow.blocks.BlockForwardTo)
+    	htSubst.put("isForward", Boolean.TRUE);
+  } else {
+	  Map<String,String> printButton = new HashMap<String,String>();
+	  buttons.add(printButton);
+	  printButton.put("type","_imprimir");
+	  printButton.put("text","Imprimir");
+  }
   processDetail = ProcessPresentation.getProcessDetail(userInfo, procData);
   if (null == processDetail) processDetail = new HashMap<String,String>();
   htSubst.put("processDetail", processDetail);
@@ -123,23 +141,6 @@ try {
     htSubst.put("error", "");
   else
     htSubst.put("error", procData.getError());
-  List<Map<String,String>> buttons = new ArrayList<Map<String,String>>(1);
-  if (op == 10) {
-    Block block = flowBean.getBlock(userInfo, procData); 
-    buttons = block.getPreviewButtons(userInfo, procData);
-    for (Map<String,String> button: buttons) {
-      if (button.get("hiddenfield") != null && !"".equals(button.get("hiddenfield"))) {
-        hmHidden.put(button.get("hiddenfield"), "");
-      }
-    }
-    if (block instanceof pt.iflow.blocks.BlockForwardTo)
-    	htSubst.put("isForward", Boolean.TRUE);
-  } else {
-	  Map<String,String> printButton = new HashMap<String,String>();
-	  buttons.add(printButton);
-	  printButton.put("type","_imprimir");
-	  printButton.put("text","Imprimir");
-  }
   htSubst.put("hmHidden", hmHidden);
   htSubst.put("buttonList", buttons);
 
