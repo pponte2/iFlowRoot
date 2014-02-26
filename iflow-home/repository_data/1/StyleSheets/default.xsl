@@ -1157,7 +1157,7 @@
 		</xsl:if>
 
 		<xsl:if test="type='rich_textarea'">
-			<div class="yui-skin-sam" align="right">
+			<div class="yui-skin-sam" align="right" style="min-height = 200">
 				<textarea name="{variable}" >
 					<xsl:attribute name="id">
 						<xsl:value-of select="variable/text()" />
@@ -1273,7 +1273,7 @@
 			<em>*</em>
 		</xsl:if>
 		</label>
-		<select class="txt form-control pull-right combobox" style="width:250px;">
+		<select class="txt  form-control pull-right combobox" style="width:250px;">
 		<xsl:attribute name="name">
 			<xsl:value-of select="variable/text()" />
 		</xsl:attribute>
@@ -1346,62 +1346,62 @@
 							<xsl:text>table_row_subheader</xsl:text>
 						</xsl:if>
 					</xsl:attribute>
-					<xsl:attribute name="align">
-					<xsl:value-of select="align/text()" />
-					</xsl:attribute>
+				<xsl:attribute name="align">
+				<xsl:value-of select="align/text()" />
+				</xsl:attribute>
+				<xsl:choose>
+					<xsl:when test="header='true'">
 					<xsl:choose>
-						<xsl:when test="header='true'">
-						<xsl:choose>
-							<xsl:when test="string-length(colspan) &gt; 0">
-							<xsl:attribute name="class">
-									<xsl:text>table_main_header</xsl:text>
-								</xsl:attribute>
-							<xsl:attribute name="colspan">
-									<xsl:value-of select="colspan/text()" />
-								</xsl:attribute>
-							</xsl:when>
-							<xsl:otherwise>
-							<xsl:attribute name="class">
-									<xsl:text>table_sub_header</xsl:text>
-								</xsl:attribute>
-							</xsl:otherwise>
-						</xsl:choose>
+						<xsl:when test="string-length(colspan) &gt; 0">
+						<xsl:attribute name="class">
+								<xsl:text>table_main_header</xsl:text>
+							</xsl:attribute>
+						<xsl:attribute name="colspan">
+								<xsl:value-of select="colspan/text()" />
+							</xsl:attribute>
 						</xsl:when>
+						<xsl:otherwise>
+						<xsl:attribute name="class">
+								<xsl:text>table_sub_header</xsl:text>
+							</xsl:attribute>
+						</xsl:otherwise>
+					</xsl:choose>
+					</xsl:when>
 
-						<xsl:otherwise>
-						<xsl:choose><!-- Oscar here: As tags "gt" e "lt" e "eq" tem prioridade sobre o bgcolor -->
-							<xsl:when test="string-length(gt) &gt; 0">
-							<xsl:attribute name="class">bgcolor1</xsl:attribute>
-							</xsl:when>
-							<xsl:when test="string-length(eq) &gt; 0">
-							<xsl:attribute name="class">bgcolor1</xsl:attribute>
-							</xsl:when>
-							<xsl:when test="string-length(lt) &gt; 0">
-							<xsl:attribute name="class">bgcolor2</xsl:attribute>
-							</xsl:when>
-							<xsl:when test="string-length(bgcolor) &gt; 0">
-							<xsl:if test="count(../separator) = 0">
-									<xsl:attribute name="bgcolor">
-									<xsl:value-of select="bgcolor/text()" />
-									</xsl:attribute>
-							</xsl:if>
-							</xsl:when>
-						</xsl:choose>
-						</xsl:otherwise>
-					</xsl:choose>
-					<xsl:choose>
-						<xsl:when test="string-length(value) = 0">
-							<xsl:text>&nbsp;</xsl:text>
+					<xsl:otherwise>
+					<xsl:choose><!-- Oscar here: As tags "gt" e "lt" e "eq" tem prioridade sobre o bgcolor -->
+						<xsl:when test="string-length(gt) &gt; 0">
+						<xsl:attribute name="class">bgcolor1</xsl:attribute>
 						</xsl:when>
-						<xsl:otherwise>
-							<xsl:apply-templates select="value" />
-							<xsl:choose>
-								<xsl:when test="string-length(suffix) &gt; 0">
-								<xsl:apply-templates select="suffix" />
-								</xsl:when>
-							</xsl:choose>
-						</xsl:otherwise>
+						<xsl:when test="string-length(eq) &gt; 0">
+						<xsl:attribute name="class">bgcolor1</xsl:attribute>
+						</xsl:when>
+						<xsl:when test="string-length(lt) &gt; 0">
+						<xsl:attribute name="class">bgcolor2</xsl:attribute>
+						</xsl:when>
+						<xsl:when test="string-length(bgcolor) &gt; 0">
+						<xsl:if test="count(../separator) = 0">
+								<xsl:attribute name="bgcolor">
+								<xsl:value-of select="bgcolor/text()" />
+								</xsl:attribute>
+						</xsl:if>
+						</xsl:when>
 					</xsl:choose>
+					</xsl:otherwise>
+				</xsl:choose>
+				<xsl:choose>
+					<xsl:when test="string-length(value) = 0">
+					<xsl:text>&nbsp;</xsl:text>
+					</xsl:when>
+					<xsl:otherwise>
+					<xsl:apply-templates select="value" />
+					<xsl:choose>
+						<xsl:when test="string-length(suffix) &gt; 0">
+						<xsl:apply-templates select="suffix" />
+						</xsl:when>
+					</xsl:choose>
+					</xsl:otherwise>
+				</xsl:choose>
 				</td>
 			</xsl:for-each>
 			</tr>

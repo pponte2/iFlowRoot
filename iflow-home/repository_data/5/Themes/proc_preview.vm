@@ -151,27 +151,82 @@
 							#end 
 						</div>
 					</div>	
-					#set($varName="Tramitação Recente")
-					#set($value = "")
-					#if ($processDetail.get(${varName})!="")
-						#set($value = $processDetail.get(${varName}))
-					#end
-					<input type="hidden" name="$processVarnames.get(${varName})" value="${value}">
-					<div class="form-group">
-						<label  class="col-sm-2 control-label">${varName}: </label>
-						<div class="col-sm-8" style=" font-size: 14px; margin-top: 5px"> 
-							#if ($processDetail.get(${varName})!="")
-								$processDetail.get(${varName})
-							#else
-								&ltn&#227;o dispon&#237;vel&gt
-							#end 
+					
+						#set($sAccoes=$processDetail.get("Acções"))
+						#set($lAccoes=$sAccoes.split("] "))
+						#if ($lAccoes != "")
+							#set($listAccoes = [])
+								#foreach($accao in $lAccoes)
+									#if($accao.indexOf("<br>") > 0)
+										#if ($listAccoes.add($accao.substring(0, $accao.indexOf("<br>"))))
+										#end
+									#end
+								#end
+						#set($accao1="")
+						#set($accao2="")
+							#foreach($accao in $listAccoes)
+								#set($accao2=$accao1)
+								#set($accao1=$accao)
+							#end
+						#end
+						
+						#set($sComents=$processDetail.get("Comentários"))
+						#set($lComents=$sComents.split("] "))
+						#if ($lComents != "")
+							#set($listComents = [])
+								#foreach($coment in $lComents)
+									#if($coment.indexOf("<br>") >= 0)
+										#if ($listComents.add($coment.substring(0, $coment.indexOf("<br>"))))
+										#end
+									#end
+								#end
+						#set($coment1="")
+						#set($coment2="")
+							#foreach($coment in $listComents)
+								#set($coment2=$coment1)
+								#set($coment1=$coment)
+							#end
+						#end
+						
+						<div class="form-group">
+							<label  class="col-sm-2 control-label">Tramitação Recente: </label>
+								#if ($accao1!="")
+									<table class="col-sm-8" border="1" cellpadding="10%" style=" font-size: 14px; margin-top: 5px; margin-left: 15px">
+										<tr>
+											<td>$accao1 </td>
+											<td> 
+												#if ($coment1!="")
+													$coment1
+												#else
+													&ltn&#227;o dispon&#237;vel&gt
+												#end 
+											</td>										
+										</tr>
+										#if ($accao2!="")
+											<tr>
+												<td>$accao2 </td>
+												<td> 
+														#if ($coment2!="")
+															$coment2
+														#else
+															&ltn&#227;o dispon&#237;vel&gt
+														#end 
+												</td>										
+											</tr>
+										#end
+									</table>
+								#else
+									<div class="col-sm-8" style=" font-size: 14px; margin-top: 5px"> 
+											&ltn&#227;o dispon&#237;vel&gt
+									</div>
+								#end	
 						</div>
-					</div>
 
+					
 					#if ($user_name == "presidente" && $processDetail.get("Acções")!="" && (!($processDetail.get("Acção escolhida")!="") || $processDetail.get("Acção escolhida")=="pre_decisao" || $processDetail.get("Acção escolhida")=="parecer") )
 						#set($valueName="Acção a executar")
 						#set($varName="Decisão")
-						#set($value = "")
+						#set($value = "") 
 						#if ($processDetail.get(${valueName})!="")
 							#set($value = $processDetail.get(${valueName}))
 						#end
