@@ -81,6 +81,8 @@ var ajaxSavedValues = {};
 //var that keeps richtextarea variables to save before ajaxsubmit
 var ajaxSavedRichTextAreaValues = new Array();
 
+var cancelMenu = false;
+
 function selectedItem(tabnr, item) {    
   cur_item = 'li_a_' + tabnr + "_"+ item;
   if (document.getElementById((prev_item[tabnr]))) document.getElementById((prev_item[tabnr])).className = 'toolTipItemLink li_link';
@@ -1631,6 +1633,10 @@ function createLabel(labelid, editname, color) {
 }
 
 function process_detail_new(thePage, ctrl, flowid, pid, subpid, procStatus, uri) {
+  if (cancelMenu) {
+    cancelMenu = false;
+    return;
+  }
   var scrollpos = layout.getScrollPosition().toString();
   var params = 'flowid='+flowid+'&pid='+pid+'&subpid='+subpid+'&procStatus='+procStatus+'&scroll='+scroll+'&uri='+uri;
   getCtrlFill(thePage, params, ctrl);

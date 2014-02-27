@@ -208,7 +208,7 @@
 					<a href="javascript:tabber_right(2, 'main_content.jsp', 'filterDate=$act.get("createdDate")')">$act.get("createdDate")</a>
 				</div>
 				<div class="dropdown">
-					<div class="dropdown-toggle donotpropagate" data-toggle="dropdown" id="dropdownmenu_$act.get('pnumber')" data-toggle="dropdown"><img src="Themes/newflow/images/V.png"/></div>
+					<div class="dropdown-toggle data-toggle="dropdown" id="dropdownmenu_$act.get('pnumber')" data-toggle="dropdown" onClick="cancelMenu = true;"><img src="Themes/newflow/images/V.png"/></div>
 					<ul class="dropdown-menu topt-menu" role="menu" aria-labelledby="dropdownmenu_$act.get('pnumber')" style="top:10px;left:30px">
 				#if ($act.get("task_annotation_color_title") != "" )
 						<li role="presentation">
@@ -216,10 +216,10 @@
 						</li>
 				#end
 						<li id="mread_$act.get("pid")" style="$display_read" role="presentation">
-							<a role="menuitem" tabindex="-1" href="javascript:markActivityRead(1, $act.get("flowid"), $act.get("pid"));">Marcar como lido</a>
+							<a role="menuitem" tabindex="-1" href="#" onClick="javascript:cancelMenu=true;markActivityRead(1, $act.get("flowid"), $act.get("pid"));">Marcar como lido</a>
 						</li>
 						<li id="munread_$act.get("pid")" style="$display_unread" role="presentation">
-							<a role="menuitem" tabindex="-1" href="javascript:markActivityRead(0, $act.get("flowid"), $act.get("pid"));">Marcar como não lido</a>
+							<a role="menuitem" tabindex="-1" href="#" onClick="javascript:cancelMenu=true;markActivityRead(0, $act.get("flowid"), $act.get("pid"));">Marcar como não lido</a>
 						</li>
 					</ul>
 				</div>	
@@ -422,10 +422,3 @@
 </div>
 	
 	#end
-
-#if($hasMoreActivities)
-	<!--div class="button_box">
-		<input class="regular_button_00" type="button" name="more" value="$button_more" onClick="javascript:tabber(2, '$response.encodeURL($url_prefix,'actividades_filtro.jsp')','clean=true','$response.encodeURL($url_prefix,'actividades.jsp')','ts=$ts&clean=true');"
-		/>
-	</div-->
-#end
