@@ -32,11 +32,15 @@
 	<%for (Folder folder: folders) { %>
 	<li class="droppable" style="height:34px;padding:2px;margin:2px;" valToAssign="<%= folder.getFolderid()%>">
 
-		<a href="" onClick="deleteLabel('<%=folder.getFolderid()%>'); return false;" class="lmenu">
+		<a href="" onClick="deleteLabel('<%=folder.getFolderid()%>'); return false;" class="lmenu" id="bt_delete_<%=folder.getFolderid()%>">
 			<img id="bte_change_<%=folder.getFolderid()%>" title="Remover" width="10" height="10" src="images/icon_delete.png" style="margin-left:-20px"/>
 		</a>
-		<a href="" onClick="editLabel('<%=folder.getFolderid()%>','1'); return false;" class="lmenu">
+		<a href="" onClick="editLabel('<%=folder.getFolderid()%>','1'); return false;" class="lmenu" id="bt_change_<%=folder.getFolderid()%>">
 			<img id="btd_change_<%=folder.getFolderid()%>" title="Alterar" width="10" height="10" src="images/icon_modify.png" style="margin-left:0px"/>
+		</a>
+	  	<a href="" onClick="javascript:editlabel('<%=folder.getFolderid()%>','0'); return false;" title="<%=messages.getString("actividades.folder.confirm")%>" id="bt_confirm_<%=folder.getFolderid()%>" 
+	  		style="display:none">
+			<img border="0" src="Themes/newflow/images/confirm.png"  class="toolTipImg" href="javascript:editFolder('<%=folder.getFolderid()%>','0');">
 		</a>
 		<a href="" onclick="javascript:editLabel('<%=folder.getFolderid()%>','-1'); return false;" class="lmenu">
 			<img id="bt_cancel_<%=folder.getFolderid()%>" title="fechar" width="10" height="10" src="Themes/newflow/images/close.png" style="display:none;"/>

@@ -190,6 +190,8 @@
 					if (obj!=null) obj.style.display = 'none';
 					obj = document.getElementById('bt_edit_'+labelid);
 					if (obj!=null) obj.style.display = 'none';
+					obj = document.getElementById('bt_change_'+labelid);
+					if (obj!=null) obj.style.display = 'none';
 					obj = document.getElementById('bt_delete_'+labelid);
 					if (obj!=null) obj.style.display = 'none';
 					obj = document.getElementById('bt_confirm_'+labelid);
@@ -234,6 +236,8 @@
 					obj = document.getElementById('color_'+labelid);
 					if (obj!=null) obj.style.display = '';
 					obj = document.getElementById('bt_edit_'+labelid);
+					if (obj!=null) obj.style.display = 'inline-block';
+					obj = document.getElementById('bt_change_'+labelid);
 					if (obj!=null) obj.style.display = 'inline-block';
 					obj = document.getElementById('bt_delete_'+labelid);
 					if (obj!=null) obj.style.display = 'inline-block';
