@@ -1369,7 +1369,7 @@
 					</xsl:when>
 
 					<xsl:otherwise>
-					<xsl:choose><!-- Oscar here: As tags "gt" e "lt" e "eq" tem prioridade sobre o bgcolor -->
+					<xsl:choose>
 						<xsl:when test="string-length(gt) &gt; 0">
 						<xsl:attribute name="class">bgcolor1</xsl:attribute>
 						</xsl:when>
@@ -1393,13 +1393,33 @@
 					<xsl:when test="string-length(value) = 0">
 					<xsl:text>&nbsp;</xsl:text>
 					</xsl:when>
+
+					<xsl:when test="string-length(value) > $maxLenCol">
+						<xsl:variable name="valueShort" select="substring(value, 1, $maxLenCol)" />
+						<xsl:variable name="idAux" select="generate-id()" />
+						<span id="span_short_{$idAux}">
+							<xsl:value-of select="$valueShort" />
+							<span style="color:blue;cursor:pointer;" onClick="javascript:cancelMenu=true;document.getElementById('span_short_{$idAux}').style.display='none';document.getElementById('span_long_{$idAux}').style.display='inline';">&nbsp;...</span>
+						</span>
+						<span id="span_long_{$idAux}" style="display:none">
+							<xsl:apply-templates select="value" />
+							<span style="color:blue;cursor:pointer;" onClick="javascript:cancelMenu=true;document.getElementById('span_short_{$idAux}').style.display='block';document.getElementById('span_long_{$idAux}').style.display='none';">&nbsp;[.]</span>
+						</span>
+
+						<xsl:choose>
+							<xsl:when test="string-length(suffix) &gt; 0">
+							<xsl:apply-templates select="suffix" />
+							</xsl:when>
+						</xsl:choose>
+					</xsl:when>
+
 					<xsl:otherwise>
-					<xsl:apply-templates select="value" />
-					<xsl:choose>
-						<xsl:when test="string-length(suffix) &gt; 0">
-						<xsl:apply-templates select="suffix" />
-						</xsl:when>
-					</xsl:choose>
+						<xsl:apply-templates select="value" />
+						<xsl:choose>
+							<xsl:when test="string-length(suffix) &gt; 0">
+							<xsl:apply-templates select="suffix" />
+							</xsl:when>
+						</xsl:choose>
 					</xsl:otherwise>
 				</xsl:choose>
 				</td>
@@ -2001,6 +2021,7 @@
 	</CENTER>
 	</xsl:template>
 
+	<xsl:variable name="maxLenCol" select="70" />
 	<!--  URL ENCODING  Written by Mike J. Brown, mike@skew.org -->
 	<!-- Characters we'll support. We could add control chars 0-31 and 127-159, but we won't. -->
 	<xsl:variable name="ascii">

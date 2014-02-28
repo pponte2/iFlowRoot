@@ -195,7 +195,7 @@
 										<tr>
 											<td>$accao1 </td>
 											<td> 
-												#if ($coment1!="")
+												#if ($coment1!="" && $coment1!="null")
 													$coment1
 												#else
 													&ltn&#227;o dispon&#237;vel&gt
@@ -206,7 +206,7 @@
 											<tr>
 												<td>$accao2 </td>
 												<td> 
-														#if ($coment2!="")
+														#if ($coment2!="" && $coment2!="null")
 															$coment2
 														#else
 															&ltn&#227;o dispon&#237;vel&gt

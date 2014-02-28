@@ -177,6 +177,7 @@
 
 		#if($hasActivities)
 
+			#set($maxLen = 70)
 			#foreach($act in $newact)
 				#set($style_read="")
 				#set($display_read="")
@@ -201,14 +202,26 @@
 				
 				#end
 				<br/>
-				$act.get("shortDesc")
+				#set($descr = $act.get("desc"))
+				#if ($descr.length() > $maxLen)
+					<span id="span_short_$act.get("pnumber")">
+						$descr.substring(0, $maxLen)
+						<span style="color:blue" onClick="javascript:cancelMenu=true;document.getElementById('span_short_$act.get("pnumber")').style.display='none';document.getElementById('span_long_$act.get("pnumber")').style.display='inline';">&nbsp;...</span>
+					</span>
+					<span id="span_long_$act.get('pnumber')" style="display:none">
+						$descr
+						<span style="color:blue" onClick="javascript:cancelMenu=true;document.getElementById('span_short_$act.get("pnumber")').style.display='block';document.getElementById('span_long_$act.get("pnumber")').style.display='none';">&nbsp;[.]</span>
+					</span>
+				#else
+					$descr
+				#end
 			</div>
 			<div class="right">
 				<div>
 					<a href="javascript:tabber_right(2, 'main_content.jsp', 'filterDate=$act.get("createdDate")')">$act.get("createdDate")</a>
 				</div>
 				<div class="dropdown">
-					<div class="dropdown-toggle data-toggle="dropdown" id="dropdownmenu_$act.get('pnumber')" data-toggle="dropdown" onClick="cancelMenu = true;"><img src="Themes/newflow/images/V.png"/></div>
+					<div class="dropdown-toggle data-toggle="dropdown" id="dropdownmenu_$act.get('pnumber')" data-toggle="dropdown" onClick="cancelMenu=true;"><img src="Themes/newflow/images/V.png"/></div>
 					<ul class="dropdown-menu topt-menu" role="menu" aria-labelledby="dropdownmenu_$act.get('pnumber')" style="top:10px;left:30px">
 				#if ($act.get("task_annotation_color_title") != "" )
 						<li role="presentation">
@@ -375,6 +388,7 @@
 		<div class="pr07" style="text-align: left;width:10%;font-weight:bold">Data de criação</div>
 	</div>
 
+	#set($maxLen = 70)
 	#foreach($act in $newact)
 				#set($style_read="")
 				#if($act.get("read") == 0)
@@ -390,7 +404,21 @@
 		<div class="pr02" style="width:10%">
 			<a href="javascript:tabber_right(2, 'main_content.jsp', 'filterPreviousUserid=$act.get("previousUserid")')">$act.get("previousUserid")</a>
 		</div>
-		<div class="pr04" style="width:40%"> $act.get("desc")</div>
+		<div class="pr04" style="width:40%">
+				#set($descr = $act.get("desc"))
+				#if ($descr.length() > $maxLen)
+					<span id="span_short_$act.get("pnumber")">
+						$descr.substring(0, $maxLen)
+						<span style="color:blue" onClick="javascript:cancelMenu=true;document.getElementById('span_short_$act.get("pnumber")').style.display='none';document.getElementById('span_long_$act.get("pnumber")').style.display='inline';">&nbsp;...</span>
+					</span>
+					<span id="span_long_$act.get('pnumber')" style="display:none">
+						$descr
+						<span style="color:blue" onClick="javascript:cancelMenu=true;document.getElementById('span_short_$act.get("pnumber")').style.display='block';document.getElementById('span_long_$act.get("pnumber")').style.display='none';">&nbsp;[.]</span>
+					</span>
+				#else
+					$descr
+				#end
+		</div>
 		<div class="pr05" style="text-align: left;width:6%; font-weight:bold"></div>
 		<div  class="pr06" style="width:10%;"><div>$act.get("duration")</div><div style="height:2px;width:$act.get("diffDays")px;background-color:$act.get("durationColor")"></div></div>
 		<div class="pr07" style="width:10%;">

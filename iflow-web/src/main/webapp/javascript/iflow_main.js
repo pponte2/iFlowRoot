@@ -1609,6 +1609,10 @@ function getCtrlFillCallBack(htmltext, ctrl) {
 }
 
 function openProcess(flowid, contentpage, contentparam, runMax, tabnr) {
+  if (cancelMenu) {
+    cancelMenu = false;
+    return;
+  }
   hidePopup();
   var scrollpos = layout.getScrollPosition().toString();
   var src = processLoadJSP;

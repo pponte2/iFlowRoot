@@ -594,8 +594,7 @@ try {
         String sFlowId = String.valueOf(fd.getId());
         String sPid = String.valueOf(a.pid);
         String sSubPid = String.valueOf(a.subpid);
-        String sShortDesc = (a.description.length()>70)?a.description.substring(0,67)+"...":a.description;
-        String sDesc = (a.description.length()>140)?a.description.substring(0,137)+"...":a.description;
+        String sDesc = a.description;
         String sCreated = DateUtility.formatTimestamp(userInfo, a.created);
       
         Timestamp createdTimestamp = new Timestamp(a.created.getTime());
@@ -651,7 +650,6 @@ try {
         hm.put("pid", sPid);
         hm.put("subpid", sSubPid);
         hm.put("desc", sDesc);
-        hm.put("shortDesc", sShortDesc);
         hm.put("created", sCreated);
         hm.put("createdDate", sCreatedDate);
         hm.put("duration", sDuration);
