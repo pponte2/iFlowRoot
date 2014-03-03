@@ -40,7 +40,7 @@
 		</a>
 	  	<a href="" onClick="javascript:editlabel('<%=folder.getFolderid()%>','0'); return false;" title="<%=messages.getString("actividades.folder.confirm")%>" id="bt_confirm_<%=folder.getFolderid()%>" 
 	  		style="display:none">
-			<img border="0" src="Themes/newflow/images/confirm.png"  class="toolTipImg" href="javascript:editFolder('<%=folder.getFolderid()%>','0');">
+			<img border="0" src="Themes/newflow/images/confirm.png"  class="toolTipImg" href="javascript:editFolder('<%=folder.getFolderid()%>','0');"/>
 		</a>
 		<a href="" onclick="javascript:editLabel('<%=folder.getFolderid()%>','-1'); return false;" class="lmenu">
 			<img id="bt_cancel_<%=folder.getFolderid()%>" title="fechar" width="10" height="10" src="Themes/newflow/images/close.png" style="display:none;"/>

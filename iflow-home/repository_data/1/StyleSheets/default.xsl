@@ -605,9 +605,6 @@
 
 					}
 
-				
-						
-					
 				</style>
 
 				<xsl:text disable-output-escaping="yes"></xsl:text>
@@ -1607,7 +1604,6 @@
 								</img>
 							</xsl:when>
 							<xsl:otherwise>
-								<div id="idb_{../variable}_upd_[{id}]" class="btn btn-default" style="float:left;width:300px;height:35px;position:relative;top:2px;">Arraste ou pressione para alterar ficheiro</div>
 								<input type="file" name="{../variable}_upd_[{id}]" size="20" style="width:300px;opacity:0;position:relative;height:35px"
 									onchange="javascript:document.getElementById('idb_{../variable}_upd_[{id}]').innerHTML = this.value"/>
 							</xsl:otherwise>
@@ -1652,18 +1648,18 @@
 					</input>
 				</xsl:if>
 				</td>
-												<td>
-													<xsl:if test="asSignatures='true'">
-														<img class="toolTipImg" id="lock_{id}" border="0" width="16" height="16" 
-															src="{$url_prefix}/images/lock.png" alt="Assinado" title="Este documento j� foi assinado">
-														</img>
-													</xsl:if>
-													<xsl:if test="asSignatures!='true'">
-														<img class="toolTipImg" id="lock_{id}" border="0" width="16" style="display:none" height="16"
-															src="{$url_prefix}/images/lock.png" alt="Assinado" title="Este documento j� foi assinado">
-														</img>
-													</xsl:if>
-												</td>
+				<td>
+					<xsl:if test="asSignatures='true'">
+						<img class="toolTipImg" id="lock_{id}" border="0" width="16" height="16" 
+							src="{$url_prefix}/images/lock.png" alt="Assinado" title="Este documento j� foi assinado">
+						</img>
+					</xsl:if>
+					<xsl:if test="asSignatures!='true'">
+						<img class="toolTipImg" id="lock_{id}" border="0" width="16" style="display:none" height="16"
+							src="{$url_prefix}/images/lock.png" alt="Assinado" title="Este documento j� foi assinado">
+						</img>
+					</xsl:if>
+				</td>
 			</tr>
 			</xsl:for-each>
 			<xsl:if test="upload_enabled='true'"><!-- If edit is enabled, add more files -->
@@ -1680,6 +1676,7 @@
 					<!--/xsl:if-->
 					<xsl:choose>
 						<xsl:when test="($use_scanner='true' and scanner_enabled='true') or (signatureType!='' and signatureType!='NONE')">
+							<xsl:variable name="idDragDrop" select="generate-id()" />
 							<div class="multiupload">
 								<xsl:if test="$use_scanner='true' and scanner_enabled='true'">
 								<input id="scanfile" name="scanfile" type="button" value="Digitalizar" class="button btn btn-default" >
@@ -1691,6 +1688,7 @@
 																		</xsl:attribute>
 								</input>
 								</xsl:if>
+								<div id="{$idDragDrop}" class="dragandropapplet btn btn-default" style="float:left;width:150px;height:35px;">Arraste ficheiro</div>
 								<input id="loadfile" name="loadfile" type="button" value="Carregar" class="button btn btn-default" >
 																	<xsl:attribute name="onclick">
 																		uploadFile('<xsl:value-of select="variable" />',
@@ -1704,7 +1702,18 @@
 								</div>
 							</div>
 							<SCRIPT LANGUAGE="JavaScript" type="text/javascript">
-								checkAppletButtons('<xsl:value-of select="variable" />');
+									var obj = $jQuery('#<xsl:value-of select="$idDragDrop"/>');
+									obj.on('drop', function (e) {
+										e.stopPropagation();
+										e.preventDefault();
+										var files = e.originalEvent.dataTransfer.files;
+										uploadFile('<xsl:value-of select="variable" />',
+											'<xsl:value-of select="signatureType" />',
+											'<xsl:value-of select="encryptType" />',
+											<xsl:value-of select="upload_limit" />);
+										//We need to send dropped files to Server
+									});
+									checkAppletButtons('<xsl:value-of select="variable" />');
 							</SCRIPT>
 						</xsl:when>
 						<xsl:otherwise>

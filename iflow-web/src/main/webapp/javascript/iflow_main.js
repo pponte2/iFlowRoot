@@ -1733,6 +1733,17 @@ function reloadBootstrapElements(){
     }); 
   } catch (err) {}
 
+  try {
+    var obj = $jQuery(".dragandropapplet");
+    obj.on('dragenter', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+    });
+    obj.on('dragover', function (e) {
+         e.stopPropagation();
+         e.preventDefault();
+    });
+  } catch (err) {}
 }
 
 function reloadJS(doCloseMenus) {
@@ -1750,16 +1761,7 @@ function reloadJS(doCloseMenus) {
   } catch (err) {}
 
   $('.donotclosemenu').click(function(e) { e.stopPropagation();});
-/*
-  $('.donotpropagate').click(function(e) {
-    e.stopPropagation();
-    Dropdown.prototype.toggle(e);
-    //$(this.parentNode).find('.dropdown-menu')[0].toggle();
-    //$(this.parentNode).find('.dropdown-menu')[0].addClass('active');
-    //$(this.parentNode).addClass('active');
-    return false;
-  });
-*/
+
   $(".draggable").draggable({revert: "invalid", opacity: 0.7, helper: "clone"});
   $(".droppable").droppable({
     hoverClass: "if-state-active",
