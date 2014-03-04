@@ -224,9 +224,10 @@
 					if (obj!=null) obj.focus();	
 				} else  {
 					if (from == '0') {
-						var editname = escape(document.getElementById('edit_'+labelid).value);
+						var editname = encodeURI(document.getElementById('edit_'+labelid).value);
 						var cor = escape(document.getElementById('bt_pickColor_'+labelid).color);
-						if(editname != "" && cor != "ffffff") 
+						if (cor == "ffffff") cor = escape(document.getElementById('bt_pickColor_'+labelid).getStyle('background-color'));
+						if(editname != "" && cor != "ffffff" && cor != "999999") 
 							createLabel(labelid, editname, cor);
 						else
 							return;
@@ -407,6 +408,9 @@
 						<div id='container_task_labels' class="txt_categ"></div>
 						<div style="font-size: 0.9em; color: #666666;">
 							<a id="bt_edit_0" href="" onClick="editLabel('0','1'); return false;" class="lmenu">$new_label</a>
+							<a id="bt_confirm_0" href="" onClick="javascript:editLabel('0','0'); return false;" title="Confirmar" style="display:none">
+								<img border="0" src="Themes/newflow/images/confirm.png"  class="toolTipImg" href="javascript:editFolder('0','0');"/>
+							</a>
 							<a href="" onclick="javascript:editLabel('0','-1'); return false;" class="lmenu" >
 								<img id="bt_cancel_0" title="fechar" width="10" height="10" style="display:none" src="Themes/newflow/images/close.png"/>
 							</a>

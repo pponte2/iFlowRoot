@@ -17,8 +17,10 @@
 	String editfolder = fdFormData.getParameter("editfolder");
 	if(editfolder!=null){
 		  String editname = fdFormData.getParameter("editname");
-		  String color = "#"+fdFormData.getParameter("color");
-	
+		  String color = fdFormData.getParameter("color");
+		  if (!color.startsWith("#"))
+		      color = "#" + color;
+		  
 		  if(editfolder.equals("0"))
 			  fm.createFolder(userInfo,editname,color);
 		  else
@@ -38,9 +40,8 @@
 		<a href="" onClick="editLabel('<%=folder.getFolderid()%>','1'); return false;" class="lmenu" id="bt_change_<%=folder.getFolderid()%>">
 			<img id="btd_change_<%=folder.getFolderid()%>" title="Alterar" width="10" height="10" src="images/icon_modify.png" style="margin-left:0px"/>
 		</a>
-	  	<a href="" onClick="javascript:editlabel('<%=folder.getFolderid()%>','0'); return false;" title="<%=messages.getString("actividades.folder.confirm")%>" id="bt_confirm_<%=folder.getFolderid()%>" 
-	  		style="display:none">
-			<img border="0" src="Themes/newflow/images/confirm.png"  class="toolTipImg" href="javascript:editFolder('<%=folder.getFolderid()%>','0');"/>
+	  	<a href="" onClick="javascript:editLabel('<%=folder.getFolderid()%>','0'); return false;" class="lmenu">
+			<img id="bt_confirm_<%=folder.getFolderid()%>" title="<%=messages.getString("actividades.folder.confirm")%>" src="Themes/newflow/images/confirm.png" style="display:none;"/>
 		</a>
 		<a href="" onclick="javascript:editLabel('<%=folder.getFolderid()%>','-1'); return false;" class="lmenu">
 			<img id="bt_cancel_<%=folder.getFolderid()%>" title="fechar" width="10" height="10" src="Themes/newflow/images/close.png" style="display:none;"/>
@@ -52,10 +53,8 @@
 		<img id="cl_edit_bg_<%=folder.getFolderid()%>" title="Alterar" width="15" height="30" src="Themes/newflow/images/img_categ.png" style="float: right; background:<%=folder.getColor()%>;"/>
 		
 		<input class="form-control" type="text" value="" id="edit_<%=folder.getFolderid()%>" style="display:none;width:7em;height:30px;" onkeydown="if (event.keyCode == 13) { editLabel('<%=folder.getFolderid()%>','0');}"/>
-		<input id="bt_pickColor_<%=folder.getFolderid()%>" class="color form-control" style="display:none; font-size: 0px;cursor:pointer;width:15px;height:25px;border: 1px solid #CCCCCC" maxlength="0" title="Escolha a cor"></input>
+		<input id="bt_pickColor_<%=folder.getFolderid()%>" color="<%=folder.getColor()%>" class="color form-control" style="display:none; font-size: 0px;cursor:pointer;width:15px;height:25px;color:<%=folder.getColor()%>;border: 1px solid #CCCCCC" maxlength="0" title="Escolha a cor"></input>
 		<button id="bt_cancel_<%=folder.getFolderid()%>"  style="display:none;"  type="button" class="close pull-left" onclick="javascript:editLabel('<%=folder.getFolderid()%>','-1');">&times;</button>
 	</li>
 	<%}%>
 </ul>
-<script type="text/javascript">
-</script>

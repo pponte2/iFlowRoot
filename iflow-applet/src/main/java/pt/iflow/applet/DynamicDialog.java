@@ -472,16 +472,6 @@ public class DynamicDialog extends JFrame implements PropertyChangeListener, Act
 
       setVisible(true);
 
-      //    
-      //    // simulate modality
-      //    while(dialog.isVisible()) {
-      //      try {
-      //        Thread.sleep(100);
-      //      } catch (InterruptedException e) {
-      //      }
-      //    }
-      //    
-      //    
     } else {
       actionPerformed(new ActionEvent(okButton, 0, ACTION_OK));
     }
@@ -490,9 +480,6 @@ public class DynamicDialog extends JFrame implements PropertyChangeListener, Act
 
   
   public void actionPerformed(ActionEvent e) {
-	  
-	  //if(!haveCert)      
-		  //JOptionPane.showMessageDialog(this,Messages.getString("FileApplet.44"), Messages.getString("FileApplet.45"), JOptionPane.INFORMATION_MESSAGE);
 	  
     System.out.println(task.getState());
     if(ACTION_OK.equals(e.getActionCommand())) {

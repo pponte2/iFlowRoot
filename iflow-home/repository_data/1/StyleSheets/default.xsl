@@ -1688,7 +1688,7 @@
 																		</xsl:attribute>
 								</input>
 								</xsl:if>
-								<div id="{$idDragDrop}" class="dragandropapplet btn btn-default" style="float:left;width:150px;height:35px;">Arraste ficheiro</div>
+								<!--div id="{$idDragDrop}" class="btn btn-default" style="float:left;width:150px;height:35px;">Arraste ficheiro</div-->
 								<input id="loadfile" name="loadfile" type="button" value="Carregar" class="button btn btn-default" >
 																	<xsl:attribute name="onclick">
 																		uploadFile('<xsl:value-of select="variable" />',
@@ -1702,17 +1702,33 @@
 								</div>
 							</div>
 							<SCRIPT LANGUAGE="JavaScript" type="text/javascript">
+							/*
 									var obj = $jQuery('#<xsl:value-of select="$idDragDrop"/>');
 									obj.on('drop', function (e) {
 										e.stopPropagation();
 										e.preventDefault();
 										var files = e.originalEvent.dataTransfer.files;
-										uploadFile('<xsl:value-of select="variable" />',
-											'<xsl:value-of select="signatureType" />',
-											'<xsl:value-of select="encryptType" />',
-											<xsl:value-of select="upload_limit" />);
-										//We need to send dropped files to Server
+										if (files == null || files.length == 0) {
+											alert('Arraste um ficheiro, por favor.');
+											return false;
+										} else if (files.length > 1) {
+											alert('Arraste apenas um ficheiro, por favor.');
+											return false;
+										}
+
+										var reader = new FileReader();
+										reader.onload = function (evt) {
+											var obj = evt.target.result;
+											uploadFileFromDisk('<xsl:value-of select="variable" />',
+												'<xsl:value-of select="signatureType" />',
+												'<xsl:value-of select="encryptType" />',
+												<xsl:value-of select="upload_limit" />,
+												files[0].name,
+												obj);
+										};
+										reader.readAsArrayBuffer(files[0]);
 									});
+							*/		
 									checkAppletButtons('<xsl:value-of select="variable" />');
 							</SCRIPT>
 						</xsl:when>

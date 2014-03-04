@@ -66,6 +66,35 @@ function uploadFile(varName, signatureType, encryptionType, max, sig_pos_style_j
   // setTimeout('checkTaskStatus("'+taskId+'")', TIMEOUT_DELAY);
 }
 
+function uploadFileFromDisk(varName, signatureType, encryptionType, max, fileName, arrBuffer, sig_pos_style_java) {
+  if(!IFLOW_APPLET_ELEM)  {
+    alert('Applet nao foi configurada');
+    return null;
+  }
+  updateMax(max);
+  if (checkLimits(varName)) {
+    return null;
+  }
+
+  // preparar o objecto com argumentos
+  var obj = {};
+  obj[IFLOW_APPLET_ELEM.FLOWID] = document.getElementById('flowid').value;
+  obj[IFLOW_APPLET_ELEM.PID] = document.getElementById('pid').value;
+  obj[IFLOW_APPLET_ELEM.SUBPID] = document.getElementById('subpid').value;
+  obj[IFLOW_APPLET_ELEM.VARIABLE] = varName;
+  obj[IFLOW_APPLET_ELEM.SIGNATURE_TYPE] = signatureType;
+  obj[IFLOW_APPLET_ELEM.ENCRYPTION_TYPE] = encryptionType;
+
+  var taskId = IFLOW_APPLET_ELEM.uploadFileFromDisk(
+        document.cookie,
+        Json.toString(obj),
+        new Int8Array(arrBuffer),
+        fileName,
+        sig_pos_style_java);
+
+  checkLimits(varName);
+}
+
 function updateMax(max) {
   if ($defined ( BIG_MAX )) {
     this.BIG_MAX = max;
