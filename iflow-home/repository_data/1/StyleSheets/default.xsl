@@ -1154,29 +1154,21 @@
 		</xsl:if>
 
 		<xsl:if test="type='rich_textarea'">
-			<div class="yui-skin-sam" align="right" style="min-height = 200">
+			<div class="yui-skin-sam" align="right">
+				<xsl:attribute name="style">
+					<xsl:choose>
+						<xsl:when test="string-length(height) &gt; 0">
+							<xsl:text>height:</xsl:text><xsl:value-of select="height/text()+165" />;
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:text>height:465;</xsl:text>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:attribute>
 				<textarea name="{variable}" >
 					<xsl:attribute name="id">
 						<xsl:value-of select="variable/text()" />
 					</xsl:attribute>
-					<!--
-					<xsl:if test="string-length(cols) &gt; 0">
-						<xsl:attribute name="cols">
-							<xsl:value-of select="cols/text()" />
-						</xsl:attribute>
-					</xsl:if>
-					<xsl:if test="string-length(rows) &gt; 0">
-						<xsl:attribute name="rows">
-							<xsl:value-of select="rows/text()" />
-						</xsl:attribute>
-					</xsl:if>
-					-->
-					<xsl:if test="string-length(width) &gt; 0">
-						<xsl:attribute name="style">
-						<xsl:text>width:</xsl:text><xsl:value-of select="width/text()" />
-							select="width/text()" />
-						</xsl:attribute>
-					</xsl:if>
 					<xsl:attribute name="class">
 						<xsl:text>txt</xsl:text>
 						<xsl:if test="disabled='true' or readonly='true'">
@@ -1702,7 +1694,6 @@
 								</div>
 							</div>
 							<SCRIPT LANGUAGE="JavaScript" type="text/javascript">
-							/*
 									var obj = $jQuery('#<xsl:value-of select="$idDragDrop"/>');
 									obj.on('drop', function (e) {
 										e.stopPropagation();
@@ -1719,6 +1710,7 @@
 										var reader = new FileReader();
 										reader.onload = function (evt) {
 											var obj = evt.target.result;
+											
 											uploadFileFromDisk('<xsl:value-of select="variable" />',
 												'<xsl:value-of select="signatureType" />',
 												'<xsl:value-of select="encryptType" />',
@@ -1728,7 +1720,6 @@
 										};
 										reader.readAsArrayBuffer(files[0]);
 									});
-							*/		
 									checkAppletButtons('<xsl:value-of select="variable" />');
 							</SCRIPT>
 						</xsl:when>

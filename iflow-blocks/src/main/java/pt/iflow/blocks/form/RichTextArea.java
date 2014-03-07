@@ -16,7 +16,7 @@ public class RichTextArea implements FieldInterface {
   public static final String HEIGHT = "height";
 
   public String getDescription() {
-    return "Área de Texto rich text";
+    return "ï¿½rea de Texto rich text";
   }
 
   public void generateHTML(PrintStream out, Properties prop) {
@@ -73,15 +73,9 @@ public class RichTextArea implements FieldInterface {
       sb.append("<variable>").append(prop.getProperty("variable")).append("</variable>");
       sb.append("<value>").append(value).append("</value>");
       sb.append("<formatted_value>").append(replaceLeftBar(value)).append("</formatted_value>");
-
-      String cols = prop.getProperty("cols");
-      if (StringUtils.endsWith(cols, "%")) {
-        sb.append("<width>").append(cols).append("</width>");
-      } else {
-        sb.append("<cols>").append(cols).append("</cols>");
+      if (height != null && !"".equals(height)) {
+        sb.append("<height>").append(prop.getProperty("height")).append("</height>");
       }
-
-      sb.append("<rows>").append(prop.getProperty("rows")).append("</rows>");
       sb.append("<obligatory>").append(prop.getProperty(FormProps.sOBLIGATORY_PROP)).append("</obligatory>");
       stmp = prop.getProperty("suffix");
       if (stmp == null) {

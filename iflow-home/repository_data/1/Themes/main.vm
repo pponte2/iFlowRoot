@@ -89,7 +89,7 @@
 
 			function calcFrameHeight(frameName) {
 				//find the height of the internal page
-				var the_height = document.getElementById(frameName).contentWindow.document.body.scrollHeight + 10; //pp: martelada dos 10 deveria ser corrigida.
+				var the_height = document.getElementById(frameName).contentWindow.document.body.scrollHeight + 80; //pp: martelada dos 10 deveria ser corrigida.
 					
 				//change the height of the iframe
 				document.getElementById(frameName).style.height = the_height.toString() + 'px';
