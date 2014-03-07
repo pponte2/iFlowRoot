@@ -1383,7 +1383,7 @@
 					<xsl:text>&nbsp;</xsl:text>
 					</xsl:when>
 
-					<xsl:when test="string-length(value) > $maxLenCol">
+					<xsl:when test="string-length(value) > $maxLenCol and count(value/a) = 0">
 						<xsl:variable name="valueShort" select="substring(value, 1, $maxLenCol)" />
 						<xsl:variable name="idAux" select="generate-id()" />
 						<span id="span_short_{$idAux}">
@@ -1596,6 +1596,7 @@
 								</img>
 							</xsl:when>
 							<xsl:otherwise>
+								<div id="idb_{../variable}_upd_[{id}]" class="btn btn-default" style="float:left;width:300px;height:35px;position:relative;top:2px;">Arraste ou pressione para alterar ficheiro</div>
 								<input type="file" name="{../variable}_upd_[{id}]" size="20" style="width:300px;opacity:0;position:relative;height:35px"
 									onchange="javascript:document.getElementById('idb_{../variable}_upd_[{id}]').innerHTML = this.value"/>
 							</xsl:otherwise>
@@ -1694,33 +1695,32 @@
 								</div>
 							</div>
 							<SCRIPT LANGUAGE="JavaScript" type="text/javascript">
-									var obj = $jQuery('#<xsl:value-of select="$idDragDrop"/>');
-									obj.on('drop', function (e) {
-										e.stopPropagation();
-										e.preventDefault();
-										var files = e.originalEvent.dataTransfer.files;
-										if (files == null || files.length == 0) {
-											alert('Arraste um ficheiro, por favor.');
-											return false;
-										} else if (files.length > 1) {
-											alert('Arraste apenas um ficheiro, por favor.');
-											return false;
-										}
-
-										var reader = new FileReader();
-										reader.onload = function (evt) {
-											var obj = evt.target.result;
-											
-											uploadFileFromDisk('<xsl:value-of select="variable" />',
-												'<xsl:value-of select="signatureType" />',
-												'<xsl:value-of select="encryptType" />',
-												<xsl:value-of select="upload_limit" />,
-												files[0].name,
-												obj);
-										};
-										reader.readAsArrayBuffer(files[0]);
-									});
-									checkAppletButtons('<xsl:value-of select="variable" />');
+								var obj = $jQuery('#<xsl:value-of select="$idDragDrop"/>');
+								obj.on('drop', function (e) {
+									e.stopPropagation();
+									e.preventDefault();
+									var files = e.originalEvent.dataTransfer.files;
+									if (files == null || files.length == 0) {
+										alert('Arraste um ficheiro, por favor.');
+										return false;
+									} else if (files.length > 1) {
+										alert('Arraste apenas um ficheiro, por favor.');
+										return false;
+									}
+									var reader = new FileReader();
+									reader.onload = function (evt) {
+									var obj = evt.target.result;
+										
+									uploadFileFromDisk('<xsl:value-of select="variable" />',
+										'<xsl:value-of select="signatureType" />',
+										'<xsl:value-of select="encryptType" />',
+										<xsl:value-of select="upload_limit" />,
+										files[0].name,
+										obj);
+									};
+									reader.readAsArrayBuffer(files[0]);
+								});
+								checkAppletButtons('<xsl:value-of select="variable" />');
 							</SCRIPT>
 						</xsl:when>
 						<xsl:otherwise>
