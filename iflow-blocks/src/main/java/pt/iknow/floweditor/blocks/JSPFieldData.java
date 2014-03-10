@@ -227,6 +227,8 @@ public class JSPFieldData {
   public final static int nPROP_POPUP_CALLER_VARIABLE = 116;
   public final static int nPROP_POPUP_VARIABLES = 117;
   public final static int nPROP_FORM_TEMPLATE = 118;
+  public final static int nPROP_TABLE_ORDER = 119;
+  public final static int nPROP_TABLE_SEARCH = 120;
   // ...
 
 
@@ -498,6 +500,10 @@ public class JSPFieldData {
     "macrotitle"); //$NON-NLS-1$
     _hmPropCodeNames.put(new Integer(JSPFieldData.nPROP_ROW_CONTROL_LIST),
     "rowcontrollist"); //$NON-NLS-1$
+    _hmPropCodeNames.put(new Integer(JSPFieldData.nPROP_TABLE_ORDER), 
+	"tableorder");
+    _hmPropCodeNames.put(new Integer(JSPFieldData.nPROP_TABLE_SEARCH), 
+	"tablesearch");
     _hmPropCodeNames.put(new Integer(JSPFieldData.nPROP_ALT_TEXT),
     "alt_text"); //$NON-NLS-1$
     _hmPropCodeNames.put(new Integer(JSPFieldData.nPROP_WIDTH),
@@ -616,6 +622,7 @@ public class JSPFieldData {
     _hmPropCodeNames.put(new Integer(JSPFieldData.nPROP_POPUP_CALLER_VARIABLE), MASTER_FLOW_VARIABLES);
     _hmPropCodeNames.put(new Integer(JSPFieldData.nPROP_POPUP_VARIABLES), POPUP_VARIABLES);
     _hmPropCodeNames.put(new Integer(JSPFieldData.nPROP_FORM_TEMPLATE), FormProps.FORM_TEMPLATE);
+    
 
 
     // PROP LABELS
@@ -722,6 +729,10 @@ public class JSPFieldData {
         adapter.getString("JSPFieldData.proplabel.macro_title")); //$NON-NLS-1$
     _hmPropLabels.put(new Integer(JSPFieldData.nPROP_ROW_CONTROL_LIST),
         adapter.getString("JSPFieldData.proplabel.row_control_list")); //$NON-NLS-1$
+    _hmPropLabels.put(new Integer(JSPFieldData.nPROP_TABLE_ORDER), 
+		adapter.getString("JSPFieldData.proplabel.table_order"));
+    _hmPropLabels.put(new Integer(JSPFieldData.nPROP_TABLE_SEARCH), 
+		adapter.getString("JSPFieldData.proplabel.table_search"));
     _hmPropLabels.put(new Integer(JSPFieldData.nPROP_ALT_TEXT),
         adapter.getString("JSPFieldData.proplabel.alt_text")); //$NON-NLS-1$
     _hmPropLabels.put(new Integer(JSPFieldData.nPROP_WIDTH),
@@ -855,8 +866,7 @@ public class JSPFieldData {
     _hmPropLabels.put(new Integer(JSPFieldData.nPROP_POPUP_VARIABLES),
         adapter.getString("JSPFieldData.proplabel.popup.popup_flow_variables"));
     _hmPropLabels.put(new Integer(JSPFieldData.nPROP_FORM_TEMPLATE), adapter.getString("JSPFieldData.proplabel."
-        + FormProps.FORM_TEMPLATE));
-
+        + FormProps.FORM_TEMPLATE));   
 
     // DATA TYPES
     _hmDataTypes.put(new Integer(JSPFieldData.nDATA_TYPE_NONE),

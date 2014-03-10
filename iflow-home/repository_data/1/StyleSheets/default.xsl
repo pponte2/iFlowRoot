@@ -1297,7 +1297,19 @@
 				</xsl:if>
 			</xsl:attribute>
 		</label>
-		<table class="arraytable sortable">
+		<table class="">		
+		<xsl:choose>
+			<xsl:when test="tablesearch='true'">
+				<xsl:attribute name="class">
+					arraytable 
+				</xsl:attribute>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:attribute name="class">
+					arraytable sortable
+				</xsl:attribute>
+			</xsl:otherwise>
+		</xsl:choose>
 		<xsl:variable name="rowCount" select="count(row)" />
 		<xsl:variable name="colCount" select="count(row/col)" />
 		<xsl:for-each select="row">

@@ -137,6 +137,29 @@ public class ArrayTable implements FieldInterface {
         sb.append("false");
       }
       sb.append("</export>");
+      
+      sb.append("<tableorder>");
+      stmp = prop.getProperty("tableorder");
+      btmp = (new Boolean(stmp)).booleanValue();
+      if (stmp2 == null && btmp) {
+        sb.append("true");
+      }
+      else {
+        sb.append("false");
+      }
+      sb.append("</tableorder>");
+      
+      sb.append("<tablesearch>");
+      stmp = prop.getProperty("tablesearch");
+      btmp = (new Boolean(stmp)).booleanValue();
+      if (stmp2 == null && btmp) {
+        sb.append("true");
+      }
+      else {
+        sb.append("false");
+      }
+      sb.append("</tablesearch>");
+
 
       btmp = false;
 

@@ -44,7 +44,9 @@ public  class JSPTableData extends JSPFieldData {
     this._alEditSingleProps.add(new Integer(JSPFieldData.nPROP_ROW_CONTROL_LIST));
     this._alEditSingleProps.add(new Integer(JSPFieldData.nPROP_DISABLE_COND));
     this._alEditSingleProps.add(new Integer(JSPFieldData.nPROP_DISABLE_TABLE_HEADER));
-
+    //this._alEditSingleProps.add(new Integer(JSPFieldData.nPROP_TABLE_ORDER));
+    this._alEditSingleProps.add(new Integer(JSPFieldData.nPROP_TABLE_SEARCH));
+    
     // add table multiple properties
     this._alEditMultipleProps.add(new Integer(JSPFieldData.nPROP_MACRO_TITLE));
     this._alEditMultipleProps.add(new Integer(JSPFieldData.nPROP_TITLE));
