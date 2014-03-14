@@ -182,7 +182,7 @@ public class UtilityApplet extends JApplet implements UtilityConstants {
       log.error("Privilegios insuficientes para executar a operacao pretendida", e); //$NON-NLS-1$
     }
     log.info("canScan complete"); //$NON-NLS-1$
-    return result;	  
+    return result;
   }
 
   /**

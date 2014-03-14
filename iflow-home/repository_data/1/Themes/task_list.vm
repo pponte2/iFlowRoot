@@ -218,7 +218,7 @@
 			</div>
 			<div class="right">
 				<div>
-					<a href="javascript:tabber_right(2, 'main_content.jsp', 'filterDate=$act.get("createdDate")')">$act.get("createdDate")</a>
+					<a href="javascript:tabber_right(2, 'main_content.jsp', 'filterDate=$act.get("createdDate")&filterLastMoveDate=$act.get("createdDate")')">$act.get("createdDate")</a>
 				</div>
 				<div class="dropdown">
 					<div class="dropdown-toggle data-toggle="dropdown" id="dropdownmenu_$act.get('pnumber')" data-toggle="dropdown" onClick="cancelMenu=true;"><img src="Themes/newflow/images/V.png"/></div>
@@ -317,22 +317,53 @@
 			<ul class="dropdown-menu" role="menu" style="width:350px; top:110px; left: 270px;">
 				<li class="form-group">
 					<label></label>
-					<button type="button" class="close pull-right" onclick="javascript:tabber_right(2, 'main_content.jsp', 'cleanFilter=1');">&times;</button>
+					<button type="button" class="close pull-right" onclick="javascript:tabber_right(2, 'main_content.jsp', 'cleanFilter=1&startindex=0');">&times;</button>
+				</li>
+				<li class="form-group">
+					<label class="form-label">
+						$labelFilterFlow
+					</label>
+					<select id="showflowid" name="showflowid" class="form-control donotclosemenu pull-right" style="width:150px;height:25px;font-size:0.8em;padding: 0 0 0 5px" 
+							onchange="javascript: tabber_right(2, 'main_content.jsp', 'showflowid=' + this.value); return false; ">
+						<option value="-1">$selectFlow</option>
+						$filterFlowOptions
+					</select>
+
 				</li>
 				<li class="form-group">
 					<label class="form-label">
 						Utilizador prévio
 					</label>
-					<input type="text" class="form-control donotclosemenu pull-right" id="previousUseridText" title="Utilizador Anterior"
-							style="display: inline; width: 150px; height: 20px; padding: 0;" onkeydown="javascript:if (event.keyCode == 13) { tabber_right(2, 'main_content.jsp', 'filterPreviousUserid=' + this.value); return false; }">
+					<input type="text" class="form-control donotclosemenu pull-right" id="previousUseridText" title="Utilizador Anterior" value="$filterPreviousUserid"
+							style="display: inline; width: 150px; height: 20px; padding: 0;" 
+							onkeydown="javascript:if (event.keyCode == 13) { tabber_right(2, 'main_content.jsp', 'filterPreviousUserid=' + this.value); return false; }">
 					</input>
 				</li>
 				<li class="form-group">
 					<label class="form-label">
-						Data Criação
+						Assunto
 					</label>
-					<input type="text" class="form-control pull-right donotclosemenu" id="previousDataCriacaoText" title="Utilizador Anterior"  
-							style="display: inline; width: 150px; height: 20px; padding: 0;" onkeydown="javascript:if (event.keyCode == 13) { tabber_right(2, 'main_content.jsp', 'filterDate=' + this.value); return false; }">
+					<input type="text" class="form-control donotclosemenu pull-right" id="filterSubject" title="Assunto" value="$filterSubject"
+							style="display: inline; width: 150px; height: 20px; padding: 0;" 
+							onkeydown="javascript:if (event.keyCode == 13) { tabber_right(2, 'main_content.jsp', 'filterSubject=' + this.value); return false; }">
+					</input>
+				</li>
+				<li class="form-group">
+					<label class="form-label">
+						Data de
+					</label>
+					<input type="text" class="form-control pull-right donotclosemenu" id="dataCriacaoText" title="Data de"  value="$filterDate"
+							onmouseover="caltasks(this.id, '%d/%m/%Y');this.onmouseover=null;" style="display: inline; width: 150px; height: 20px; padding: 0;" 
+							onchange="javascript: tabber_right(2, 'main_content.jsp', 'filterDate=' + this.value); return false; ">
+					</input>
+				</li>
+				<li class="form-group">
+					<label class="form-label">
+						Data ate
+					</label>
+					<input type="text" class="form-control pull-right donotclosemenu" id="dataUltMovText" title="Data ate"  value="$filterLastMoveDate"
+							onmouseover="caltasks(this.id, '%d/%m/%Y');this.onmouseover=null;" style="display: inline; width: 150px; height: 20px; padding: 0;" 
+							onchange="javascript: tabber_right(2, 'main_content.jsp', 'filterLastMoveDate=' + this.value); return false; ">
 					</input>
 				</li>
 
@@ -422,7 +453,7 @@
 		<div class="pr05" style="text-align: left;width:6%; font-weight:bold"></div>
 		<div  class="pr06" style="width:10%;"><div>$act.get("duration")</div><div style="height:2px;width:$act.get("diffDays")px;background-color:$act.get("durationColor")"></div></div>
 		<div class="pr07" style="width:10%;">
-			<a href="javascript:tabber_right(2, 'main_content.jsp', 'filterDate=$act.get("createdDate")')">$act.get("createdDate")</a>
+			<a href="javascript:tabber_right(2, 'main_content.jsp', 'filterDate=$act.get("createdDate")&filterLastMoveDate=$act.get("createdDate")')">$act.get("createdDate")</a>
 			<br>
 			<img src="images/flag.png" width="12" height="14" alt=""/>
 				<div style="text-align: center" onclick="event.cancelBubble = true; if(event.stopPropagation) { event.stopPropagation(); }">
