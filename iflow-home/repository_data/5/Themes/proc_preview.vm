@@ -82,8 +82,6 @@
 						<div class="col-sm-8" style=" font-size: 14px; margin-top: 5px"> 
 							#if ($processDetail.get(${varName})!="")
 								$processDetail.get(${varName})
-							#else
-								&ltn&#227;o dispon&#237;vel&gt
 							#end 
 						</div>
 					</div>
@@ -98,8 +96,6 @@
 						<div class="col-sm-8" style=" font-size: 14px; margin-top: 5px"> 
 							#if ($processDetail.get(${varName})!="")
 								$processDetail.get(${varName})
-							#else
-								&ltn&#227;o dispon&#237;vel&gt
 							#end 
 						</div>
 					</div>						
@@ -114,8 +110,6 @@
 						<div class="col-sm-8" style=" font-size: 14px; margin-top: 5px"> 
 							#if ($processDetail.get(${varName})!="")
 								$processDetail.get(${varName})
-							#else
-								&ltn&#227;o dispon&#237;vel&gt
 							#end 
 						</div>
 					</div>	
@@ -130,8 +124,6 @@
 						<div class="col-sm-8" style=" font-size: 14px; margin-top: 5px"> 
 							#if ($processDetail.get(${varName})!="")
 								$processDetail.get(${varName})
-							#else
-								&ltn&#227;o dispon&#237;vel&gt
 							#end 
 						</div>
 					</div>	
@@ -146,8 +138,6 @@
 						<div class="col-sm-8" style=" font-size: 14px; margin-top: 5px"> 
 							#if ($processDetail.get(${varName})!="")
 								$processDetail.get(${varName})
-							#else
-								&ltn&#227;o dispon&#237;vel&gt
 							#end 
 						</div>
 					</div>	
@@ -190,40 +180,136 @@
 						
 						<div class="form-group">
 							<label  class="col-sm-2 control-label">Tramitação Recente: </label>
+							<div class="col-sm-8">&nbsp;</div>				
+						</div>						
+						<div class="form-group">					
 								#if ($accao1!="")
-									<table class="col-sm-8" border="1" cellpadding="10%" style=" font-size: 14px; margin-top: 5px; margin-left: 15px">
-										<tr>
-											<td>$accao1 </td>
-											<td> 
-												#if ($coment1!="" && $coment1!="null")
-													$coment1
-												#else
-													&ltn&#227;o dispon&#237;vel&gt
-												#end 
-											</td>										
-										</tr>
+									<table class="col-sm-11" border="1" cellpadding="10%" style=" font-size: 14px; margin-top: 5px; margin-left: 15px">
 										#if ($accao2!="")
 											<tr>
 												<td>$accao2 </td>
 												<td> 
-														#if ($coment2!="" && $coment2!="null")
-															$coment2
-														#else
-															&ltn&#227;o dispon&#237;vel&gt
-														#end 
+													#if ($coment2!="" && $coment2!="null")
+														$coment2
+													#end 
 												</td>										
 											</tr>
 										#end
+										<tr>
+											<td>$accao1 </td>
+											<td> 
+													#if ($coment1!="" && $coment1!="null")
+														$coment1
+													#end 
+											</td>										
+										</tr>										
 									</table>
 								#else
 									<div class="col-sm-8" style=" font-size: 14px; margin-top: 5px"> 
-											&ltn&#227;o dispon&#237;vel&gt
+
 									</div>
 								#end	
 						</div>
 
+					 
+					#if ($user_name == "olopes" && 1==2)
+						
+						#set($sAccoes=$processDetail.get("Acções"))
+						#set($lAccoes=$sAccoes.split("] "))
+						#if ($lAccoes != "")
+							#set($listAccoes = [])
+								#foreach($accao in $lAccoes)
+									#if($accao.indexOf("<br>") > 0)
+										#if ($listAccoes.add($accao.substring(0, $accao.indexOf("<br>"))))
+										#end
+									#end
+								#end
+						#end
+						
+						#set($sComents=$processDetail.get("Comentários"))
+						#set($lComents=$sComents.split("] "))
+						#if ($lComents != "")
+							#set($listComents = [])
+								#foreach($coment in $lComents)
+									#if($coment.indexOf("<br>") >= 0)
+										#if ($listComents.add($coment.substring(0, $coment.indexOf("<br>"))))
+										#end
+									#end
+								#end
+						#end
+
+						#set($sDatas=$processDetail.get("datas"))
+						#set($lDatas=$sDatas.split("] "))
+						#if ($lDatas != "")
+							#set($listDatas = [])
+								#foreach($data in $lDatas)
+									#if($data.indexOf("<br>") >= 0)
+										#if ($listDatas.add($data.substring(0, $data.indexOf("<br>"))))
+										#end
+									#end
+								#end
+						#end
+
+						#set($sPessoas=$processDetail.get("pessoas"))
+						#set($lPessoas=$sPessoas.split("] "))
+						#if ($lPessoas != "")
+							#set($listPessoas = [])
+								#foreach($pessoa in $lPessoas)
+									#if($pessoa.indexOf("<br>") >= 0)
+										#if ($listPessoas.add($pessoa.substring(0, $pessoa.indexOf("<br>"))))
+										#end
+									#end
+								#end
+						#end
+
+						
+						
+						<div class="form-group">
+							<label  class="col-sm-2 control-label">Tramitação: </label>
+							<div class="col-sm-8">&nbsp;</div>				
+						</div>
+						<div class="form-group">					
+							<table class="col-sm-11" border="1" cellpadding="10%" style=" font-size: 14px; margin-top: 5px; margin-left: 15px">
+									
+											#foreach ($accao in $listAccoes)
+												#set($pos = $velocityCount)
+												#foreach ($coment in $listComents)
+													#if ($velocityCount == $pos)
+														#if ($coment!="" && $coment!="null")
+															#set($tool = $coment)
+														#else
+															#set($tool = "Sem comentário")
+														#end
+														
+													#end
+												#end
+											
+												<tr title="$tool">
+													<td>$accao </td>
+
+													#foreach ($data in $listDatas)
+														#if ($velocityCount == $pos)
+															<td>$data </td>
+														#end
+													#end
+													
+													#foreach ($pessoa in $listPessoas)
+														#if ($velocityCount == $pos)
+															<td>$pessoa </td>
+														#end
+													#end
+												</tr>	
+											#end
+									
+							</table>
+						</div>									
+					#end
+					
+					
+					
 					
 					#if ($user_name == "presidente" && $processDetail.get("Acções")!="" && (!($processDetail.get("Acção escolhida")!="") || $processDetail.get("Acção escolhida")=="pre_decisao" || $processDetail.get("Acção escolhida")=="parecer") )
+
 						#set($valueName="Acção a executar")
 						#set($varName="Decisão")
 						#set($value = "") 
@@ -279,8 +365,6 @@
 							<div class="col-sm-8" style=" font-size: 14px; margin-top: 5px"> 
 								#if ($processDetail.get(${varName})!="")
 									$processDetail.get(${varName})
-								#else
-									&ltn&#227;o dispon&#237;vel&gt
 								#end 
 							</div>
 						</div>
