@@ -52,7 +52,7 @@
 		
 		<img id="cl_edit_bg_<%=folder.getFolderid()%>" title="Alterar" width="15" height="30" src="Themes/newflow/images/img_categ.png" style="float: right; background:<%=folder.getColor()%>;"/>
 		
-		<input class="form-control" type="text" value="" id="edit_<%=folder.getFolderid()%>" style="display:none;width:7em;height:30px;" onkeydown="if (event.keyCode == 13) { editLabel('<%=folder.getFolderid()%>','0');}"/>
+		<input class="form-control" type="text" value="<%=folder.getName()%>" id="edit_<%=folder.getFolderid()%>" style="display:none;width:7em;height:30px;" onkeydown="if (event.keyCode == 13) { editLabel('<%=folder.getFolderid()%>','0');}"/>
 		<input id="bt_pickColor_<%=folder.getFolderid()%>" color="<%=folder.getColor()%>" class="color form-control" style="display:none; font-size: 0px;cursor:pointer;width:15px;height:25px;color:<%=folder.getColor()%>;border: 1px solid #CCCCCC" maxlength="0" title="Escolha a cor"></input>
 		<button id="bt_cancel_<%=folder.getFolderid()%>"  style="display:none;"  type="button" class="close pull-left" onclick="javascript:editLabel('<%=folder.getFolderid()%>','-1');">&times;</button>
 	</li>

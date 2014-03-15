@@ -202,7 +202,6 @@
 					if (obj!=null) obj.style.display = 'inline-block';
 					obj = document.getElementById('edit_'+labelid);
 					if (obj!=null) obj.style.display = 'inline-block';
-					if (obj!=null) obj.value = '';
 					obj = document.getElementById('bt_pickColor_'+labelid);
 					if (obj!=null) {
 						obj.style.display = 'inline-block';
@@ -214,11 +213,7 @@
 						if (labelid!='0') {
 							obj = document.getElementById('bt_edit_'+labelid);
 							var obj2 = document.getElementById('edit_'+labelid);
-							if (obj!=null && obj2!=null) {
-								obj2.value = obj.innerHTML;
-							}
 						}
-						  
 					}
 					obj = document.getElementById('edit_'+labelid);
 					if (obj!=null) obj.focus();	

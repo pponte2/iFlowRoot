@@ -188,11 +188,12 @@
 				#else
 					#set($display_read="display:none")
 				#end
+				#set($valToAssign=$act.get("flowid")+"_"+$act.get("pid")+"_"+$act.get("subpid"))
 
-		<div id="ptc_$act.get("pid")" class="process draggable activity" valToAssign='$act.get("flowid")_$act.get("pid")_$act.get("subpid")' 
+		<div id="ptc_$act.get("pid")" class="process draggable activity" valToAssign='$valToAssign' pid="$act.get("pid")"
 			onclick='javascript:process_detail_new("user_proc_detail.jsp", "div_process_preview", $act.get("flowid"), $act.get("pid"), $act.get("subpid"), -4, "$act.get("uri")");changeColor(this);'
 			 style="$style_read">
-			<div class="cube" title='$act.get("task_annotation_color_title")' style='background-color:$act.get("task_annotation_color_backgroundColor")'>
+			<div id="cube_$act.get("pid")" class="cube" title='$act.get("task_annotation_color_title")' style='background-color:$act.get("task_annotation_color_backgroundColor")'>
 				$act.get("pinitials") 
 			</div>
 			<div class="left">
@@ -221,19 +222,32 @@
 					<a href="javascript:tabber_right(2, 'main_content.jsp', 'filterDate=$act.get("createdDate")&filterLastMoveDate=$act.get("createdDate")')">$act.get("createdDate")</a>
 				</div>
 				<div class="dropdown">
-					<div class="dropdown-toggle data-toggle="dropdown" id="dropdownmenu_$act.get('pnumber')" data-toggle="dropdown" onClick="cancelMenu=true;"><img src="Themes/newflow/images/V.png"/></div>
+					<div class="dropdown-toggle" data-toggle="dropdown" id="dropdownmenu_$act.get('pnumber')" data-toggle="dropdown" onClick="cancelMenu=true;"><img src="Themes/newflow/images/V.png"/></div>
 					<ul class="dropdown-menu topt-menu" role="menu" aria-labelledby="dropdownmenu_$act.get('pnumber')" style="top:10px;left:30px">
-				#if ($act.get("task_annotation_color_title") != "" )
-						<li role="presentation">
-							<a role="menuitem" tabindex="-1" href="javascript:removeFolder('$act.get("flowid")_$act.get("pid")_$act.get("subpid")');">Retirar da categoria</a>
-						</li>
-				#end
 						<li id="mread_$act.get("pid")" style="$display_read" role="presentation">
 							<a role="menuitem" tabindex="-1" href="#" onClick="javascript:cancelMenu=true;markActivityRead(1, $act.get("flowid"), $act.get("pid"));">Marcar como lido</a>
 						</li>
 						<li id="munread_$act.get("pid")" style="$display_unread" role="presentation">
 							<a role="menuitem" tabindex="-1" href="#" onClick="javascript:cancelMenu=true;markActivityRead(0, $act.get("flowid"), $act.get("pid"));">Marcar como não lido</a>
 						</li>
+						<li role="presentation">
+							<a role="menuitem" tabindex="-1" href="#" onClick="javascript:cancelMenu=true; MarkCategory('$valToAssign', $act.get("pid"), '');">
+								<div class="cube" style="background-color:#666;width:20px;height:20px">&nbsp;</div>
+								&nbsp;&nbsp;Retirar da categoria
+							</a>
+						</li>
+				#foreach($folder in $folders)
+					#set($folderName = $folder.getName())
+					#if($folderName.length() > 18)
+						#set($folderName=$folderName.substring(0, 15)+"...")
+					#end
+						<li role="presentation">
+							<a role="menuitem" title="$folder.getName()" tabindex="-1" href="#" onClick="javascript:cancelMenu=true;MarkCategory('$valToAssign', $act.get("pid"), $folder.getFolderid());">
+								<div class="cube" style="background-color:$folder.getColor();width:20px;height:20px">&nbsp;</div>
+								&nbsp;&nbsp;$folderName
+							</a>
+						</li>
+				#end
 					</ul>
 				</div>	
 				<div style="text-align: center">
@@ -422,13 +436,19 @@
 	#set($maxLen = 70)
 	#foreach($act in $newact)
 				#set($style_read="")
+				#set($display_read="")
+				#set($display_unread="")
 				#if($act.get("read") == 0)
 					#set($style_read="font-weight:bold;")
+					#set($display_unread="display:none")
+				#else
+					#set($display_read="display:none")
 				#end
+				#set($valToAssign=$act.get("flowid")+"_"+$act.get("pid")+"_"+$act.get("subpid"))
 
-	<div id="pte_$act.get("pid")" class="process_t3" onclick="javascript:changeColor(this);openProcess($act.get("flowid"), '$response.encodeURL($url_prefix,$act.get("uri"))', 'flowid=$act.get("flowid")&pid=$act.get("pid")&subpid=$act.get("subpid")', false, 3);"
+	<div id="pte_$act.get("pid")" class="draggable process_t3" valToAssign='$valToAssign' onclick="javascript:changeColor(this); openProcess($act.get("flowid"), '$response.encodeURL($url_prefix, $act.get("uri"))', 'flowid=$act.get("flowid")&pid=$act.get("pid")&subpid=$act.get("subpid")', false, 3);"
 		style="$style_read;">
-		<div class="cube" title='$act.get("task_annotation_color_title")' style='background-color:$act.get("task_annotation_color_backgroundColor")'>
+		<div id="cube_$act.get("pid")" class="cube" title='$act.get("task_annotation_color_title")' style='background-color:$act.get("task_annotation_color_backgroundColor")'>
 			$act.get("pinitials") 
 		</div>
 		<div class="pr01" style="width:15%">$act.get("pnumber") </div>
@@ -455,10 +475,38 @@
 		<div class="pr07" style="width:10%;">
 			<a href="javascript:tabber_right(2, 'main_content.jsp', 'filterDate=$act.get("createdDate")&filterLastMoveDate=$act.get("createdDate")')">$act.get("createdDate")</a>
 			<br>
-			<img src="images/flag.png" width="12" height="14" alt=""/>
-				<div style="text-align: center" onclick="event.cancelBubble = true; if(event.stopPropagation) { event.stopPropagation(); }">
-					$act.get("task_annotation_icon")
-				</div>
+			<div class="dropdown">
+				<div class="dropdown-toggle" id="dropdownmenu_$act.get('pnumber')" data-toggle="dropdown" onClick="cancelMenu=true;"><img src="Themes/newflow/images/V.png"/></div>
+				<ul class="dropdown-menu topt-menu" role="menu" aria-labelledby="dropdownmenu_$act.get('pnumber')" style="top:10px;left:-72px">
+					<li id="mread_$act.get("pid")" style="$display_read" role="presentation">
+						<a role="menuitem" tabindex="-1" href="#" onClick="javascript:cancelMenu=true;markActivityRead(1, $act.get("flowid"), $act.get("pid"));">Marcar como lido</a>
+					</li>
+					<li id="munread_$act.get("pid")" style="$display_unread" role="presentation">
+						<a role="menuitem" tabindex="-1" href="#" onClick="javascript:cancelMenu=true;markActivityRead(0, $act.get("flowid"), $act.get("pid"));">Marcar como não lido</a>
+					</li>
+						<li role="presentation">
+							<a role="menuitem" tabindex="-1" href="#" onClick="javascript:cancelMenu=true; MarkCategory('$valToAssign', $act.get("pid"), '');">
+								<div class="cube" style="background-color:#666;width:20px;height:20px">&nbsp;</div>
+								&nbsp;&nbsp;Retirar da categoria
+							</a>
+						</li>
+				#foreach($folder in $folders)
+					#set($folderName = $folder.getName())
+					#if($folderName.length() > 18)
+						#set($folderName=$folderName.substring(0, 15)+"...")
+					#end
+						<li role="presentation">
+							<a role="menuitem" title="$folder.getName()" tabindex="-1" href="#" onClick="javascript:cancelMenu=true;MarkCategory('$valToAssign', $act.get("pid"), $folder.getFolderid());">
+								<div class="cube" style="background-color:$folder.getColor();width:20px;height:20px">&nbsp;</div>
+								&nbsp;&nbsp;$folderName
+							</a>
+						</li>
+				#end
+				</ul>
+			</div>	
+			<div style="text-align: center" onclick="event.cancelBubble = true; if(event.stopPropagation) { event.stopPropagation(); }">
+				$act.get("task_annotation_icon")
+			</div>
 		</div>
 	</div>
 	

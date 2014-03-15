@@ -1766,11 +1766,10 @@ function reloadJS(doCloseMenus) {
   $(".droppable").droppable({
     hoverClass: "if-state-active",
     drop: function(event, ui) {
-      var aux = event.target.attributes['valToAssign'].value;
-      if (aux != null && aux != "")
-        tabber_right(1, 'main_content.jsp', 'setfolder='+aux+'&activities='+ui.draggable.attr('valToAssign'));
-      else
-        tabber_right(1, 'main_content.jsp', 'setfolder='+aux+'&removeactivities=='+ui.draggable.attr('valToAssign'));
+      var folderId = event.target.attributes['valToAssign'].value;
+      var actId = ui.draggable.attr('valToAssign');
+      var pid = ui.draggable.attr('pid');
+      MarkCategory(actId, pid, folderId);
     }
   });
 
@@ -1856,13 +1855,63 @@ function markActivityReadCallBack(error) {
     alert(error);
   } else {
     var idDiv = 'ptc_' + act_pid;
-    document.getElementById(idDiv).style.fontWeight = act_style;
-    idDiv = 'mread_' + act_pid; 
-    document.getElementById(idDiv).style.display = displayRead;
-    idDiv = 'munread_' + act_pid;
-    document.getElementById(idDiv).style.display = displayUnread;
+    var obj = document.getElementById(idDiv);
+    if (obj != null) {
+      obj.style.fontWeight = act_style;
+      idDiv = 'mread_' + act_pid; 
+      obj = document.getElementById(idDiv);
+      if (obj != null) obj.style.display = displayRead;
+      idDiv = 'munread_' + act_pid;
+      obj = document.getElementById(idDiv);
+      if (obj != null) obj.style.display = displayUnread;
+    } else {
+      var idDiv = 'pte_' + act_pid;
+      var obj = document.getElementById(idDiv);
+      if (obj != null) {
+        obj.style.fontWeight = act_style;
+        idDiv = 'mread_' + act_pid; 
+        obj = document.getElementById(idDiv);
+        if (obj != null) obj.style.display = displayRead;
+        idDiv = 'munread_' + act_pid;
+        obj = document.getElementById(idDiv);
+        if (obj != null) obj.style.display = displayUnread;
+      }       
+    }
   }
   displayUnread = '';
   displayRead = '';
   act_style = '';
+}
+
+var pidToChange = '';
+var folderIdToChange = '';
+function MarkCategory(actId, pid, folderId) {
+  pidToChange = pid;
+  folderIdToChange = folderId;
+  var call = "main_content.jsp";
+  var params = '';
+  if (folderId != null && folderId != "") {
+    params = 'setfolder='+folderId+'&activities='+actId;
+  } else {
+    params = 'setfolder='+folderId+'&removeactivities='+actId;
+  }
+  makeRequest(call, params , MarkCategoryCallBack, 'text', 0);
+  
+}
+
+function MarkCategoryCallBack(error) {
+  if (error != null && error.lenght > 0) {
+    alert(error);
+  } else {
+    var objDest = document.getElementById("cube_" + pidToChange); 
+    if (objDest != null) {}
+      var color = "#666";
+      if (folderIdToChange != null && folderIdToChange != "") {
+        var objOri = document.getElementById("cl_edit_bg_" + folderIdToChange); 
+        if (objOri != null) color = objOri.style.backgroundColor; 
+      }
+      objDest.style.backgroundColor = color;
+  }
+  pidToChange = '';
+  folderIdToChange = '';
 }
