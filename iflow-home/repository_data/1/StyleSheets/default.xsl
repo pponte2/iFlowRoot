@@ -596,12 +596,17 @@
 						margin-bottom:20px;
 					}
 
+					.ui-accordion {
+						margin-top:8px;
+					}
+
 					.ui-accordion-header {
 						text-align:left;
-						background-image: -webkit-linear-gradient(3deg, rgba(235,236,240,0.32) 0%, rgba(235,236,240,0.54) 100%);
-						background-image: -moz-linear-gradient(3deg, rgba(235,236,240,0.32) 0%, rgba(235,236,240,0.54) 100%);
-						background-image: -o-linear-gradient(3deg, rgba(235,236,240,0.32) 0%, rgba(235,236,240,0.54) 100%);
-						background-image: linear-gradient(87deg, rgba(235,236,240,0.32) 0%, rgba(235,236,240,0.54) 100%);
+						margin-top:8px;
+						background-image: -webkit-linear-gradient(3deg, rgba(205,206,210,0.32) 0%, rgba(205,206,210,0.54) 100%);
+						background-image: -moz-linear-gradient(3deg, rgba(205,206,210,0.32) 0%, rgba(205,206,210,0.54) 100%);
+						background-image: -o-linear-gradient(3deg, rgba(205,206,210,0.32) 0%, rgba(205,206,210,0.54) 100%);
+						background-image: linear-gradient(87deg, rgba(205,206,210,0.32) 0%, rgba(205,206,210,0.54) 100%);
 
 					}
 
@@ -738,18 +743,19 @@
 	</xsl:template>
 
 	<xsl:template match="tabdivision">
-		<div class="accordion">			
 			<xsl:apply-templates select="tab" />
-		</div>
+                <div style="width:100%;height:8px;"></div>
 	</xsl:template>
 
 	<xsl:template match="tab">		
+		<div class="accordion">			
 		<h3>
 			<xsl:apply-templates select="name" />
 		</h3>
 		<div>
 			<xsl:apply-templates select="blockdivision" />
 		</div>			
+		</div>
 	</xsl:template>
 
 	<xsl:template match="field">
