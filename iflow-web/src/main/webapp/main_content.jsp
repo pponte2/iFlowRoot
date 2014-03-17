@@ -206,7 +206,7 @@ try {
     pageContent = "deleg_list";
   } else if (data.equals("tasks") || data.equals("alerts")) {
     // FLOWS, ACTIVITIES AND NOTIFICATIONS
-    int nNEWEST_LIMIT = 20;
+    int nNEWEST_LIMIT = 500;
     int nOLDEST_LIMIT = 5;
     int nNOTIFICATION_LIMIT = 5;
     int nAll_Tasks = 0;
