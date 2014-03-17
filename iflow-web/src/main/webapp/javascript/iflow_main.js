@@ -1832,7 +1832,8 @@ function eventFire(el, etype){
 }
 
 var act_pid ='';
-var act_style = '';
+var act_font_weight = '';
+var act_font_color = '';
 var displayUnread = '';
 var displayRead = '';
 function markActivityRead(readFlag, flowid, pid) {
@@ -1840,10 +1841,12 @@ function markActivityRead(readFlag, flowid, pid) {
   var params = "flowid=" + flowid + "&pid=" + pid + "&readFlag=" + readFlag;
   act_pid = '' + pid;
   if (readFlag == 0) {
-    act_style = 'bold';
+    act_font_weight = 'bold';
+    act_font_color = '#000000'; 
     displayUnread = 'none';
   } else {
-    act_style = '';
+    act_font_weight = '';
+    act_font_color = '#999999'; 
     displayRead = 'none';
   }
     
@@ -1857,7 +1860,8 @@ function markActivityReadCallBack(error) {
     var idDiv = 'ptc_' + act_pid;
     var obj = document.getElementById(idDiv);
     if (obj != null) {
-      obj.style.fontWeight = act_style;
+      obj.style.fontWeight = act_font_weight;
+      obj.style.color = act_font_color; 
       idDiv = 'mread_' + act_pid; 
       obj = document.getElementById(idDiv);
       if (obj != null) obj.style.display = displayRead;
@@ -1868,7 +1872,8 @@ function markActivityReadCallBack(error) {
       var idDiv = 'pte_' + act_pid;
       var obj = document.getElementById(idDiv);
       if (obj != null) {
-        obj.style.fontWeight = act_style;
+        obj.style.fontWeight = act_font_weight;
+        obj.style.color = act_font_color; 
         idDiv = 'mread_' + act_pid; 
         obj = document.getElementById(idDiv);
         if (obj != null) obj.style.display = displayRead;
@@ -1880,7 +1885,7 @@ function markActivityReadCallBack(error) {
   }
   displayUnread = '';
   displayRead = '';
-  act_style = '';
+  act_font_weight = '';
 }
 
 var pidToChange = '';

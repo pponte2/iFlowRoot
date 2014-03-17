@@ -1002,6 +1002,7 @@
 			<em>*</em>
 		</xsl:if>
 		</label>
+		<span class="pull-right" style="width:150px">
 		<xsl:choose>
 		<xsl:when test="disabled='true'">
 			<xsl:apply-templates select="value" />
@@ -1009,7 +1010,7 @@
 		<xsl:otherwise>
 			<input type="text" size="12" >
 			<xsl:attribute name="class">
-				<xsl:text>txt form-control pull-right</xsl:text>
+				<xsl:text>txt form-control</xsl:text>
 				<xsl:if test="disabled='true'">
 				<xsl:text> readonly</xsl:text>
 				</xsl:if>
@@ -1018,7 +1019,7 @@
 										
 									</xsl:attribute>
 									<xsl:attribute name="style">
-										<xsl:text>max-width:120px</xsl:text>
+										<xsl:text>max-width:120px;display:inline</xsl:text>
 									</xsl:attribute>
 			<xsl:attribute name="id">
 				<xsl:value-of select="variable/text()" />
@@ -1056,11 +1057,15 @@
 		</xsl:choose>
 		<xsl:if test="disabled!='true'">
 		<img border="0" src="{$url_prefix}/images/icon_delete.png">
+			<xsl:attribute name="style">
+				<xsl:text>display:inline</xsl:text>
+			</xsl:attribute>
 			<xsl:attribute name="onclick">
 				<xsl:text>javascript:document.getElementById('</xsl:text><xsl:value-of select="variable/text()" /><xsl:text>').value=''</xsl:text>
 			</xsl:attribute>
 		</img>
 		</xsl:if>
+		</span>
 	</xsl:if>
 
 	<xsl:if test="type='textarea'">

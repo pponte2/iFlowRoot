@@ -114,9 +114,9 @@
 				</li>
 				<li class="form-group">
 					<label class="form-label">
-						Assunto
+						Descrição
 					</label>
-					<input type="text" class="form-control donotclosemenu pull-right" id="filterSubject" title="Assunto" value="$filterSubject"
+					<input type="text" class="form-control donotclosemenu pull-right" id="filterSubject" title="Descrição" value="$filterSubject"
 							style="display: inline; width: 150px; height: 20px; padding: 0;" 
 							onkeydown="javascript:if (event.keyCode == 13) { tabber_right(2, 'main_content.jsp', 'filterSubject=' + this.value); return false; }">
 					</input>
@@ -186,6 +186,7 @@
 					#set($style_read="font-weight:bold;")
 					#set($display_unread="display:none")
 				#else
+					#set($style_read="color:#888888;")
 					#set($display_read="display:none")
 				#end
 				#set($valToAssign=$act.get("flowid")+"_"+$act.get("pid")+"_"+$act.get("subpid"))
@@ -355,9 +356,9 @@
 				</li>
 				<li class="form-group">
 					<label class="form-label">
-						Assunto
+						Descrição
 					</label>
-					<input type="text" class="form-control donotclosemenu pull-right" id="filterSubject" title="Assunto" value="$filterSubject"
+					<input type="text" class="form-control donotclosemenu pull-right" id="filterSubject" title="Descrição" value="$filterSubject"
 							style="display: inline; width: 150px; height: 20px; padding: 0;" 
 							onkeydown="javascript:if (event.keyCode == 13) { tabber_right(2, 'main_content.jsp', 'filterSubject=' + this.value); return false; }">
 					</input>
@@ -427,7 +428,7 @@
 		<div class="pr01" style="text-align: left;width:40px;font-weight:bold"></div>
 		<div class="pr01" style="text-align: left;width:15%;font-weight:bold">Nº processo</div>
 		<div class="pr02" style="text-align: left;width:10%;font-weight:bold">Vindo de</div>
-		<div class="pr04" style="text-align: left;width:40%; font-weight:bold">Assunto</div>
+		<div class="pr04" style="text-align: left;width:40%; font-weight:bold">Descrição</div>
 		<div class="pr05" style="text-align: left;width:6%; font-weight:bold"></div>
 		<div class="pr06" style="text-align: left;width:10%; font-weight:bold">Pendente há</div>
 		<div class="pr07" style="text-align: left;width:10%;font-weight:bold">Data de criação</div>
@@ -442,6 +443,7 @@
 					#set($style_read="font-weight:bold;")
 					#set($display_unread="display:none")
 				#else
+					#set($style_read="color:#888888;")
 					#set($display_read="display:none")
 				#end
 				#set($valToAssign=$act.get("flowid")+"_"+$act.get("pid")+"_"+$act.get("subpid"))
@@ -476,7 +478,7 @@
 			<a href="javascript:tabber_right(2, 'main_content.jsp', 'filterDate=$act.get("createdDate")&filterLastMoveDate=$act.get("createdDate")')">$act.get("createdDate")</a>
 			<br>
 			<div class="dropdown">
-				<div class="dropdown-toggle" id="dropdownmenu_$act.get('pnumber')" data-toggle="dropdown" onClick="cancelMenu=true;"><img src="Themes/newflow/images/V.png"/></div>
+				<div class="dropdown-toggle" style="text-align:right;margin-right:40px" id="dropdownmenu_$act.get('pnumber')" data-toggle="dropdown" onClick="cancelMenu=true;"><img src="Themes/newflow/images/V.png"/></div>
 				<ul class="dropdown-menu topt-menu" role="menu" aria-labelledby="dropdownmenu_$act.get('pnumber')" style="top:10px;left:-72px">
 					<li id="mread_$act.get("pid")" style="$display_read" role="presentation">
 						<a role="menuitem" tabindex="-1" href="#" onClick="javascript:cancelMenu=true;markActivityRead(1, $act.get("flowid"), $act.get("pid"));">Marcar como lido</a>

@@ -160,7 +160,7 @@ request.setAttribute("flow_type", FlowType.WORKFLOW);
 		font-size: 0.8m;
 	}
 </style>
-	<form id="search_simple_form" class="form-horizontal" name="user_procs_filter" method="post" style="display:block;">
+	<form id="search_simple_form" class="form-horizontal" name="user_procs_filter" method="post" style="display:<%=StringUtils.equals(searchType,"ss")?"block":"none"%>">
 		<ul class="menu">
 			<li>
 				<a id="searchlink" title="<%=messages.getString("user_procs_filtro.simplesearch.tooltip")%>" class="" href= "#"><%=messages.getString("user_procs_filtro.simplesearch")%></a>
@@ -316,7 +316,7 @@ request.setAttribute("flow_type", FlowType.WORKFLOW);
 
 	
 
-	<form id="search_advanced_form" name="advanced_user_procs_filter" method="post" style="display:<%= (StringUtils.equals(searchType,"as") || StringUtils.equals(searchType,"nf"))?"block":"block" %>">
+	<form id="search_advanced_form" name="advanced_user_procs_filter" method="post" style="display:<%= (StringUtils.equals(searchType,"as") || StringUtils.equals(searchType,"nf"))?"block":"none" %>">
 	<% //load flows
 	FlowApplications appInfo = BeanFactory.getFlowApplicationsBean();
 	//only loads search flows
