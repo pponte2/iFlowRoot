@@ -55,7 +55,7 @@
 				<input type="hidden" name="$varName" id="$varName" value="$hmHidden.get($varName)" />
 			#end				
 			<input type="hidden" name="procPreview" id="procPreview" value="true">
-        <div class="title_cont" > Dados do processo n&ordm; $procPid (Pr&eacute;-visualiza&Ccedil;&atilde;o)</div>
+        <div class="title_cont" > Dados do processo n&ordm; $procPid (Pr&eacute;-visualiza&ccedil;&atilde;o)</div>
         <div class="panel-body">
           <div class="form-horizontal" role="form">
 
@@ -81,8 +81,8 @@
 						#set($odd=0)
 					#end
 					<div class="form-group">
-						<label  class="col-sm-2 control-label">${varName}: </label>
-						<div class="col-sm-8" style=" font-size: 14px; margin-top: 5px"> 
+						<label  class="col-sm-2 control-label" style=" font-size: 12px; margin-bottom: 2px">${varName}: </label>
+						<div class="col-sm-8" style=" font-size: 12px; margin-top: 7px"> 
 							#if ($processDetail.get(${varName})!="")
 								$processDetail.get(${varName})
 							#else
