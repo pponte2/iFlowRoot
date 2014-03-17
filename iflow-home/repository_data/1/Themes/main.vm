@@ -315,14 +315,14 @@
 					</div>
 					<div class="Nl">
 					<form name="nlsearch">
-						<table width="390px" border="0" cellspacing="0" cellpadding="0">
+						<table width="350px" border="0" cellspacing="0" cellpadding="0">
 							#if($org_admin == "yes") 
 							<tr>
 								<td>
 									<input type="text" class="form-control" id="nl" placeholder="Nº de Processo" title="Pesquisa" onkeydown="if (event.keyCode == 13) { pesquisarPnumber(document.nlsearch.nl.value); return false; }">
 									</input>
 								</td>
-								<td>
+								<td style="padding-left:3px;width:60px;">
 									<div class="div_BTNL">
 				
 										<input style=" margin: 0px;" type="button" name="Send" id="Send" class="btn btn-default btn-sm" value="Pesquisar" onclick="pesquisarPnumber(document.nlsearch.nl.value); return false;"/>
@@ -341,7 +341,7 @@
 							<td height="20" colspan="4">$date</td>
 						</tr>
 						<tr>
-							<td max-width="300" style="padding:5px" title="$user">
+							<td style="padding:5px;max-width:180px" title="$user">
 								#if($sys_admin != "yes")
 									#if($user.length()>50)
 										$user.substring(0,49)...
@@ -350,7 +350,7 @@
 									#end
 								#end							
 							</td>
-							<td max-width="200" style="color: #009933;padding:5px" title="$username @ $unit">
+							<td style="color: #009933;padding:5px;max-width:120px" title="$username @ $unit">
 							<a style="color: #009933;text-decoration:none;" href="javascript:tabber_right(6, 'personal_account.jsp')">
 							#if($sys_admin != "yes")
 								#if($username.length()>15)
