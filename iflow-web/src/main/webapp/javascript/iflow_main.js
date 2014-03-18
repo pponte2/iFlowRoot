@@ -559,13 +559,53 @@ function tabber(tabnr, navpage, navparam, contentpage, contentparam) {
   tabnr = convert_tabnr(tabnr);
 
   var selectedSection = null;
-  var selectedSectionStr = null;
+  var selectedSectionStr = null;  
   while (i++ < GLOBAL_MAX_TABS) {
     var section = document.getElementById(sectionDiv + i);
     if (!section) section = parent.document.getElementById(sectionDiv + i);
     if (section) {
       if (i != tabnr) {
-        section.style.display = 'none';
+    	//Martelada CMA P13064-16 BEGIN
+          if (i==3 && section.style.display == 'block'){        	 
+        	//try{
+        	  	  var $jQuery = jQuery.noConflict();
+        	  	  //find if ther is a auto return button
+        	  	  var j=0;
+        	      autoReturnId = '';        	      
+        	  	  var objsInButtons = $jQuery('#open_proc_frame_3').contents().find('.submit').contents(); 
+        	  	  for(j=0; j<objsInButtons.length; j++)
+        	  		try{
+        	  			if (objsInButtons[j].attributes.title.value.indexOf('#auto')>-1)
+        	  			autoReturnId = objsInButtons[j].attributes.name.value.charAt(objsInButtons[j].attributes.name.value.length-1);
+        	  		} catch(e){}
+        	  	  //process form trough AJAX        		  
+        		  $jQuery.ajaxSetup ({cache: false});
+        		  ajaxSavedValues['_button_clicked_id'] = autoReturnId;
+        		  ajaxSavedValues['op'] = '3';
+        		  ajaxSavedValues['buttonResult'] = 'return';
+        		  ajaxSavedValues['flowid'] = $jQuery('#open_proc_frame_3').contents().find('#flowid')[0].value;
+        		  ajaxSavedValues['pid'] = $jQuery('#open_proc_frame_3').contents().find('#pid')[0].value;
+        		  ajaxSavedValues['subpid'] = $jQuery('#open_proc_frame_3').contents().find('#subpid')[0].value;
+        		  ajaxSavedValues['contentType'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+        		  $jQuery.getJSON(  
+        		      'AjaxGoBackServlet',     
+        		      ajaxSavedValues,
+        		      function(response){  
+        		          try{
+        		            var main = $jQuery('#open_proc_frame_3').contents().find('#main');
+        		            main.html(response);
+        		            $jQuery('#curmid').val(1 + Number($jQuery('#curmid').val())); 
+        		          } catch (err){}
+        		          finally{
+        		            reloadBootstrapElements();
+        		          }
+
+        		        }
+        		  );
+        	//}catch(e){}
+          }
+          //Martelada CMA P13064-16 END  
+        section.style.display = 'none';      
       } else {
         selectedSection = section; 
         section.style.display = 'block';

@@ -347,6 +347,16 @@ Disabled. Use servlet container defaults
 	    <servlet-name>AjaxFormServlet</servlet-name>
 	    <url-pattern>/AjaxFormServlet/*</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+	    <servlet-name>AjaxGoBackServlet</servlet-name>
+	    <servlet-class>pt.iflow.servlets.AjaxGoBackServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+	    <servlet-name>AjaxGoBackServlet</servlet-name>
+	    <url-pattern>/AjaxGoBackServlet/*</url-pattern>
+	</servlet-mapping>
 
     <!-- Apache Axis -->
   <servlet-mapping>

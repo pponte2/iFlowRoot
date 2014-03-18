@@ -459,6 +459,13 @@ public class IFlowRemote {
             variableTmp = buttonChildrenNodes.item(j).getTextContent();
           else if (StringUtils.equalsIgnoreCase(buttonChildrenNodes.item(j).getNodeName(), "value"))
             valueTmp = buttonChildrenNodes.item(j).getTextContent();
+          else if (StringUtils.equalsIgnoreCase(buttonChildrenNodes.item(j).getNodeName(), "operation")){
+        	  String aux  = buttonChildrenNodes.item(j).getTextContent();
+        	  int startv = aux.indexOf("document.dados." , aux.indexOf("document.dados.op") + 17) + 15;
+        	  int endv = aux.indexOf(".value=", startv);
+        	  variableTmp=aux.substring(startv, endv);
+        	  valueTmp=aux.substring(endv+8, aux.length()-2);
+          }              
         if (StringUtils.equals(idTmp, clickedId)) {
           // button name
           retObj.setParameter(nameTmp, idTmp);
