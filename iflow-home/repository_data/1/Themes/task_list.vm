@@ -139,6 +139,15 @@
 							onchange="javascript: tabber_right(2, 'main_content.jsp', 'filterLastMoveDate=' + this.value); return false; ">
 					</input>
 				</li>
+				<li class="form-group">
+					<label class="form-label">
+						N processo
+					</label>
+					<input type="text" class="form-control donotclosemenu pull-right" id="filterProcessNumber" title="N processo" value="$filterProcessNumber"
+							style="display: inline; width: 150px; height: 20px; padding: 0;" 
+							onkeydown="javascript:if (event.keyCode == 13) { tabber_right(2, 'main_content.jsp', 'filterProcessNumber=' + this.value); return false; }">
+					</input>
+				</li>
 
 			</ul>  
 		</form>
@@ -381,7 +390,15 @@
 							onchange="javascript: tabber_right(2, 'main_content.jsp', 'filterLastMoveDate=' + this.value); return false; ">
 					</input>
 				</li>
-
+				<li class="form-group">
+					<label class="form-label">
+						N processo
+					</label>
+					<input type="text" class="form-control donotclosemenu pull-right" id="filterProcessNumber" title="N de processo" value="$filterProcessNumber"
+							style="display: inline; width: 150px; height: 20px; padding: 0;" 
+							onkeydown="javascript:if (event.keyCode == 13) { tabber_right(2, 'main_content.jsp', 'filterProcessNumber=' + this.value); return false; }">
+					</input>
+				</li>
 			</ul>  
 		</form>
 		<div class="btn-group">

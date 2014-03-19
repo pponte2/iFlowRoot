@@ -257,6 +257,7 @@ try {
       session.removeAttribute("filterfolder");
       session.removeAttribute("filterPreviousUserid");
       session.removeAttribute("filterSubject");
+      session.removeAttribute("filterProcessNumber");
       session.removeAttribute("filterLastMoveDate");
       session.removeAttribute("filtro_showflowid");
     }
@@ -370,6 +371,15 @@ try {
       session.setAttribute("startindexTasks", startIndex.toString()); // Utilizador actualizou valor
     }
   
+    String selectedProcessNumber = "";    
+    String filterProcessNumber = fdFormData.getParameter("filterProcessNumber");
+    if (filterProcessNumber != null) {
+      session.setAttribute("filterProcessNumber", filterProcessNumber); // Utilizador actualizou valor
+      selectedProcessNumber = filterProcessNumber;
+      startIndex = 0;
+      session.setAttribute("startindexTasks", startIndex.toString()); // Utilizador actualizou valor
+    }
+    
     String filterDate = fdFormData.getParameter("filterDate");
     if (filterDate != null){
       session.setAttribute("filterDate", filterDate); // Utilizador actualizou valor
@@ -403,6 +413,12 @@ try {
         hsSubstLocal.put("filterSubject", "");
       } else {
         hsSubstLocal.put("filterSubject", filterSubject);
+      }
+    if (filterProcessNumber == null){
+    	filterProcessNumber = (String) session.getAttribute("filterProcessNumber");
+        hsSubstLocal.put("filterProcessNumber", "");
+      } else {
+        hsSubstLocal.put("filterProcessNumber", filterProcessNumber);
       }
     if (filterDate == null){
       filterDate = (String) session.getAttribute("filterDate");
@@ -476,6 +492,7 @@ try {
     filter.setOrderType(orderType);
     filter.setPreviousUserid(filterPreviousUserid);
     filter.setSubject(filterSubject);
+    filter.setPnumber(filterProcessNumber);
     hsSubstLocal.put("filterDate", "");
     hsSubstLocal.put("filterLastMoveDate", "");
     if (filterDate != null) {
