@@ -63,7 +63,6 @@ function uploadFile(varName, signatureType, encryptionType, max, sig_pos_style_j
   );
 
   checkLimits(varName);
-  // setTimeout('checkTaskStatus("'+taskId+'")', TIMEOUT_DELAY);
 }
 
 function uploadFileFromDisk(varName, signatureType, encryptionType, max, fileName, arrBuffer, sig_pos_style_java) {
@@ -342,9 +341,9 @@ function canEncrypt(fmt) {
 
 
 function updateForm(status) {
-  if(window.frames['open_proc_frame']) {
+  if(window.frames['open_proc_frame_3']) {
     // delegate to children frame
-    window.frames['open_proc_frame'].updateForm(status);
+    window.frames['open_proc_frame_3'].updateForm(status);
     return;
   }
   if(!IFLOW_APPLET_ELEM)  {
@@ -366,8 +365,8 @@ function changeFileState(docid) {
     window.frames['open_proc_frame_3'].changeFileState(docid);
     return;
   }
-    document.getElementById('lock_'+docid).src= "/iFlow/images/my_lock.png";
-    document.getElementById('lock_'+docid).style.display="inline";
+  document.getElementById('lock_'+docid).src= "/iFlow/images/my_lock.png";
+  document.getElementById('lock_'+docid).style.display="inline";
 }
 
 //As funcoes de exemplo nas quais me devo basear s�o estas:
@@ -386,40 +385,36 @@ function loadSignedFile(signatureType,varname) {
 function addFileElem(myObject) {
   var filename, fileid, varname, item, delete_button, row_element, insertLocation;
   
-  window.frames['open_proc_frame_3'].document.getElementById('op').value=2;
-  window.frames['open_proc_frame_3'].document.getElementById('dados').submit();
-  
   if(!myObject) return;
   
   filename = myObject.name.replace('&apos;', '\'');
   fileid = myObject.id;
   varname = myObject.varname;
 
-  item = new Element('span').setText( filename );
-  delete_button = new Element('img',{
-    'src':'../images/cross_small.gif',
-    'alt':'Delete',
-    'title':'Delete'
-  });
-//  delete_button.setAttribute('onclick',"removeFile('" + fileid + "','"+varname+"')"); //N�o funciona no IE
+  item = document.createElement("span");
+  item.innerHTML = filename; 
+  delete_button = document.createElement('img');
+  delete_button.src ='../images/cross_small.gif';
+  delete_button.alt = 'Delete';
+  delete_button.title = 'Delete';
   
   delete_button.onclick = function(){ // Solu��o para IE
     removeFile(fileid,varname);
       return true;
   };
   
-  
-  row_element = new Element( 'div', {
-    'class':'item',
-    'id':'elem_'+fileid
-  }).adopt( delete_button ).adopt( item );
 
-  insertLocation = document.getElementById('list_'+varname);
-  row_element.injectInside(insertLocation); 
-  //insertLocation.adopt(row_element);
+  row_element = document.createElement('div');
+  row_element.class = 'item',
+  row_element.id = 'elem_'+fileid;
+  row_element.appendChild(delete_button);
+  row_element.appendChild(item);
+
+  insertLocation = $('list_'+varname);
+  insertLocation.appendChild(row_element); 
 }
 
-function removeSignedFile(fileid, varname) {
+function remsoveSignedFile(fileid, varname) {
   if(!IFLOW_APPLET_ELEM)  {
     alert('Applet nao foi configurada');
     return;
