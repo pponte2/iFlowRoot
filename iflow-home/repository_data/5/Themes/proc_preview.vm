@@ -141,7 +141,7 @@
 							#end 
 						</div>
 					</div>	
-					
+			#if ($user_name != "presidente")		
 						#set($sAccoes=$processDetail.get("Acções"))
 						#set($lAccoes=$sAccoes.split("] "))
 						#if ($lAccoes != "")
@@ -212,14 +212,16 @@
 						</div>
 
 					 
-					#if ($user_name == "olopes")
+					#else
 						
 						#set($sAccoes=$processDetail.get("Acções"))
 						#set($lAccoes=$sAccoes.split("] "))
+						#set($countAccoes = 0)
 						#if ($lAccoes != "")
 							#set($listAccoes = [])
 								#foreach($accao in $lAccoes)
 									#if($accao.indexOf("<br>") > 0)
+										#set($countAccoes = $velocityCount - 1)
 										#if ($listAccoes.add($accao.substring(0, $accao.indexOf("<br>"))))
 										#end
 									#end
@@ -264,16 +266,24 @@
 
 						#set($sMarcar=$processDetail.get("marcar"))
 						#set($lMarcar=$sMarcar.split("] "))
+						#set($countCheck = 0)
 						#if ($lMarcar != "")
 							#set($listMarcar = [])
 								#foreach($marcar in $lMarcar)
 									#if($marcar.indexOf("<br>") >= 0)
+										#set($countCheck = $velocityCount - 1)
 										#if ($listMarcar.add($marcar.substring(0, $marcar.indexOf("<br>"))))
 										#end
 									#end
 								#end
-						#end						
-						
+						#end
+
+						#set($range = [$countCheck..$countAccoes])
+						#foreach($i in $range)
+						   #if ($listMarcar.add(""))
+						   #end
+						#end	
+	
 						<div class="form-group">
 							<label  class="col-sm-2 control-label">Tramitação: </label>
 							<div class="col-sm-8">&nbsp;</div>				
@@ -286,7 +296,7 @@
 												#foreach ($coment in $listComents)
 													#if ($velocityCount == $pos)
 														#if ($coment!="" && $coment!="null")
-															#set($tool = $coment)
+															#set($tool = $coment.replaceAll("</?[^>]+/?>", ""))
 														#else
 															#set($tool = "Sem comentário")
 														#end
@@ -312,7 +322,7 @@
 													#set($pos2 = $pos - 1)
 													#set($max_row = 0)
 													#foreach ($marcar in $listMarcar)
-													#set($max_row = $velocityCount)
+													#set($max_row = $velocityCount - 1)
 														#if ($velocityCount == $pos)
 															<td>
 															#if($marcar == 1)
@@ -329,9 +339,8 @@
 									
 							</table>
 						</div>		
+						<input id="94_MAX_ROW" type="hidden" value="$max_row" name="94_MAX_ROW">
 					#end
-					
-					<input id="94_MAX_ROW" type="hidden" value="$max_row" name="94_MAX_ROW">
 					
 					#if ($user_name == "presidente" && $processDetail.get("Acções")!="" && (!($processDetail.get("Acção escolhida")!="") || $processDetail.get("Acção escolhida")=="pre_decisao" || $processDetail.get("Acção escolhida")=="parecer") )
 
