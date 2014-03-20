@@ -212,7 +212,7 @@
 						</div>
 
 					 
-					#if ($user_name == "olopes" && 1==2)
+					#if ($user_name == "olopes")
 						
 						#set($sAccoes=$processDetail.get("Acções"))
 						#set($lAccoes=$sAccoes.split("] "))
@@ -262,7 +262,17 @@
 								#end
 						#end
 
-						
+						#set($sMarcar=$processDetail.get("marcar"))
+						#set($lMarcar=$sMarcar.split("] "))
+						#if ($lMarcar != "")
+							#set($listMarcar = [])
+								#foreach($marcar in $lMarcar)
+									#if($marcar.indexOf("<br>") >= 0)
+										#if ($listMarcar.add($marcar.substring(0, $marcar.indexOf("<br>"))))
+										#end
+									#end
+								#end
+						#end						
 						
 						<div class="form-group">
 							<label  class="col-sm-2 control-label">Tramitação: </label>
@@ -298,15 +308,30 @@
 															<td>$pessoa </td>
 														#end
 													#end
+													
+													#set($pos2 = $pos - 1)
+													#set($max_row = 0)
+													#foreach ($marcar in $listMarcar)
+													#set($max_row = $velocityCount)
+														#if ($velocityCount == $pos)
+															<td>
+															#if($marcar == 1)
+																<input class="txt" type="checkbox" title="" checked="true" value="1" name="docs_assinar_seleccionados[$pos2]" checked>
+															#else
+																<input class="txt" type="checkbox" title="" value="1" name="docs_assinar_seleccionados[$pos2]">
+															#end															
+															</td>
+														#end
+													#end
+													
 												</tr>	
 											#end
 									
 							</table>
-						</div>									
+						</div>		
 					#end
 					
-					
-					
+					<input id="94_MAX_ROW" type="hidden" value="$max_row" name="94_MAX_ROW">
 					
 					#if ($user_name == "presidente" && $processDetail.get("Acções")!="" && (!($processDetail.get("Acção escolhida")!="") || $processDetail.get("Acção escolhida")=="pre_decisao" || $processDetail.get("Acção escolhida")=="parecer") )
 
@@ -354,20 +379,63 @@
 						#end
 					#end
 				#else
-					#foreach($varName in $processDetail.keySet())
-						#set($value = "")
-						#if ($processDetail.get(${varName})!="")
-							#set($value = $processDetail.get(${varName}))
-						#end
-						<input type="hidden" name="$processVarnames.get(${varName})" value="${value}">	
-						<div class="form-group">
-							<label  class="col-sm-2 control-label">${varName}: </label>
-							<div class="col-sm-8" style=" font-size: 14px; margin-top: 5px"> 
-								#if ($processDetail.get(${varName})!="")
-									$processDetail.get(${varName})
-								#end 
+					#if ($procFlowid == 90)
+								<div class="form-group">
+									<label  class="col-sm-2 control-label">Criado por: </label>
+									<div class="col-sm-8" style=" font-size: 14px; margin-top: 5px"> 
+										#if ($processDetail.get("Criado por")!="")
+											$processDetail.get("Criado por")
+										#end 
+									</div>
+								</div>
+								<div class="form-group">
+									<label  class="col-sm-2 control-label">Prioridade: </label>
+									<div class="col-sm-8" style=" font-size: 14px; margin-top: 5px"> 
+										#if ($processDetail.get("Prioridade")!="")
+											$processDetail.get("Prioridade")
+										#end 
+									</div>
+								</div>
+								<div class="form-group">
+									<label  class="col-sm-2 control-label">Assunto: </label>
+									<div class="col-sm-8" style=" font-size: 14px; margin-top: 5px"> 
+										#if ($processDetail.get("Assunto")!="")
+											$processDetail.get("Assunto")
+										#end 
+									</div>
+								</div>
+								<div class="form-group">
+									<label  class="col-sm-2 control-label">Descrição da tarefa: </label>
+									<div class="col-sm-8" style=" font-size: 14px; margin-top: 5px"> 
+										#if ($processDetail.get("Descrição da tarefa")!="")
+											$processDetail.get("Descrição da tarefa")
+										#end 
+									</div>
+								</div>
+								<div class="form-group">
+									<label  class="col-sm-2 control-label">Comentário: </label>
+									<div class="col-sm-8" style=" font-size: 14px; margin-top: 5px">
+										#if ($processDetail.get("Comentário")!="")
+											$processDetail.get("Comentário")
+										#end 										
+									</div>
+								</div>								
+					#else
+						#foreach($varName in $processDetail.keySet())
+							#set($value = "")
+							#if ($processDetail.get(${varName})!="")
+								#set($value = $processDetail.get(${varName}))
+							#end
+							<input type="hidden" name="$processVarnames.get(${varName})" value="${value}">	
+							<div class="form-group">
+								<label  class="col-sm-2 control-label">${varName}: </label>
+								<div class="col-sm-8" style=" font-size: 14px; margin-top: 5px"> 
+									#if ($processDetail.get(${varName})!="")
+										$processDetail.get(${varName})
+									#end 
+								</div>
 							</div>
-						</div>
+						#end
 					#end
 				#end
 			#end
