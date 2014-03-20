@@ -295,10 +295,12 @@
 					}
 				});
 			});
+			
+			
 		</script>
 		</head>
 
-	<body onresize="javascript:mainResize()">
+	<body onresize="javascript:mainResize()"  onload="updateNotifications()">
 	
 	<style type="text/css">
 		h1 {
@@ -372,9 +374,7 @@
 								</td>
 							<td width="34" style="padding:5px;text-align:center">
 								<a id="delegButton" onclick="javascript:$('#delegations-form').dialog('open');return false;"><img id="iconAlerts" width="16" height="16" src="Themes/newflow/images/alert-bell.png" alt="Alertas"/></a> 
-								#if($nAlerts>0)
-									<a id="delegButtonCount" class="countAlert">$nAlerts</a>
-								#end
+								<a id="delegButtonCount" class="countAlert">$nAlerts</a>								
 							</td>
 
 							<td>

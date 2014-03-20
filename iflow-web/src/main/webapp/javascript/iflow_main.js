@@ -567,7 +567,7 @@ function tabber(tabnr, navpage, navparam, contentpage, contentparam) {
       if (i != tabnr) {
     	//Martelada CMA P13064-16 BEGIN
           if (i==3 && section.style.display == 'block'){        	 
-        	//try{
+        	try{
         	  	  var $jQuery = jQuery.noConflict();
         	  	  //find if ther is a auto return button
         	  	  var j=0;
@@ -576,7 +576,7 @@ function tabber(tabnr, navpage, navparam, contentpage, contentparam) {
         	  	  for(j=0; j<objsInButtons.length; j++)
         	  		try{
         	  			if (objsInButtons[j].attributes.title.value.indexOf('#auto')>-1)
-        	  			autoReturnId = objsInButtons[j].attributes.name.value.charAt(objsInButtons[j].attributes.name.value.length-1);
+        	  				autoReturnId = objsInButtons[j].attributes.name.value.charAt(objsInButtons[j].attributes.name.value.length-1);
         	  		} catch(e){}
         	  	  //process form trough AJAX        		  
         		  $jQuery.ajaxSetup ({cache: false});
@@ -602,7 +602,7 @@ function tabber(tabnr, navpage, navparam, contentpage, contentparam) {
 
         		        }
         		  );
-        	//}catch(e){}
+        	}catch(e){}
           }
           //Martelada CMA P13064-16 END  
         section.style.display = 'none';      
@@ -1959,4 +1959,13 @@ function MarkCategoryCallBack(error) {
   }
   pidToChange = '';
   folderIdToChange = '';
+}
+
+function updateNotifications(){
+	makeRequest('updateNotifications.jsp', '', updateNotificationsCallback, 'text');   	
+}
+
+function updateNotificationsCallback(response){
+	document.getElementById('delegButtonCount').text = response.trim();
+	window.setTimeout(updateNotifications, 60000);
 }
