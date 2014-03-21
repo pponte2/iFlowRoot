@@ -1406,7 +1406,7 @@
 					<xsl:text>&nbsp;</xsl:text>
 					</xsl:when>
 
-					<xsl:when test="string-length(value) > $maxLenCol and count(value/a) = 0">
+					<xsl:when test="string-length(value) > $maxLenCol and count(value/a) = 0 and not(contains(value,'&lt;'))">
 						<xsl:variable name="valueShort" select="substring(value, 1, $maxLenCol)" />
 						<xsl:variable name="idAux" select="generate-id()" />
 						<span id="span_short_{$idAux}">
@@ -1603,7 +1603,7 @@
 				<xsl:if test="../show_link='true'">
 					<xsl:text>&nbsp;</xsl:text>
 					<xsl:if test="string-length(link_url) &gt; 0">
-					<a target="_blank" href="{link_url}">
+					<a target="_blank" href="{link_url}" style="white-space:nowrap;">
 						<xsl:apply-templates select="link_text" />
 					</a>
 					</xsl:if>
