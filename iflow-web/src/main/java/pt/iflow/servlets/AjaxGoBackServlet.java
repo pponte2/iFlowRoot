@@ -43,11 +43,19 @@ public class AjaxGoBackServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		Integer flowid  = Integer.parseInt(request.getParameter("flowid"));
-		Integer pid  = Integer.parseInt(request.getParameter("pid"));
-		Integer subpid  = Integer.parseInt(request.getParameter("subpid"));
-		Integer _button_clicked_id  = Integer.parseInt(request.getParameter("_button_clicked_id"));
-		
+		Integer flowid  = null;
+		Integer pid  = null;
+		Integer subpid  = null;
+		Integer _button_clicked_id = null;
+		try{
+			flowid  = Integer.parseInt(request.getParameter("flowid"));
+			pid  = Integer.parseInt(request.getParameter("pid"));
+			subpid  = Integer.parseInt(request.getParameter("subpid"));
+			_button_clicked_id  = Integer.parseInt(request.getParameter("_button_clicked_id"));
+		} catch(Exception e)
+		{
+			return;
+		}
 		HttpSession session = request.getSession();
 		UserInfoInterface userInfo = (UserInfoInterface) session.getAttribute(Const.USER_INFO);
 		if (userInfo == null)

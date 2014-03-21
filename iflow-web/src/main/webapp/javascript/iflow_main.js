@@ -568,39 +568,39 @@ function tabber(tabnr, navpage, navparam, contentpage, contentparam) {
     	//Martelada CMA P13064-16 BEGIN
           if (i==3 && section.style.display == 'block'){        	 
         	try{
-        	  	  var $jQuery = jQuery.noConflict();
+        	  	  //var $jQuery = jQuery.noConflict();
         	  	  //find if ther is a auto return button
         	  	  var j=0;
         	      autoReturnId = '';        	      
-        	  	  var objsInButtons = $jQuery('#open_proc_frame_3').contents().find('.submit').contents(); 
+        	  	  var objsInButtons = window.jQuery('#open_proc_frame_3').contents().find('.submit').contents(); 
         	  	  for(j=0; j<objsInButtons.length; j++)
         	  		try{
         	  			if (objsInButtons[j].attributes.title.value.indexOf('#auto')>-1)
         	  				autoReturnId = objsInButtons[j].attributes.name.value.charAt(objsInButtons[j].attributes.name.value.length-1);
         	  		} catch(e){}
         	  	  //process form trough AJAX        		  
-        		  $jQuery.ajaxSetup ({cache: false});
+        	  	  window.jQuery.ajaxSetup ({cache: false});
         		  ajaxSavedValues['_button_clicked_id'] = autoReturnId;
         		  ajaxSavedValues['op'] = '3';
         		  ajaxSavedValues['buttonResult'] = 'return';
-        		  ajaxSavedValues['flowid'] = $jQuery('#open_proc_frame_3').contents().find('#flowid')[0].value;
-        		  ajaxSavedValues['pid'] = $jQuery('#open_proc_frame_3').contents().find('#pid')[0].value;
-        		  ajaxSavedValues['subpid'] = $jQuery('#open_proc_frame_3').contents().find('#subpid')[0].value;
+        		  ajaxSavedValues['flowid'] = window.jQuery('#open_proc_frame_3').contents().find('#flowid')[0].value;
+        		  ajaxSavedValues['pid'] = window.jQuery('#open_proc_frame_3').contents().find('#pid')[0].value;
+        		  ajaxSavedValues['subpid'] = window.jQuery('#open_proc_frame_3').contents().find('#subpid')[0].value;
         		  ajaxSavedValues['contentType'] = 'application/x-www-form-urlencoded;charset=UTF-8';
-        		  $jQuery.getJSON(  
+        		  window.jQuery.getJSON(  
         		      'AjaxGoBackServlet',     
-        		      ajaxSavedValues,
-        		      function(response){  
-        		          try{
-        		            var main = $jQuery('#open_proc_frame_3').contents().find('#main');
-        		            main.html(response);
-        		            $jQuery('#curmid').val(1 + Number($jQuery('#curmid').val())); 
-        		          } catch (err){}
-        		          finally{
-        		            reloadBootstrapElements();
-        		          }
-
-        		        }
+        		      ajaxSavedValues
+//        		      ,function(response){  
+//        		          try{
+//        		            var main = window.jQuery('#open_proc_frame_3').contents().find('#main');
+//        		            main.html(response);
+//        		            window.jQuery('#curmid').val(1 + Number($jQuery('#curmid').val())); 
+//        		          } catch (err){}
+//        		          finally{
+//        		            reloadBootstrapElements();
+//        		          }
+//
+//        		        }
         		  );
         	}catch(e){}
           }
