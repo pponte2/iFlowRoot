@@ -1335,14 +1335,15 @@ function resizeProcDetail() {
   try {
 
     if(!$('iframe_proc_detail')) return
-    var iframe_height = (document.getElementById('Accordion1').style.height + 10) + "px";
+    //var iframe_height = (document.getElementById('Accordion1').style.height + 10) + "px";
+    var iframe_height = document.getElementById('main_sidebar').clientHeight + "px";
     var mainWidth = document.getElementById('mainheader').scrollWidth-0;
     var sidebarWidth = document.getElementById('main_sidebar').scrollWidth-0;
     var taskbarWidth = document.getElementById('taskbar').scrollWidth-0;
     var iframe_width=(mainWidth-sidebarWidth-taskbarWidth-6)+'px'; // nao mexer sem saber
 
     document.getElementById('iframe_proc_detail').setStyle('width',iframe_width);
-    document.getElementById('iframe_proc_detail').setStyle('height',iframe_width);
+    document.getElementById('iframe_proc_detail').setStyle('height',iframe_height);
   } catch(err) {
     // ignore error....
   }
