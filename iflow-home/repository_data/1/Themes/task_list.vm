@@ -207,7 +207,7 @@
 				#set($valToAssign=$act.get("flowid")+"_"+$act.get("pid")+"_"+$act.get("subpid"))
 
 		<div id="ptc_$act.get("pid")" class="process draggable activity" valToAssign='$valToAssign' pid="$act.get("pid")"
-			onclick='javascript:process_detail_new("user_proc_detail.jsp", "div_process_preview", $act.get("flowid"), $act.get("pid"), $act.get("subpid"), -4, "$act.get("uri")");changeColor(this);window.scrollTo(0,0);'
+			onclick='javascript:process_detail_new("user_proc_detail.jsp", "div_process_preview", $act.get("flowid"), $act.get("pid"), $act.get("subpid"), -4, "$act.get("uri")");changeColor(this);'
 			 style="$style_read">
 			<div id="cube_$act.get("pid")" class="cube" title='$act.get("task_annotation_color_title")' style='background-color:$act.get("task_annotation_color_backgroundColor")'>
 				$act.get("pinitials") 
