@@ -137,6 +137,7 @@ try {
   htSubst.put("inDetail", "true");
   htSubst.put("uri", uri);
   htSubst.put("user_name", userInfo.getUtilizador());
+  htSubst.put("user_profiles", userInfo.getProfiles());
   if (procData == null || procData.getError() == null)
     htSubst.put("error", "");
   else

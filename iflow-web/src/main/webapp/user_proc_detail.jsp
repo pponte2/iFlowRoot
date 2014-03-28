@@ -30,12 +30,12 @@ if(scroll != null)
 <fieldset class="submit">
 <% if(status.equals("-2")){ %>
 
-  <input class="regular_button_01 btn btn-default" type="button" name="back" value="Fechar" 
+  <input class="regular_button_01 btn btn-default pull-right" style="margin-right:40px;" type="button" name="back" value="Fechar" 
   	onClick="javascript:tabber('<%=response.encodeURL("main.jsp")%>');"/>
   
 <%} else if(status.equals("-3")){ %>
 
-  <input class="regular_button_01 btn btn-default" type="button" name="back" value="Fechar" 
+  <input class="regular_button_01 btn btn-default pull-right" style="margin-right:40px;" type="button" name="back" value="Fechar" 
 	onClick="javascript:tabber('inbox','','',inboxJSP);"/>
 
 <%} else if(status.equals("-4")){ %>

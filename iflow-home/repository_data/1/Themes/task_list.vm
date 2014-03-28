@@ -94,10 +94,9 @@
 				</li>
 				<li class="form-group">
 					<label class="form-label">
-						$labelFilterFlow
+						Selecionar fluxo
 					</label>
-					<select id="showflowid" name="showflowid" class="form-control donotclosemenu pull-right" style="width:150px;height:25px;font-size:0.8em;padding: 0 0 0 5px" 
-							onchange="javascript: tabber_right(2, 'main_content.jsp', 'showflowid=' + this.value); return false; ">
+					<select id="filterflowid" name="filterflowid" class="form-control donotclosemenu pull-right" style="width:150px;height:25px;font-size:0.8em;padding: 0 0 0 5px">
 						<option value="-1">$selectFlow</option>
 						$filterFlowOptions
 					</select>
@@ -108,8 +107,7 @@
 						Utilizador prévio
 					</label>
 					<input type="text" class="form-control donotclosemenu pull-right" id="previousUseridText" title="Utilizador Anterior" value="$filterPreviousUserid"
-							style="display: inline; width: 150px; height: 20px; padding: 0;" 
-							onkeydown="javascript:if (event.keyCode == 13) { tabber_right(2, 'main_content.jsp', 'filterPreviousUserid=' + this.value); return false; }">
+							style="display: inline; width: 150px; height: 20px; padding: 0;">
 					</input>
 				</li>
 				<li class="form-group">
@@ -117,8 +115,7 @@
 						Descrição
 					</label>
 					<input type="text" class="form-control donotclosemenu pull-right" id="filterSubject" title="Descrição" value="$filterSubject"
-							style="display: inline; width: 150px; height: 20px; padding: 0;" 
-							onkeydown="javascript:if (event.keyCode == 13) { tabber_right(2, 'main_content.jsp', 'filterSubject=' + this.value); return false; }">
+							style="display: inline; width: 150px; height: 20px; padding: 0;">
 					</input>
 				</li>
 				<li class="form-group">
@@ -127,34 +124,41 @@
 					</label>
 					<span class="pull-right">
 						<input type="text" class="form-control donotclosemenu" id="dataCriacaoText" title="Data de"  value="$filterDate"
-								onmouseover="caltasks(this.id, '%d/%m/%Y');this.onmouseover=null;" style="display: inline; width: 130px; height: 20px; padding: 0;" 
-								onchange="javascript: tabber_right(2, 'main_content.jsp', 'filterDate=' + this.value); return false; ">
+								onmouseover="caltasks(this.id, '%d/%m/%Y');this.onmouseover=null;" style="display: inline; width: 130px; height: 20px; padding: 0;">
 						</input>
 						<img class="toolTipImg" border="0" title="Apagar" src="images/icon_delete.png" onClick="javascript: tabber_right(2, 'main_content.jsp', 'filterDate='); return false;">
 					</span>
 				</li>
 				<li class="form-group">
 					<label class="form-label">
-						Data ate
+						Data até
 					</label>
 					<span class="pull-right">
 						<input type="text" class="form-control donotclosemenu" id="dataUltMovText" title="Data ate"  value="$filterLastMoveDate"
-								onmouseover="caltasks(this.id, '%d/%m/%Y');this.onmouseover=null;" style="display: inline; width: 130px; height: 20px; padding: 0;" 
-								onchange="javascript: tabber_right(2, 'main_content.jsp', 'filterLastMoveDate=' + this.value); return false; ">
+								onmouseover="caltasks(this.id, '%d/%m/%Y');this.onmouseover=null;" style="display: inline; width: 130px; height: 20px; padding: 0;">						
 						</input>
 						<img class="toolTipImg" border="0" title="Apagar" src="images/icon_delete.png" onClick="javascript: tabber_right(2, 'main_content.jsp', 'filterLastMoveDate='); return false; ">
 					</span>
 				</li>
 				<li class="form-group">
 					<label class="form-label">
-						N processo
+						Nº processo
 					</label>
 					<input type="text" class="form-control donotclosemenu pull-right" id="filterProcessNumber" title="N processo" value="$filterProcessNumber"
-							style="display: inline; width: 150px; height: 20px; padding: 0;" 
-							onkeydown="javascript:if (event.keyCode == 13) { tabber_right(2, 'main_content.jsp', 'filterProcessNumber=' + this.value); return false; }">
+							style="display: inline; width: 150px; height: 20px; padding: 0;">
 					</input>
 				</li>
-
+				<li class="form-group">
+					<button id="layout1" type="button" class="btn btn-default btn-sm pull-right" onclick="javascript: tabber_right(2, 'main_content.jsp', 
+					 'filterLastMoveDate=' + document.getElementById('dataUltMovText').value
+					+'&filterProcessNumber=' + document.getElementById('filterProcessNumber').value
+					+'&filterDate=' + document.getElementById('dataCriacaoText').value
+					+'&filterSubject=' + document.getElementById('filterSubject').value
+					+'&filterPreviousUserid=' + document.getElementById('previousUseridText').value
+					+'&showflowid=' + document.getElementById('filterflowid').value					
+					); return false; ">Aplicar</button>
+				</li>
+				
 			</ul>  
 		</form>
 		<div class="btn-group">
@@ -176,7 +180,7 @@
 			</div>
 		</form>
 		<div class="btn-group">
-<div>$startTask - $endTask </div>
+		<div>$startTask - $endTask </div>
 		</div>		
 		#if(!$cleanFilter)
 				
@@ -246,18 +250,18 @@
 						<li id="munread_$act.get("pid")" style="$display_unread" role="presentation">
 							<a role="menuitem" tabindex="-1" href="#" onClick="javascript:cancelMenu=true;markActivityRead(0, $act.get("flowid"), $act.get("pid"));">Marcar como não lido</a>
 						</li>
-						<li role="presentation">
+						<li role="presentation"  style="text-transform: uppercase;">
 							<a role="menuitem" tabindex="-1" href="#" onClick="javascript:cancelMenu=true; MarkCategory('$valToAssign', $act.get("pid"), '');">
 								<div class="cube" style="background-color:#666;width:20px;height:20px">&nbsp;</div>
-								&nbsp;&nbsp;Retirar da categoria
+								&nbsp;&nbsp;Retirar da categoria &nbsp;&nbsp;&nbsp;&nbsp;
 							</a>
 						</li>
 				#foreach($folder in $folders)
 					#set($folderName = $folder.getName())
-					#if($folderName.length() > 18)
-						#set($folderName=$folderName.substring(0, 15)+"...")
+					#if($folderName.length() > 16)
+						#set($folderName=$folderName.substring(0, 13)+"...")
 					#end
-						<li role="presentation">
+						<li role="presentation" style="text-transform: uppercase;">
 							<a role="menuitem" title="$folder.getName()" tabindex="-1" href="#" onClick="javascript:cancelMenu=true;MarkCategory('$valToAssign', $act.get("pid"), $folder.getFolderid());">
 								<div class="cube" style="background-color:$folder.getColor();width:20px;height:20px">&nbsp;</div>
 								&nbsp;&nbsp;$folderName
@@ -351,10 +355,9 @@
 				</li>
 				<li class="form-group">
 					<label class="form-label">
-						$labelFilterFlow
+						Selecionar fluxo
 					</label>
-					<select id="showflowid" name="showflowid" class="form-control donotclosemenu pull-right" style="width:150px;height:25px;font-size:0.8em;padding: 0 0 0 5px" 
-							onchange="javascript: tabber_right(2, 'main_content.jsp', 'showflowid=' + this.value); return false; ">
+					<select id="filterflowid" name="filterflowid" class="form-control donotclosemenu pull-right" style="width:150px;height:25px;font-size:0.8em;padding: 0 0 0 5px">
 						<option value="-1">$selectFlow</option>
 						$filterFlowOptions
 					</select>
@@ -365,8 +368,7 @@
 						Utilizador prévio
 					</label>
 					<input type="text" class="form-control donotclosemenu pull-right" id="previousUseridText" title="Utilizador Anterior" value="$filterPreviousUserid"
-							style="display: inline; width: 150px; height: 20px; padding: 0;" 
-							onkeydown="javascript:if (event.keyCode == 13) { tabber_right(2, 'main_content.jsp', 'filterPreviousUserid=' + this.value); return false; }">
+							style="display: inline; width: 150px; height: 20px; padding: 0;">
 					</input>
 				</li>
 				<li class="form-group">
@@ -374,8 +376,7 @@
 						Descrição
 					</label>
 					<input type="text" class="form-control donotclosemenu pull-right" id="filterSubject" title="Descrição" value="$filterSubject"
-							style="display: inline; width: 150px; height: 20px; padding: 0;" 
-							onkeydown="javascript:if (event.keyCode == 13) { tabber_right(2, 'main_content.jsp', 'filterSubject=' + this.value); return false; }">
+							style="display: inline; width: 150px; height: 20px; padding: 0;">
 					</input>
 				</li>
 				<li class="form-group">
@@ -384,34 +385,42 @@
 					</label>
 					<span class="pull-right">
 						<input type="text" class="form-control donotclosemenu" id="dataCriacaoText" title="Data de"  value="$filterDate"
-								onmouseover="caltasks(this.id, '%d/%m/%Y');this.onmouseover=null;" style="display: inline; width: 130px; height: 20px; padding: 0;" 
-								onchange="javascript: tabber_right(2, 'main_content.jsp', 'filterDate=' + this.value); return false; ">
+								onmouseover="caltasks(this.id, '%d/%m/%Y');this.onmouseover=null;" style="display: inline; width: 130px; height: 20px; padding: 0;">
 						</input>
 						<img class="toolTipImg" border="0" title="Apagar" src="images/icon_delete.png" onClick="javascript: tabber_right(2, 'main_content.jsp', 'filterDate='); return false;">
 					</span>
 				</li>
 				<li class="form-group">
 					<label class="form-label">
-						Data ate
+						Data até
 					</label>
 					<span class="pull-right">
 						<input type="text" class="form-control donotclosemenu" id="dataUltMovText" title="Data ate"  value="$filterLastMoveDate"
-								onmouseover="caltasks(this.id, '%d/%m/%Y');this.onmouseover=null;" style="display: inline; width: 130px; height: 20px; padding: 0;" 
-								onchange="javascript: tabber_right(2, 'main_content.jsp', 'filterLastMoveDate=' + this.value); return false; ">
+								onmouseover="caltasks(this.id, '%d/%m/%Y');this.onmouseover=null;" style="display: inline; width: 130px; height: 20px; padding: 0;">						
 						</input>
 						<img class="toolTipImg" border="0" title="Apagar" src="images/icon_delete.png" onClick="javascript: tabber_right(2, 'main_content.jsp', 'filterLastMoveDate='); return false; ">
 					</span>
 				</li>
 				<li class="form-group">
 					<label class="form-label">
-						N processo
+						Nº processo
 					</label>
-					<input type="text" class="form-control donotclosemenu pull-right" id="filterProcessNumber" title="N de processo" value="$filterProcessNumber"
-							style="display: inline; width: 150px; height: 20px; padding: 0;" 
-							onkeydown="javascript:if (event.keyCode == 13) { tabber_right(2, 'main_content.jsp', 'filterProcessNumber=' + this.value); return false; }">
+					<input type="text" class="form-control donotclosemenu pull-right" id="filterProcessNumber" title="N processo" value="$filterProcessNumber"
+							style="display: inline; width: 150px; height: 20px; padding: 0;">
 					</input>
 				</li>
-			</ul>  
+				<li class="form-group">
+					<button id="layout1" type="button" class="btn btn-default btn-sm pull-right" onclick="javascript: tabber_right(2, 'main_content.jsp', 
+					 'filterLastMoveDate=' + document.getElementById('dataUltMovText').value
+					+'&filterProcessNumber=' + document.getElementById('filterProcessNumber').value
+					+'&filterDate=' + document.getElementById('dataCriacaoText').value
+					+'&filterSubject=' + document.getElementById('filterSubject').value
+					+'&filterPreviousUserid=' + document.getElementById('previousUseridText').value
+					+'&showflowid=' + document.getElementById('filterflowid').value					
+					); return false; ">Aplicar</button>
+				</li>
+				
+			</ul>
 		</form>
 		<div class="btn-group">
 			<button id="layout0" type="button" class="btn btn-default btn-sm" onclick="javascript:tabber_right(2, 'main_content.jsp', 'layout=0');">Preview</button> 
@@ -517,18 +526,18 @@
 					<li id="munread_$act.get("pid")" style="$display_unread" role="presentation">
 						<a role="menuitem" tabindex="-1" href="#" onClick="javascript:cancelMenu=true;markActivityRead(0, $act.get("flowid"), $act.get("pid"));">Marcar como não lido</a>
 					</li>
-						<li role="presentation">
+						<li role="presentation"  style="text-transform: uppercase;">
 							<a role="menuitem" tabindex="-1" href="#" onClick="javascript:cancelMenu=true; MarkCategory('$valToAssign', $act.get("pid"), '');">
 								<div class="cube" style="background-color:#666;width:20px;height:20px">&nbsp;</div>
-								&nbsp;&nbsp;Retirar da categoria
+								&nbsp;&nbsp;Retirar da categoria &nbsp;&nbsp;&nbsp;&nbsp;
 							</a>
 						</li>
 				#foreach($folder in $folders)
 					#set($folderName = $folder.getName())
-					#if($folderName.length() > 18)
-						#set($folderName=$folderName.substring(0, 15)+"...")
+					#if($folderName.length() > 16)
+						#set($folderName=$folderName.substring(0, 13)+"...")
 					#end
-						<li role="presentation">
+						<li role="presentation" style="text-transform: uppercase;">
 							<a role="menuitem" title="$folder.getName()" tabindex="-1" href="#" onClick="javascript:cancelMenu=true;MarkCategory('$valToAssign', $act.get("pid"), $folder.getFolderid());">
 								<div class="cube" style="background-color:$folder.getColor();width:20px;height:20px">&nbsp;</div>
 								&nbsp;&nbsp;$folderName

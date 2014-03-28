@@ -1406,7 +1406,7 @@
 					<xsl:text>&nbsp;</xsl:text>
 					</xsl:when>
 
-					<xsl:when test="string-length(value) > $maxLenCol and count(value/a) = 0 and not(contains(value,'&lt;'))">
+					<xsl:when test="string-length(value) > $maxLenCol and count(value/a) = 0 and not(contains(value,'&lt;')) and tablesearch='true'">
 						<xsl:variable name="valueShort" select="substring(value, 1, $maxLenCol)" />
 						<xsl:variable name="idAux" select="generate-id()" />
 						<span id="span_short_{$idAux}">

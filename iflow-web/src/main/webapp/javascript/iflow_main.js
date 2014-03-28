@@ -1293,13 +1293,14 @@ function caltasks(id, format) {
   if (showsHourFull) {
     timeFormat = "24";
   }
-  Calendar.setup({
+  var el = Calendar.setup({
     inputField     :    id,   // id of the input field
     ifFormat       :    format,       // format of the input field
     showsTime      :    showsTime,
     timeFormat     :    timeFormat,
     electric       :    false
   });
+  Calendar.addClass(el, 'donotclosemenu');
 }
 
 function mainResize () {
@@ -1826,7 +1827,7 @@ function reloadJS(doCloseMenus) {
         if(!$(this).hasClass('active')) {
           menu_a.removeClass('active');
           menu_ul.filter(':visible').slideUp('normal');
-          $(this).addClass('active').next().stop(true,true).slideDown('normal');
+//          $(this).addClass('active').next().stop(true,true).slideDown('normal');
         } else {
           $(this).removeClass('active');
           $(this).next().stop(true,true).slideUp('normal');
