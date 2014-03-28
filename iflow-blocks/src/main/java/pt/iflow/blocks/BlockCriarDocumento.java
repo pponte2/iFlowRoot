@@ -1,9 +1,21 @@
 package pt.iflow.blocks;
 
+import java.io.File;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.Calendar;
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
 import pt.iflow.api.blocks.Block;
@@ -103,7 +115,13 @@ public class BlockCriarDocumento extends Block {
           Logger.error(login, this, "after", "Unable to process data into file: unknown template (found: template=" + tmpl + ")");
         } else {
           try {
-            FoTemplate tpl = FoTemplate.compile(template.getResourceAsStream());
+        	//preprocessing for html elements
+	    	StringWriter writer = new StringWriter();
+	    	IOUtils.copy(template.getResourceAsStream(), writer);
+	    	String templateTxt = writer.toString();
+	    	templateTxt = replaceHTLMByFO(templateTxt, userInfo, procData);
+	    	
+            FoTemplate tpl = FoTemplate.compile(templateTxt);                       
             tpl.setUseLegacyExpressions(true);
             PDFGenerator pdfGen = new PDFGenerator(tpl);
             pdfGen.addURIResolver(new RepositoryURIResolver(userInfo));
@@ -137,8 +155,41 @@ public class BlockCriarDocumento extends Block {
     return outPort;
   }
 
-  
-  private Map<String, String> getProcessSimpleVariables(ProcessData procData) {
+  /**
+   * replaces $xpto:html$ tag by FO code, the xpto var should have html code
+   * @param templateTxt
+ * @param userInfo 
+   * @param procData
+   * @return
+   */
+  private String replaceHTLMByFO(String templateTxt, UserInfoInterface userInfo, ProcessData procData) {
+	  String result = templateTxt;
+	  try{
+		  TransformerFactory factory = TransformerFactory.newInstance();
+		  RepositoryFile templateXSL = BeanFactory.getRepBean().getStyleSheet(userInfo, "xhtml-to-xslfo.xsl");  	
+		  Source xslt = new StreamSource(templateXSL.getResourceAsStream());
+		  Transformer transformer = factory.newTransformer(xslt);
+		  
+		  Pattern p = Pattern.compile("\\$\\w+:html\\$");
+		  Matcher m = p.matcher(templateTxt);
+		  while(m.find()){
+			  String htmlTagVar = m.group().substring(1, m.group().indexOf(":"));
+			  if(procData.get(htmlTagVar)!=null ){
+				 String htmlTagContent = procData.get(htmlTagVar).getRawValue();
+				 StringWriter sw = new StringWriter(); 
+				 Source text = new StreamSource(new StringReader("<html><head/><body>#START_CONTENT " + htmlTagContent.replace("<br>", "<br/>") + " #END_CONTENT</body></html>"));
+				 transformer.transform(text, new StreamResult(sw));
+				 
+				 String fopTagContent = sw.toString().substring(sw.toString().indexOf("#START_CONTENT") + 15, sw.toString().indexOf("#END_CONTENT"));
+				 fopTagContent = fopTagContent.replace("fo:","fop:");
+				 result = result.replace(m.group(), fopTagContent);
+			  }		  		  
+		  }		  
+	  }catch(Exception e){}
+	return result;
+}
+
+private Map<String, String> getProcessSimpleVariables(ProcessData procData) {
     Map<String, String> htProps = new Hashtable<String, String>();
     for (String sName : procData.getSimpleVariableNames()) {
       if (!htProps.containsKey(sName)) {
