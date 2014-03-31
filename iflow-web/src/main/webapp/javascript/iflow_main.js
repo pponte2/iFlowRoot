@@ -1513,6 +1513,7 @@ function InicializeRichTextField(elementName, richTextComponentTitle, richTextCo
     }, 100);
   };
 
+  richTextComponentWidth = document.getElementById('main').clientWidth + 'px';
   if (richTextComponentWidth == undefined){
     richTextComponentWidth = '600px';
   }
