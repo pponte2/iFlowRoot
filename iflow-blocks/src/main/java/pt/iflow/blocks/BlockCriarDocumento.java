@@ -117,7 +117,7 @@ public class BlockCriarDocumento extends Block {
           try {
         	//preprocessing for html elements
 	    	StringWriter writer = new StringWriter();
-	    	IOUtils.copy(template.getResourceAsStream(), writer);
+	    	IOUtils.copy(template.getResourceAsStream(), writer, "UTF-8");
 	    	String templateTxt = writer.toString();
 	    	templateTxt = replaceHTLMByFO(templateTxt, userInfo, procData);
 	    	
