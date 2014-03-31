@@ -78,8 +78,8 @@
 					#end
 					<input type="hidden" name="$processVarnames.get(${varName})" value="${value}">
 					<div class="form-group">
-						<label  class="col-sm-2 control-label" style=" font-size: 12px; margin-bottom: 2px">${varName}: </label>
-						<div class="col-sm-8" style=" font-size: 12px; margin-top: 7px"> 
+						<label  class="col-sm-2 control-label">${varName}: </label>
+						<div class="col-sm-8" style=" font-size: 14px; margin-top: 7px"> 
 							#if ($processDetail.get(${varName})!="")
 								$processDetail.get(${varName})
 							#end 

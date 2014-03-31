@@ -389,6 +389,9 @@ try {
     
     String selectedLastMoveDate = "";    
     String filterLastMoveDate = fdFormData.getParameter("filterLastMoveDate");
+	if( filterDate!= null && filterDate!= "" && (filterLastMoveDate == null || filterLastMoveDate == "")){
+		filterLastMoveDate = filterDate;
+	}
     if (filterLastMoveDate != null){
       session.setAttribute("filterLastMoveDate", filterLastMoveDate); // Utilizador actualizou valor
       selectedLastMoveDate = filterLastMoveDate;
