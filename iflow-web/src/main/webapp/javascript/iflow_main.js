@@ -83,6 +83,8 @@ var ajaxSavedRichTextAreaValues = new Array();
 
 var cancelMenu = false;
 
+var appletButtons = {};
+
 function selectedItem(tabnr, item) {    
   cur_item = 'li_a_' + tabnr + "_"+ item;
   if (document.getElementById((prev_item[tabnr]))) document.getElementById((prev_item[tabnr])).className = 'toolTipItemLink li_link';
@@ -587,21 +589,7 @@ function tabber(tabnr, navpage, navparam, contentpage, contentparam) {
         		  ajaxSavedValues['pid'] = window.jQuery('#open_proc_frame_3').contents().find('#pid')[0].value;
         		  ajaxSavedValues['subpid'] = window.jQuery('#open_proc_frame_3').contents().find('#subpid')[0].value;
         		  ajaxSavedValues['contentType'] = 'application/x-www-form-urlencoded;charset=UTF-8';
-        		  window.jQuery.getJSON(  
-        		      'AjaxGoBackServlet',     
-        		      ajaxSavedValues
-//        		      ,function(response){  
-//        		          try{
-//        		            var main = window.jQuery('#open_proc_frame_3').contents().find('#main');
-//        		            main.html(response);
-//        		            window.jQuery('#curmid').val(1 + Number($jQuery('#curmid').val())); 
-//        		          } catch (err){}
-//        		          finally{
-//        		            reloadBootstrapElements();
-//        		          }
-//
-//        		        }
-        		  );
+        		  window.jQuery.getJSON('AjaxGoBackServlet', ajaxSavedValues);
         	}catch(e){}
           }
           //Martelada CMA P13064-16 END  
@@ -1293,14 +1281,13 @@ function caltasks(id, format) {
   if (showsHourFull) {
     timeFormat = "24";
   }
-  var el = Calendar.setup({
+  Calendar.setup({
     inputField     :    id,   // id of the input field
     ifFormat       :    format,       // format of the input field
     showsTime      :    showsTime,
     timeFormat     :    timeFormat,
     electric       :    false
   });
-  Calendar.addClass(el, 'donotclosemenu');
 }
 
 function mainResize () {
@@ -1513,6 +1500,7 @@ function InicializeRichTextField(elementName, richTextComponentTitle, richTextCo
     }, 100);
   };
 
+  richTextComponentWidth = document.getElementById('main').clientWidth + 'px';
   if (richTextComponentWidth == undefined){
     richTextComponentWidth = '600px';
   }
@@ -1710,13 +1698,14 @@ function ajaxFormRefresh(component){
   ajaxSavedValues['pid'] = document.getElementById('pid').value;;
   ajaxSavedValues['subpid'] = document.getElementById('subpid').value;
   ajaxSavedValues['contentType'] = 'application/x-www-form-urlencoded;charset=UTF-8';
-  $jQuery.getJSON(  
-      '../AjaxFormServlet',     
-      ajaxSavedValues, 
+  $jQuery.getJSON('../AjaxFormServlet', ajaxSavedValues, 
         function(response){  
           try{
             var main = $jQuery('#main');
             main.html(response);
+            for (var k in appletButtons) {
+              $(k).innerHTML = appletButtons[k];  
+            }
             $jQuery('#curmid').val(1 + Number($jQuery('#curmid').val())); 
           } catch (err){}
           finally{
@@ -1827,7 +1816,7 @@ function reloadJS(doCloseMenus) {
         if(!$(this).hasClass('active')) {
           menu_a.removeClass('active');
           menu_ul.filter(':visible').slideUp('normal');
-//          $(this).addClass('active').next().stop(true,true).slideDown('normal');
+          $(this).addClass('active').next().stop(true,true).slideDown('normal');
         } else {
           $(this).removeClass('active');
           $(this).next().stop(true,true).slideUp('normal');

@@ -343,7 +343,7 @@
 							<td height="20" colspan="4">$date</td>
 						</tr>
 						<tr>
-							<td style="padding:5px;max-width:180px" title="$user">
+							<td style="padding:5px;max-width:150px" title="$user">
 								#if($sys_admin != "yes")
 									#if($user.length()>50)
 										$user.substring(0,49)...
@@ -352,11 +352,11 @@
 									#end
 								#end							
 							</td>
-							<td style="color: #009933;padding:5px;max-width:120px" title="$username @ $unit">
+							<td style="color: #009933;padding:5px;max-width:150px" title="$username @ $unit">
 							<a style="color: #009933;text-decoration:none;" href="javascript:tabber_right(6, 'personal_account.jsp')">
 							#if($sys_admin != "yes")
-								#if($username.length()>15)
-									#set($usernameAux = "$username.substring(0,14)..." )
+								#if($username.length()>20)
+									#set($usernameAux = "$username.substring(0,19)..." )
 								#else
 									#set($usernameAux = "$username" )
 								#end
