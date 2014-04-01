@@ -37,6 +37,7 @@ if(!window['Json']) Json = top.Json;
  * 
  * @return Identificador do ficheiro carregado
  */
+
 function uploadFile(varName, signatureType, encryptionType, max, sig_pos_style_java) {
   if(!IFLOW_APPLET_ELEM)  {
     alert('Applet nao foi configurada');
@@ -56,11 +57,7 @@ function uploadFile(varName, signatureType, encryptionType, max, sig_pos_style_j
   obj[IFLOW_APPLET_ELEM.SIGNATURE_TYPE] = signatureType;
   obj[IFLOW_APPLET_ELEM.ENCRYPTION_TYPE] = encryptionType;
 
-  var taskId = IFLOW_APPLET_ELEM.uploadFile(
-      document.cookie,
-      Json.toString(obj),
-      sig_pos_style_java
-  );
+  var taskId = IFLOW_APPLET_ELEM.uploadFile(document.cookie, Json.toString(obj), sig_pos_style_java);
 
   checkLimits(varName);
 }
@@ -101,6 +98,7 @@ function updateMax(max) {
     this.BIG_MAX = 0;
   }
 }
+
 /**
  * Modificar ficheiro existente. Permite reassinar ou encriptar um documento existente na base de dados.
  * 
@@ -127,11 +125,7 @@ function modifyFile(varName, fileId, signatureType, encryptionType, sig_pos_styl
   obj[IFLOW_APPLET_ELEM.SIGNATURE_TYPE] = signatureType;
   obj[IFLOW_APPLET_ELEM.ENCRYPTION_TYPE] = encryptionType;
 
-  return IFLOW_APPLET_ELEM.modifyFile(
-      document.cookie,
-      Json.toString(obj), 
-      sig_pos_style_java
-  );
+  return IFLOW_APPLET_ELEM.modifyFile(document.cookie, Json.toString(obj), sig_pos_style_java);
 }
 
 /**
@@ -160,11 +154,7 @@ function replaceFile(varName, fileId, signatureType, encryptionType, sig_pos_sty
   obj[IFLOW_APPLET_ELEM.SIGNATURE_TYPE] = signatureType;
   obj[IFLOW_APPLET_ELEM.ENCRYPTION_TYPE] = encryptionType;
 
-  return IFLOW_APPLET_ELEM.replaceFile(
-      document.cookie,
-      Json.toString(obj), 
-      sig_pos_style_java
-  );
+  return IFLOW_APPLET_ELEM.replaceFile(document.cookie, Json.toString(obj), sig_pos_style_java);
 }
 
 /**
@@ -370,13 +360,13 @@ function changeFileState(docid) {
 }
 
 //As funcoes de exemplo nas quais me devo basear s�o estas:
-function loadSignedFile(signatureType,varname) {
+function loadSignedFile(signatureType, varname) {
   var fileDesc;
   if(!IFLOW_APPLET_ELEM)  {
     alert('Applet nao foi configurada');
     return;
   }
-  fileDesc = IFLOW_APPLET_ELEM.loadAndSign(signatureType,varname);
+  fileDesc = IFLOW_APPLET_ELEM.loadAndSign(signatureType, varname);
   if(fileDesc) {
     addFileElem(fileDesc);
   }
@@ -400,7 +390,7 @@ function addFileElem(myObject) {
   
   delete_button.onclick = function(){ // Solu��o para IE
     removeFile(fileid,varname);
-      return true;
+    return true;
   };
   
 
@@ -412,9 +402,12 @@ function addFileElem(myObject) {
 
   insertLocation = $('list_'+varname);
   insertLocation.appendChild(row_element); 
+  
+  //martelada: guardar os botões das applets
+  appletButtons['list_'+varname] = $('list_'+varname).innerHTML; 
 }
 
-function remsoveSignedFile(fileid, varname) {
+function removeSignedFile(fileid, varname) {
   if(!IFLOW_APPLET_ELEM)  {
     alert('Applet nao foi configurada');
     return;

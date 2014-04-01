@@ -543,8 +543,8 @@
 	          if (this.selectbox.attr('onChange'))
 	            this.selectbox.trigger("change");
 	          else{
-	        	ajaxSaveValueChange(this.selectbox.context);	
-	            ajaxFormRefresh(this.selectbox.context);	            										
+	            ajaxSaveValueChange(this.selectbox.context);	
+	            ajaxFormRefresh(this.selectbox.context);
 	          }
 	        }
 
