@@ -382,7 +382,7 @@ function addFileElem(myObject) {
   varname = myObject.varname;
 
   item = document.createElement("span");
-  item.innerHTML = filename; 
+  item.innerHTML = filename;
   delete_button = document.createElement('img');
   delete_button.src ='../images/cross_small.gif';
   delete_button.alt = 'Delete';
@@ -395,8 +395,9 @@ function addFileElem(myObject) {
   
 
   row_element = document.createElement('div');
-  row_element.class = 'item',
+  row_element.class = 'item';
   row_element.id = 'elem_'+fileid;
+  row_element.setStyle('white-space', 'nowrap');
   row_element.appendChild(delete_button);
   row_element.appendChild(item);
 
