@@ -1,22 +1,24 @@
 package pt.iflow.blocks;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringReader;
-import java.io.StringWriter;
+import java.net.URL;
 import java.util.Calendar;
 import java.util.Hashtable;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.Properties;
 
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
+import org.w3c.dom.CharacterData;
+import org.w3c.dom.Node;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import pt.iflow.api.blocks.Block;
 import pt.iflow.api.blocks.Port;
@@ -32,6 +34,7 @@ import pt.iflow.api.utils.Logger;
 import pt.iflow.api.utils.UserInfoInterface;
 import pt.iflow.connector.document.Document;
 import pt.iknow.pdf.PDFGenerator;
+import pt.iknow.xslfo.FoEvaluatorFactory;
 import pt.iknow.xslfo.FoTemplate;
 
 public class BlockCriarDocumento extends Block {
@@ -115,20 +118,23 @@ public class BlockCriarDocumento extends Block {
           Logger.error(login, this, "after", "Unable to process data into file: unknown template (found: template=" + tmpl + ")");
         } else {
           try {
-        	//preprocessing for html elements
-	    	StringWriter writer = new StringWriter();
-	    	IOUtils.copy(template.getResourceAsStream(), writer, "UTF-8");
-	    	String templateTxt = writer.toString();
-	    	templateTxt = replaceHTLMByFO(templateTxt, userInfo, procData);
-	    	
-            FoTemplate tpl = FoTemplate.compile(templateTxt);                       
+        	bsh.Interpreter bsh = procData.getInterpreter(userInfo);
+        	//1st pass get a prerendered fop because of html tags and all
+        	FoTemplate tpl = FoTemplate.compile(template.getResourceAsStream());                       
             tpl.setUseLegacyExpressions(true);
             PDFGenerator pdfGen = new PDFGenerator(tpl);
             pdfGen.addURIResolver(new RepositoryURIResolver(userInfo));
+            String replacedTemplate = pdfGen.getRenderedFOP(FoEvaluatorFactory.wrapScriptEngine(bsh)).replace("&lt;", "<").replace("&gt;", ">");
+            //start again this time with the new template
+            tpl = FoTemplate.compile(replacedTemplate);                       
+            tpl.setUseLegacyExpressions(true);
+            pdfGen = new PDFGenerator(tpl);
+            pdfGen.addURIResolver(new RepositoryURIResolver(userInfo));
+            
             DocumentData newDocument = new DocumentData();
             newDocument.setFileName(procData.transform(userInfo, filename));
 //            newDocument.setContent(pdfGen.getContents(getProcessSimpleVariables(procData)));
-            bsh.Interpreter bsh = procData.getInterpreter(userInfo);
+            
             newDocument.setContent(pdfGen.getContents(bsh));
             newDocument.setUpdated(Calendar.getInstance().getTime());
             Document savedDocument = BeanFactory.getDocumentsBean().addDocument(userInfo, procData, newDocument);
@@ -154,40 +160,6 @@ public class BlockCriarDocumento extends Block {
     Logger.logFlowState(userInfo, procData, this, logMsg.toString());
     return outPort;
   }
-
-  /**
-   * replaces $xpto:html$ tag by FO code, the xpto var should have html code
-   * @param templateTxt
- * @param userInfo 
-   * @param procData
-   * @return
-   */
-  private String replaceHTLMByFO(String templateTxt, UserInfoInterface userInfo, ProcessData procData) {
-	  String result = templateTxt;
-	  try{
-		  TransformerFactory factory = TransformerFactory.newInstance();
-		  RepositoryFile templateXSL = BeanFactory.getRepBean().getStyleSheet(userInfo, "xhtml-to-xslfo.xsl");  	
-		  Source xslt = new StreamSource(templateXSL.getResourceAsStream());
-		  Transformer transformer = factory.newTransformer(xslt);
-		  
-		  Pattern p = Pattern.compile("\\$\\w+:html\\$");
-		  Matcher m = p.matcher(templateTxt);
-		  while(m.find()){
-			  String htmlTagVar = m.group().substring(1, m.group().indexOf(":"));
-			  if(procData.get(htmlTagVar)!=null ){
-				 String htmlTagContent = procData.get(htmlTagVar).getRawValue();
-				 StringWriter sw = new StringWriter(); 
-				 Source text = new StreamSource(new StringReader("<html><head/><body>#START_CONTENT " + htmlTagContent.replace("<br>", "<br/>") + " #END_CONTENT</body></html>"));
-				 transformer.transform(text, new StreamResult(sw));
-				 
-				 String fopTagContent = sw.toString().substring(sw.toString().indexOf("#START_CONTENT") + 15, sw.toString().indexOf("#END_CONTENT"));
-				 fopTagContent = fopTagContent.replace("fo:","fop:");
-				 result = result.replace(m.group(), fopTagContent);
-			  }		  		  
-		  }		  
-	  }catch(Exception e){}
-	return result;
-}
 
 private Map<String, String> getProcessSimpleVariables(ProcessData procData) {
     Map<String, String> htProps = new Hashtable<String, String>();
