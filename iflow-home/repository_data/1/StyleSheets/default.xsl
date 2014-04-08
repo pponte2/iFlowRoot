@@ -1997,27 +1997,39 @@
 		</xsl:otherwise>
 	</xsl:choose>
 	</xsl:attribute>
-	<xsl:attribute name="href">
-	<xsl:value-of select="href/text()" />
-	<xsl:for-each select="arg">
-		<xsl:choose>
-		<xsl:when test="first='true'"><xsl:text>?</xsl:text></xsl:when>
-		<xsl:otherwise><xsl:text>&amp;</xsl:text></xsl:otherwise>
-		</xsl:choose>
-		<xsl:value-of select="name/text()" />
-		<xsl:text>=</xsl:text>
-		<xsl:choose>
-		<xsl:when test="function-available('encoder:encode')">
-			<xsl:value-of select="encoder:encode(value)" />
+	<xsl:choose>
+		<xsl:when test="externallink='true'">
+			<xsl:attribute name="href">
+				<xsl:value-of select="href/text()" />
+			</xsl:attribute>		
+			<xsl:attribute name="target">
+				_blank 
+			</xsl:attribute>
 		</xsl:when>
 		<xsl:otherwise>
-			<xsl:call-template name="url-encode">
-				<xsl:with-param name="str" select="value" />
-			</xsl:call-template>
-				</xsl:otherwise>
-		</xsl:choose>
-	</xsl:for-each>
-	</xsl:attribute>
+			<xsl:attribute name="href">
+			<xsl:value-of select="href/text()" />
+			<xsl:for-each select="arg">
+				<xsl:choose>
+				<xsl:when test="first='true'"><xsl:text>?</xsl:text></xsl:when>
+				<xsl:otherwise><xsl:text>&amp;</xsl:text></xsl:otherwise>
+				</xsl:choose>
+				<xsl:value-of select="name/text()" />
+				<xsl:text>=</xsl:text>
+				<xsl:choose>
+				<xsl:when test="function-available('encoder:encode')">
+					<xsl:value-of select="encoder:encode(value)" />
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:call-template name="url-encode">
+						<xsl:with-param name="str" select="value" />
+					</xsl:call-template>
+						</xsl:otherwise>
+				</xsl:choose>
+			</xsl:for-each>
+			</xsl:attribute>
+		</xsl:otherwise>
+	</xsl:choose>	
 	<xsl:if test="disabled='true'">
 		<xsl:attribute name="disabled">true</xsl:attribute>
 	</xsl:if>

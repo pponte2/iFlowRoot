@@ -838,6 +838,13 @@ public class BlockFormulario extends Block implements FormOperations {
                 rowValue.setValue(StringEscapeUtils.escapeXml(rowValue.getValue().toString()));
               
               fieldContent = dtiMultiple.formatRow(userInfo, procData, anService, fieldNumber, i, listVarName, row, rowValue, props, response);
+              //P13064-99 BEGiN
+              if(StringUtils.isNotBlank(extraProps.get("externallink"))){
+            	  String externalLinkVarName = extraProps.get("externallink");
+            	  ProcessListVariable externalLinkVarList = procData.getList(externalLinkVarName);
+            	  fieldContent = "<a><href>" + externalLinkVarList.getItem(row).getRawValue() + "</href><externallink>true</externallink>" + fieldContent.substring(fieldContent.indexOf("<text>")) ;
+              }
+              //P13064-99 END
               Logger.debug(sLogin,abBlock,"generateForm",
                   (abBlock==null? procData.getSignature() : procData.getSignature(abBlock.getId())) +
                   "List formatRow(" + listVarName + ")[" + row + "]=" + fieldContent);
