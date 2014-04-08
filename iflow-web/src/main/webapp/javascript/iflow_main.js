@@ -1960,3 +1960,23 @@ function updateNotificationsCallback(response){
 	document.getElementById('delegButtonCount').text = response.trim();
 	window.setTimeout(updateNotifications, 60000);
 }
+
+function isDownloadAvailable(component){
+	var $jQuery = jQuery.noConflict();
+	result = $jQuery.ajax({
+	    type: 'GET',
+	    url: component.href,
+	    async: false,
+		success: function(data, textStatus, jqXHR) {        
+		},
+		error: function(data, textStatus, jqXHR) {
+		}
+		});	
+	
+	if (result.responseText.length==0){
+		alert('Por favor aguarde, o ficheiro vai ser disponibilizado brevemente');
+		return false;	
+	}		
+	else
+		return true;
+}

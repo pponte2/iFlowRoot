@@ -1603,7 +1603,7 @@
 				<xsl:if test="../show_link='true'">
 					<xsl:text>&nbsp;</xsl:text>
 					<xsl:if test="string-length(link_url) &gt; 0">
-					<a target="_blank" href="{link_url}" style="white-space:nowrap;">
+					<a target="_blank" href="{link_url}" style="white-space:nowrap;" onclick="return isDownloadAvailable(this)">
 						<xsl:apply-templates select="link_text" />
 					</a>
 					</xsl:if>
