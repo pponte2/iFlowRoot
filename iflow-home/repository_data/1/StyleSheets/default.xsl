@@ -1487,7 +1487,7 @@
 		<xsl:attribute name="style">
 			text-align:<xsl:apply-templates select="align" />
 				</xsl:attribute>
-		<a style="color:#03679e;font-size:13px;">
+		<a style="color:#FFFF00;font-size:13px;">
 		<xsl:choose>
 			<xsl:when test="disabled='true'">
 			<xsl:attribute name="href">
@@ -1986,7 +1986,14 @@
 	</xsl:template>
 
 	<xsl:template match="a">
-	<a>
+	<a>	
+	<xsl:if test="disabled='true'">		
+		<xsl:attribute name="style">
+			color:#000000;
+			pointer-events: none;
+   			cursor: default;
+		</xsl:attribute>
+	</xsl:if>
 	<xsl:attribute name="class">
 	<xsl:choose>
 		<xsl:when test="string-length(stylesheet/text()) &gt; 0">
@@ -2029,10 +2036,7 @@
 			</xsl:for-each>
 			</xsl:attribute>
 		</xsl:otherwise>
-	</xsl:choose>	
-	<xsl:if test="disabled='true'">
-		<xsl:attribute name="disabled">true</xsl:attribute>
-	</xsl:if>
+	</xsl:choose>		
 	<xsl:value-of select="text/text()" />
 	</a>
 	</xsl:template>
