@@ -836,9 +836,9 @@ public class BlockFormulario extends Block implements FormOperations {
               
               if(rowValue != null && rowValue.getValue() != null && rowValue.getValue().getClass().equals(String.class))
                 rowValue.setValue(StringEscapeUtils.escapeXml(rowValue.getValue().toString()));
-              
+             
               //P13064-97 BEGiN
-              if(extraProps!=null && StringUtils.equals(extraProps.get("activeInDetail"), "true") && StringUtils.equals("true", props.getProperty(i+ "_" + FormProps.sOUTPUT_ONLY))){
+              if(extraProps!=null && StringUtils.equals(extraProps.get("activeInDetail"), "true") && StringUtils.equals(jspOverride,"proc_detail.jsp") && StringUtils.equals("true", props.getProperty(i+ "_" + FormProps.sOUTPUT_ONLY))){
             	  props.setProperty(i+ "_" + FormProps.sOUTPUT_ONLY,"false");
               }
               //P13064-97 BEGiN
