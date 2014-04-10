@@ -1487,7 +1487,7 @@
 		<xsl:attribute name="style">
 			text-align:<xsl:apply-templates select="align" />
 				</xsl:attribute>
-		<a style="color:#FFFF00;font-size:13px;">
+		<a style="color:#03679e;font-size:13px;">
 		<xsl:choose>
 			<xsl:when test="disabled='true'">
 			<xsl:attribute name="href">
@@ -1989,7 +1989,7 @@
 	<a>	
 	<xsl:if test="disabled='true'">		
 		<xsl:attribute name="style">
-			color:#000000;
+			color:#777777;
 			pointer-events: none;
    			cursor: default;
 		</xsl:attribute>

@@ -470,9 +470,13 @@ public class FlowBean implements Flow {
 
           if (nextURL == null) {
             String forwardBlockUpdateLabelParams = getFowardBlockUpdateLabelParams(userInfo, block, procData);
+            //Update Folder
+            getFowardBlockUpdateFolderParams(userInfo, block, procData);
+            //Get message
+            String mensagemForward = getFowardBlockMSG(block);
             // show info page
             nextURL = "proc_info.jsp?flowid=" + flowId + "&pid=" + pid + "&subpid=" + procData.getSubPid()
-                + (block.isForwardBlock() ? "&from=forward" + forwardBlockUpdateLabelParams : "");
+                + (block.isForwardBlock() ? "&from=forward" + forwardBlockUpdateLabelParams + mensagemForward : "");
 
             if (callNextBlock) {
               // if here, block does not have interaction and user does
@@ -567,12 +571,24 @@ public class FlowBean implements Flow {
         DatabaseInterface.closeResources(conn);
       }
     }
-    //Update Folder
-    getFowardBlockUpdateFolderParams(userInfo, block, procData);
+
     if (blockedNextUrl != null) nextURL = blockedNextUrl;  
     return nextURL;
   }
 
+  private String getFowardBlockMSG(Block block) {
+	    String mensagem = "";
+	    String mensagemForward = "";
+	    
+	    if (block.isForwardBlock()){
+	    	mensagem = block.getAttribute("UserMessage");
+	      if(StringUtils.isNotEmpty(mensagem))
+	    	  mensagemForward = "&msg="+mensagem;
+	    }
+	    
+	    return mensagemForward;
+	  }
+  
   private String getFowardBlockUpdateLabelParams(UserInfoInterface userInfo, Block block, ProcessData procData) {
     String forwardBlockUpdateLabelParams = "";
     if (block.isForwardBlock()){
