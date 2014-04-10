@@ -35,7 +35,17 @@
 
   if ("forward".equals(from) && hasAnnottations){
     pam.deleteAnnotations(userInfo,flowid,pid,subpid); 
-  }	
+  }
+  
+  if ("forward".equals(from)){
+	  //Insert Auto Label from block Forward
+	  String forwardToLabelId = fdFormData.getParameter("forwardToLabelId");
+	  if(StringUtils.isNotEmpty(forwardToLabelId)){
+	      String[] label = {forwardToLabelId};
+	      BeanFactory.getProcessAnnotationManagerBean().addLabel(userInfo, flowid, pid, subpid,label);
+	  }
+  }
+  
   List<ProcessComment> comments = pam.getProcessComment_History(userInfo, flowid, pid, subpid); 
 %>
 
@@ -127,11 +137,13 @@
 				<img class="icon_clear" src="images/icon_delete.png" onclick="javascript:document.getElementById('deadline').value='';" />
 				<input type="hidden" id="deadlineini" value="<%=sDeadline%>">
 			</ul>
-			
 			<%if (!"forward".equals(from)) {%>
 			<br><input type="button" class="apt_regular_button btn btn-default" value="<if:message string="button.save"/>" id="save" onclick="saveProcessAnnotations('false');">
 			<input type="button" class="apt_regular_button btn btn-default" value="<if:message string="button.cancel"/>" id="cancel" onclick="showAnnotations(<%=flowid%>,<%=pid%>,<%=subpid%>);">
-			<%}%>	
+			<%}else{%>
+			<input id="annotationButton" class="regular_button_02 btn btn-default" type="button" name="close" value="<if:message string="button.send.anottation"/>" 
+    		onclick="parent.saveForwardToProcessAnnotations('true');if(parent && parent.close_process) parent.close_process(3); return false;" />
+			<%} %>	
 		</div>    
 	</div>    
 	

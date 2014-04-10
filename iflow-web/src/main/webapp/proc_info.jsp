@@ -29,6 +29,12 @@
         }
     }
     
+    String msg = fdFormData.getParameter("msg");
+    if(StringUtils.isNotEmpty(msg)){
+        sbHtml = new StringBuffer("<p>");
+        sbHtml.append(msg).append("</p>");	
+    }
+    
     boolean paramsOk = false;
     try {
      // use of fdFormData defined in /inc/defs.jsp
@@ -119,40 +125,50 @@
         sFrom = "";
     }
     if (pid > 0 && "forward".equals(sFrom)){ 
-      String labelId = fdFormData.getParameter("labelid");
-      if (labelId == null){
-        labelId = "";
-      }
-      String labelName = fdFormData.getParameter("labelname");
-      if (labelName == null){
-        labelName = "";
-      }
-    %>
-  <span id ="end_process_process_annotations_span"></span>
-  <script language="JavaScript" type="text/javascript">
-	if (parent.showProcessFowardAnnotations)
-	  parent.showProcessFowardAnnotations(<%=flowid%>,<%=pid%>,<%=subpid%>,'<%=sFrom%>', '<%=labelId%>', '<%=labelName%>');
-	 
-  </script>
-<% } %>
+		      String labelId = fdFormData.getParameter("labelid");
+		      if (labelId == null){
+		        labelId = "";
+		      }
+		      String labelName = fdFormData.getParameter("labelname");
+		      if (labelName == null){
+		        labelName = "";
+		      }
+		      
+		    %>
+		  <span id ="end_process_process_annotations_span"></span>
+		  <script language="JavaScript" type="text/javascript">
+		  	if (parent.showProcessFowardAnnotations){
+			  parent.showProcessFowardAnnotations(<%=flowid%>,<%=pid%>,<%=subpid%>,'<%=sFrom%>', '<%=labelId%>', '<%=labelName%>');
+		  	}
+		  </script>
+	<% } %>
 <hr class="apt_sep">
 <div class="button_box" style="text-align:center; margin-bottom:30px">
   <form action="#" onsubmit="return false;">
     <% String theme = BeanFactory.getOrganizationThemeBean().getOrganizationTheme(userInfo).getThemeName(); %>
 		<input class="regular_button_01 btn btn-default"
 			<%if (userInfo.isGuest() || "newflow".equals(theme)) {%>
-			type="hidden" <%} else {%> type="button" <%}%> name="close"
-			value="<if:message string="button.close"/>"
+				type="hidden" 
+			<%}	else {%> 
+				type="button" 
+			<%}%> 
+			name="close" value="<if:message string="button.close"/>"
 			onclick="if(parent.saveForwardToProcessAnnotations)parent.saveForwardToProcessAnnotations('true');if(parent && parent.close_process) parent.close_process(3); return false;" />
-		<% if (pid > 0 && "forward".equals(sFrom)){ %>
-    <input id="annotationButton" class="regular_button_02 btn btn-default" <%if (userInfo.isGuest()) {%> type="hidden" <%} else {%> type="button" <%}%> name="close" value="<if:message string="button.send.anottation"/>" onclick="parent.saveForwardToProcessAnnotations('true');if(parent && parent.close_process) parent.close_process(3); return false;" />
-  <script language="JavaScript" type="text/javascript">
-  window.frames.frameElement.style.height='800px';	
-  //setTimeout(function(){document.getElementById('open_proc_frame_3').style.height = '800px';alert('done!');}, 1000);  	
-	if (!parent.showProcessFowardAnnotations) //not brilliant... Check if the function is the to know if annotations are to be used
-      document.getElementById('annotationButton').style.display = 'none';     
-  </script>
-
+	<% if (pid > 0 && "forward".equals(sFrom) && 1==2){ %>
+    		<input id="annotationButton" class="regular_button_02 btn btn-default" 
+    		<%if (userInfo.isGuest()) {%> 
+    			type="hidden" <%} 
+    		else {%> 
+    			type="button" 
+    		<%}%> 
+    		name="close" value="<if:message string="button.send.anottation"/>" 
+    		onclick="parent.saveForwardToProcessAnnotations('true');if(parent && parent.close_process) parent.close_process(3); return false;" />
+		  	<script language="JavaScript" type="text/javascript">
+		  	window.frames.frameElement.style.height='800px';	
+		  	//setTimeout(function(){document.getElementById('open_proc_frame_3').style.height = '800px';alert('done!');}, 1000);  	
+			if (!parent.showProcessFowardAnnotations) //not brilliant... Check if the function is the to know if annotations are to be used
+		      	document.getElementById('annotationButton').style.display = 'none';     
+		  	</script>
     <% } %>
   </form>
 </div>
