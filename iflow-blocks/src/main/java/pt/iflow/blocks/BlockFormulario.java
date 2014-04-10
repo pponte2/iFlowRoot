@@ -836,8 +836,21 @@ public class BlockFormulario extends Block implements FormOperations {
               
               if(rowValue != null && rowValue.getValue() != null && rowValue.getValue().getClass().equals(String.class))
                 rowValue.setValue(StringEscapeUtils.escapeXml(rowValue.getValue().toString()));
+             
+              //P13064-97 BEGiN
+              if(extraProps!=null && StringUtils.equals(extraProps.get("activeInDetail"), "true") && StringUtils.equals(jspOverride,"proc_detail.jsp") && StringUtils.equals("true", props.getProperty(i+ "_" + FormProps.sOUTPUT_ONLY))){
+            	  props.setProperty(i+ "_" + FormProps.sOUTPUT_ONLY,"false");
+              }
+              //P13064-97 BEGiN
               
               fieldContent = dtiMultiple.formatRow(userInfo, procData, anService, fieldNumber, i, listVarName, row, rowValue, props, response);
+              //P13064-99 BEGiN
+              if(extraProps!=null && StringUtils.isNotBlank(extraProps.get("externallink"))){
+            	  String externalLinkVarName = extraProps.get("externallink");
+            	  ProcessListVariable externalLinkVarList = procData.getList(externalLinkVarName);
+            	  fieldContent = "<a><href>" + externalLinkVarList.getItem(row).getRawValue() + "</href><externallink>true</externallink>" + fieldContent.substring(fieldContent.indexOf("<text>")) ;
+              }
+              //P13064-99 END
               Logger.debug(sLogin,abBlock,"generateForm",
                   (abBlock==null? procData.getSignature() : procData.getSignature(abBlock.getId())) +
                   "List formatRow(" + listVarName + ")[" + row + "]=" + fieldContent);
