@@ -24,18 +24,18 @@ if(scroll != null)
 <input type="hidden" name="subpid" value="<%=sSubPid%>">
 <input type="hidden" name="procStatus" value="<%=status%>">
 
-<iframe onload="calcFrameHeight('iframe_proc_detail');" name="proc_detail" id="iframe_proc_detail" scrolling="auto" height="1" width="100%" style="position: fixed" frameborder="0" src="<%=detailURL%>">
+<iframe onload="calcFrameHeight('iframe_proc_detail');" name="proc_detail" id="iframe_proc_detail" scrolling="auto" height="1" style="" frameborder="0" src="<%=detailURL%>">
 </iframe>
 <div id="buttons_proc_detail">
 <fieldset class="submit">
 <% if(status.equals("-2")){ %>
 
-  <input class="regular_button_01 btn btn-default pull-right" style="margin-right:40px;" type="button" name="back" value="Fechar" 
+  <input class="regular_button_01 btn btn-default btn-sm  pull-right" style="margin-right:40px;" type="button" name="back" value="Fechar" 
   	onClick="javascript:tabber('<%=response.encodeURL("main.jsp")%>');"/>
   
 <%} else if(status.equals("-3")){ %>
 
-  <input class="regular_button_01 btn btn-default pull-right" style="margin-right:40px;" type="button" name="back" value="Fechar" 
+  <input class="regular_button_01 btn btn-default btn-sm pull-right" style="margin-right:40px;" type="button" name="back" value="Fechar" 
 	onClick="javascript:tabber('inbox','','',inboxJSP);"/>
 
 <%} else if(status.equals("-4")){ %>

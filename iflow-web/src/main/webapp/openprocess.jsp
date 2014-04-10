@@ -18,7 +18,7 @@
 	frameborder="0" scrolling="auto" marginheight="0" marginwidth="0" width="100%" height="100%"
 	src="<%=src%>?process_url=<%=param%>" class="open_proc_frame_colapsed" style="display: block;"> your
 	browser does not support iframes or they are disabled at this time </iframe>
-<div class="proc_menu_colapsed" style="display:block;position:relative;top:-80px">
+<div class="proc_menu_colapsed" style="display:block;">
 	<div style="display:inline;width:15px;" class="pull-right">&nbsp;</div>
 	<div id="butclose2" class="proc_menu_button btn btn-default btn-sm pull-right" src="images/close.png" onclick="javascript:close_process(3);changeColor(document.getElementById('ptc_<%=23%>'));" title="Fechar::Fechar o form"><if:message string="button.close"/></div>
 </div>
