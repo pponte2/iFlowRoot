@@ -624,8 +624,8 @@ public class FlowBean implements Flow {
 
     if (block.isForwardBlock()){
       String updateTaskFolderCond = block.getAttribute(BlockForwardTo.sFORWARD_TO_UPDATE_FOLDER_COND);
-      String updateTaskFolder = block.getAttribute(BlockForwardTo.sFORWARD_TO_UPDATE_FOLDER);
-
+      String updateTaskFolder = block.getParsedAttribute(userInfo, BlockForwardTo.sFORWARD_TO_UPDATE_FOLDER, procData);
+      
       boolean isUpdateFolder = false;
       if (StringUtilities.isEmpty(updateTaskFolderCond) || StringUtilities.isEmpty(updateTaskFolder)) {
         Logger.warning(userInfo.getUtilizador(), this, "before", "Missing update condition or Category, assuming false");
