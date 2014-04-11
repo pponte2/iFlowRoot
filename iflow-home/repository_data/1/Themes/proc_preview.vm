@@ -148,15 +148,15 @@
 					url : formURL,
 					type: "POST",
 					data : postData,
-				    success:function(data, textStatus, jqXHR) {
+				   /* success:function(data, textStatus, jqXHR) {
                         var tabnr = '3';
                         parent.tabber(tabnr);
                         var ctrl = sectionDiv + tabnr;
                         var aux =  document.getElementById(ctrl);
                         if (aux == null) aux = parent.document.getElementById(ctrl);
                         if (aux != null) aux.innerHTML = jqXHR.responseText;
-                        //openProcess($procFlowid, '$response.encodeURL($url_prefix,$uri)', 'flowid=$procFlowid&pid=$procPid&subpid=$procSubpid', false, 3);
-                    },
+                    }, */
+                    success:function(data, textStatus, jqXHR) {openProcess($procFlowid, '$response.encodeURL($url_prefix,$uri)', 'flowid=$procFlowid&pid=$procPid&subpid=$procSubpid', false, 3);},
 					error: function(jqXHR, textStatus, errorThrown){openProcess($procFlowid, '$response.encodeURL($url_prefix,$uri)', 'flowid=$procFlowid&pid=$procPid&subpid=$procSubpid', false, 3);}
 				});
 			    e.preventDefault();	
