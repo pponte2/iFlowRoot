@@ -12,7 +12,7 @@ begin
 
 
 
-  update activity set userid = auserid, created = mydate, started = mydate, archived = mydate, profilename = auserid
+  update activity set userid = auserid, created = mydate, started = mydate, archived = mydate, profilename = auserid, read_flag = 0
   where pid = apid and flowid = aflowid and userid = olduser and mid = oldmid;
 END
 //
