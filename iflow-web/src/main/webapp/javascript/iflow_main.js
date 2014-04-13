@@ -1798,6 +1798,20 @@ function reloadJS(doCloseMenus) {
 
   $('.donotclosemenu').click(function(e) { e.stopPropagation();});
 
+	$(function () {
+	    $('.dropdown.keep-open').on({
+		"shown.bs.dropdown": function() {
+		    $(this).data('closable', false);
+		},
+		"click": function() {
+		    $(this).data('closable', true);
+		},
+		"hide.bs.dropdown": function() {
+		    return $(this).data('closable');
+		}
+	    });
+	});
+
   $(".draggable").draggable({revert: "invalid", opacity: 0.7, helper: "clone"});
   $(".droppable").droppable({
     hoverClass: "if-state-active",

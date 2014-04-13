@@ -1,3 +1,4 @@
+
 <style type="text/css">
 	ul.dropdown-menu li {
 		text-align: left;
@@ -85,13 +86,9 @@
 				</li>
 			</ul>  
 		</form>
-		<form style="display:inline">
+		<form style="display:inline" class="dropdown keep-open">
 			<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">Filtrar<img width="12" height="12" src="Themes/newflow/images/down-arrow.png" style="margin-left:2px"/></button>
-			<ul class="dropdown-menu" role="menu" style="width:350px; top:110px; left: 270px;">
-				<li class="form-group">
-					<label></label>
-					<button type="button" class="close pull-right" onclick="javascript:tabber_right(2, 'main_content.jsp', 'cleanFilter=1&startindex=0');">&times;</button>
-				</li>
+			<ul class="dropdown-menu" role="menu" style="width:350px; top:20px; left: 0px;; padding-top: 10px">
 				<li class="form-group">
 					<label class="form-label">
 						Selecionar fluxo
@@ -126,7 +123,7 @@
 						<input type="text" class="form-control donotclosemenu" id="dataCriacaoText" title="Data de"  value="$filterDate"
 								onmouseover="caltasks(this.id, '%d/%m/%Y');this.onmouseover=null;" style="display: inline; width: 130px; height: 20px; padding: 0;">
 						</input>
-						<img class="toolTipImg" border="0" title="Apagar" src="images/icon_delete.png" onClick="javascript: tabber_right(2, 'main_content.jsp', 'filterDate='); return false;">
+						<!--img class="toolTipImg" border="0" title="Apagar" src="images/icon_delete.png" onClick="javascript: alert($jquery('dataCriacaoText').value)"-->
 					</span>
 				</li>
 				<li class="form-group">
@@ -137,7 +134,7 @@
 						<input type="text" class="form-control donotclosemenu" id="dataUltMovText" title="Data ate"  value="$filterLastMoveDate"
 								onmouseover="caltasks(this.id, '%d/%m/%Y');this.onmouseover=null;" style="display: inline; width: 130px; height: 20px; padding: 0;">						
 						</input>
-						<img class="toolTipImg" border="0" title="Apagar" src="images/icon_delete.png" onClick="javascript: tabber_right(2, 'main_content.jsp', 'filterLastMoveDate='); return false; ">
+						<!--img class="toolTipImg" border="0" title="Apagar" src="images/icon_delete.png" onClick="javascript: tabber_right(2, 'main_content.jsp', 'filterLastMoveDate='); return false; "-->
 					</span>
 				</li>
 				<li class="form-group">
@@ -157,6 +154,7 @@
 					+'&filterPreviousUserid=' + document.getElementById('previousUseridText').value
 					+'&showflowid=' + document.getElementById('filterflowid').value					
 					); return false; ">Aplicar</button>
+					<button type="button" class="btn btn-default btn-sm pull-right" onclick="javascript:tabber_right(2, 'main_content.jsp', 'cleanFilter=1&startindex=0');">Limpar</button>
 				</li>
 				
 			</ul>  
@@ -350,13 +348,9 @@
 				</li>
 			</ul>  
 		</form>
-		<form style="display:inline">
+		<form style="display:inline" class="dropdown keep-open">
 			<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">Filtrar<img width="12" height="12" src="Themes/newflow/images/down-arrow.png" style="margin-left:2px"/></button>
-			<ul class="dropdown-menu" role="menu" style="width:350px; top:110px; left: 270px;">
-				<li class="form-group">
-					<label></label>
-					<button type="button" class="close pull-right" onclick="javascript:tabber_right(2, 'main_content.jsp', 'cleanFilter=1&startindex=0');">&times;</button>
-				</li>
+			<ul class="dropdown-menu" role="menu" style="width:350px; top:10px; left: 0px; margin-top:10px">
 				<li class="form-group">
 					<label class="form-label">
 						Selecionar fluxo
@@ -391,7 +385,7 @@
 						<input type="text" class="form-control donotclosemenu" id="dataCriacaoText" title="Data de"  value="$filterDate"
 								onmouseover="caltasks(this.id, '%d/%m/%Y');this.onmouseover=null;" style="display: inline; width: 130px; height: 20px; padding: 0;">
 						</input>
-						<img class="toolTipImg" border="0" title="Apagar" src="images/icon_delete.png" onClick="javascript: tabber_right(2, 'main_content.jsp', 'filterDate='); return false;">
+						<!--img class="toolTipImg" border="0" title="Apagar" src="images/icon_delete.png" onClick="javascript: tabber_right(2, 'main_content.jsp', 'filterDate='); return false;"-->
 					</span>
 				</li>
 				<li class="form-group">
@@ -402,7 +396,7 @@
 						<input type="text" class="form-control donotclosemenu" id="dataUltMovText" title="Data ate"  value="$filterLastMoveDate"
 								onmouseover="caltasks(this.id, '%d/%m/%Y');this.onmouseover=null;" style="display: inline; width: 130px; height: 20px; padding: 0;">						
 						</input>
-						<img class="toolTipImg" border="0" title="Apagar" src="images/icon_delete.png" onClick="javascript: tabber_right(2, 'main_content.jsp', 'filterLastMoveDate='); return false; ">
+						<!--img class="toolTipImg" border="0" title="Apagar" src="images/icon_delete.png" onClick="javascript: tabber_right(2, 'main_content.jsp', 'filterLastMoveDate='); return false; "-->
 					</span>
 				</li>
 				<li class="form-group">
@@ -414,7 +408,7 @@
 					</input>
 				</li>
 				<li class="form-group">
-					<button id="layout3" type="button" class="btn btn-default btn-sm pull-right" onclick="javascript: tabber_right(2, 'main_content.jsp', 
+					<button id="layout1" type="button" class="btn btn-default btn-sm pull-right" onclick="javascript: tabber_right(2, 'main_content.jsp', 
 					 'filterLastMoveDate=' + document.getElementById('dataUltMovText').value
 					+'&filterProcessNumber=' + document.getElementById('filterProcessNumber').value
 					+'&filterDate=' + document.getElementById('dataCriacaoText').value
@@ -422,8 +416,8 @@
 					+'&filterPreviousUserid=' + document.getElementById('previousUseridText').value
 					+'&showflowid=' + document.getElementById('filterflowid').value					
 					); return false; ">Aplicar</button>
+					<button type="button" class="btn btn-default btn-sm pull-right" onclick="javascript:tabber_right(2, 'main_content.jsp', 'cleanFilter=1&startindex=0');">Limpar</button>
 				</li>
-				
 			</ul>
 		</form>
 		<div class="btn-group">
