@@ -24,7 +24,7 @@ if(scroll != null)
 <input type="hidden" name="subpid" value="<%=sSubPid%>">
 <input type="hidden" name="procStatus" value="<%=status%>">
 
-<iframe onload="calcFrameHeight('iframe_proc_detail');" name="proc_detail" id="iframe_proc_detail" scrolling="auto" height="1" style="" frameborder="0" src="<%=detailURL%>">
+<iframe onload="calcFrameHeight('iframe_proc_detail');" name="proc_detail" id="iframe_proc_detail" scrolling="auto" height="1" style="<%= ("-4".equals(status))?"position: fixed":"" %>" frameborder="0" src="<%=detailURL%>">
 </iframe>
 <div id="buttons_proc_detail">
 <fieldset class="submit">

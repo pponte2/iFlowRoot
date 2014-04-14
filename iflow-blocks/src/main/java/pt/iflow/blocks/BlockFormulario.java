@@ -840,6 +840,7 @@ public class BlockFormulario extends Block implements FormOperations {
               //P13064-97 BEGiN
               if(extraProps!=null && StringUtils.equals(extraProps.get("activeInDetail"), "true") && StringUtils.equals(jspOverride,"proc_detail.jsp") && StringUtils.equals("true", props.getProperty(i+ "_" + FormProps.sOUTPUT_ONLY))){
             	  props.setProperty(i+ "_" + FormProps.sOUTPUT_ONLY,"false");
+            	  //props.setProperty(FormProps.JSP, "./Form/form.jsp");
               }
               //P13064-97 BEGiN
               

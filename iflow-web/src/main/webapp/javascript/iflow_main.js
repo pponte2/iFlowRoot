@@ -1322,21 +1322,22 @@ function process_detail(tabnr, thePage, flowid, pid, subpid, procStatus) {
 function resizeProcDetail() {
   try {
 
-    if(!$('iframe_proc_detail')) return
-    //var iframe_height = (document.getElementById('Accordion1').style.height + 10) + "px";
-    var iframe_base = document.getElementById('iframe_proc_detail').contentWindow.document.body.scrollHeight;
+	  if(!$('iframe_proc_detail')) return
+	    //var iframe_height = (document.getElementById('Accordion1').style.height + 10) + "px";
+	    var iframe_base = document.getElementById('iframe_proc_detail').contentWindow.document.body.scrollHeight;
 
-    var iframe_height = document.getElementById('main_sidebar').clientHeight;
+	    //var iframe_height = document.getElementById('main_sidebar').clientHeight;
+	    var iframe_height = (screen.height - 185);
 
-    var mainWidth = document.getElementById('mainheader').scrollWidth-0;
-    var sidebarWidth = document.getElementById('main_sidebar').scrollWidth-0;
-    var taskbarWidth = document.getElementById('taskbar').scrollWidth-0;
-    var iframe_width=(mainWidth-sidebarWidth-taskbarWidth-6)+'px'; // nao mexer sem saber
+	    var mainWidth = document.getElementById('mainheader').scrollWidth-0;
+	    var sidebarWidth = document.getElementById('main_sidebar').scrollWidth-0;
+	    var taskbarWidth = document.getElementById('taskbar').scrollWidth-0;
+	    var iframe_width=(mainWidth-sidebarWidth-taskbarWidth-6)+'px'; // nao mexer sem saber
 
-    document.getElementById('iframe_proc_detail').setStyle('width',iframe_width);
-    if (iframe_height > iframe_base) {
-	    document.getElementById('iframe_proc_detail').setStyle('height',iframe_height + "px");
-    }
+	    document.getElementById('iframe_proc_detail').setStyle('width',iframe_width);
+	    //if (iframe_height > iframe_base) {
+		    document.getElementById('iframe_proc_detail').setStyle('height',iframe_height + "px");
+	    //}
   } catch(err) {
     // ignore error....
   }
