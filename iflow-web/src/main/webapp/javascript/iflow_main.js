@@ -1786,6 +1786,24 @@ function reloadJS(doCloseMenus) {
 
   jscolor.bind();
 
+  
+  try {
+      $('[title]').qtip({
+	      		  position: {
+		  target: 'mouse', // Track the mouse as the positioning target
+			  adjust: { x: 5, y: 5 } // Offset it slightly from under the mouse
+	      },
+		  show: { delay: 400 },
+
+	  
+		  style: { 
+		  classes: 'qtip-dark qtip-shadow qtip-rounded'
+		  }
+
+
+	  });
+  } catch (err) {}
+
   //sortable
   try {
     var tables = document.getElementsByTagName('table');
