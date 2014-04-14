@@ -4,6 +4,7 @@ import java.io.PrintStream;
 import java.util.Properties;
 
 import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang.StringUtils;
 
 import pt.iflow.api.processdata.ProcessData;
 import pt.iflow.api.utils.ServletUtils;
@@ -36,7 +37,9 @@ public class Link implements FieldInterface {
 
       boolean bDisabled = false;
       stmp = prop.getProperty("output_only");
-      if (stmp != null && stmp.equalsIgnoreCase("true")) bDisabled = true;
+      boolean proc_link_active_detail = StringUtils.equals("true", prop.getProperty("proc_link_active_detail"));
+      boolean inProcDetail = StringUtils.equals("proc_detail.jsp", prop.getProperty("_JSP_"));
+      if (stmp != null && stmp.equalsIgnoreCase("true") &&!(inProcDetail && proc_link_active_detail)) bDisabled = true;
 
       sb.append("<field><type>link</type>");
       sb.append("<text>").append(prop.getProperty("text")).append("</text>");

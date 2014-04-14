@@ -44,7 +44,7 @@ public  class JSPLinkData extends JSPFieldData {
     this._alEditSingleProps.add(new Integer(JSPFieldData.nPROP_VAR_NAME));
     this._alEditSingleProps.add(new Integer(JSPFieldData.nPROP_VAR_VALUE));
     this._alEditSingleProps.add(new Integer(JSPFieldData.nPROP_DISABLE_COND));
-
+    this._alEditSingleProps.add(new Integer(JSPFieldData.nPROP_PROC_LINK_ACTIVE_DETAIL));
 
     // add static/constant properties
     DataTypeInterface dti = loadDataType(adapter, "pt.iflow.api.datatypes.Text");
@@ -63,6 +63,8 @@ public  class JSPLinkData extends JSPFieldData {
 					   PropDependency.nENABLE, 
 					   PropDependency.nTRUE);
     PropDependencyItem pdi = new PropDependencyItem(JSPFieldData.nPROP_URL, PropDependency.nDISABLE);
+    pd.addDependency(pdi);
+    pdi = new PropDependencyItem(JSPFieldData.nPROP_PROC_LINK_ACTIVE_DETAIL, PropDependency.nENABLE);
     pd.addDependency(pdi);
     pdi = new PropDependencyItem(JSPFieldData.nPROP_VAR_NAME, PropDependency.nENABLE);
     pd.addDependency(pdi);

@@ -229,6 +229,7 @@ public class JSPFieldData {
   public final static int nPROP_FORM_TEMPLATE = 118;
   public final static int nPROP_TABLE_ORDER = 119;
   public final static int nPROP_TABLE_SEARCH = 120;
+  public final static int nPROP_PROC_LINK_ACTIVE_DETAIL = 121;
   // ...
 
 
@@ -454,6 +455,8 @@ public class JSPFieldData {
     "control_on_cond"); //$NON-NLS-1$
     _hmPropCodeNames.put(new Integer(JSPFieldData.nPROP_PROC_LINK),
     "proc_link"); //$NON-NLS-1$
+    _hmPropCodeNames.put(new Integer(JSPFieldData.nPROP_PROC_LINK_ACTIVE_DETAIL),
+    "proc_link_active_detail"); //$NON-NLS-1$
     _hmPropCodeNames.put(new Integer(JSPFieldData.nPROP_URL),
     "url"); //$NON-NLS-1$
     _hmPropCodeNames.put(new Integer(JSPFieldData.nPROP_VAR_VALUE),
@@ -683,6 +686,8 @@ public class JSPFieldData {
         adapter.getString("JSPFieldData.proplabel.control_on_cond")); //$NON-NLS-1$
     _hmPropLabels.put(new Integer(JSPFieldData.nPROP_PROC_LINK),
         adapter.getString("JSPFieldData.proplabel.proc_link")); //$NON-NLS-1$
+    _hmPropLabels.put(new Integer(JSPFieldData.nPROP_PROC_LINK_ACTIVE_DETAIL),
+            adapter.getString("JSPFieldData.proplabel.proc_link_active_detail")); //$NON-NLS-1$
     _hmPropLabels.put(new Integer(JSPFieldData.nPROP_URL),
         adapter.getString("JSPFieldData.proplabel.url")); //$NON-NLS-1$
     _hmPropLabels.put(new Integer(JSPFieldData.nPROP_VAR_VALUE),
@@ -1389,6 +1394,7 @@ public class JSPFieldData {
     case JSPFieldData.nPROP_SERVICE_EXPORT:
     case JSPFieldData.nPROP_OPEN_NEW_WINDOW:
     case JSPFieldData.nPROP_PROC_LINK:
+    case JSPFieldData.nPROP_PROC_LINK_ACTIVE_DETAIL:
     case JSPFieldData.nPROP_ONCHANGE_SUBMIT:
     case JSPFieldData.nPROP_TEXT_VALUE:
     case JSPFieldData.nPROP_CURRDATE_IF_EMPTY:
@@ -2523,6 +2529,7 @@ public class JSPFieldData {
       case JSPFieldData.nPROP_SERVICE_EXPORT:
       case JSPFieldData.nPROP_OPEN_NEW_WINDOW:
       case JSPFieldData.nPROP_PROC_LINK:
+      case JSPFieldData.nPROP_PROC_LINK_ACTIVE_DETAIL:
       case JSPFieldData.nPROP_ONCHANGE_SUBMIT:
       case JSPFieldData.nPROP_TEXT_VALUE:
       case JSPFieldData.nPROP_CURRDATE_IF_EMPTY:
@@ -2691,6 +2698,7 @@ public class JSPFieldData {
         case JSPFieldData.nPROP_SERVICE_EXPORT:
         case JSPFieldData.nPROP_OPEN_NEW_WINDOW:
         case JSPFieldData.nPROP_PROC_LINK:
+        case JSPFieldData.nPROP_PROC_LINK_ACTIVE_DETAIL:
         case JSPFieldData.nPROP_ONCHANGE_SUBMIT:
         case JSPFieldData.nPROP_TEXT_VALUE:
         case JSPFieldData.nPROP_CURRDATE_IF_EMPTY:
@@ -2861,6 +2869,7 @@ public class JSPFieldData {
         case JSPFieldData.nPROP_SERVICE_EXPORT:
         case JSPFieldData.nPROP_OPEN_NEW_WINDOW:
         case JSPFieldData.nPROP_PROC_LINK:
+        case JSPFieldData.nPROP_PROC_LINK_ACTIVE_DETAIL:
         case JSPFieldData.nPROP_ONCHANGE_SUBMIT:
         case JSPFieldData.nPROP_TEXT_VALUE:
         case JSPFieldData.nPROP_CURRDATE_IF_EMPTY:
@@ -3182,6 +3191,7 @@ public class JSPFieldData {
         case JSPFieldData.nPROP_SERVICE_EXPORT:
         case JSPFieldData.nPROP_OPEN_NEW_WINDOW:
         case JSPFieldData.nPROP_PROC_LINK:
+        case JSPFieldData.nPROP_PROC_LINK_ACTIVE_DETAIL:
         case JSPFieldData.nPROP_ONCHANGE_SUBMIT:
         case JSPFieldData.nPROP_TEXT_VALUE:
         case JSPFieldData.nPROP_CURRDATE_IF_EMPTY:
@@ -3272,6 +3282,7 @@ public class JSPFieldData {
           case JSPFieldData.nPROP_SERVICE_EXPORT:
           case JSPFieldData.nPROP_OPEN_NEW_WINDOW:
           case JSPFieldData.nPROP_PROC_LINK:
+          case JSPFieldData.nPROP_PROC_LINK_ACTIVE_DETAIL:
           case JSPFieldData.nPROP_ONCHANGE_SUBMIT:
           case JSPFieldData.nPROP_TEXT_VALUE:
           case JSPFieldData.nPROP_CURRDATE_IF_EMPTY:
