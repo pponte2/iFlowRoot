@@ -41,6 +41,14 @@
 	</head>
 	
 	<body>
+<div id="_formLoadingDiv" style="text-align:center;width:99%;height:99%;position:absolute;left:0;top:0;z-index:99;display:none">
+	<div class="loadingDivContainer">
+		<div class="loadingDivInfo">
+                     <p>Em processamento...</p><img src="{$url_prefix}/images/loading.gif"/>
+						</div>
+					</div>
+</div>
+
 	<style type="text/css">
 		body {
 			background: white;
@@ -405,7 +413,7 @@
 									#end
 									</select>
 									<button type="submit" align="center" valign="center" class="btn btn-default" name="_custom_2000" value="Decidir" id="2000" style="float:right"
-										onClick="disableForm();document.dados.op.value='3';document.getElementById('_button_clicked_id').value='2000'; document.dados.botao_accao.value='decisao_preview';" title="Decidir">
+										onClick="camouflageForm();document.dados.op.value='3';document.getElementById('_button_clicked_id').value='2000'; document.dados.botao_accao.value='decisao_preview';" title="Decidir">
 										Decidir 
 									</button>
 								</div>
