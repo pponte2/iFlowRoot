@@ -27,14 +27,13 @@
             sbHtml = new StringBuffer("<p>");
             sbHtml.append(message).append("</p>");
         }
+    } else {    
+	    String msg = fdFormData.getParameter("msg");
+	    if(StringUtils.isNotEmpty(msg)){
+	        sbHtml = new StringBuffer("<p>");
+	        sbHtml.append(msg).append("</p>");	
+	    }
     }
-    
-    String msg = fdFormData.getParameter("msg");
-    if(StringUtils.isNotEmpty(msg)){
-        sbHtml = new StringBuffer("<p>");
-        sbHtml.append(msg).append("</p>");	
-    }
-    
     boolean paramsOk = false;
     try {
      // use of fdFormData defined in /inc/defs.jsp

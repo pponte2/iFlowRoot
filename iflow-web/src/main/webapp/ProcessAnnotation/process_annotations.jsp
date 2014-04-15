@@ -87,7 +87,7 @@
   	<div onclick="javascript:menuonoff('anotacoes',1);" class="apt_link btn btn-default btn-sm" id="butinfocol">Anota&ccedil;&atilde;o</div>
 	<%}%>
 	<div id="anotacoes" 
-		style="<%if (!"forward".equals(from) || !hasAnnottations){%>display:none;position:absolute;z-index:1;border:1px solid gray;<%} else {%>position:relative;z-index:0;bottom:10px;<%}%>background:none repeat scroll 0 0 #FFFFFF;
+		style="<%if (!"forward".equals(from) || !hasAnnottations){%>display:none;position:absolute;z-index:1;border:1px solid gray;<%} else {%>z-index:0;bottom:10px;<%}%>background:none repeat scroll 0 0 #FFFFFF;
 		text-align:left;right:0px;;width:40em;align:center;left:290px;top:20px">
 		<div style="margin:10px;">
 			<div class="yui-skin-sam">
