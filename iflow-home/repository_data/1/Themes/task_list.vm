@@ -121,7 +121,7 @@
 					</label>
 					<span class="pull-right">
 						<input type="text" class="form-control donotclosemenu" id="dataCriacaoText" title="Data de"  value="$filterDate"
-								onmouseover="caltasks(this.id, '%d/%m/%Y');this.onmouseover=null;" style="display: inline; width: 130px; height: 20px; padding: 0;">
+								onmouseover="caltasks(this.id, '%d/%m/%Y');this.onmouseover=null;" style="display: inline; width: 150px; height: 20px; padding: 0;">
 						</input>
 						<!--img class="toolTipImg" border="0" title="Apagar" src="images/icon_delete.png" onClick="javascript: alert($jquery('dataCriacaoText').value)"-->
 					</span>
@@ -132,7 +132,7 @@
 					</label>
 					<span class="pull-right">
 						<input type="text" class="form-control donotclosemenu" id="dataUltMovText" title="Data ate"  value="$filterLastMoveDate"
-								onmouseover="caltasks(this.id, '%d/%m/%Y');this.onmouseover=null;" style="display: inline; width: 130px; height: 20px; padding: 0;">						
+								onmouseover="caltasks(this.id, '%d/%m/%Y');this.onmouseover=null;" style="display: inline; width: 150px; height: 20px; padding: 0;">						
 						</input>
 						<!--img class="toolTipImg" border="0" title="Apagar" src="images/icon_delete.png" onClick="javascript: tabber_right(2, 'main_content.jsp', 'filterLastMoveDate='); return false; "-->
 					</span>
@@ -383,7 +383,7 @@
 					</label>
 					<span class="pull-right">
 						<input type="text" class="form-control donotclosemenu" id="dataCriacaoText" title="Data de"  value="$filterDate"
-								onmouseover="caltasks(this.id, '%d/%m/%Y');this.onmouseover=null;" style="display: inline; width: 130px; height: 20px; padding: 0;">
+								onmouseover="caltasks(this.id, '%d/%m/%Y');this.onmouseover=null;" style="display: inline; width: 150px; height: 20px; padding: 0;">
 						</input>
 						<!--img class="toolTipImg" border="0" title="Apagar" src="images/icon_delete.png" onClick="javascript: tabber_right(2, 'main_content.jsp', 'filterDate='); return false;"-->
 					</span>
@@ -394,7 +394,7 @@
 					</label>
 					<span class="pull-right">
 						<input type="text" class="form-control donotclosemenu" id="dataUltMovText" title="Data ate"  value="$filterLastMoveDate"
-								onmouseover="caltasks(this.id, '%d/%m/%Y');this.onmouseover=null;" style="display: inline; width: 130px; height: 20px; padding: 0;">						
+								onmouseover="caltasks(this.id, '%d/%m/%Y');this.onmouseover=null;" style="display: inline; width: 150px; height: 20px; padding: 0;">						
 						</input>
 						<!--img class="toolTipImg" border="0" title="Apagar" src="images/icon_delete.png" onClick="javascript: tabber_right(2, 'main_content.jsp', 'filterLastMoveDate='); return false; "-->
 					</span>

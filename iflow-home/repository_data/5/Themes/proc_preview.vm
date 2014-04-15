@@ -44,7 +44,7 @@
 <div id="_formLoadingDiv" style="text-align:center;width:99%;height:99%;position:absolute;left:0;top:0;z-index:99;display:none">
 	<div class="loadingDivContainer">
 		<div class="loadingDivInfo">
-                     <p>Em processamento...</p><img src="{$url_prefix}/images/loading.gif"/>
+                     <p>Em processamento...</p><img src="../images/loading.gif"/>
 						</div>
 					</div>
 </div>
@@ -129,8 +129,24 @@
 					#end
 					<input type="hidden" name="$processVarnames.get(${varName})" value="${value}">
 					<div class="form-group">
-						<label  class="col-sm-2 control-label" style=" font-size: 12px; margin-bottom: 2px">${varName}: </label>
-						<div class="col-sm-8" style=" font-size: 12px; margin-top: 7px"> 
+
+						<label  class="col-sm-2 control-label">${varName}: </label>
+						<div class="col-sm-8" style=" font-size: 14px; margin-top: 5px"> 
+							#if ($processDetail.get(${varName})!="")
+								$processDetail.get(${varName})
+							#end 
+						</div>
+					</div>	
+					#set($varName="NIF")
+					#set($value = "")
+					#if ($processDetail.get(${varName})!="")
+						#set($value = $processDetail.get(${varName}))
+					#end
+					<input type="hidden" name="$processVarnames.get(${varName})" value="${value}">
+					<div class="form-group">
+						<label  class="col-sm-2 control-label">${varName}: </label>
+						<div class="col-sm-8" style=" font-size: 14px; margin-top: 5px"> 
+							
 							#if ($processDetail.get(${varName})!="")
 								$processDetail.get(${varName})
 							#end 
@@ -372,9 +388,9 @@
 						<input id="94_MAX_ROW" type="hidden" value="$max_row" name="94_MAX_ROW">
 					#end
 					
-					#if ($FlagDecisao == 1 && $processDetail.get("Acções")!="" && (!($processDetail.get("Acção escolhida")!="") || $processDetail.get("Acção escolhida")=="pre_decisao" || $processDetail.get("Acção escolhida")=="parecer") )
+					#if ($FlagDecisao == 1 && $processDetail.get("Acções")!="" && (!($processDetail.get("Ação escolhida")!="") || $processDetail.get("Ação escolhida")=="pre_decisao" || $processDetail.get("Ação escolhida")=="parecer") )
 
-						#set($valueName="Acção a executar")
+						#set($valueName="Ação a executar")
 						#set($varName="Decisão")
 						#set($value = "") 
 						#if ($processDetail.get(${valueName})!="")
@@ -395,8 +411,9 @@
 
 							#if ($lValues != "")
 								<div class="form-group">
-									<label  class="col-sm-2 control-label" style=" font-size: 12px; margin-bottom: 2px" >${varName}: </label>
-									<select class="txt  form-control pull-right combobox" style="width:250px;" name="$processVarnames.get(${valueName})">
+									<label  class="col-sm-2 control-label">${varName}: </label>
+									<select class="txt  form-control pull-right combobox" style="width:250px;" name="$processVarnames.get(${valueName})"
+											onchange="camouflageForm();document.dados.op.value='16';jQuery('#dados').submit();" >
 									#set($idx = 0)
 									<option value="Opção de decisão" >Opção de decisão</option>
 									#foreach($val in $lValues)
@@ -412,10 +429,6 @@
 										#end
 									#end
 									</select>
-									<button type="submit" align="center" valign="center" class="btn btn-default" name="_custom_2000" value="Decidir" id="2000" style="float:right"
-										onClick="camouflageForm();document.dados.op.value='3';document.getElementById('_button_clicked_id').value='2000'; document.dados.botao_accao.value='decisao_preview';" title="Decidir">
-										Decidir 
-									</button>
 								</div>
 							#end
 						#end
