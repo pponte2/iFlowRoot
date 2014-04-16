@@ -273,9 +273,12 @@
 					</ul>
 				</div>	
 				<div style="text-align: center">
-					$act.get("task_annotation_icon")
+					#if($act.get("delegated") == "1")
+			   			<img src="$response.encodeURL($url_prefix,'images/icon_delegations.png')" alt="$act.get("delegated_alt")"  />
+			 		#end
+			 		$act.get("task_annotation_icon") 
 				</div>
-			</div> 
+			</div>
 		</div>
 	
 			#end
@@ -547,7 +550,10 @@
 				</ul>
 			</div>	
 			<div style="text-align: center" onclick="event.cancelBubble = true; if(event.stopPropagation) { event.stopPropagation(); }">
-				$act.get("task_annotation_icon")
+				#if($act.get("delegated") == "1")
+		   			<img src="$response.encodeURL($url_prefix,'images/icon_delegations.png')" alt="$act.get("delegated_alt")" />
+				#end
+				$act.get("task_annotation_icon") 
 			</div>
 		</div>
 	</div>
