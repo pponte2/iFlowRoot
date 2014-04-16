@@ -37,13 +37,19 @@ String popupReturnBlockId = null;
     try {
         
         bBlockJSP = flow.getBlock(userInfo, procData);
-        
+        //Object allfieldsssss = pt.iflow.blocks.form.utils.FormCache.getFields(((pt.iflow.blocks.BlockFormulario)bBlockJSP));
         // To appear blockId in title
         title = bBlockJSP.getDescription(userInfo, procData);
+        
         if (Const.nMODE == Const.nDEVELOPMENT) {
             title = title + " block" + bBlockJSP.getId();
         }
-        
+        if (bBlockJSP.getClass().getName().indexOf("BlockProcDetail") > -1 ){ 
+        	String pseudoDetailFlowid = procData.transform(userInfo, bBlockJSP.getAttribute("flowid"));
+        	bBlockJSP = new pt.iflow.blocks.BlockFormulario(bBlockJSP.getFlowId(), bBlockJSP.getId(), bBlockJSP.getSubFlowBlockId(), bBlockJSP.getSubFlowFilename());
+        	bBlockJSP.addAttribute(new pt.iflow.api.blocks.Attribute("pseudoDetail","true"));
+        	bBlockJSP.addAttribute(new pt.iflow.api.blocks.Attribute("pseudoDetailFlowid",pseudoDetailFlowid));
+        }
         if (bBlockJSP.getClass().getName().indexOf("BlockFormulario") == -1) {
             throw new Exception("Not BlockFormulario!");
         }

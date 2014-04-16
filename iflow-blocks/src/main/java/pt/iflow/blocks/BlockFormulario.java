@@ -52,6 +52,7 @@ import pt.iflow.api.documents.DocumentData;
 import pt.iflow.api.documents.DocumentSessionHelper;
 import pt.iflow.api.documents.Documents;
 import pt.iflow.api.flows.FlowSetting;
+import pt.iflow.api.flows.IFlowData;
 import pt.iflow.api.processdata.EvalException;
 import pt.iflow.api.processdata.ProcessData;
 import pt.iflow.api.processdata.ProcessListItem;
@@ -827,7 +828,12 @@ public class BlockFormulario extends Block implements FormOperations {
             Map<String,Object> deps = new HashMap<String, Object>();            
             deps.put(FormProps.HIDDEN_FIELDS, hmHiddenFields);
             deps.put(FormProps.VALUE_MAP ,valueMap);
-            
+            //P13064-97 BEGiN II
+            if(extraProps!=null){
+            	extraProps.put("detailInsideFlowid", ahmHiddenFields.get("flowid"));
+      	  		extraProps.put("detailInsidePid", ahmHiddenFields.get("pid"));
+          	}
+      	  	//P13064-97 EnD
             dtiMultiple.init(userInfo, procData, extraProps, deps);            
 
             for (int row=0; row < values.size(); row++) {
@@ -837,10 +843,10 @@ public class BlockFormulario extends Block implements FormOperations {
               if(rowValue != null && rowValue.getValue() != null && rowValue.getValue().getClass().equals(String.class))
                 rowValue.setValue(StringEscapeUtils.escapeXml(rowValue.getValue().toString()));
              
-              //P13064-97 BEGiN
+              //P13064-97 BEGiN I
               if(extraProps!=null && StringUtils.equals(extraProps.get("activeInDetail"), "true") && StringUtils.equals(jspOverride,"proc_detail.jsp") && StringUtils.equals("true", props.getProperty(i+ "_" + FormProps.sOUTPUT_ONLY))){
-            	  props.setProperty(i+ "_" + FormProps.sOUTPUT_ONLY,"false");
-            	  //props.setProperty(FormProps.JSP, "./Form/form.jsp");
+            	  props.setProperty(i+ "_" + FormProps.sOUTPUT_ONLY,"false");            	  
+            	  props.setProperty(FormProps.JSP, "./Form/form.jsp");
               }
               //P13064-97 BEGiN
               
@@ -1919,7 +1925,13 @@ public class BlockFormulario extends Block implements FormOperations {
 
     final ProcessData retObj = pdProcData;
     final String sLogin = userInfo.getUtilizador();
-
+    //P13064-97 Begin III
+    try{
+    if(StringUtils.equals(this.getAttribute("pseudoDetail"), "true")){
+    	this.setFlowId(Integer.parseInt(this.getAttribute("pseudoDetailFlowid")));
+    	this.setId(1);
+    }} catch(Exception e){} 		
+    //P13064-97 EnD III
     final ArrayList<FieldInterface> alFields = FormCache.getFields(this);
     FieldInterface fi = null;
     boolean btmp = false;

@@ -254,7 +254,11 @@ public class Link implements DataTypeInterface {
         }
         String name = data.get(varHid);
         String value = data.get(name);
-
+        if(StringUtils.equals(name, "flowid") && !StringUtils.equals(""+data.get("detailInsideFlowid"), value))
+        	value = data.get("detailInsideFlowid");
+        if(StringUtils.equals(name, "pid") && !StringUtils.equals(""+data.get("detailInsidePid"), value))
+        	value = data.get("detailInsidePid");
+        
         sb.append(genArgXml(btmp, name, value));
 
         btmp = false;
