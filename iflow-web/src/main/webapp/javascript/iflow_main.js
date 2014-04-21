@@ -1335,9 +1335,12 @@ function resizeProcDetail() {
 	    var iframe_width=(mainWidth-sidebarWidth-taskbarWidth-6)+'px'; // nao mexer sem saber
 
 	    document.getElementById('iframe_proc_detail').setStyle('width',iframe_width);
-	    //if (iframe_height > iframe_base) {
+	    if (iframe_height > iframe_base) {
 		    document.getElementById('iframe_proc_detail').setStyle('height',iframe_height + "px");
-	    //}
+	    }
+	    else {
+		    document.getElementById('iframe_proc_detail').setStyle('height',iframe_base + "px");	
+	    }
   } catch(err) {
     // ignore error....
   }
