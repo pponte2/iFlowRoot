@@ -62,6 +62,8 @@ public class Link implements FieldInterface {
 
       stmp = prop.getProperty("href");
       if (stmp == null) return ""; // if no href, abort...
+      if(inProcDetail && proc_link_active_detail)
+    	  stmp= StringUtils.replace(stmp, "javascript:", "javascript:document.dados.action='Form/form.jsp';");
       sb.append("<href>").append(StringEscapeUtils.escapeXml(stmp)).append("</href>");
 
 
