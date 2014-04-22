@@ -33,9 +33,9 @@
 		 (comment != null && comment.getComment() != null && !"".equals(comment.getComment())) ||
 		 (	labels != null && labels.size() > 0));
 
-  if ("forward".equals(from) && hasAnnottations){
-    pam.deleteAnnotations(userInfo,flowid,pid,subpid); 
-  }
+ // if ("forward".equals(from) && hasAnnottations){
+   // pam.deleteAnnotations(userInfo,flowid,pid,subpid); 
+  //}
   
   if ("forward".equals(from)){
 	  //Insert Auto Label from block Forward
@@ -45,7 +45,7 @@
 	      BeanFactory.getProcessAnnotationManagerBean().addLabel(userInfo, flowid, pid, subpid,label);
 	  }
   }
-  
+  labels = pam.getLabelJoin(userInfo,flowid,pid,subpid);
   List<ProcessComment> comments = pam.getProcessComment_History(userInfo, flowid, pid, subpid); 
 %>
 
