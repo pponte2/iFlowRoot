@@ -787,7 +787,9 @@ function selectAll(){
     }
 }
 
-jscolor.bind();
+try {
+	jscolor.bind();
+} catch (err) {}
 </script>
 
 

@@ -526,7 +526,6 @@ function updateSessionConfig(tabnr) {
     if (GLOBAL_session_config.sections && GLOBAL_session_config.sections[tabnr]) {
       for (key in GLOBAL_session_config.sections[tabnr]) {
         val = GLOBAL_session_config.sections[tabnr][key];
-//      alert(key + " = " + val);
         if (val == 'colapsed'){
           // colapse
           toggleItemBox (tabnr, $(key));
@@ -615,6 +614,35 @@ function tabber(tabnr, navpage, navparam, contentpage, contentparam) {
     if(gTabNr != null) gOldTabNr = gTabNr;
     gTabNr = tabnr;
     */
+  }
+}
+
+function tabberWithContent(tabnr, contentpage, contentparam, htmlContent, frameId) {
+  var i=0;
+  parent.untooltips();
+  tabnr = convert_tabnr(tabnr);
+
+  var selectedSection = null;
+  var selectedSectionStr = null;  
+  while (i++ < GLOBAL_MAX_TABS) {
+    var section = document.getElementById(sectionDiv + i);
+    if (!section) section = parent.document.getElementById(sectionDiv + i);
+    if (section) {
+      if (i != tabnr) {
+        section.style.display = 'none';      
+      } else {
+        selectedSection = section; 
+        section.style.display = 'block';
+        selectedSectionStr = sectionDiv + i;
+      }
+    }
+  }
+
+  if (contentpage) {
+    selectedSection.innerHTML = '';
+    contentparam = prepareParams('content', tabnr, contentparam);
+    parent.registerContent(contentpage, contentparam, tabnr);
+    getCtrlFillWithContent(contentpage, contentparam, selectedSectionStr, htmlContent, frameId);
   }
 }
 
@@ -1647,6 +1675,35 @@ function getCtrlFillCallBack(htmltext, ctrl) {
   reloadJS(closeMenus  && ctrl.substring(0, 12) != sectionDiv);
 }
 
+function getCtrlFillWithContent(url, params, ctrl, htmlContent, frameId) {
+  if (ctrl == null) {
+    alert('Error filling Controll!');
+    return;
+  }
+  makeRequest(url, params, getCtrlFillWithContentCallBack(frameId, htmlContent), 'text', ctrl);
+}
+
+function getCtrlFillWithContentCallBack (frameId, htmlContent) {
+  return function(htmltext, ctrl) {
+    if (htmltext.indexOf("session-expired") > 0) {
+      parent.openLoginIbox();
+    } else if (htmltext.indexOf("session-reload") > 0) {
+      parent.pageReload(gotoPersonalAccount);
+    } else {
+      var aux =  document.getElementById(ctrl);
+      if (aux == null) aux = parent.document.getElementById(ctrl);
+      if (aux != null) aux.innerHTML = htmltext;
+    }
+    
+    var iframe = parent.document.getElementById(frameId);
+    var domdoc = iframe.contentDocument || iframe.contentWindow.document;
+    domdoc.write(htmlContent);
+    domdoc.close();
+    
+    reloadJS(closeMenus && ctrl.substring(0, 12) != sectionDiv);
+  };
+}
+
 function openProcess(flowid, contentpage, contentparam, runMax, tabnr) {
   if (cancelMenu) {
     cancelMenu = false;
@@ -1669,6 +1726,27 @@ function openProcess(flowid, contentpage, contentparam, runMax, tabnr) {
   if (urlPrefix == null) urlPrefix = '/iFlow';
   if (!tabnr) tabnr = 3;
   tabber_right(tabnr, urlPrefix+'/openprocess.jsp', 'src=' + src + '&tab=' + tabnr + '&param=' + param);
+}
+
+function openProcessWithContent(tabnr, htmlContent, runMax) {
+  if (cancelMenu) {
+    cancelMenu = false;
+    return;
+  }
+  parent.hidePopup();
+  var scrollpos = parent.layout.getScrollPosition().toString();
+  var src = 'Form/empty.jsp';
+  parent.setScrollPosition(0);
+  var urlPrefix = null;
+  try {
+    urlPrefix = URL_PREFIX;
+  } catch (err) {}
+  try {
+    if (urlPrefix == null) urlPrefix = parent.URL_PREFIX;
+  } catch (err) {}
+  if (urlPrefix == null) urlPrefix = '/iFlow';
+  if (!tabnr) tabnr = 3;
+  tabberWithContent(tabnr, urlPrefix+'/openprocess.jsp', 'src=' + src + '&tab=' + tabnr, htmlContent, 'open_proc_frame_' + tabnr);
 }
 
 function createLabel(labelid, editname, color) {
@@ -1788,7 +1866,9 @@ function reloadBootstrapElements(){
 
 function reloadJS(doCloseMenus) {
 
-  jscolor.bind();
+  try {
+    if (jscolor) jscolor.bind();
+  } catch (exc) {}
 
   
   try {
@@ -1818,32 +1898,40 @@ function reloadJS(doCloseMenus) {
     }
   } catch (err) {}
 
-  $('.donotclosemenu').click(function(e) { e.stopPropagation();});
+  try {
+    $('.donotclosemenu').click(function(e) { e.stopPropagation();});
+  } catch (err) {}
 
-	$(function () {
-	    $('.dropdown.keep-open').on({
-		"shown.bs.dropdown": function() {
-		    $(this).data('closable', false);
-		},
-		"click": function() {
-		    $(this).data('closable', true);
-		},
-		"hide.bs.dropdown": function() {
-		    return $(this).data('closable');
-		}
-	    });
-	});
+  try {
+  	$(function () {
+  	    $('.dropdown.keep-open').on({
+  		"shown.bs.dropdown": function() {
+  		    $(this).data('closable', false);
+  		},
+  		"click": function() {
+  		    $(this).data('closable', true);
+  		},
+  		"hide.bs.dropdown": function() {
+  		    return $(this).data('closable');
+  		}
+  	    });
+  	});
+  } catch (err) {}
 
-  $(".draggable").draggable({revert: "invalid", opacity: 0.7, helper: "clone"});
-  $(".droppable").droppable({
-    hoverClass: "if-state-active",
-    drop: function(event, ui) {
-      var folderId = event.target.attributes['valToAssign'].value;
-      var actId = ui.draggable.attr('valToAssign');
-      var pid = ui.draggable.attr('pid');
-      MarkCategory(actId, pid, folderId);
-    }
-  });
+  try {
+    $(".draggable").draggable({revert: "invalid", opacity: 0.7, helper: "clone"});
+  } catch (err) {}
+  try {
+    $(".droppable").droppable({
+      hoverClass: "if-state-active",
+      drop: function(event, ui) {
+        var folderId = event.target.attributes['valToAssign'].value;
+        var actId = ui.draggable.attr('valToAssign');
+        var pid = ui.draggable.attr('pid');
+        MarkCategory(actId, pid, folderId);
+      }
+    });
+  } catch (err) {}
 
   try {
     $(function() {
@@ -1890,10 +1978,12 @@ function reloadJS(doCloseMenus) {
     } catch (err) {}
   }
 
-  var taskId;
-  if (taskId = document.getElementById(globalSelectedTask)) {
-     changeColor(taskId);
-  }
+  try {
+    var taskId;
+    if (taskId = document.getElementById(globalSelectedTask)) {
+       changeColor(taskId);
+    }
+  } catch (err) {}
 
 }
 

@@ -25,6 +25,14 @@
   ProcessAnnotationManager pam = BeanFactory.getProcessAnnotationManagerBean();
   String sDeadline = pam.getProcessDeadline(userInfo,flowid,pid,subpid);
   ProcessComment comment = pam.getProcessComment(userInfo,flowid,pid,subpid);
+  if ("forward".equals(from)){
+	  //Insert Auto Label from block Forward
+	  String forwardToLabelId = fdFormData.getParameter("forwardToLabelId");
+	  if(StringUtils.isNotEmpty(forwardToLabelId)){
+	      String[] label = {forwardToLabelId};
+	      pam.addLabel(userInfo, flowid, pid, subpid,label);
+	  }
+  }
   List<ProcessLabel> labels = pam.getLabelJoin(userInfo,flowid,pid,subpid);
   java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
   String from = fdFormData.getParameter("from");
@@ -37,16 +45,9 @@
    // pam.deleteAnnotations(userInfo,flowid,pid,subpid); 
   //}
   
-  if ("forward".equals(from)){
-	  //Insert Auto Label from block Forward
-	  String forwardToLabelId = fdFormData.getParameter("forwardToLabelId");
-	  if(StringUtils.isNotEmpty(forwardToLabelId)){
-	      String[] label = {forwardToLabelId};
-	      BeanFactory.getProcessAnnotationManagerBean().addLabel(userInfo, flowid, pid, subpid,label);
-	  }
-  }
-  labels = pam.getLabelJoin(userInfo,flowid,pid,subpid);
   List<ProcessComment> comments = pam.getProcessComment_History(userInfo, flowid, pid, subpid); 
+  
+  String sUrl = Const.APP_PROTOCOL + "://" + Const.APP_HOST + ":" + Const.APP_PORT + Const.APP_URL_PREFIX + "/";
 %>
 
     <%if (!"forward".equals(from)){ %>
@@ -119,12 +120,12 @@
 				if(labels.get(i).getCheck()){%>
 					
 					<input type="checkbox" onclick="managerLabels(<%=labels.get(i).getId()%>,true)" checked id="checkLabel_<%=labels.get(i).getId()%>" />
-					<img src="AnnotationIconsServlet?label_name='<%=labels.get(i).getName()%>'&ts='+<%=System.currentTimeMillis() %>+'" width="16px" height="16px"/>
+					<img src="<%=sUrl%>AnnotationIconsServlet?label_name='<%=labels.get(i).getName()%>'&ts='+<%=System.currentTimeMillis() %>+'" width="16px" height="16px"/>
 					<%=labels.get(i).getName()%><br/>
 				<%}else{ %>
 				    
 					<input type="checkbox" onclick="managerLabels(<%=labels.get(i).getId()%>,false)" id="checkLabel_<%=labels.get(i).getId()%>" />
-					<img src="AnnotationIconsServlet?label_name='<%=labels.get(i).getName()%>'&ts='+<%=System.currentTimeMillis() %>+'" width="16px" height="16px"/>
+					<img src="<%=sUrl%>AnnotationIconsServlet?label_name='<%=labels.get(i).getName()%>'&ts='+<%=System.currentTimeMillis() %>+'" width="16px" height="16px"/>
 					<%=labels.get(i).getName()%><br/>
 				<%}
 				} %>
@@ -134,7 +135,7 @@
 				<label class="form-label"><if:message string="process_annotations.field.deadline" /></label>
 				<input class="calendaricon" id="deadline" type="text" size="12" name="deadline" 
 			  		value="<%=sDeadline%>" onmouseover="caltasks(this.id);this.onmouseover=null;"/>
-				<img class="icon_clear" src="images/icon_delete.png" onclick="javascript:document.getElementById('deadline').value='';" />
+				<img class="icon_clear" src="<%=sUrl%>images/icon_delete.png" onclick="javascript:document.getElementById('deadline').value='';" />
 				<input type="hidden" id="deadlineini" value="<%=sDeadline%>">
 			</ul>
 			<%if (!"forward".equals(from)) {%>

@@ -166,7 +166,9 @@
 				#end
 				getCtrlFill(adminNavJSPNew, '', containerMain);
 				
-				jscolor.bind();
+				try {
+					if (jscolor) jscolor.bind();
+				} catch (err) {}
 
 				mainResize();
 				#if($sys_admin != "no")

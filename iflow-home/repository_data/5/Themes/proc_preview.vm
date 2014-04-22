@@ -565,7 +565,7 @@
 					url : formURL,
 					type: "POST",
 					data : postData,
-					success:function(data, textStatus, jqXHR) {openProcess($procFlowid, '$response.encodeURL($url_prefix,$uri)', 'flowid=$procFlowid&pid=$procPid&subpid=$procSubpid', false, 3);},
+					success:function(data, textStatus, jqXHR) { openProcessWithContent('3', jqXHR.responseText); },
 					error: function(jqXHR, textStatus, errorThrown){openProcess($procFlowid, '$response.encodeURL($url_prefix,$uri)', 'flowid=$procFlowid&pid=$procPid&subpid=$procSubpid', false, 3);}
 				});
 			    e.preventDefault();	

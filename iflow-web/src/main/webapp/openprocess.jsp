@@ -1,12 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/core" prefix="c"%>
 <%@ taglib uri="http://www.iknow.pt/jsp/jstl/iflow" prefix="if"%>
 <%@ include file="inc/defs.jsp"%>
 <%
   String src = fdFormData.getParameter("src");
   String tab = fdFormData.getParameter("tab");
-  String param = URLEncoder.encode(fdFormData.getParameter("param"));
+  String param = fdFormData.getParameter("param");
+  if (param == null)
+    param = "";
+  else
+    param = URLEncoder.encode(param);
 %>
 <div id="div_proc_menu_colapsed" class="proc_menu_colapsed" style="display:block;">
 	
