@@ -185,6 +185,9 @@
 				if (confirm('Confirma a eliminação da categoria?')) {
 					getCtrlFill(taskLabelsJSP, 'deletefolder=' + labelid, containerLabels);
 				}
+				//Serve para recarregar a lista das tarefas quando se apaga uma categoria
+				//Pode dar problemas quando actualiza mais rapido do que se apaga, para já fica assim
+				tabber_right(1, 'main_content.jsp', '');
 			}
 
 			function editLabel(labelid, from){
@@ -221,7 +224,7 @@
 						}
 					}
 					obj = document.getElementById('edit_'+labelid);
-					if (obj!=null) obj.focus();	
+					if (obj!=null) obj.focus();
 				} else  {
 					if (from == '0') {
 						var editname = encodeURI(document.getElementById('edit_'+labelid).value);
@@ -231,6 +234,9 @@
 							createLabel(labelid, editname, cor);
 						else
 							return;
+					//Serve para recarregar a lista das tarefas quando se cria/edita uma categoria
+					//Pode dar problemas quando actualiza mais rapido do que cria/edita, para já fica assim
+					tabber_right(1, 'main_content.jsp', '');
 					}
 					var obj = document.getElementById('name_'+labelid);
 					if (obj!=null) obj.style.display = 'inline-block';

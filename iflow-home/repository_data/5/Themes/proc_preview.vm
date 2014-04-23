@@ -335,7 +335,7 @@
 														#foreach ($coment in $listComents)
 															#if ($velocityCount == $pos)
 																#if ($coment!="" && $coment!="null")
-																	#set($tool = $coment.replaceAll("</?[^>]+/?>", ""))
+																	#set($tool = $coment)
 																#else
 																	#set($tool = "Sem comentário")
 																#end
