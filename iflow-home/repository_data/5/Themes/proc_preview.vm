@@ -413,7 +413,7 @@
 								<div class="form-group">
 									<label  class="col-sm-2 control-label">${varName}: </label>
 									<select class="txt  form-control pull-right combobox" style="width:250px;" name="$processVarnames.get(${valueName})"
-											onchange="camouflageForm();document.dados.op.value='16';jQuery('#dados').submit();" >
+											onchange="camouflageForm();document.dados.op.value='16';document.dados.submit();" >
 									#set($idx = 0)
 									<option value="Opção de decisão" >Opção de decisão</option>
 									#foreach($val in $lValues)
@@ -557,7 +557,7 @@
 
 			var jQuery = jQuery.noConflict();
 			jQuery("#dados").submit(function(e)
-			{			
+			{
 				var postData = jQuery(this).serializeArray(); 
 				var formURL = jQuery(this).attr("action");
 				jQuery.ajax(
@@ -566,6 +566,7 @@
 					type: "POST",
 					data : postData,
 					success:function(data, textStatus, jqXHR) { openProcessWithContent('3', jqXHR.responseText); },
+					//success:function(data, textStatus, jqXHR) {openProcess($procFlowid, '$response.encodeURL($url_prefix,$uri)', 'flowid=$procFlowid&pid=$procPid&subpid=$procSubpid', false, 3);},
 					error: function(jqXHR, textStatus, errorThrown){openProcess($procFlowid, '$response.encodeURL($url_prefix,$uri)', 'flowid=$procFlowid&pid=$procPid&subpid=$procSubpid', false, 3);}
 				});
 			    e.preventDefault();	
