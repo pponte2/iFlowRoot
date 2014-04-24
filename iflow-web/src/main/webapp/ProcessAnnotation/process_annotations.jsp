@@ -25,6 +25,10 @@
   ProcessAnnotationManager pam = BeanFactory.getProcessAnnotationManagerBean();
   String sDeadline = pam.getProcessDeadline(userInfo,flowid,pid,subpid);
   ProcessComment comment = pam.getProcessComment(userInfo,flowid,pid,subpid);
+  java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+  String from = fdFormData.getParameter("from");
+  if (from == null) from = "";
+  
   if ("forward".equals(from)){
 	  //Insert Auto Label from block Forward
 	  String forwardToLabelId = fdFormData.getParameter("forwardToLabelId");
@@ -34,9 +38,7 @@
 	  }
   }
   List<ProcessLabel> labels = pam.getLabelJoin(userInfo,flowid,pid,subpid);
-  java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
-  String from = fdFormData.getParameter("from");
-  if (from == null) from = "";
+
   boolean hasAnnottations = ((sDeadline != null && !"".equals(sDeadline)) || 
 		 (comment != null && comment.getComment() != null && !"".equals(comment.getComment())) ||
 		 (	labels != null && labels.size() > 0));
@@ -47,7 +49,7 @@
   
   List<ProcessComment> comments = pam.getProcessComment_History(userInfo, flowid, pid, subpid); 
   
-  String sUrl = Const.APP_PROTOCOL + "://" + Const.APP_HOST + ":" + Const.APP_PORT + Const.APP_URL_PREFIX + "/";
+  String sUrl = Const.APP_URL_PREFIX + "/";
 %>
 
     <%if (!"forward".equals(from)){ %>

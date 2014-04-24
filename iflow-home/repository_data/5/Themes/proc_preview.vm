@@ -184,8 +184,8 @@
 						#if ($lComents != "")
 							#set($listComents = [])
 								#foreach($coment in $lComents)
-									#if($coment.indexOf("<br>") >= 0)
-										#if ($listComents.add($coment.substring(0, $coment.indexOf("<br>"))))
+									#if($coment.lastIndexOf("<br>") >= 0)
+										#if ($listComents.add($coment.substring(0, $coment.lastIndexOf("<br>"))))
 										#end
 									#end
 								#end
@@ -265,8 +265,8 @@
 						#if ($lComents != "")
 							#set($listComents = [])
 								#foreach($coment in $lComents)
-									#if($coment.indexOf("<br>") >= 0)
-										#if ($listComents.add($coment.substring(0, $coment.indexOf("<br>"))))
+									#if($coment.lastIndexOf("<br>") >= 0)
+										#if ($listComents.add($coment.substring(0, $coment.lastIndexOf("<br>"))))
 										#end
 									#end
 								#end
@@ -335,7 +335,7 @@
 														#foreach ($coment in $listComents)
 															#if ($velocityCount == $pos)
 																#if ($coment!="" && $coment!="null")
-																	#set($tool = $coment)
+																	#set($tool = $coment.replaceAll("</?[^>]+/?>", ""))
 																#else
 																	#set($tool = "Sem comentário")
 																#end

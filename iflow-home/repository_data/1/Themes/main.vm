@@ -97,7 +97,7 @@
 				//change the height of the iframe
 				document.getElementById(frameName).style.height = the_height.toString() + 'px';
 				
-				resizeDelay(2000);
+				resizeDelay(2000,frameName);
 			}
 
 			function setFocus(el, focus) {
@@ -116,12 +116,13 @@
 				fgOpacity:10 // how transparent our overlay fg is
 			});
 
-			function resizeDelay(delayMillisecs) {
-				if(!$('iframe_proc_detail')) {
-					setTimeout("resizeDelay()", delayMillisecs);
-				}
-				else {
+			function resizeDelay(delayMillisecs, frameName) {
+				if(frameName == 'iframe_proc_detail') {
 					resizeProcDetail();
+				} else if (frameName == 'iframe_proc_preview'){
+					resizeProcPreview();
+				} else {
+					setTimeout("resizeDelay()", delayMillisecs);
 				}
 			}
 

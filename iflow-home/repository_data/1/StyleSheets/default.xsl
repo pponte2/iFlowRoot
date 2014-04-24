@@ -205,7 +205,7 @@
 					font-size: 11px;
 					background-color: #858585;
 					cursor: pointer;
-					background:#858585 url('../Themes/newflow/images/up-down-arrow.png') no-repeat;
+					background:#858585 url('/iFlow/Themes/newflow/images/up-down-arrow.png') no-repeat;
 					background-position:right;
 					}
 
