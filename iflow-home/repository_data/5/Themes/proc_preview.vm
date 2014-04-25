@@ -63,7 +63,7 @@
 			<form action="form.jsp" id="dadosPreview" name="dados" method="POST" onsubmit="">
 			#foreach($varName in $hmHidden.keySet())
 				<input type="hidden" name="$varName" id="$varName" value="$hmHidden.get($varName)" />
-			#end				
+			#end 				
 			<input type="hidden" name="procPreview" id="procPreview" value="true">
         <div class="title_cont" > Dados do processo n&ordm; $procPid (Pr&eacute;-visualiza&ccedil;&atilde;o)</div>
         <div class="panel-body">
