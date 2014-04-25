@@ -60,7 +60,7 @@
 				<input type="hidden" name="pid" value="$procPid">
 				<input type="hidden" name="subpid" value="$procSubpid">				
 			</form>
-			<form action="form.jsp" id="dados" name="dados" method="POST" onsubmit="">
+			<form action="form.jsp" id="dadosPreview" name="dados" method="POST" onsubmit="">
 			#foreach($varName in $hmHidden.keySet())
 				<input type="hidden" name="$varName" id="$varName" value="$hmHidden.get($varName)" />
 			#end				
@@ -413,7 +413,7 @@
 								<div class="form-group">
 									<label  class="col-sm-2 control-label">${varName}: </label>
 									<select class="txt  form-control pull-right combobox" style="width:250px;" name="$processVarnames.get(${valueName})"
-											onchange="camouflageForm();document.dados.op.value='16';document.dados.submit();" >
+											onchange="camouflageForm();document.dadosPreview.op.value='16';jQuery('#dadosPreview').submit();" >
 									#set($idx = 0)
 									<option value="Opção de decisão" >Opção de decisão</option>
 									#foreach($val in $lValues)
@@ -517,8 +517,8 @@
 					#set($hiddenfield=$button.get("hiddenfield"))
 					&nbsp;
 
-					<button type="submit" align="center" valign="center" class="btn btn-default" name="$name" value="$text" id="$id" 
-						onClick="$operation" title="$tooltip">
+					<button type="button" align="center" valign="center" class="btn btn-default" name="$name" value="$text" id="$id" 
+						onClick="javascript:$operation jQuery('#dadosPreview').submit();return false;" title="$tooltip">
 						$text 
 					</button>
 					&nbsp;
@@ -556,8 +556,9 @@
 
 
 			var jQuery = jQuery.noConflict();
-			jQuery("#dados").submit(function(e)
+			jQuery("#dadosPreview").submit(function(e)
 			{
+				alert(0);
 				var postData = jQuery(this).serializeArray(); 
 				var formURL = jQuery(this).attr("action");
 				jQuery.ajax(
@@ -565,13 +566,13 @@
 					url : formURL,
 					type: "POST",
 					data : postData,
-					success:function(data, textStatus, jqXHR) { openProcessWithContent('3', jqXHR.responseText); },
+					complete: function(jqXHR, textStatus) { openProcessWithContent('3', jqXHR.responseText); },
+					//success: function(data, textStatus, jqXHR) { openProcessWithContent('3', jqXHR.responseText); },
 					//success:function(data, textStatus, jqXHR) {openProcess($procFlowid, '$response.encodeURL($url_prefix,$uri)', 'flowid=$procFlowid&pid=$procPid&subpid=$procSubpid', false, 3);},
 					error: function(jqXHR, textStatus, errorThrown){openProcess($procFlowid, '$response.encodeURL($url_prefix,$uri)', 'flowid=$procFlowid&pid=$procPid&subpid=$procSubpid', false, 3);}
 				});
 			    e.preventDefault();	
 			});
-		
 
     	</script>
 		</body>
