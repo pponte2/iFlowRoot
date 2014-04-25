@@ -5763,7 +5763,7 @@ public ListIterator<Activity> getUserActivitiesOrderFilters(UserInfoInterface us
 
         StringBuilder sQuery = new StringBuilder(DBQueryManager.processQuery("ProcessManager.get_activity_filters_user", new Object[]{ userid }));
         
-        if(filter.getPreviousUserid() != null)
+        if(filter.getPreviousUserid() != null && !"".equals(filter.getPreviousUserid()))
           sQuery.append(" and previoususerid='"+ filter.getPreviousUserid() + "'");
       
         if(!filter.getFolderid().equals("0"))
@@ -5803,7 +5803,13 @@ public ListIterator<Activity> getUserActivitiesOrderFilters(UserInfoInterface us
 
         // TODO: ORDER
         if(filter.getOrderBy() != null && !"".equals(filter.getOrderBy())){
-          sQueryDelegated.append(" order by ").append(filter.getOrderBy()); 
+        	
+        	if(filter.getOrderBy().equals("description")){ //para eliminar espaços em branco no inicio
+        		sQueryDelegated.append(" order by trim(").append(filter.getOrderBy()+")");
+        	}else{
+        		sQueryDelegated.append(" order by ").append(filter.getOrderBy());
+        	}
+
           if(filter.getOrderType() != null){
             sQueryDelegated.append(" ").append(filter.getOrderType()); 
           }
