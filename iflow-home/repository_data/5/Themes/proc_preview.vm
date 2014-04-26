@@ -1,4 +1,4 @@
-<html> 
+<html>
 	<head>
 		<title>Detail</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -63,8 +63,8 @@
 			<form action="form.jsp" id="dadosPreview" name="dados" method="POST" onsubmit="">
 			#foreach($varName in $hmHidden.keySet())
 				<input type="hidden" name="$varName" id="$varName" value="$hmHidden.get($varName)" />
-			#end 				
-			<input type="hidden" name="procPreview" id="procPreview" value="true">
+			#end				
+			<!--input type="hidden" name="procPreview" id="procPreview" value="true"-->
         <div class="title_cont" > Dados do processo n&ordm; $procPid (Pr&eacute;-visualiza&ccedil;&atilde;o)</div>
         <div class="panel-body">
           <div class="form-horizontal" role="form">
@@ -558,7 +558,6 @@
 			var jQuery = jQuery.noConflict();
 			jQuery("#dadosPreview").submit(function(e)
 			{
-				alert(0);
 				var postData = jQuery(this).serializeArray(); 
 				var formURL = jQuery(this).attr("action");
 				jQuery.ajax(
@@ -566,9 +565,21 @@
 					url : formURL,
 					type: "POST",
 					data : postData,
-					complete: function(jqXHR, textStatus) { openProcessWithContent('3', jqXHR.responseText); },
-					//success: function(data, textStatus, jqXHR) { openProcessWithContent('3', jqXHR.responseText); },
-					//success:function(data, textStatus, jqXHR) {openProcess($procFlowid, '$response.encodeURL($url_prefix,$uri)', 'flowid=$procFlowid&pid=$procPid&subpid=$procSubpid', false, 3);},
+					success: function(data, textStatus, jqXHR) { openProcessWithContent('3', jqXHR.responseText); },
+					/*
+					success:function(data, textStatus, jqXHR) {
+                        var tabnr = '3';
+                        parent.tabber(tabnr);
+                        var ctrl = sectionDiv + tabnr;
+                        var iframe =  document.getElementById(ctrl);
+                        if (iframe == null) iframe = parent.document.getElementById(ctrl);
+                        if (iframe != null) {
+						    var domdoc = iframe.contentDocument || iframe.contentWindow.document;
+						    domdoc.write(htmlContent);
+						    domdoc.close();
+						}
+                    },
+                    */
 					error: function(jqXHR, textStatus, errorThrown){openProcess($procFlowid, '$response.encodeURL($url_prefix,$uri)', 'flowid=$procFlowid&pid=$procPid&subpid=$procSubpid', false, 3);}
 				});
 			    e.preventDefault();	

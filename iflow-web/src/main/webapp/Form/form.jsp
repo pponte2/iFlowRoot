@@ -8,8 +8,8 @@ request.setAttribute("inFrame", "true");
 <%@ include file="../inc/initProcInfo.jspf"%>
 <%@ include file="../inc/checkProcAccess.jspf"%><%
 
-//TODO
-String popupReturnBlockId = null;
+	//TODO
+	String popupReturnBlockId = null;
 
     String title = "Formul&aacute;rio";
     // use of fdFormData defined in /inc/defs.jsp

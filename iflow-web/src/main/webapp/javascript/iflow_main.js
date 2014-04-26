@@ -580,7 +580,7 @@ function tabber(tabnr, navpage, navparam, contentpage, contentparam) {
         	  				autoReturnId = objsInButtons[j].attributes.name.value.charAt(objsInButtons[j].attributes.name.value.length-1);
         	  		} catch(e){}
         	  	  //process form trough AJAX        		  
-        	  	  window.jQuery.ajaxSetup ({cache: false});
+        	  	window.jQuery.ajaxSetup ({cache: false});
         		  ajaxSavedValues['_button_clicked_id'] = autoReturnId;
         		  ajaxSavedValues['op'] = '3';
         		  ajaxSavedValues['buttonResult'] = 'return';
@@ -607,13 +607,6 @@ function tabber(tabnr, navpage, navparam, contentpage, contentparam) {
     contentparam = prepareParams('content', tabnr, contentparam);
     registerContent(contentpage, contentparam, tabnr);
     getCtrlFill(contentpage, contentparam, selectedSectionStr);
-  }
-  else {
-    /* ???
-    clearContent();
-    if(gTabNr != null) gOldTabNr = gTabNr;
-    gTabNr = tabnr;
-    */
   }
 }
 

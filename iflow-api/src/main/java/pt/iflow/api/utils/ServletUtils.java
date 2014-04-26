@@ -1,6 +1,7 @@
 package pt.iflow.api.utils;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Hashtable;
 
 import javax.servlet.ServletException;
@@ -14,6 +15,8 @@ import org.apache.commons.lang.StringUtils;
 public class ServletUtils {
 
   public static void sendEncodeRedirect(HttpServletResponse response, String url) throws IOException {
+    if (url.contains("form.jsp?"))
+      url += "&martelada=" + Calendar.getInstance().getTimeInMillis(); 
     response.sendRedirect(response.encodeRedirectURL(url));
   }
   
