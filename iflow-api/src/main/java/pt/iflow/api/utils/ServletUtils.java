@@ -15,7 +15,7 @@ import org.apache.commons.lang.StringUtils;
 public class ServletUtils {
 
   public static void sendEncodeRedirect(HttpServletResponse response, String url) throws IOException {
-    if (url.contains("form.jsp?"))
+    if (url.contains("?"))
       url += "&martelada=" + Calendar.getInstance().getTimeInMillis(); 
     response.sendRedirect(response.encodeRedirectURL(url));
   }
