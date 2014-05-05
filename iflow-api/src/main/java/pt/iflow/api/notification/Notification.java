@@ -27,4 +27,8 @@ public interface Notification {
 	public String getLink() ;
 	
 	public void setLink(String link) ;
+	
+	public String getOpenFlowid();
+	
+	public void setOpenFlowid(String flowid);
 }

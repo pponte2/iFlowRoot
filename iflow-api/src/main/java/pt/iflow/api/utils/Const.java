@@ -219,6 +219,8 @@ public class Const {
   public static final String sEMAIL_TEMPLATE_DIR = "EMAIL_TEMPLATE_DIR";
   public static final String sEMAIL_TEMPLATE_DIR_DESC = "Directoria de templates de email";
 
+  public static final String sOPEN_FLOW_IN_NOTIFICATION = "OPEN_FLOW_IN_NOTIFICATION";
+  public static final String sOPEN_FLOW_IN_NOTIFICATION_DESC = "Fluxo a abrir na Notificação";
   
   public static final String sRUN_MAXIMIZED = "RUN_MAXIMIZED";
   public static final String sRUN_MAXIMIZED_DESC = "Executar fluxo maximizado";

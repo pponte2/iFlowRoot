@@ -770,6 +770,7 @@ public class FlowSettingsBean implements FlowSettings {
     altmp.add(new FlowSetting(anFlowId, Const.sSHOW_SCHED_USERS, Const.sSHOW_SCHED_USERS_DESC));
     altmp.add(new FlowSetting(anFlowId, Const.sDIRECT_LINK_AUTHENTICATION, Const.sDIRECT_LINK_AUTHENTICATION_DESC));
     altmp.add(new FlowSetting(anFlowId, Const.sEMAIL_TEMPLATE_DIR, Const.sEMAIL_TEMPLATE_DIR_DESC));
+    altmp.add(new FlowSetting(anFlowId, Const.sOPEN_FLOW_IN_NOTIFICATION, Const.sOPEN_FLOW_IN_NOTIFICATION_DESC));
     altmp.add(new FlowSetting(anFlowId, Const.sRUN_MAXIMIZED, Const.sRUN_MAXIMIZED_DESC));
     altmp.add(new FlowSetting(anFlowId, Const.sENABLE_HISTORY, Const.sENABLE_HISTORY_DESC));
     altmp.add(new FlowSetting(anFlowId, Const.sDEFAULT_STYLESHEET, Const.sDEFAULT_STYLESHEET_DESC));

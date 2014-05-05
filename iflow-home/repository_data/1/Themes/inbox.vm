@@ -55,6 +55,7 @@
 			#else
 				<td class="itemlist">
 				<a href="javascript:process_detail($note.get("link"));" > $notificationitem </a>	
+				<a href="$note.get("openFlow")" > Abrir </a>					
 				</td>
 			#end	
 				

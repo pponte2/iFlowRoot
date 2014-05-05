@@ -14,13 +14,17 @@ import java.util.TimerTask;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.lang.StringUtils;
+
 import pt.iflow.api.core.AuthProfile;
 import pt.iflow.api.core.BeanFactory;
 import pt.iflow.api.db.DBQueryManager;
 import pt.iflow.api.db.DatabaseInterface;
+import pt.iflow.api.flows.FlowSettings;
 import pt.iflow.api.notification.Notification;
 import pt.iflow.api.notification.NotificationManager;
 import pt.iflow.api.userdata.UserData;
+import pt.iflow.api.utils.Const;
 import pt.iflow.api.utils.Logger;
 import pt.iflow.api.utils.UserInfoInterface;
 import pt.iflow.api.utils.Utils;
@@ -107,6 +111,7 @@ public class NotificationManagerBean implements NotificationManager {
   private Collection<Notification> listAllNotifications(UserInfoInterface userInfo, boolean listNew) {
     if(userInfo == null) return null;
     String user = userInfo.getUtilizador();
+    FlowSettings fs = BeanFactory.getFlowSettingsBean();
     final String query = "select a.*,b.isread from notifications a, user_notifications b where a.id=b.notificationid "+(listNew?"and b.isread=0":"")+" and b.userid=? order by a.created desc";
 
     ArrayList<Notification> notifications = new ArrayList<Notification>();
@@ -126,6 +131,10 @@ public class NotificationManagerBean implements NotificationManager {
       while(rs.next()) {
         NotificationImpl notification = new NotificationImpl(rs.getInt("id"), rs.getString("sender"), rs.getTimestamp("created"), rs.getString("message"), rs.getInt("isread")!=0);
         notification.setLink(rs.getString("link"));
+        if (!StringUtils.equalsIgnoreCase("false",notification.getLink())){
+        	Integer notificationFlowid = Integer.parseInt(notification.getLink().split(",")[0]);
+        	notification.setOpenFlowid( fs.getFlowSetting(notificationFlowid, Const.sOPEN_FLOW_IN_NOTIFICATION).getValue());
+        }
         notifications.add(notification);
       }
       rs.close();
