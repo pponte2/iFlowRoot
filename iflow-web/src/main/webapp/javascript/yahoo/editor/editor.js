@@ -7723,8 +7723,8 @@ var Dom = YAHOO.util.Dom,
                                 { type: 'color', label: 'Font Color', value: 'forecolor', disabled: true },
                                 { type: 'color', label: 'Background Color', value: 'backcolor', disabled: true },
                                 { type: 'separator' },
-                                { type: 'push', label: 'Remove Formatting', value: 'removeformat', disabled: true },
-                                { type: 'push', label: 'Show/Hide Hidden Elements', value: 'hiddenelements' }
+                                { type: 'push', label: 'Remove Formatting', value: 'removeformat'},
+                                { type: 'push', label: 'Show/Hide Hidden Elements', value: 'hiddenelements'}
                             ]
                         },
                         { type: 'separator' },

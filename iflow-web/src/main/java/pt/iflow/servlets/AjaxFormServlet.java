@@ -24,6 +24,7 @@ import pt.iflow.api.processdata.ProcessHeader;
 import pt.iflow.api.processdata.ProcessSimpleVariable;
 import pt.iflow.api.processtype.DateDataType;
 import pt.iflow.api.utils.Const;
+import pt.iflow.api.utils.Logger;
 import pt.iflow.api.utils.ServletUtils;
 import pt.iflow.api.utils.UserInfoInterface;
 import pt.iknow.utils.html.FormData;
@@ -41,7 +42,7 @@ public class AjaxFormServlet extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		try{
 		Integer flowid  = Integer.parseInt(request.getParameter("flowid"));
 		Integer pid  = Integer.parseInt(request.getParameter("pid"));
 		Integer subpid  = Integer.parseInt(request.getParameter("subpid"));
@@ -50,7 +51,7 @@ public class AjaxFormServlet extends HttpServlet {
 		UserInfoInterface userInfo = (UserInfoInterface) session.getAttribute(Const.USER_INFO);
 		if (userInfo == null)
 			throw new NullPointerException();
-		
+		Logger.debug(userInfo.getUtilizador(), this, "AjaxFormServlet", "Processing request for flow: " +flowid+ ", pid: " +pid+ ", subpid:" + subpid);
 		ProcessManager pm = BeanFactory.getProcessManagerBean();
 	    Flow flow = BeanFactory.getFlowBean();
 	    ProcessData procData = null;
@@ -114,6 +115,9 @@ public class AjaxFormServlet extends HttpServlet {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(result);
+		} catch (Exception e){
+			Logger.error("", this, "AjaxFormServlet", "Erro processing request for flow " + e);
+		}
 	}
 	
 	private String extractUpdatedFieldDivsSimple(String sHtmlNew){
