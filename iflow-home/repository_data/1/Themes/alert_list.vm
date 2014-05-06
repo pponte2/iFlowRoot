@@ -33,7 +33,7 @@
 			<td>
 				$note.get("from")<br>/$note.get("date")
 				#if($note.get("link")!="false")				
-					<br><a href='javascript:process_detail($note.get("link"));'> $notificationitem </a>						
+					<br><a href="javascript:process_detail($note.get("link"));"> $notificationitem </a>						
 				#end
 			</td>
 			<td>$note.get("message")</td>					
