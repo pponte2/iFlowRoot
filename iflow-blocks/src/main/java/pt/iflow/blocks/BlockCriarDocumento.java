@@ -14,6 +14,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.w3c.dom.CharacterData;
 import org.w3c.dom.Node;
@@ -287,7 +288,8 @@ private Map<String, String> getProcessSimpleVariables(ProcessData procData) {
 	        tpl.setUseLegacyExpressions(true);
 	        PDFGenerator pdfGen = new PDFGenerator(tpl);
 	        pdfGen.addURIResolver(new RepositoryURIResolver(userInfo));
-	        String replacedTemplate = pdfGen.getRenderedFOP(FoEvaluatorFactory.wrapScriptEngine(bsh)).replace("&lt;", "<").replace("&gt;", ">");
+	        //Manual fix for &nbsp; characters e <p> elements
+	        String replacedTemplate = StringEscapeUtils.unescapeHtml(pdfGen.getRenderedFOP(FoEvaluatorFactory.wrapScriptEngine(bsh))).replaceAll("&nbsp;", " ").replaceAll("<p>", "<fop:block font-size=\"12pt\" line-height=\"15pt\" space-after=\"12pt\">").replaceAll("</p>", "</fop:block>");		         
 	        //start again this time with the new template
 	        tpl = FoTemplate.compile(replacedTemplate);                       
 	        tpl.setUseLegacyExpressions(true);
