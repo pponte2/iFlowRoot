@@ -3,7 +3,6 @@ package pt.iflow.blocks;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -343,9 +342,11 @@ public class BlockForwardTo extends Block implements MessageBlock {
       } catch (Exception e) {}
       if (go) {
         Flow flow = BeanFactory.getFlowBean();
-        flow.nextBlock(userInfo, procData);
-        Block block = flow.getBlock(userInfo, procData);
-        buttons = block.getPreviewButtons(userInfo, procData);
+        String url = flow.nextBlock(userInfo, procData);
+        if (url != null && !url.contains("flow_error.jsp")) {
+          Block block = flow.getBlock(userInfo, procData);
+          buttons = block.getPreviewButtons(userInfo, procData);
+        }
       }
       return buttons;
     }

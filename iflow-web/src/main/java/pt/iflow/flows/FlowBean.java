@@ -172,14 +172,32 @@ public class FlowBean implements Flow {
 
     try {
 
-      if (useExistingTransaction && userInfo.inTransaction()) {
-        conn = DatabaseInterface.getConnection(userInfo);
+      boolean getNewConn = false;
+      
+      if (userInfo.inTransaction()) {
+        if (useExistingTransaction) {
+          conn = DatabaseInterface.getConnection(userInfo);
+        } else {
+          try {
+            DatabaseInterface.commitConnection(conn);
+            userInfo.unregisterTransaction(transactionId);
+          } catch (Exception e) {
+            DatabaseInterface.closeResources(conn);
+            Logger.error(login, this, "NextBlock", "Error closing Transaction", e);
+          }
+          getNewConn = true;
+        }
       } else {
+        getNewConn = true;
+      }
+      
+      if (getNewConn) {
         conn = Utils.getDataSource().getConnection();
         conn.setAutoCommit(false);
         transactionId = userInfo.registerTransaction(new DBConnectionWrapper(conn));
       }
 
+      
       int mid = Const.NO_MID;
 
       do {
@@ -643,6 +661,7 @@ public class FlowBean implements Flow {
       }
     }
   }
+
   private String getErrorUrl(String msgKey) {
     return "flow_error.jsp?msg_key=" + (StringUtils.isEmpty(msgKey) ? "" : msgKey);
   }
