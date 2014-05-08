@@ -1581,6 +1581,7 @@ function InicializeRichTextField(elementName, richTextComponentTitle, richTextCo
 
 
   richTextEditorComponent.render();
+  var cleanPaste = new CleanPaste(richTextEditorComponent);
 }
 
 function blockPopupCallerForm(){

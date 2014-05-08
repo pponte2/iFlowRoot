@@ -77,6 +77,7 @@
 				<script type="text/javascript" src="{$url_prefix}/javascript/sorttable.js"/> 
 				<script type="text/javascript" src="{$url_prefix}/javascript/yahoo/element/element-min.js"></script> 
 				<script type="text/javascript" src="{$url_prefix}/javascript/yahoo/editor/editor.js"></script>
+				<script type="text/javascript" src="{$url_prefix}/javascript/yahoo/editor/CleanPaste.js"></script>
 				<script type="text/javascript" src="{$url_prefix}/javascript/quicksearch.js"/>
 				<script type="text/javascript" src="{$url_prefix}/javascript/sexy-combo/jquery.sexy-combo.js"/>
 				<!-- Carrega codigo javacript de interaccao com a applet e prepara o ambiente -->

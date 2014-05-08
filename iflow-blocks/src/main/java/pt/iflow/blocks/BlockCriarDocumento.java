@@ -289,7 +289,8 @@ private Map<String, String> getProcessSimpleVariables(ProcessData procData) {
 	        PDFGenerator pdfGen = new PDFGenerator(tpl);
 	        pdfGen.addURIResolver(new RepositoryURIResolver(userInfo));
 	        //Manual fix for &nbsp; characters e <p> elements
-	        String replacedTemplate = StringEscapeUtils.unescapeHtml(pdfGen.getRenderedFOP(FoEvaluatorFactory.wrapScriptEngine(bsh))).replaceAll("&nbsp;", " ").replaceAll("<p>", "<fop:block font-size=\"12pt\" line-height=\"15pt\" space-after=\"12pt\">").replaceAll("</p>", "</fop:block>");		         
+	        String replacedTemplate = StringEscapeUtils.unescapeHtml(pdfGen.getRenderedFOP(FoEvaluatorFactory.wrapScriptEngine(bsh)));		         
+	        replacedTemplate = replacedTemplate.replaceAll("&nbsp;", " ").replaceAll("<span>", "").replaceAll("</span>", "").replaceAll("<br>", "");
 	        //start again this time with the new template
 	        tpl = FoTemplate.compile(replacedTemplate);                       
 	        tpl.setUseLegacyExpressions(true);

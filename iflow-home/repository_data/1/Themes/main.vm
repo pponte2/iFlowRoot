@@ -67,6 +67,7 @@
 		<script type="text/javascript" src="javascript/yahoo/container/container_core.js"></script>
 		<script type="text/javascript" src="javascript/yahoo/menu/menu-min.js"></script>
 		<script type="text/javascript" src="javascript/yahoo/editor/editor.js"></script>
+		<script type="text/javascript" src="javascript/yahoo/editor/CleanPaste.js"></script>
 		<script type="text/javascript" src="javascript/html/encoder.js"></script>
 		<script type="text/javascript" src="javascript/mootools.js"></script>
 		<script type="text/javascript" src="javascript/ajax_processing.js"></script>
