@@ -1629,10 +1629,11 @@
 													<xsl:if test="../file_sign_existing='true' and ../file_sign_method!='true' and tosign='true'">
 						<img class="toolTipImg" border="0" width="16" height="16" src="{$url_prefix}/images/sign.png" alt="Assinar" title="Assinar o documento original" >
 															<xsl:attribute name="onclick">
-																modifyFile('<xsl:value-of select="../variable" />',
+															if (isDownloadLinkAvailable('<xsl:value-of select="link_url"/>'))
+															modifyFile('<xsl:value-of select="../variable" />',
 																	'<xsl:value-of select="id" />',
 																	'<xsl:value-of select="../signatureType" />',
-																	'<xsl:value-of select="../encryptType" />')
+																	'<xsl:value-of select="../encryptType" />');															
 															</xsl:attribute>
 														</img>
 													</xsl:if>
