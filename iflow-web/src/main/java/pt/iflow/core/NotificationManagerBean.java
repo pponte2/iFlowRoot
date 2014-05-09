@@ -131,10 +131,11 @@ public class NotificationManagerBean implements NotificationManager {
       while(rs.next()) {
         NotificationImpl notification = new NotificationImpl(rs.getInt("id"), rs.getString("sender"), rs.getTimestamp("created"), rs.getString("message"), rs.getInt("isread")!=0);
         notification.setLink(rs.getString("link"));
+        try{
         if (!StringUtils.equalsIgnoreCase("false",notification.getLink())){
         	Integer notificationFlowid = Integer.parseInt(notification.getLink().split(",")[0]);
         	notification.setOpenFlowid( fs.getFlowSetting(notificationFlowid, Const.sOPEN_FLOW_IN_NOTIFICATION).getValue());
-        }
+        }}catch(Exception e){}
         notifications.add(notification);
       }
       rs.close();

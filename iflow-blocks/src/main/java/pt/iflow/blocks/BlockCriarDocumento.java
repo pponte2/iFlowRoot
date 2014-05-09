@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.Hashtable;
@@ -13,6 +14,11 @@ import java.util.Properties;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
@@ -289,7 +295,8 @@ private Map<String, String> getProcessSimpleVariables(ProcessData procData) {
 	        PDFGenerator pdfGen = new PDFGenerator(tpl);
 	        pdfGen.addURIResolver(new RepositoryURIResolver(userInfo));
 	        //Manual fix for &nbsp; characters e <p> elements
-	        String replacedTemplate = StringEscapeUtils.unescapeHtml(pdfGen.getRenderedFOP(FoEvaluatorFactory.wrapScriptEngine(bsh)));		         
+	        String replacedTemplate = StringEscapeUtils.unescapeHtml(pdfGen.getRenderedFOP(FoEvaluatorFactory.wrapScriptEngine(bsh)));		
+	        Logger.debug(userInfo.getUtilizador(), this, "after", "replacedTemplate=" + replacedTemplate);
 	        replacedTemplate = replacedTemplate.replaceAll("&nbsp;", " ").replaceAll("<span>", "").replaceAll("</span>", "").replaceAll("<br>", "");
 	        //start again this time with the new template
 	        tpl = FoTemplate.compile(replacedTemplate);                       
