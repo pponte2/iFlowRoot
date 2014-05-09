@@ -535,7 +535,7 @@ try {
     }
 
     if (!StringUtils.isEmpty(selectedFlow) || !StringUtils.isEmpty(selectedFolderName) ||
-        !StringUtils.isEmpty(filterDate) || !StringUtils.isEmpty(filterPreviousUserid))
+        !StringUtils.isEmpty(filterDate) || !StringUtils.isEmpty(filterPreviousUserid) || !StringUtils.isEmpty(filterProcessNumber))
       isCleanFilter = false;
 
     hsSubstLocal.put("selectedFlow", (selectedFlow != null ? selectedFlow : ""));
@@ -545,7 +545,7 @@ try {
     hsSubstLocal.put("selectedPreviousUser", (filterPreviousUserid != null ? filterPreviousUserid : ""));
     hsSubstLocal.put("selectedDate", (filterDate != null ? filterDate : ""));
     hsSubstLocal.put("selectedFolderName", (selectedFolderName != null ? selectedFolderName : ""));
-  
+    hsSubstLocal.put("selectedProcessNumber", (filterProcessNumber != null ? filterProcessNumber : ""));
     //    now get activities
     Activity a;
   

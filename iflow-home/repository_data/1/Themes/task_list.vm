@@ -192,7 +192,7 @@
 				
 		<div style="height:30px;clear:both;padding-right: 10px;">
 			<div class="left" style="padding-top:10px;text-align:left;font-size:1em;color:#aaa;">
-				Filtros: $selectedFlow $selectedFolderName $selectedDate $selectedPreviousUser <button type="button" class="close" data-dismiss="alert" aria-hidden="true" onclick="javascript:tabber_right(2, 'main_content.jsp', 'cleanFilter=1');">&times;</button>
+				Filtros: $selectedFlow $selectedFolderName $selectedDate $selectedPreviousUser $selectedProcessNumber<button type="button" class="close" data-dismiss="alert" aria-hidden="true" onclick="javascript:tabber_right(2, 'main_content.jsp', 'cleanFilter=1');">&times;</button>
 			</div>
 		</div>
 		#end
@@ -464,8 +464,8 @@
 		<div class="process_t3" style=" border-bottom: 1px Solid #cccccc; padding: 0 2px 5px 2px;height:30px;">
 		<div style="height:30px;margin-bottom:20px;padding-right: 10px;">
 			<div class="left" style="padding-top:10px;text-align:left;font-size:1em;color:#aaa;width:200px;">
-				Filtros: $selectedFolderName $selectedDate $selectedPreviousUser <button type="button" class="close" data-dismiss="alert" aria-hidden="true" onclick="javascript:tabber_right(2, 'main_content.jsp', 'cleanFilter=1');">&times;</button>
-			</div>
+				Filtros: $selectedFlow $selectedFolderName $selectedDate $selectedPreviousUser $selectedProcessNumber<button type="button" class="close" data-dismiss="alert" aria-hidden="true" onclick="javascript:tabber_right(2, 'main_content.jsp', 'cleanFilter=1');">&times;</button>
+			</div>       
 		</div>
 		</div>
 		#end
