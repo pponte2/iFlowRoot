@@ -2125,7 +2125,7 @@ function isDownloadAvailable(component){
 		});	
 	
 	if (result.responseText.length==0){
-		alert('Por favor aguarde, o ficheiro vai ser disponibilizado brevemente');
+		alert('Por favor aguarde, o ficheiro vai ser disponibilizado brevemente. Se demorar excessivamente recarregue o processo através do painel Tarefas');
 		return false;	
 	}		
 	else
@@ -2145,7 +2145,7 @@ function isDownloadLinkAvailable(link){
 		});	
 	
 	if (result.responseText.length==0){
-		alert('Por favor aguarde, o ficheiro vai ser disponibilizado brevemente');
+		alert('Por favor aguarde, o ficheiro vai ser disponibilizado brevemente. Se demorar excessivamente recarregue o processo através do painel Tarefas');
 		return false;	
 	}		
 	else
