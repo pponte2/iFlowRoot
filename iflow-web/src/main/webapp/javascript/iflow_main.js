@@ -1795,7 +1795,8 @@ function ajaxSaveValueChange(component){
 function ajaxFormRefresh(component){
   var $jQuery = jQuery.noConflict();
   $jQuery.ajaxSetup ({cache: false});
-  $jQuery(component).after('<img src=\'/iFlow//images/loading.gif\' style=\'left:0px; position:fixed; top:15px\'>');
+  $jQuery(component).after('<img src=\'/iFlow/images/loading.gif\' style=\'left:50px; position:relative;\'>');
+  var varNewValue=component.value;
   var varNewValue=component.value;
   var varName=component.name;  	  
   ajaxSavedValues[varName] = varNewValue;
