@@ -543,8 +543,10 @@
 	          if (this.selectbox.attr('onChange'))
 	            this.selectbox.trigger("change");
 	          else{
-	            ajaxSaveValueChange(this.selectbox.context);	
-	            ajaxFormRefresh(this.selectbox.context);
+	        	if(!this.selectbox[0].hasClass("noajax")){
+		            ajaxSaveValueChange(this.selectbox.context);	
+		            ajaxFormRefresh(this.selectbox.context);
+		          }
 	          }
 	        }
 

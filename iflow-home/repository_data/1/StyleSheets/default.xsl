@@ -1274,7 +1274,7 @@
 			<em>*</em>
 		</xsl:if>
 		</label>
-		<select class="txt  form-control pull-right combobox" style="width:250px;">
+		<select class="txt  form-control pull-right combobox noajax" style="width:250px;">
 		<xsl:attribute name="name">
 			<xsl:value-of select="variable/text()" />
 		</xsl:attribute>

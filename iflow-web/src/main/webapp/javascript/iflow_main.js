@@ -1803,21 +1803,23 @@ function ajaxFormRefresh(component){
   ajaxSavedValues['pid'] = document.getElementById('pid').value;;
   ajaxSavedValues['subpid'] = document.getElementById('subpid').value;
   ajaxSavedValues['contentType'] = 'application/x-www-form-urlencoded;charset=UTF-8';
-  $jQuery.getJSON('../AjaxFormServlet', ajaxSavedValues, 
-        function(response){  
-          try{
-            var main = $jQuery('#main');
-            main.html(response);
-            for (var k in appletButtons) {
-              $(k).innerHTML = appletButtons[k];  
-            }
-            $jQuery('#curmid').val(1 + Number($jQuery('#curmid').val())); 
-          } catch (err){}
-          finally{
-            reloadBootstrapElements();
-          }
+  $jQuery.getJSON(
+		  '../AjaxFormServlet', 
+		  ajaxSavedValues, 
+		  function(response){  
+			  try{
+				  var main = $jQuery('#main');
+				  main.html(response);
+				  for (var k in appletButtons) {
+					  $(k).innerHTML = appletButtons[k];  
+				  }
+				  $jQuery('#curmid').val(1 + Number($jQuery('#curmid').val())); 
+			  } catch (err){}
+			  finally{
+				  reloadBootstrapElements();
+			  }
 
-        }
+		  }
   );
   ajaxSavedValues = {};
 }    
