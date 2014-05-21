@@ -385,7 +385,7 @@
 										#end
 							</table>
 						</div>		
-						<input id="96_MAX_ROW" type="hidden" value="$max_row" name="96_MAX_ROW">
+						<input id="91_MAX_ROW" type="hidden" value="$max_row" name="91_MAX_ROW">
 					#end
 					
 					#if ($FlagDecisao == 1 && $processDetail.get("Acções")!="" && (!($processDetail.get("Ação escolhida")!="") || $processDetail.get("Ação escolhida")=="pre_decisao" || $processDetail.get("Ação escolhida")=="parecer") )

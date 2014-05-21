@@ -163,6 +163,7 @@
 </div>
 
 
-<% out.println(ProcessEndDisplay.processTasks(userInfo, response)); %>
+<% 		//Slow Query disabled
+		//out.println(ProcessEndDisplay.processTasks(userInfo, response)); %>
 
 <%@ include file="inc/process_bottom.jspf"%>
