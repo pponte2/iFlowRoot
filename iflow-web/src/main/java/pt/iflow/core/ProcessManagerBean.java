@@ -5793,7 +5793,7 @@ public ListIterator<Activity> getUserActivitiesOrderFilters(UserInfoInterface us
         // 5: pnumber
         if (StringUtils.isNotEmpty(filter.getPnumber())) {
           sQuery.append(" and upper(pnumber) like upper('%").append(escapeSQL(filter.getPnumber())).append("%')");
-          sQueryDelegated.append(" and upper(p.pnumber) like upper('%").append(escapeSQL(filter.getPnumber())).append("%')");
+          sQueryDelegated.append(" and upper(pnumber) like upper('%").append(escapeSQL(filter.getPnumber())).append("%')");
         }
 
         // TODO: ORDER
