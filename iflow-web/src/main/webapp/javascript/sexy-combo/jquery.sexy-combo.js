@@ -555,7 +555,7 @@
 this.input.css("width", (this.listWrapper.width() + 40) + 'px');
 this.input.css("left", (89 - this.listWrapper.width()) + 'px');
 this.input.css("font-size", '0.85em');
-this.listWrapper.css("width", (this.listWrapper.width() + 60) + 'px');
+this.listWrapper.css("width", (this.listWrapper.width() + 0) + 'px');
 
 
 

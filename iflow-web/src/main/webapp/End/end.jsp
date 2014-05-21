@@ -118,7 +118,8 @@
 </div>
 <% 
 	if ("".equals(flowExecType)) {
-		out.println(ProcessEndDisplay.processTasks(userInfo, response,flowid)); 
+		//Slow Query disabled
+		//out.println(ProcessEndDisplay.processTasks(userInfo, response,flowid)); 
 	}
 %>
 <%@ include file = "../inc/process_bottom.jspf" %>

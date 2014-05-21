@@ -5616,13 +5616,8 @@ public ListIterator<Activity> getUserActivitiesOrderByPid(UserInfoInterface user
         db = DatabaseInterface.getConnection(userInfo);
         db.setAutoCommit(true);
   
-        final StringBuilder sQuery = new StringBuilder(
-            "select a.flowid, a.previoususerid, a.pid, a.mid, a.subpid, a.type, a.priority, a.created, a.started, a.archived, a.description, a.url, a.status, a.notify, a.profilename, a.read_flag, a.delegated, p.pnumber, PAI.icon, a.folderid from activity a,process p LEFT JOIN process_annotation_icon PAI ON (p.flowid=PAI.flowid AND p.pid=PAI.pid AND p.subpid=PAI.subpid) where p.flowid=a.flowid and p.pid=a.pid and p.subpid=a.subpid and status=0 and userid='"+userid+"' ");
-
-        final StringBuilder sQueryDelegated = new StringBuilder(
-            "select a.flowid, a.previoususerid, a.pid, a.mid, a.subpid, a.type, a.priority, a.created, a.started, a.archived, a.description, a.url, a.status, a.notify, a.profilename, a.read_flag, 1 as delegated, p.pnumber, PAI.icon, -1 as folderid from activity_delegated a,process p LEFT JOIN process_annotation_icon PAI ON (p.flowid=PAI.flowid AND p.pid=PAI.pid AND p.subpid=PAI.subpid) where p.flowid=a.flowid and p.pid=a.pid and p.subpid=a.subpid and status=0 and userid='"+userid+"' ");
-            
-       
+        final StringBuilder sQuery = new StringBuilder(DBQueryManager.processQuery("ProcessManager.getUserActivitiesOrderByPid_user", new Object[]{ userid }));               
+        final StringBuilder sQueryDelegated = new StringBuilder(DBQueryManager.processQuery("ProcessManager.getUserActivitiesOrderByPid_delegated", new Object[]{ userid }));       
 
         String queryUnion = sQuery.toString()+" UNION "+sQueryDelegated.toString()+" order by created";
                 
