@@ -138,4 +138,8 @@ public interface Documents {
   public boolean isToSign(UserInfoInterface userInfo, int docid);
   
   public boolean markDocsToSign(UserInfoInterface userInfo, ProcessListVariable docs, ProcessListVariable values);
+  
+  public Boolean markDocGenerationSuccess(UserInfoInterface userInfo, Document adoc, Boolean success);
+  
+  public Boolean checkDocGenerationSuccess(UserInfoInterface userInfo, Document adoc);
 }

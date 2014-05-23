@@ -121,6 +121,12 @@ public class DocumentServlet extends HttpServlet {
       response.sendError(HttpServletResponse.SC_NOT_FOUND, "File not found");
       return;
     }
+    
+    if(BeanFactory.getDocumentsBean().checkDocGenerationSuccess(userInfo, doc)==Boolean.FALSE){
+    	response.sendError(HttpServletResponse.SC_NO_CONTENT, "File not created");
+    	return;
+    }
+    
     byte [] ba = doc.getContent();
     response.setHeader("Content-Disposition","attachment;filename=\"" + doc.getFileName().replace(' ', '_')+"\";");
     response.setContentLength(ba.length);

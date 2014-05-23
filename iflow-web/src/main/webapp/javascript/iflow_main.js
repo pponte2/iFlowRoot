@@ -2126,9 +2126,12 @@ function isDownloadAvailable(component){
 		},
 		error: function(data, textStatus, jqXHR) {
 		}
-		});	
+		});
 	
-	if (result.responseText.length==0){
+	if (result.status==204){
+		alert('Nao foi possivel gerar o documento, sugerimos que repita a operaçao ou contacte a equipa de suporte');
+		return false;	
+	}else if (result.responseText.length==0){
 		alert('Por favor aguarde, o ficheiro vai ser disponibilizado brevemente. Se demorar excessivamente recarregue o processo atravï¿½s do painel Tarefas');
 		return false;	
 	}		
@@ -2148,7 +2151,10 @@ function isDownloadLinkAvailable(link){
 		}
 		});	
 	
-	if (result.responseText.length==0){
+	if (result.status==204){
+		alert('Nao foi possivel gerar o documento, sugerimos que repita a operaçao ou contacte a equipa de suporte');
+		return false;	
+	}else if (result.responseText.length==0){
 		alert('Por favor aguarde, o ficheiro vai ser disponibilizado brevemente. Se demorar excessivamente recarregue o processo atravï¿½s do painel Tarefas');
 		return false;	
 	}		

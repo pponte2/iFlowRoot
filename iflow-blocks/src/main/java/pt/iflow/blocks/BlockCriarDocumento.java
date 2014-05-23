@@ -297,7 +297,7 @@ private Map<String, String> getProcessSimpleVariables(ProcessData procData) {
 	        //Manual fix for &nbsp; characters e <p> elements
 	        String replacedTemplate = StringEscapeUtils.unescapeHtml(pdfGen.getRenderedFOP(FoEvaluatorFactory.wrapScriptEngine(bsh)));		
 	        Logger.debug(userInfo.getUtilizador(), this, "after", "replacedTemplate=" + replacedTemplate);
-	        replacedTemplate = replacedTemplate.replaceAll("&nbsp;", " ").replaceAll("<span>", "").replaceAll("</span>", "").replaceAll("<br>", "");
+	        replacedTemplate = replacedTemplate.replaceAll("&nbsp;", " ").replaceAll("<span>", "").replaceAll("</span>", "").replaceAll("<br>", "").replaceAll("&", "&amp;");
 	        //start again this time with the new template
 	        tpl = FoTemplate.compile(replacedTemplate);                       
 	        tpl.setUseLegacyExpressions(true);
@@ -307,8 +307,10 @@ private Map<String, String> getProcessSimpleVariables(ProcessData procData) {
 	        newDocument.setContent(docContent);
 	        BeanFactory.getDocumentsBean().updateDocument(userInfo, procData, newDocument);
 	        
+	        BeanFactory.getDocumentsBean().markDocGenerationSuccess(userInfo, newDocument, Boolean.TRUE);
             Logger.debug(userInfo.getUtilizador(), this, "after", "SUCCESS processing assinc data into file: (found: template=" + template);
 		} catch (Exception e){
+			BeanFactory.getDocumentsBean().markDocGenerationSuccess(userInfo, newDocument, Boolean.FALSE);
 			Logger.error(userInfo.getUtilizador(), this, "after", "Unable to process data into file: error processing file (found: template=" + template, e);
 		}
 		

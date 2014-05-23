@@ -74,3 +74,10 @@ CREATE TABLE  `iflow`.`calendar_periods` (
   `period_end` TIME  NOT NULL,
   CONSTRAINT `fk_calendar_periods_calendar` FOREIGN KEY (`calendar_id`) REFERENCES `calendar` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `iflow`.`documents_support`;
+CREATE TABLE  `iflow`.`documents_support` (
+  `docid` int(10) unsigned NOT NULL,
+  `generation` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`docid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;

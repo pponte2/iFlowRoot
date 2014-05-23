@@ -16,7 +16,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
@@ -24,6 +26,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
 
 import pt.iflow.api.connectors.DMSConnectorUtils;
+import pt.iflow.api.core.Activity;
 import pt.iflow.api.core.BeanFactory;
 import pt.iflow.api.db.DBQueryManager;
 import pt.iflow.api.db.DatabaseInterface;
@@ -1123,5 +1126,70 @@ public class DocumentsBean implements Documents {
      }
      Logger.debug(userInfo.getUtilizador(), this, "markDocsToSign", "Update to not sign "+queryUpdate0+" and to sign "+queryUpdate1);
      return true;
+  }
+
+@Override
+public Boolean markDocGenerationSuccess(UserInfoInterface userInfo,
+		Document adoc, Boolean success) {    
+    Logger.trace(this, "markDocGenerationSuccess", userInfo.getUtilizador() + " call.");
+    Boolean result = Boolean.TRUE;
+    Connection db = null;
+    PreparedStatement st = null;
+    ResultSet rs = null;
+    LinkedList<Activity> l = new LinkedList<Activity>();
+
+    try {
+      db = DatabaseInterface.getConnection(userInfo);
+      db.setAutoCommit(true);
+
+      final StringBuilder sQuery = new StringBuilder(DBQueryManager.processQuery("Documents.markDocGenerationSuccess", new Object[]{adoc.getDocId(), success, success }));                                   
+      st = db.prepareStatement(sQuery.toString());
+      st.execute();
+      DatabaseInterface.closeResources(st, rs);            
+    } catch (SQLException sqle) {
+      Logger.error(userInfo.getUtilizador(), this, "markDocGenerationSuccess", "sql exception: " + sqle.getMessage(), sqle);
+      result = Boolean.FALSE;
+    } catch (Exception e) {
+      Logger.error(userInfo.getUtilizador(), this, "markDocGenerationSuccess", "exception: " + e.getMessage(), e);
+      result = Boolean.FALSE;
+    } finally {
+      DatabaseInterface.closeResources(db, st, rs);
+    }
+    return result;
+  }
+
+@Override
+public Boolean checkDocGenerationSuccess(UserInfoInterface userInfo,
+		Document adoc) {    
+    Logger.trace(this, "checkDocGenerationSuccess", userInfo.getUtilizador() + " call.");
+    Boolean result = Boolean.TRUE;
+    Connection db = null;
+    PreparedStatement st = null;
+    ResultSet rs = null;
+    LinkedList<Activity> l = new LinkedList<Activity>();
+
+    try {
+      db = DatabaseInterface.getConnection(userInfo);
+      db.setAutoCommit(true);
+
+      final StringBuilder sQuery = new StringBuilder(DBQueryManager.processQuery("Documents.checkDocGenerationSuccess", new Object[]{adoc.getDocId()}));                                   
+      st = db.prepareStatement(sQuery.toString());
+      rs = st.executeQuery();
+      
+      if(!rs.next())
+    	  return null;
+      else
+    	  return rs.getBoolean(1);
+                  
+    } catch (SQLException sqle) {
+      Logger.error(userInfo.getUtilizador(), this, "checkDocGenerationSuccess", "sql exception: " + sqle.getMessage(), sqle);
+      result = Boolean.FALSE;
+    } catch (Exception e) {
+      Logger.error(userInfo.getUtilizador(), this, "checkDocGenerationSuccess", "exception: " + e.getMessage(), e);
+      result = Boolean.FALSE;
+    } finally {
+      DatabaseInterface.closeResources(db, st, rs);
+    }
+    return null;
   }
 }
