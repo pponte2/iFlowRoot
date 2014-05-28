@@ -57,7 +57,7 @@
 				<link href="{$url_prefix}/javascript/jQueryAssets/jquery.ui.accordion.min.css" rel="stylesheet" type="text/css" />
 				<link href="{$url_prefix}/javascript/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>
 				<link href="{$url_prefix}/javascript/sexy-combo/css/sexy-combo.css" rel="stylesheet" type="text/css" />
-				<link href="{$url_prefix}/javascript/sexy-combo/css/sexy/sexy.css" rel="stylesheet" type="text/css" />
+				<link href="{$url_prefix}/javascript/sexy-combo/css/sexy/sexy.css" rel="stylesheet" type="text/css" />				
 
 				<script type="text/javascript" src="{$url_prefix}/javascript/yahoo/yahoo-dom-event/yahoo-dom-event.js" />
 				<script type="text/javascript" src="{$url_prefix}/javascript/yahoo/dragdrop/dragdrop-min.js" />
@@ -80,6 +80,8 @@
 				<script type="text/javascript" src="{$url_prefix}/javascript/yahoo/editor/CleanPaste.js"></script>
 				<script type="text/javascript" src="{$url_prefix}/javascript/quicksearch.js"/>
 				<script type="text/javascript" src="{$url_prefix}/javascript/sexy-combo/jquery.sexy-combo.js"/>
+				<script type="text/javascript" src="{$url_prefix}/javascript/ckeditor/ckeditor.js"/>
+				<script type="text/javascript" src="{$url_prefix}/javascript/ckeditor/adapters/jquery.js"/>
 				<!-- Carrega codigo javacript de interaccao com a applet e prepara o ambiente -->
 				<script type="text/javascript" src="{$url_prefix}/javascript/applet_functions.js"></script>
 				
@@ -1166,7 +1168,7 @@
 		</xsl:if>
 
 		<xsl:if test="type='rich_textarea'">
-			<div class="yui-skin-sam" align="right">
+			<div class="" align="right">
 				<xsl:attribute name="style">
 					<xsl:choose>
 						<xsl:when test="string-length(height) &gt; 0">
@@ -1182,7 +1184,7 @@
 						<xsl:value-of select="variable/text()" />
 					</xsl:attribute>
 					<xsl:attribute name="class">
-						<xsl:text>txt</xsl:text>
+						<xsl:text></xsl:text>
 						<xsl:if test="disabled='true' or readonly='true'">
 							<xsl:text> readonly</xsl:text>
 						</xsl:if>
@@ -1274,7 +1276,7 @@
 			<em>*</em>
 		</xsl:if>
 		</label>
-		<select class="txt  form-control pull-right combobox noajax" style="width:250px;">
+		<select class="txt  form-control pull-right combobox" style="width:250px;">
 		<xsl:attribute name="name">
 			<xsl:value-of select="variable/text()" />
 		</xsl:attribute>

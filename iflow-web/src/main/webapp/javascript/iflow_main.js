@@ -1537,7 +1537,8 @@ function setScrollPosition(yPosition) {
 }
 
 function InicializeRichTextField(elementName, richTextComponentTitle, richTextComponentWidth, richTextComponentHeight){
-  var isReadOnly = document.getElementById(elementName).readOnly;
+	$jQuery('#'+elementName).ckeditor();	
+/*var isReadOnly = document.getElementById(elementName).readOnly;
   var collapseToolbar = true;
 
   //Setup some private variables
@@ -1585,6 +1586,7 @@ function InicializeRichTextField(elementName, richTextComponentTitle, richTextCo
 
   richTextEditorComponent.render();
   var cleanPaste = new CleanPaste(richTextEditorComponent);
+*/
 }
 
 function blockPopupCallerForm(){
@@ -1787,17 +1789,21 @@ function process_detail_new(thePage, ctrl, flowid, pid, subpid, procStatus, uri)
 //save temporary changes in form before ajax submit
 function ajaxSaveValueChange(component){
 	//save present variable
-	for(var i=0; i<ajaxSavedRichTextAreaValues.length; i++)
-		ajaxSavedValues[ajaxSavedRichTextAreaValues[i]] = document.getElementById(ajaxSavedRichTextAreaValues[i]).value;
+	//for(var i=0; i<ajaxSavedRichTextAreaValues.length; i++)
+	//	ajaxSavedValues[ajaxSavedRichTextAreaValues[i]] = document.getElementById(ajaxSavedRichTextAreaValues[i]).value;
 	//save the new value
 	var varNewValue=component.value;
 	var varName=component.name;	
 	ajaxSavedValues[varName] = varNewValue;	
 }
 
-function ajaxFormRefresh(component){
+function ajaxFormRefresh(component){	
   var $jQuery = jQuery.noConflict();
   $jQuery.ajaxSetup ({cache: false});
+  //save richtext variable
+  for(var i=0; i<ajaxSavedRichTextAreaValues.length; i++)
+	ajaxSavedValues[ajaxSavedRichTextAreaValues[i]] = $jQuery('#'+ajaxSavedRichTextAreaValues[i]).val();
+
   $jQuery(component).after('<img src=\'/iFlow/images/loading.gif\' style=\'left:50px; position:relative;\'>');
   var varNewValue=component.value;
   var varNewValue=component.value;
@@ -1807,6 +1813,7 @@ function ajaxFormRefresh(component){
   ajaxSavedValues['pid'] = document.getElementById('pid').value;;
   ajaxSavedValues['subpid'] = document.getElementById('subpid').value;
   ajaxSavedValues['contentType'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+ 
   $jQuery.getJSON(
 		  '../AjaxFormServlet', 
 		  ajaxSavedValues, 
@@ -1825,6 +1832,7 @@ function ajaxFormRefresh(component){
 
 		  }
   );
+  
   ajaxSavedValues = {};
 }    
 
