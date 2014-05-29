@@ -49,7 +49,10 @@ try {
 		
 		if(StringUtils.isNotBlank(notification.getOpenFlowid())){			
 			note.put("openFlow", "javascript:openProcess(" +notification.getOpenFlowid()+ ",%20'inicio_flow.jsp',%20'flowid=" +notification.getOpenFlowid()+ "&sel=" +notification.getOpenFlowid()+ "',%20false,%203)");
+		}else{
+			note.put("openFlow","-1");
 		}
+			
 		
 		notes.add(note);
 	}
