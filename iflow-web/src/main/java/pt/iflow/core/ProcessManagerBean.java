@@ -3271,6 +3271,73 @@ public void deleteAllActivities(UserInfoInterface userInfo, ProcessHeader procHe
   }
 }
 
+
+/**
+ * Delete other activities of the process in case for forward to a group
+ * 
+ * @param userid
+ * @param pid
+ * 
+ * @throws SQLException
+ */
+public void deleteOtherActivities(UserInfoInterface userInfo, ProcessHeader procHeader) throws SQLException {
+
+  int flowid = procHeader.getFlowId();
+  int pid = procHeader.getPid();
+  int subpid = procHeader.getSubPid();
+
+  String userid = userInfo.getUtilizador();
+
+  Logger.trace(this, "deleteOtherActivities", "Call for user=" + userid + ", flowid=" + flowid + " and pid=" + pid + " and subpid="
+      + subpid);
+
+  if (pid == Const.nSESSION_PID) {
+    Logger.debug(userid, this, "deleteOtherActivities", "Process still in session... returning");
+    return;
+  }
+
+  Connection db = null;
+  Statement st = null;
+  String stmp = null;
+
+  try {
+    db = DatabaseInterface.getConnection(userInfo);
+    db.setAutoCommit(false);
+    st = db.createStatement();
+
+    historifyActivities(userInfo, db, procHeader, userid);
+
+    stmp = "delete from activity where flowid=" + flowid + " and pid=" + pid + " and subpid=" + subpid + " and userid != '"+userid+"'";
+    Logger.debug(userid, this, "deleteOtherActivities", "Query3=" + stmp);
+    st.executeUpdate(stmp);
+
+    DatabaseInterface.commitConnection(db);
+  }
+  catch (SQLException sqle) {
+    Logger.error(userid, this, "deleteOtherActivities", procHeader.getSignature() + "sql exception: " + sqle.getMessage(), sqle);
+    try {
+      DatabaseInterface.rollbackConnection(db);
+    }
+    catch (Exception e2) {
+    }
+    // now throw caught exception so caller handle it properly.
+    throw sqle;
+  } catch (Exception e) {
+    Logger.error(userid, this, "deleteOtherActivities", procHeader.getSignature() + "exception: " + e.getMessage(), e);
+    try {
+      DatabaseInterface.rollbackConnection(db);
+    }
+    catch (Exception e2) {
+    }
+    // now throw caught exception so caller handle it properly.
+    throw new SQLException(e.getMessage());
+  }
+  finally {
+    DatabaseInterface.closeResources(db, st);
+  }
+}
+
+
 /**
  * Updates a process activities with the new specified url and description
  * 

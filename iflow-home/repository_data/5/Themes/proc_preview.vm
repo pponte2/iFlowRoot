@@ -160,79 +160,8 @@
 				#end 
 			#end
 					
-			#if ($FlagDecisao == 0)		
-						#set($sAccoes=$processDetail.get("Acções"))
-						#set($lAccoes=$sAccoes.split("] "))
-						#if ($lAccoes != "")
-							#set($listAccoes = [])
-								#foreach($accao in $lAccoes)
-									#if($accao.indexOf("<br>") > 0)
-										#if ($listAccoes.add($accao.substring(0, $accao.indexOf("<br>"))))
-										#end
-									#end
-								#end
-						#set($accao1="")
-						#set($accao2="")
-							#foreach($accao in $listAccoes)
-								#set($accao2=$accao1)
-								#set($accao1=$accao)
-							#end
-						#end
-						
-						#set($sComents=$processDetail.get("Comentários"))
-						#set($lComents=$sComents.split("] "))
-						#if ($lComents != "")
-							#set($listComents = [])
-								#foreach($coment in $lComents)
-									#if($coment.lastIndexOf("<br>") >= 0)
-										#if ($listComents.add($coment.substring(0, $coment.lastIndexOf("<br>"))))
-										#end
-									#end
-								#end
-						#set($coment1="")
-						#set($coment2="")
-							#foreach($coment in $listComents)
-								#set($coment2=$coment1)
-								#set($coment1=$coment)
-							#end
-						#end
-						
-						<div class="form-group">
-							<label  class="col-sm-2 control-label" style=" font-size: 12px; margin-bottom: 2px">Tramitação Recente: </label>
-							<div class="col-sm-8">&nbsp;</div>				
-						</div>						
-						<div class="form-group">					
-								#if ($accao1!="")
-									<table class="col-sm-11" border="1" cellpadding="10%" style=" font-size: 12px; margin-top: 5px; margin-left: 15px">
-									<tr align="center" style="font-weight:bold"><td>Acção</td><td>Comentário</td></tr>
-										#if ($accao2!="")
-											<tr align="center">
-												<td>$accao2 </td>
-												<td> 
-													#if ($coment2!="" && $coment2!="null")
-														$coment2
-													#end 
-												</td>										
-											</tr>
-										#end
-										<tr align="center">
-											<td>$accao1 </td>
-											<td> 
-													#if ($coment1!="" && $coment1!="null")
-														$coment1
-													#end 
-											</td>										
-										</tr>										
-									</table>
-								#else
-									<div class="col-sm-8" style=" font-size: 12px; margin-top: 5px"> 
+			#if ($FlagDecisao == 0 || $FlagDecisao == 1)		
 
-									</div>
-								#end	
-						</div>
-
-					 
-					#else
 						
 						#set($sOrdem=$processDetail.get("Ordem"))
 						#set($lOrdem=$sOrdem.split("] "))
@@ -328,7 +257,11 @@
 						</div>
 						<div class="form-group">					
 							<table class="col-sm-11" border="1" cellpadding="10%" style=" font-size: 12px; margin-top: 5px; margin-left: 15px">
-							<tr align="center" style="font-weight:bold"><td>Ordem</td><td>Acção</td><td>Por</td><td>Em</td><td>Marcar para Despacho</td></tr>
+							<tr align="center" style="font-weight:bold"><td>Ordem</td><td>Acção</td><td>Por</td><td>Em</td>
+							#if ($FlagDecisao == 1)
+								<td>Marcar para Despacho</td>
+							#end
+							</tr>
 											#foreach ($accao in $listAccoes)
 												#set($pos = $velocityCount)
 												#if ($pos > $limite)
@@ -364,7 +297,7 @@
 																	<td>$data </td>
 																#end
 															#end
-
+													#if ($FlagDecisao == 1)
 															#set($pos2 = $pos - 1)
 															#set($max_row = 0)
 															#foreach ($marcar in $listMarcar)
@@ -379,13 +312,13 @@
 																	</td>
 																#end
 															#end
-															
+													#end		
 														</tr>	
 											#end
 										#end
 							</table>
 						</div>		
-						<input id="91_MAX_ROW" type="hidden" value="$max_row" name="91_MAX_ROW">
+						<input id=75_MAX_ROW" type="hidden" value="$max_row" name="75_MAX_ROW">
 					#end
 					
 					#if ($FlagDecisao == 1 && $processDetail.get("Acções")!="" && (!($processDetail.get("Ação escolhida")!="") || $processDetail.get("Ação escolhida")=="pre_decisao" || $processDetail.get("Ação escolhida")=="parecer") )
@@ -413,18 +346,19 @@
 								<div class="form-group">
 									<label  class="col-sm-2 control-label">${varName}: </label>
 									<select class="txt  form-control pull-right combobox" style="width:250px;" name="$processVarnames.get(${valueName})"
-											onchange="camouflageForm();document.dadosPreview.op.value='16';jQuery('#dadosPreview').submit();" >
+											onchange="camouflageForm();document.getElementById('dadosPreview').op.value='16';jQuery('#dadosPreview').submit();" >
 									#set($idx = 0)
 									<option value="Opção de decisão" >Opção de decisão</option>
 									#foreach($val in $lValues)
 										#if($val.indexOf("<br>") > 0)
 											#set($val = $val.substring(0, $val.indexOf("<br>")))
-
-											<option value="$val" 
-											#if($val == $value)
-												selected= "selected"
+											#if($val != "35")
+												<option value="$val" 
+												#if($val == $value)
+													selected= "selected"
+												#end
+												>$listTexts.get($idx)</option>
 											#end
-											>$listTexts.get($idx)</option>
 											#set($idx = $idx+1)
 										#end
 									#end

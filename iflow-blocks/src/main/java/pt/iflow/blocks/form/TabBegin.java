@@ -19,6 +19,8 @@ public class TabBegin implements FieldInterface {
   
   private String previous = "";
   
+  private String tabopen = "true";
+  
   public String getDescription() {
     return "Inicio de tab";
   }
@@ -36,7 +38,7 @@ public class TabBegin implements FieldInterface {
     StringBuffer sb = new StringBuffer();
     sb.append(previous).append("<tab><name>");
     sb.append(text).append("</name><action>").append(action).append("</action><id>").append(id).append("</id><display>").append(display).append("</display>");
-    sb.append("<blockdivision><columndivision>");
+    sb.append("<tabopen>").append(tabopen).append("</tabopen>").append("<blockdivision><columndivision>");
     return sb.toString();
   }
 
@@ -61,6 +63,9 @@ public class TabBegin implements FieldInterface {
       id = "";
     display = props.getProperty("display");
     if(null == display) display = "none";
+    
+    tabopen = props.getProperty("tabopen");
+    if(null == tabopen) tabopen = "true";
     
     previous = props.getProperty("close_previous");
     if(null == previous) previous = "";

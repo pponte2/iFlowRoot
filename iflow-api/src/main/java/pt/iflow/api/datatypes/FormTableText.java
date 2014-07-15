@@ -90,7 +90,7 @@ public class FormTableText implements DataTypeInterface, ArrayTableProcessingCap
     
     if (StringUtils.isNotEmpty(_sDataType)) {
       try {
-        if (extraProps.containsKey("datatype")) { //$NON-NLS-1$
+        if (extraProps != null && extraProps.containsKey("datatype")) { //$NON-NLS-1$
           _sDataType = (String)extraProps.get("datatype"); //$NON-NLS-1$
         }
         Class<? extends DataTypeInterface> cClass = (Class<? extends DataTypeInterface>) Class.forName(_sDataType);

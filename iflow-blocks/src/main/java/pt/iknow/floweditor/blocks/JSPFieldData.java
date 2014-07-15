@@ -230,6 +230,7 @@ public class JSPFieldData {
   public final static int nPROP_TABLE_ORDER = 119;
   public final static int nPROP_TABLE_SEARCH = 120;
   public final static int nPROP_PROC_LINK_ACTIVE_DETAIL = 121;
+  public final static int nPROP_TAB_OPEN = 122;
   // ...
 
 
@@ -625,7 +626,7 @@ public class JSPFieldData {
     _hmPropCodeNames.put(new Integer(JSPFieldData.nPROP_POPUP_CALLER_VARIABLE), MASTER_FLOW_VARIABLES);
     _hmPropCodeNames.put(new Integer(JSPFieldData.nPROP_POPUP_VARIABLES), POPUP_VARIABLES);
     _hmPropCodeNames.put(new Integer(JSPFieldData.nPROP_FORM_TEMPLATE), FormProps.FORM_TEMPLATE);
-    
+    _hmPropCodeNames.put(new Integer(JSPFieldData.nPROP_TAB_OPEN),"tabopen"); //$NON-NLS-1$
 
 
     // PROP LABELS
@@ -872,7 +873,9 @@ public class JSPFieldData {
         adapter.getString("JSPFieldData.proplabel.popup.popup_flow_variables"));
     _hmPropLabels.put(new Integer(JSPFieldData.nPROP_FORM_TEMPLATE), adapter.getString("JSPFieldData.proplabel."
         + FormProps.FORM_TEMPLATE));   
-
+    _hmPropLabels.put(new Integer(JSPFieldData.nPROP_TAB_OPEN),
+            "Iniciar Aberto"); //$NON-NLS-1$
+    
     // DATA TYPES
     _hmDataTypes.put(new Integer(JSPFieldData.nDATA_TYPE_NONE),
         JSPFieldData.sCHOOSE);

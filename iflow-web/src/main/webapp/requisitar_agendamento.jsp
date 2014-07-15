@@ -439,7 +439,7 @@ return;
 		  <% } else { %>
 	      <li>
 	        <label for="user"><%=messages.getString("requisitar_agendamento.msg.3")%><em>*</em></label>
-			<select name="user" id="user" onchange="if ($('user').value == '<%=MANUAL_OPTION%>') { $('manualuser').setStyle('display', ''); } else { $('manualuser').setStyle('display', 'none'); }">
+			<select name="user" id="user" onchange="if (document.getElementById('user').value == '<%=MANUAL_OPTION%>') { document.getElementById('manualuser').setStyle('display', ''); } else { document.getElementById('manualuser').setStyle('display', 'none'); }">
 				<option value=""><%=messages.getString("const.choose")%></option>
 				<option value="<%=MYSELF_OPTION%>" <%=(MYSELF_OPTION.equals(delegatedUserid) ? "selected" : "")%>><%=messages.getString("requisitar_agendamento.msg.myself")%></option>
 				<% for (String userid : usersToDelegate) { %>
@@ -447,7 +447,7 @@ return;
 				<% } %>
 				<option value="<%=MANUAL_OPTION%>" <%=(MANUAL_OPTION.equals(delegatedUserid) ? "selected" : "")%>><%=messages.getString("requisitar_agendamento.msg.manual")%></option>
 	      	</select>
-			<input type="text" name="manualuser" id="manualuser" value="<%=manualUserid%>" style="display:none"/> 
+			<input type="text" name="manualuser" id="manualuser" value="<%=manualUserid%>" /> 
 	      </li>			
  		  <% } %>
  		  <% if(!cbRequest) { %>

@@ -44,6 +44,7 @@ public  class JSPTabBegin extends JSPFieldData {
     this._alEditSingleProps.add(new Integer(JSPFieldData.nPROP_TEXT));
     this._alEditSingleProps.add(new Integer(JSPFieldData.nPROP_ONCLICK));
     this._alEditSingleProps.add(new Integer(JSPFieldData.nPROP_DISABLE_COND));
+    this._alEditSingleProps.add(new Integer(JSPFieldData.nPROP_TAB_OPEN));
   }
 
 

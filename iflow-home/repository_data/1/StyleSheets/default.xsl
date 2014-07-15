@@ -618,7 +618,7 @@
 				<xsl:text disable-output-escaping="yes"></xsl:text>
 			</head>
 			
-			<body onload="reloadBootstrapElements(); initProcFrame();">
+			<body onload="reloadBootstrapElements(); initProcFrame();closeAccordions();">
 				<div style="margin:auto;">
 					<xsl:apply-templates select="form" />
 				</div>
@@ -751,14 +751,27 @@
 	</xsl:template>
 
 	<xsl:template match="tab">		
-		<div class="accordion">			
-		<h3>
-			<xsl:apply-templates select="name" />
-		</h3>
-		<div>
-			<xsl:apply-templates select="blockdivision" />
-		</div>			
-		</div>
+			
+		<xsl:if test="tabopen='true' or tabopen=''">
+			<div class="accordion">
+				<h3>
+					<xsl:apply-templates select="name" />
+				</h3>
+				<div>
+					<xsl:apply-templates select="blockdivision" />
+				</div>			
+			</div>
+		</xsl:if>
+		<xsl:if test="tabopen='false'">
+			<div class="accordionclose" id="accordionclose">
+				<h3>
+					<xsl:apply-templates select="name" />
+				</h3>
+				<div>
+					<xsl:apply-templates select="blockdivision" />
+				</div>			
+			</div>
+		</xsl:if>
 	</xsl:template>
 
 	<xsl:template match="field">

@@ -298,6 +298,9 @@ public interface ProcessManager extends UserProcsConst {
    */
   public abstract String[] getActivityOwners(UserInfoInterface userInfo, Activity activity);
 
+  public void deleteOtherActivities(UserInfoInterface userInfo, ProcessHeader procHeader) throws SQLException;
+
+  
   /**
    * Gets the "online" sub-process ids for the given process (pid)
    * 
