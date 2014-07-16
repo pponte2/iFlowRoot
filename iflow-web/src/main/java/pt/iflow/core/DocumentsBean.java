@@ -18,7 +18,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
@@ -32,6 +31,7 @@ import pt.iflow.api.db.DBQueryManager;
 import pt.iflow.api.db.DatabaseInterface;
 import pt.iflow.api.documents.DMSDocumentIdentifier;
 import pt.iflow.api.documents.DocumentData;
+import pt.iflow.api.documents.DocumentDataStream;
 import pt.iflow.api.documents.DocumentIdentifier;
 import pt.iflow.api.documents.Documents;
 import pt.iflow.api.documents.IFlowDocumentIdentifier;
@@ -704,16 +704,25 @@ public class DocumentsBean implements Documents {
           } else {
             dataStream = rs.getBinaryStream("datadoc");
           }
-          if (null != dataStream) {
-            byte[] r = new byte[STREAM_SIZE];
-            int j = 0;
-            while ((j = dataStream.read(r, 0, STREAM_SIZE)) != -1)
-              baos.write(r, 0, j);
-            dataStream.close();
+          try{
+	          if (null != dataStream) {
+	            byte[] r = new byte[STREAM_SIZE];
+	            int j = 0;
+	            while ((j = dataStream.read(r, 0, STREAM_SIZE)) != -1)
+	              baos.write(r, 0, j);
+	            dataStream.close();
+	          }
+	          baos.flush();
+	          baos.close();
+	          retObj.setContent(baos.toByteArray());
+          } catch( OutOfMemoryError e){
+        	  DocumentDataStream retObjStream = new DocumentDataStream(retObj.getDocId(), retObj.getFileName(), null, retObj.getUpdated(), retObj.getFlowid(), retObj.getPid(), retObj.getSubpid());
+        	  retObjStream.setContentStream(rs.getBinaryStream("datadoc"));
+        	  retObj = retObjStream;        	  
+          } finally {
+        	  baos.close();
           }
-          baos.flush();
-          baos.close();
-          retObj.setContent(baos.toByteArray());
+          
         }
       } else {
         retObj = null;
@@ -723,12 +732,14 @@ public class DocumentsBean implements Documents {
     } catch (Exception e) {
       Logger.error(login, this, "getDocument", procData.getSignature() + "Error retrieving document from database.", e);
     } finally {
-      try {
-        if (dataStream != null)
-          dataStream.close();
-      } catch (Exception e) {
-      }
-      DatabaseInterface.closeResources(st, rs);
+	 if (!(retObj instanceof DocumentDataStream) && dataStream != null)
+		 try {       
+			 dataStream.close();
+		 } catch (Exception e) {
+		 } 
+		 DatabaseInterface.closeResources(st, rs);  
+		 
+      
     }
     return retObj;
   }

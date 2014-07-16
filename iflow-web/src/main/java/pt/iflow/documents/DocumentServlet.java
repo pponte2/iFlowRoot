@@ -2,6 +2,7 @@ package pt.iflow.documents;
 
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLDecoder;
 
@@ -11,9 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
 import pt.iflow.api.core.BeanFactory;
+import pt.iflow.api.documents.DocumentDataStream;
 import pt.iflow.api.documents.DocumentHash;
 import pt.iflow.api.documents.DocumentIdentifier;
 import pt.iflow.api.documents.Documents;
@@ -127,15 +130,19 @@ public class DocumentServlet extends HttpServlet {
     	return;
     }
     
-    byte [] ba = doc.getContent();
     response.setHeader("Content-Disposition","attachment;filename=\"" + doc.getFileName().replace(' ', '_')+"\";");
-    response.setContentLength(ba.length);
     OutputStream out = response.getOutputStream();
-    out.write(ba);
-    out.flush();
+    if (doc instanceof DocumentDataStream){
+    	IOUtils.copyLarge(((DocumentDataStream) doc).getContentStream(), out);
+    	((DocumentDataStream) doc).getContentStream().close();
+    }
+    else {
+    	byte [] ba = doc.getContent();        
+        response.setContentLength(ba.length);        
+        out.write(ba);        
+    }   
     out.close();
   }
-
   
   private Document getDocument(HttpServletRequest request, UserInfoInterface userInfo, ProcessData procData, String logVar) {
 
