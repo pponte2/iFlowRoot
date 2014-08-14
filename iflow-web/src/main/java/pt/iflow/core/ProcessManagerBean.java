@@ -5540,7 +5540,7 @@ public List<Activity> getPreviousActivities(UserInfoInterface userInfo, ProcessD
       
       
       pst = db.prepareStatement("select userid,flowid,pid,subpid,type,priority,created,started,archived,description," +
-              "url,status,notify,delegated,profilename,read_flag,mid from activity_history " +
+              "url,status,notify,delegated,profilename,read_flag,mid,previoususerid from activity_history " +
               "where flowid=? and pid=? and subpid=? and undoflag=0 and mid=?");
       pst.setInt(1, procData.getFlowId());
       pst.setInt(2, procData.getPid());

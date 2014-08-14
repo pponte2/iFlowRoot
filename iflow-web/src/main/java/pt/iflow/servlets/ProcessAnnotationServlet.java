@@ -86,12 +86,12 @@ public class ProcessAnnotationServlet extends javax.servlet.http.HttpServlet imp
     ProcessAnnotationManager pam = BeanFactory.getProcessAnnotationManagerBean();
     
     if(sDeadline.equals("remove"))
-    	pam.addDeadline(userInfo, flowid, pid, subpid, "");
+    	pam.removeDeadline(userInfo, flowid, pid, subpid);
     else if(!sDeadline.equals("nochange"))
     	pam.addDeadline(userInfo, flowid, pid, subpid, sDeadline, saveHistory);
     
     if(sComment.equals("remove"))
-      pam.addComment(userInfo, flowid, pid, subpid, "");
+      pam.removeComment(userInfo, flowid, pid, subpid);
     else if(!sComment.equals("nochange"))
       pam.addComment(userInfo, flowid, pid, subpid, sComment, saveHistory);
     

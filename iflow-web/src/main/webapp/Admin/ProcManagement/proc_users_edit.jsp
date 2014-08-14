@@ -319,7 +319,7 @@ else {
  	  <input class="regular_button_01 btn btn-default" type="button" name="back" value="<%=messages.getString("button.back")%>" 
       onClick="javascript:tabber_right(4, '<%=response.encodeURL("Admin/ProcManagement/proc_users.jsp")%>', get_params(document.procusersedit));"/>
  	  <input class="regular_button_01 btn btn-default" type="button" name="back" value="<%=messages.getString("button.next")%>" 
-      onClick="javascript:if (isUserVarFilled(document.procusersedit.user.value)){document.procusersedit.op.value='2';tabber_right(4, '<%=response.encodeURL("Admin/ProcManagement/proc_users_edit.jsp")%>', get_params(document.procusersedit));}"/>
+      onClick="javascript:document.procusersedit.op.value='2';tabber_right(4, '<%=response.encodeURL("Admin/ProcManagement/proc_users_edit.jsp")%>', get_params(document.procusersedit));"/>
 <%
 }
 %>

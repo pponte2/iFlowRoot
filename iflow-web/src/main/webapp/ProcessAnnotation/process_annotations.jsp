@@ -141,7 +141,7 @@
 				<input type="hidden" id="deadlineini" value="<%=sDeadline%>">
 			</ul>
 			<%if (!"forward".equals(from)) {%>
-			<br><input type="button" class="apt_regular_button btn btn-default" value="<if:message string="button.save"/>" id="save" onclick="saveProcessAnnotations('false');">
+			<br><input type="button" class="apt_regular_button btn btn-default" value="<if:message string="button.save"/>" id="save" onclick="saveProcessAnnotations('true');">
 			<input type="button" class="apt_regular_button btn btn-default" value="<if:message string="button.cancel"/>" id="cancel" onclick="showAnnotations(<%=flowid%>,<%=pid%>,<%=subpid%>);">
 			<%}else{%>
 			<input id="annotationButton" class="regular_button_02 btn btn-default" type="button" name="close" value="<if:message string="button.send.anottation"/>" 

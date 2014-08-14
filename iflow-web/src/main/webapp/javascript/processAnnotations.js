@@ -183,7 +183,7 @@ function saveProcessAnnotations(saveHistory){
 	  params += '&comment=nochange';
   else
 	  params += '&comment=remove';
-  
+
   params += '&saveHistory=' + saveHistory;
   
   //LABELS

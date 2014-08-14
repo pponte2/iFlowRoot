@@ -63,9 +63,9 @@ String popupReturnBlockId = null;
     pm.modifyProcessData(userInfo, procData);
 
     //Ao modificar o processo apaga actividades de outros utilizadores para os casos em que é enviado para um grupo
-    if(!block.isForwardBlock()){
-    	pm.deleteOtherActivities(userInfo, procData.getProcessHeader());
-    }
+    //if(!block.isForwardBlock()){
+    //	pm.deleteOtherActivities(userInfo, procData.getProcessHeader());
+    //}
     
     sNextPage = sURL_PREFIX + sNextPage;
 

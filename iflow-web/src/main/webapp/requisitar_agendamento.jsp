@@ -447,7 +447,7 @@ return;
 				<% } %>
 				<option value="<%=MANUAL_OPTION%>" <%=(MANUAL_OPTION.equals(delegatedUserid) ? "selected" : "")%>><%=messages.getString("requisitar_agendamento.msg.manual")%></option>
 	      	</select>
-			<input type="text" name="manualuser" id="manualuser" value="<%=manualUserid%>" /> 
+			<input type="text" name="manualuser" id="manualuser" Style="display:none" value="<%=manualUserid%>" /> 
 	      </li>			
  		  <% } %>
  		  <% if(!cbRequest) { %>
