@@ -81,3 +81,40 @@ CREATE TABLE  `iflow`.`documents_support` (
   `generation` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`docid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS `get_next_pid` $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_next_pid`(OUT retpid INTEGER,
+                               OUT retsubpid INTEGER,
+                               aflowid INTEGER,
+                               acreatedate DATETIME,
+							   acreator VARCHAR(100))
+BEGIN
+    DECLARE nowdate DATETIME;
+    DECLARE modificationdate DATETIME;
+    DECLARE count INT DEfAULT 1000;
+    DECLARE afectedrows INT DEFAULT 0;
+    DECLARE existingpid INT DEFAULT -1;
+    SELECT value, modification INTO retpid, modificationdate FROM counter WHERE name = 'pid';
+    WHILE count > 0 AND afectedrows <= 0 DO
+        SET nowdate = NOW();
+        SET count = count - 1;
+
+        set retpid = retpid + 1;
+        SELECT count(pid) INTO existingpid FROM process WHERE pid = retpid;
+        IF existingpid = 0 THEN
+          update counter set value=retpid, modification=nowdate where name='pid' and modification=modificationdate;
+          SET afectedrows = ROW_COUNT();
+        END IF;
+    END WHILE;
+    IF count > 0 THEN
+        set retsubpid = 1;
+        insert into process (flowid,pid,subpid,mid,created,creator,pnumber,currentuser,lastupdate) values
+            (aflowid,retpid,retsubpid,1,acreatedate,acreator,retpid,acreator,nowdate);
+        insert into process_history (flowid,pid,subpid,mid,created,creator,pnumber,currentuser,lastupdate) values
+            (aflowid,retpid,retsubpid,1,acreatedate,acreator,retpid,acreator,nowdate);
+    END IF;
+END $$
+
+DELIMITER ;
