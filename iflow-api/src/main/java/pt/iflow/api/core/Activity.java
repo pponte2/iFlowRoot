@@ -309,7 +309,7 @@ public class Activity {
    * 
    * @return Returns the profilename.
    */
-  public String getProfileName() {
+  public String getProfilename() {
     return profilename;
   }
   

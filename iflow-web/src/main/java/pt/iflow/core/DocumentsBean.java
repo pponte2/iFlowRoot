@@ -71,45 +71,42 @@ import pt.iknow.utils.StringUtilities;
  */
 public class DocumentsBean implements Documents {
 
-  private static final int STREAM_SIZE = 8096;
-  private static DocumentsBean instance = null;
+  static final int STREAM_SIZE = 8096;
+  static DocumentsBean instance = null;
 
-  private static String docsBaseUrl = null;
-  private static boolean docDataInDB = true;
+  static String docsBaseUrl = null;
+  static boolean docDataInDB = true;
 
-  static {
-    //Verifica se existe URL absoluto
-    docsBaseUrl = Const.DOCS_BASE_URL;
-    if (StringUtilities.isNotEmpty(docsBaseUrl)) {
-      docDataInDB = false;
-      File f = new File(docsBaseUrl);
-      if (!f.isDirectory()) {
-        //Verifica se existe URL relativo
-        docsBaseUrl = FilenameUtils.concat(Const.IFLOW_HOME, Const.DOCS_BASE_URL);
-        f = new File(docsBaseUrl);
-        if (!f.isDirectory()) {
-          //tenta criar URL relativo
-          try {
-            FileUtils.forceMkdir(f);
-          } catch (Exception e) {
-            //tenta criar URL absoluto
-            try {
-              docsBaseUrl = Const.DOCS_BASE_URL;
-              f = new File(docsBaseUrl);
-              FileUtils.forceMkdir(f);
-            } catch (Exception ex) {
-              Logger.error("", "DocumentsBean", "static", "O URL : '" + Const.DOCS_BASE_URL + "' não corresponde a uma pasta.");
-              docDataInDB = true;
-              docsBaseUrl = null;
-            }
-          }
-        }
-      }
-    }
-  }
-
-  private DocumentsBean() {
-  }
+  DocumentsBean() {
+	    //Verifica se existe URL absoluto
+	    docsBaseUrl = Const.DOCS_BASE_URL;
+	    if (StringUtilities.isNotEmpty(docsBaseUrl)) {
+	      docDataInDB = false;
+	      File f = new File(docsBaseUrl);
+	      if (!f.isDirectory()) {
+	        //Verifica se existe URL relativo
+	        docsBaseUrl = FilenameUtils.concat(Const.IFLOW_HOME, Const.DOCS_BASE_URL);
+	        f = new File(docsBaseUrl);
+	        if (!f.isDirectory()) {
+	          //tenta criar URL relativo
+	          try {
+	            FileUtils.forceMkdir(f);
+	          } catch (Exception e) {
+	            //tenta criar URL absoluto
+	            try {
+	              docsBaseUrl = Const.DOCS_BASE_URL;
+	              f = new File(docsBaseUrl);
+	              FileUtils.forceMkdir(f);
+	            } catch (Exception ex) {
+	              Logger.error("", "DocumentsBean", "static", "O URL : '" + Const.DOCS_BASE_URL + "' n�o corresponde a uma pasta.");
+	              docDataInDB = true;
+	              docsBaseUrl = null;
+	            }
+	          }
+	        }
+	      }
+	    }
+	  }
 
   public static DocumentsBean getInstance() {
     if (null == instance)
@@ -123,7 +120,7 @@ public class DocumentsBean implements Documents {
    * @see pt.iflow.api.documents.Documents#addDocument(pt.iflow.api.utils.UserInfoInterface, pt.iflow.api.processdata.ProcessData,
    * pt.iflow.connector.document.Document)
    */
-  public Document addDocument(UserInfoInterface userInfo, ProcessData procData, Document doc) {
+  public Document addDocument(UserInfoInterface userInfo, ProcessData procData, Document doc) throws Exception {
     Connection db = null;
     ResultSet rs = null;
     PreparedStatement pst = null;
@@ -185,6 +182,7 @@ public class DocumentsBean implements Documents {
       if (doc instanceof DocumentData) {
         ((DocumentData) doc).setUpdated(null);
       }
+      throw e;
     } finally {
       DatabaseInterface.closeResources(db, pst, rs);
     }
@@ -271,7 +269,7 @@ public class DocumentsBean implements Documents {
     return doc;
   }
 
-  private Document addDocument(UserInfoInterface userInfo, ProcessData procData, Document adoc, Connection db) throws Exception {
+  Document addDocument(UserInfoInterface userInfo, ProcessData procData, Document adoc, Connection db) throws Exception {
 
     if (null == userInfo) {
       Logger.error(null, this, "addDocument", "Invalid user");
@@ -399,7 +397,7 @@ public class DocumentsBean implements Documents {
     return adoc;
   }
 
-  private Document updateDocument(UserInfoInterface userInfo, ProcessData procData, Document adoc, Connection db, boolean updateContents) throws Exception {
+  Document updateDocument(UserInfoInterface userInfo, ProcessData procData, Document adoc, Connection db, boolean updateContents) throws Exception {
     PreparedStatement pst = null;
     ResultSet rs = null;
     try {
@@ -459,7 +457,7 @@ public class DocumentsBean implements Documents {
   }
 
   // To preserve the current transaction...
-  private Document getDocumentFromDB(Connection db, int docid) throws SQLException {
+  protected Document getDocumentFromDB(Connection db, int docid) throws SQLException {
     PreparedStatement pst = null;
     DocumentData dbDoc = new DocumentData();
     ResultSet rs = null;
@@ -600,10 +598,13 @@ public class DocumentsBean implements Documents {
           String path = rs.getString("path");
           // convert the object from DocumentData do DMSDocument
           Document doc = retObj;
+          
           retObj = new AlfrescoDocument(scheme, address, uuid, path);
           ((DMSDocument) retObj).setDocId(doc.getDocId());
           ((DMSDocument) retObj).setFileName(doc.getFileName());
           ((DMSDocument) retObj).setContent(doc.getContent());
+          
+
         }
         DatabaseInterface.closeResources(st, rs);
         if (retObj != null && retObj instanceof DMSDocument) {
@@ -625,12 +626,12 @@ public class DocumentsBean implements Documents {
       DatabaseInterface.closeResources(st, rs);
     }
     if(retObj == null) 
-        return new DocumentData(0, "");
+    	return new DocumentData(0, "");
     else
-        return retObj;
+    	return retObj;
   }
 
-  private Document getDocumentData(UserInfoInterface userInfo, ProcessData procData, Document adoc, Connection db, boolean abFull) {
+  Document getDocumentData(UserInfoInterface userInfo, ProcessData procData, Document adoc, Connection db, boolean abFull) {
     DocumentData retObj = null;
     if (adoc instanceof DocumentData) {
       retObj = (DocumentData) adoc;
@@ -681,6 +682,7 @@ public class DocumentsBean implements Documents {
 
         String filePath = rs.getString("docurl");
         if (StringUtils.isNotEmpty(filePath)) {
+        	retObj.setDocurl(filePath);
             File f = new File(filePath);
             length = (int)f.length();
         }
@@ -705,16 +707,16 @@ public class DocumentsBean implements Documents {
             dataStream = rs.getBinaryStream("datadoc");
           }
           try{
-	          if (null != dataStream) {
-	            byte[] r = new byte[STREAM_SIZE];
-	            int j = 0;
-	            while ((j = dataStream.read(r, 0, STREAM_SIZE)) != -1)
-	              baos.write(r, 0, j);
-	            dataStream.close();
-	          }
-	          baos.flush();
-	          baos.close();
-	          retObj.setContent(baos.toByteArray());
+          if (null != dataStream) {
+            byte[] r = new byte[STREAM_SIZE];
+            int j = 0;
+            while ((j = dataStream.read(r, 0, STREAM_SIZE)) != -1)
+              baos.write(r, 0, j);
+            dataStream.close();
+          }
+          baos.flush();
+          baos.close();
+          retObj.setContent(baos.toByteArray());
           } catch( OutOfMemoryError e){
         	  DocumentDataStream retObjStream = new DocumentDataStream(retObj.getDocId(), retObj.getFileName(), null, retObj.getUpdated(), retObj.getFlowid(), retObj.getPid(), retObj.getSubpid());
         	  retObjStream.setContentStream(rs.getBinaryStream("datadoc"));
@@ -732,14 +734,11 @@ public class DocumentsBean implements Documents {
     } catch (Exception e) {
       Logger.error(login, this, "getDocument", procData.getSignature() + "Error retrieving document from database.", e);
     } finally {
-	 if (!(retObj instanceof DocumentDataStream) && dataStream != null)
-		 try {       
-			 dataStream.close();
-		 } catch (Exception e) {
-		 } 
-		 DatabaseInterface.closeResources(st, rs);  
-		 
-      
+    	if (!(retObj instanceof DocumentDataStream) && dataStream != null)
+    	try {        
+          dataStream.close();
+    	} catch (Exception e) {}
+    	DatabaseInterface.closeResources(st, rs);
     }
     return retObj;
   }
@@ -749,7 +748,7 @@ public class DocumentsBean implements Documents {
     return (doc instanceof DMSDocument) && StringUtils.isNotBlank(((DMSDocument) doc).getUuid());
   }
 
-  private boolean isLocked(UserInfoInterface userInfo, ProcessData procData, int docid) {
+  protected boolean isLocked(UserInfoInterface userInfo, ProcessData procData, int docid) {
     if (isDMSDocument(userInfo, procData, docid)) {
       try {
         return DMSUtils.getInstance().isLocked(DMSConnectorUtils.createCredential(userInfo, procData),
@@ -761,7 +760,7 @@ public class DocumentsBean implements Documents {
     return false;
   }
 
-  private boolean canCreate(UserInfoInterface userInfo, ProcessData procData, Document adoc) {
+  protected boolean canCreate(UserInfoInterface userInfo, ProcessData procData, Document adoc) {
     if (null == userInfo) {
       Logger.debug("<unknown>", this, "canCreate", "Invalid user");
       return false; // invalid user
@@ -787,7 +786,7 @@ public class DocumentsBean implements Documents {
     return true;
   }
 
-  private boolean canUpdate(UserInfoInterface userInfo, ProcessData procData, Document adoc) {
+  protected boolean canUpdate(UserInfoInterface userInfo, ProcessData procData, Document adoc) {
     if (null == userInfo) {
       Logger.warning("<unknown>", this, "canUpdate", "Invalid user");
       return false; // invalid user
@@ -815,7 +814,7 @@ public class DocumentsBean implements Documents {
     return true;
   }
 
-  private boolean canRead(UserInfoInterface userInfo, ProcessData procData, Document adoc) {
+  protected boolean canRead(UserInfoInterface userInfo, ProcessData procData, Document adoc) {
     if (null == userInfo) {
       Logger.debug("<unknown>", this, "canRead", "Invalid user");
       return false; // invalid user
@@ -825,7 +824,8 @@ public class DocumentsBean implements Documents {
       flowid = procData.getFlowId();
     else if (adoc instanceof DocumentData) 
       flowid = ((DocumentData)adoc).getFlowid();
-    String sUseDocHash = BeanFactory.getFlowSettingsBean().getFlowSetting(flowid, Const.sHASHED_DOCUMENT_URL).getValue();
+    String sUseDocHash = BeanFactory.getFlowSettingsBean().getFlowSetting(flowid, Const.sHASHED_DOCUMENT_URL)
+    .getValue();
     boolean useDocHash = StringUtils.equalsIgnoreCase(Const.sHASHED_DOCUMENT_URL_YES, sUseDocHash);
 
     if (!useDocHash && procData == null) {
@@ -1021,7 +1021,7 @@ public class DocumentsBean implements Documents {
   }
 
   //File System
-  private String getDocumentFilePath(int docID, String fileName) {
+  protected String getDocumentFilePath(int docID, String fileName) {
     String strDocIdUrl = "0000000000" + docID;
     strDocIdUrl = strDocIdUrl.substring(strDocIdUrl.length()-10, strDocIdUrl.length());
     String docIdUrl = strDocIdUrl.substring(0, 2) + "\\" + strDocIdUrl.substring(2, 4) + "\\" + 
@@ -1032,7 +1032,7 @@ public class DocumentsBean implements Documents {
       try {
         File f = new File(url);
         if (!f.isDirectory()) FileUtils.forceMkdir(f);
-        return url + "\\" + fileName;
+        return FilenameUtils.concat(url,fileName);
       } catch (Exception e) {
       }
     }
@@ -1148,17 +1148,16 @@ public Boolean markDocGenerationSuccess(UserInfoInterface userInfo,
     PreparedStatement st = null;
     ResultSet rs = null;
     LinkedList<Activity> l = new LinkedList<Activity>();
-
+    final StringBuilder sQuery = new StringBuilder(DBQueryManager.processQuery("Documents.markDocGenerationSuccess", new Object[]{adoc.getDocId(), success, success }));
     try {
       db = DatabaseInterface.getConnection(userInfo);
       db.setAutoCommit(true);
-
-      final StringBuilder sQuery = new StringBuilder(DBQueryManager.processQuery("Documents.markDocGenerationSuccess", new Object[]{adoc.getDocId(), success, success }));                                   
+                                         
       st = db.prepareStatement(sQuery.toString());
       st.execute();
       DatabaseInterface.closeResources(st, rs);            
     } catch (SQLException sqle) {
-      Logger.error(userInfo.getUtilizador(), this, "markDocGenerationSuccess", "sql exception: " + sqle.getMessage(), sqle);
+      Logger.error(userInfo.getUtilizador(), this, "markDocGenerationSuccess", "sql exception: " + sqle.getMessage() + sQuery, sqle);
       result = Boolean.FALSE;
     } catch (Exception e) {
       Logger.error(userInfo.getUtilizador(), this, "markDocGenerationSuccess", "exception: " + e.getMessage(), e);
@@ -1178,22 +1177,23 @@ public Boolean checkDocGenerationSuccess(UserInfoInterface userInfo,
     PreparedStatement st = null;
     ResultSet rs = null;
     LinkedList<Activity> l = new LinkedList<Activity>();
-
+    final StringBuilder sQuery = new StringBuilder(DBQueryManager.processQuery("Documents.checkDocGenerationSuccess", new Object[]{adoc.getDocId()}));
     try {
       db = DatabaseInterface.getConnection(userInfo);
       db.setAutoCommit(true);
-
-      final StringBuilder sQuery = new StringBuilder(DBQueryManager.processQuery("Documents.checkDocGenerationSuccess", new Object[]{adoc.getDocId()}));                                   
+      Logger.debug(userInfo.getUtilizador(), this, "checkDocGenerationSuccess", "will execute query: " + sQuery.toString());                                  
       st = db.prepareStatement(sQuery.toString());
       rs = st.executeQuery();
       
       if(!rs.next())
-    	  return null;
+    	  return true;
+      else if(rs.getInt(1)==1)
+    	  return true;
       else
-    	  return rs.getBoolean(1);
+    	  return false;
                   
     } catch (SQLException sqle) {
-      Logger.error(userInfo.getUtilizador(), this, "checkDocGenerationSuccess", "sql exception: " + sqle.getMessage(), sqle);
+      Logger.error(userInfo.getUtilizador(), this, "checkDocGenerationSuccess", "sql exception: " + sqle.getMessage() + sQuery, sqle);
       result = Boolean.FALSE;
     } catch (Exception e) {
       Logger.error(userInfo.getUtilizador(), this, "checkDocGenerationSuccess", "exception: " + e.getMessage(), e);
@@ -1203,4 +1203,11 @@ public Boolean checkDocGenerationSuccess(UserInfoInterface userInfo,
     }
     return null;
   }
+
+@Override
+public String writeDocumentDataToExternalRepos(UserInfoInterface userInfo,
+		ProcessData procData, Document doc) throws Exception {
+	// TODO Auto-generated method stub
+	return null;
+}
 }

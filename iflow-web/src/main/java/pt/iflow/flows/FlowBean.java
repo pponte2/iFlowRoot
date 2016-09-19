@@ -1016,7 +1016,7 @@ public class FlowBean implements Flow {
           + "...done commiting changes. Process reverted to flowstate " + flowState + " (mid " + mid + ")");
 
       retObj = true;
-    } catch (Exception e) {
+    } catch (Throwable e) {
       retObj = false;
       Logger.error(userid, this, "undoProcess", "Exception: " + e.getMessage(), e);
       try {
@@ -1051,7 +1051,7 @@ public class FlowBean implements Flow {
     try {
       ProcessManager pm = BeanFactory.getProcessManagerBean();
       return pm.getProcessData(userInfo, new ProcessHeader(flowid, pid, subpid));
-    } catch (Exception e) {
+    } catch (Throwable e) {
       Logger.error(userInfo.getUtilizador(), this, "getProcessData", "Caught an unexpected exception: " + e.getMessage(), e);
       return null;
     }
@@ -2273,7 +2273,7 @@ public class FlowBean implements Flow {
 
                     Logger.info(login, this, "resyncFlow", pdProc.getSignature() + "db connection commit");
 
-                  } catch (Exception ei) {
+                  } catch (Throwable ei) {
 
                     db.rollback();
 
@@ -2611,7 +2611,7 @@ public class FlowBean implements Flow {
 
                     Logger.info(login, this, "resyncFlow", pdProc.getSignature() + "db connection commit");
 
-                  } catch (Exception ei) {
+                  } catch (Throwable ei) {
 
                     db.rollback();
 

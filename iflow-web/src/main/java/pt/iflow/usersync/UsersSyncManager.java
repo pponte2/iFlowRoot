@@ -12,10 +12,10 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import pt.iflow.api.authentication.Authentication;
+import pt.iflow.api.cluster.JobManager;
 import pt.iflow.api.db.DBQueryManager;
 import pt.iflow.api.db.DatabaseInterface;
 import pt.iflow.api.userdata.UserData;
-import pt.iflow.api.utils.Const;
 import pt.iflow.api.utils.Logger;
 import pt.iflow.api.utils.Utils;
 import pt.iflow.core.AccessControlManager;
@@ -77,6 +77,7 @@ public class UsersSyncManager extends Thread {
 
     while (keepRunning) {
       try {
+      if(JobManager.getInstance().isMyBeatValid())
         try {
           get().syncUsers();
           if (Logger.isDebugEnabled()) {

@@ -121,6 +121,9 @@ public class FormProps {
   public final static String sBUTTON_ATTR_IGNORE_FORM_VALIDATION = "ignoreformvalidation"; //$NON-NLS-1$
   
   public final static String sBUTTON_CLICKED = "_button_clicked_id"; //$NON-NLS-1$
-  
+  public static final String FLOWID = "flowid";//$NON-NLS-1$
+  public static final String PID = "pid";//$NON-NLS-1$
+  public static final String SUBPID = "subpid";//$NON-NLS-1$
+    
   private FormProps() {}
 }

@@ -2148,10 +2148,10 @@ function isDownloadAvailable(component){
 		});
 	
 	if (result.status==204){
-		alert('Nao foi possivel gerar o documento, sugerimos que repita a opera�ao ou contacte a equipa de suporte');
+		alert('Nao foi possivel gerar o documento, sugerimos que repita a operacao ou contacte a equipa de suporte');
 		return false;	
 	}else if (result.responseText.length==0){
-		alert('Por favor aguarde, o ficheiro vai ser disponibilizado brevemente. Se demorar excessivamente recarregue o processo atrav�s do painel Tarefas');
+		alert('Por favor aguarde, o ficheiro vai ser disponibilizado brevemente. Se demorar excessivamente recarregue o processo atraves do painel Tarefas');
 		return false;	
 	}		
 	else

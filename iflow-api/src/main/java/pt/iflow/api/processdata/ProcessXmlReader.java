@@ -35,7 +35,7 @@ public class ProcessXmlReader {
     _streamSource = streamSource;
   }
 
-  public ProcessData readSAX() {
+  public ProcessData readSAX() throws Throwable {
     long start = System.currentTimeMillis();
     ProcessData pd = null;
     try {
@@ -58,6 +58,7 @@ public class ProcessXmlReader {
       h = null;
     } catch (Throwable t) {
       Logger.error("ADMIN", this, "readSAX","Error reading process XML", t);
+      throw t;
     }
     long end = System.currentTimeMillis();
     Logger.debug("ADMIN", this, "readSAX","SAX parsing finished in "+(end-start)+" ms");

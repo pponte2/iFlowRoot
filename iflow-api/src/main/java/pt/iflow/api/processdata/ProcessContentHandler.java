@@ -167,7 +167,12 @@ class ProcessContentHandler extends DefaultHandler {
         else {
           if(!type.isBindable()) {
             ProcessSimpleVariable processVar = new ProcessSimpleVariable(type, var.name);
+            try{
             processVar._value = new InternalValue(processVar._type, var.text);
+            } catch (Exception e){
+            	Logger.error(null, this, "endElement", " Error parsing SIMPLE type: "+ processVar._type +", text: "+var.text+", name:" +var.name + ", free mem: " +Runtime.getRuntime().freeMemory());
+            	throw e;
+            }
             _pd.set(processVar, false);
           }
         }
@@ -182,8 +187,14 @@ class ProcessContentHandler extends DefaultHandler {
         if (type == null) {
           Logger.error(null, this, "endElement", "null type for list item for list var \"" + listToken.name + "\"(removed/renamed var in catalogue?). Ignoring...");
         }
-        else {        
-          ProcessListItem item = new ProcessListItem(new InternalValue(type, var.text));
+        else {   
+        	ProcessListItem item=null;
+          try{
+          item = new ProcessListItem(new InternalValue(type, var.text));
+          } catch(Exception e){
+        	Logger.error(null, this, "endElement", " Error parsing LIST type: "+ type +", text: "+var.text+", name:" +var.name + ", free mem: " +Runtime.getRuntime().freeMemory());
+          	throw e;
+          }
           itemList.set(var.pos, item);
         }
       } else if(tag.equals(ProcessXml.ELEMENT_APPDATA)) {

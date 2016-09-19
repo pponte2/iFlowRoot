@@ -4,14 +4,19 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLDecoder;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.apache.commons.lang.StringUtils;
 
 import pt.iflow.api.core.BeanFactory;
 import pt.iflow.api.core.PassImage;
@@ -56,7 +61,7 @@ public class DocumentServiceServlet extends HttpServlet implements AppletDocPara
     response.setHeader("Content-Disposition", "attachment;filename=\"" + doc.getFileName().replace(' ', '_') + "\";");
     String mimeType = getServletContext().getMimeType(doc.getFileName());
     Logger.debug("", this, "", "file: "+doc.getFileName()+"; mime-type: "+mimeType);
-  response.setContentLength(doc.getLength());
+  response.setContentLength(doc.getContent().length);
     response.setHeader("X-iFlow-DocId", String.valueOf(doc.getDocId()));
     response.setDateHeader("Last-Modified", doc.getUpdated().getTime());
 
@@ -117,7 +122,7 @@ public class DocumentServiceServlet extends HttpServlet implements AppletDocPara
   }
   
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    HttpSession session = request.getSession();
+    HttpSession session = getSessionFixedForJNLP(request);
 
     // User must be authenticated
     UserInfoInterface userInfo = (UserInfoInterface) session.getAttribute(Const.USER_INFO);
@@ -195,6 +200,7 @@ public class DocumentServiceServlet extends HttpServlet implements AppletDocPara
       response.setHeader("NUMASS", ""+pi.getNumAss(userInfo, docid));
       
       Logger.debug(userInfo.getUtilizador(), this, "doGet", "sending file to client...");
+      
       setHeaders(doc, response);
       ba = doc.getContent();
     }
@@ -279,7 +285,7 @@ public class DocumentServiceServlet extends HttpServlet implements AppletDocPara
 	  String id = "";
 	  //String rub = "";
 	  
-    HttpSession session = request.getSession();
+    HttpSession session = getSessionFixedForJNLP(request);
     UserInfoInterface userInfo = (UserInfoInterface) session.getAttribute(Const.USER_INFO);
     if (null == userInfo) {
       Logger.error("<unknown>", this, "doPost", "Invalid user/user not authenticated.");
@@ -425,5 +431,29 @@ public class DocumentServiceServlet extends HttpServlet implements AppletDocPara
       session.setAttribute(DocumentSessionHelper.SESSION_ATTRIBUTE, helper);
     }
     return helper;
+  }
+  
+  /**
+   * BUG FIX in tomcat session tracking coupled with JNLP applet launching,
+   * if applet is initialized trough WebStart this request will have 2 session cookies!!!
+   * making it impossible to determine the correct session and so the logged user cannot be validated
+   * @param request
+   * @return
+   */
+  public static HttpSession getSessionFixedForJNLP(HttpServletRequest request){
+	  HttpSession session;
+	  ServletContext ctx = request.getSession().getServletContext();
+	  
+	  Cookie[] cookies = request.getCookies();
+	  for(Cookie coo: cookies)
+		  if (StringUtils.equals(coo.getName(),"APPLETJSESSIONID")){
+			  HashMap activeSessions = (HashMap) ctx.getAttribute(DocumentSessionListener.ACTIVE_SESSIONS);
+			  String id = StringUtils.remove(coo.getValue(),"APPLETJSESSIONID=");
+			  session = (HttpSession) activeSessions.get(id);
+			  if(session!=null)
+				  return session;
+		  }
+	  
+	  return request.getSession();	  
   }
 }

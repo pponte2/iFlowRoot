@@ -67,7 +67,7 @@ public class DeadlineEvent extends AbstractEvent {
         flow.eventNextBlock(userInfoEvent, fid.intValue(), pid.intValue(), subpid.intValue());
         processed = Boolean.TRUE;
       }
-    } catch (Exception e) {
+    } catch (Throwable e) {
       Logger.error(userId, this, "processEvent", 
           "[" + fid + ":" + pid + ":" + subpid + "] Exception caught: ", e);
     }

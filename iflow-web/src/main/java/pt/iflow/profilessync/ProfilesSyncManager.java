@@ -7,8 +7,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+
 import javax.sql.DataSource;
 
+import pt.iflow.api.cluster.JobManager;
 import pt.iflow.api.db.DBQueryManager;
 import pt.iflow.api.db.DatabaseInterface;
 import pt.iflow.api.userdata.UserDataAccess;
@@ -71,6 +73,7 @@ public class ProfilesSyncManager extends Thread {
 
     while (keepRunning) {
       try {
+      if(JobManager.getInstance().isMyBeatValid())
         try {
           get().syncProfiles();
           if (Logger.isDebugEnabled()) {

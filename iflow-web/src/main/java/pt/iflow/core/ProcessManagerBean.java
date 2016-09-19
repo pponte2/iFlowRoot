@@ -749,7 +749,7 @@ public class ProcessManagerBean implements ProcessManager {
 
   // XXX agon: rever metodo.. ir buscar xml para o mid respectivo e fazer
   // overwrite
-  public ProcessData undoProcessData(UserInfoInterface userInfo, int flowid, int pid, int subpid, int newMid, ProcessData procData) throws Exception {
+  public ProcessData undoProcessData(UserInfoInterface userInfo, int flowid, int pid, int subpid, int newMid, ProcessData procData) throws Throwable {
 
     String userid = userInfo.getUtilizador();
     Logger.trace(this, "undoProcessData", userid + " call.");
@@ -1212,9 +1212,10 @@ public class ProcessManagerBean implements ProcessManager {
    * 
    * @param pid
    *          process id
+ * @throws Throwable 
    * @returns process data stored in DataSet object
    */
-  public ProcessData getProcessData(UserInfoInterface userInfo, ProcessHeader procHeader) {
+  public ProcessData getProcessData(UserInfoInterface userInfo, ProcessHeader procHeader) throws Throwable {
 
     ProcessData retObj = null;
     ProcessHeader[] headers = new ProcessHeader[1];
@@ -1233,7 +1234,19 @@ public class ProcessManagerBean implements ProcessManager {
     ProcessData retObj = null;
     ProcessHeader[] headers = new ProcessHeader[1];
     headers[0] = procHeader;
-    ProcessData[] ret = this.getProcessesData(userInfo, headers, null, anMode);
+    
+    ProcessData[] ret = null;
+    boolean repeat = true;
+	int tries=5;
+	while(repeat && tries>0)
+		try{
+			tries--;
+			ret = this.getProcessesData(userInfo, headers, null, anMode);
+			repeat = false;
+		}catch (Throwable e){
+			repeat=true;			
+		}
+    
 
     if (ret != null && ret.length == 1) {
       retObj = ret[0];
@@ -1247,9 +1260,10 @@ public class ProcessManagerBean implements ProcessManager {
    * 
    * @param pids
    *          process ids
+ * @throws Throwable 
    * @returns processes data stored in DataSet object for each process
    */
-  public ProcessData[] getProcessesData(UserInfoInterface userInfo, ProcessHeader[] headers) {
+  public ProcessData[] getProcessesData(UserInfoInterface userInfo, ProcessHeader[] headers) throws Throwable {
     return this.getProcessesData(userInfo, headers, null);
   }
 
@@ -1258,9 +1272,10 @@ public class ProcessManagerBean implements ProcessManager {
    * 
    * @param pids
    *          process ids
+ * @throws Throwable 
    * @returns processes data stored in DataSet object for each process
    */
-  public ProcessData[] getProcessesData(UserInfoInterface userInfo, ProcessHeader[] headers, int anMode) {
+  public ProcessData[] getProcessesData(UserInfoInterface userInfo, ProcessHeader[] headers, int anMode) throws Throwable {
 
     ProcessData[] retObj = null;
 
@@ -1376,8 +1391,10 @@ public class ProcessManagerBean implements ProcessManager {
     rs = null;
   } catch (SQLException sqle) {
     Logger.error(userid, this, "getProcessesData", "sql exception " + sqle.getMessage(), sqle);
+    throw sqle;
   } catch (Exception e) {
     Logger.error(userid, this, "getProcessesData", "exception " + e.getMessage(), e);
+    throw e;
   } finally {
     DatabaseInterface.closeResources(db, st, rs);
   }
@@ -1398,9 +1415,10 @@ public class ProcessManagerBean implements ProcessManager {
  * 
  * @param pids
  *          process ids
+ * @throws Throwable 
  * @returns processes data stored in DataSet object for each process
  */
-public ProcessData[] getProcessesData(UserInfoInterface userInfo, ProcessHeader[] headers, String[] asaFields) {
+public ProcessData[] getProcessesData(UserInfoInterface userInfo, ProcessHeader[] headers, String[] asaFields) throws Throwable {
   return this.getProcessesData(userInfo, headers, Const.nOPENED_PROCS);
 }
 
@@ -1413,9 +1431,10 @@ public ProcessData[] getProcessesData(UserInfoInterface userInfo, ProcessHeader[
  *          required fields. if null or empty, all proc fields are fetched
  * @param anMode
  *          fetch mode: all procs, opened procs or closed procs
+ * @throws Throwable 
  * @returns processes data stored in DataSet object for each process
  */
-public ProcessData[] getProcessesData(UserInfoInterface userInfo, ProcessHeader[] headers, String[] asaFields, int anMode) {
+public ProcessData[] getProcessesData(UserInfoInterface userInfo, ProcessHeader[] headers, String[] asaFields, int anMode) throws Throwable {
   return this.getProcessesData(userInfo, headers, anMode);
 }
 
@@ -6080,7 +6099,7 @@ public ListIterator<Activity> getUserAndSubordinatesActivities(UserInfoInterface
     }
   }
   
-  public String setProcdataString(UserInfoInterface userInfo, String pidS, String SubpidS, String procdata){
+  public String setProcdataString(UserInfoInterface userInfo, String pidS, String SubpidS, String procdata) throws Throwable{
     Connection dbb = null;
     PreparedStatement pstt = null;  
     StringBuilder sbQueryy = new StringBuilder();

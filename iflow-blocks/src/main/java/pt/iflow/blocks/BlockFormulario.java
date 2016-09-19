@@ -495,7 +495,10 @@ public class BlockFormulario extends Block implements FormOperations {
         
         props.setProperty(FormProps.JSP, sJSP);
         props.setProperty(FormProps.FORM_NAME, sFormName);
-        
+        props.setProperty(FormProps.FLOWID,"" + procData.getFlowId());
+        props.setProperty(FormProps.PID,"" + procData.getPid());
+        props.setProperty(FormProps.SUBPID,"" + procData.getSubPid());
+                
         // now build lists for list/query attributes and append them to props
         hmListValues = (HashMap) hmListAttrs.get(fieldNumber);
         Iterator iter = hmListValues.keySet().iterator();

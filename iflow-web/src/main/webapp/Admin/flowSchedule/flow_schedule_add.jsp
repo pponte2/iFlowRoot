@@ -92,8 +92,8 @@ function validateFieldsToSubmit (){
                 </if:formSelect>
             </c:if>
             <c:if test="${not empty profiles}">
-                <if:formSelect name="form_add_profile" edit="true" labelkey="flow_schedule.add.field.profile" value="${selectedprofile}" required="true" onchange="javascript:updateSelectedProfileStr(form_add_profile.options[form_add_profile.selectedIndex].text);">
-                    <if:formOption value="0" labelkey="flow_schedule.add.field.combobox.default.text"/>
+                <if:formSelect name="form_add_profile" edit="true" labelkey="flow_schedule.add.field.profile" value="${selectedprofile}" required="true" onchange="var selectedProfileVar = document.getElementById('selectedProfileName'); selectedProfileVar.value = form_add_profile.options[form_add_profile.selectedIndex].text;">
+                    <if:formOption value="0" labelkey="flow_schedule.add.field.combobox.default.text"/> 
                     <c:forEach var="item" items="${profiles}">
                         <if:formOption value="${item.comboId}" label="${item.comboName}"/>
                     </c:forEach>
@@ -102,7 +102,7 @@ function validateFieldsToSubmit (){
             <if:formInput name='form_add_user' labelkey="flow_schedule.add.field.user" type="text" value='${form_add_user}' edit="true" required="true" maxlength="20" />
             <if:formCalendar name="eventDate" edit="true" value="<%=sDate%>" labelkey="flow_schedule.add.field.start_date" required="true"/>
             <if:formInput name="eventTime" labelkey="flow_schedule.add.field.start_time" type="text" value="${eventTime}" edit="true" required="true"  size="5" maxlength="5" onblur="javascript:validateTimeFormat(this.value)"/>
-       <if:formInput name="isRepeatable" type="checkbox" value="false" labelkey="flow_schedule.add.field.checkbox.is_repeatable" edit="true" required="false" onchange="javascript:processEventRepeateTimeFrameDiv(this.checked);"/>
+       <if:formInput name="isRepeatable" type="checkbox" value="false" labelkey="flow_schedule.add.field.checkbox.is_repeatable" edit="true" required="false" onchange="if (this.checked) {document.getElementById('eventRepeateTimeFrame').style.visibility='visible';} else { document.getElementById('eventRepeateTimeFrame').style.visibility='hidden';};"/>
     </ol>
     <div id="eventRepeateTimeFrame" style="visibility:hidden">
         <ol>

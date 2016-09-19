@@ -33,7 +33,12 @@ public abstract class ProcessTestCase extends TestCase {
         catalogue.setListDataType("lDate", new DateDataType());
         
         _catalogue = catalogue;
-        _pxml = new ProcessXml(catalogue, new FileReader(_xmlFile));
+        try {
+			_pxml = new ProcessXml(catalogue, new FileReader(_xmlFile));
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         
         //out("Finished setup:\n - process catalogue:\n" + catalogue.toString() + "\n - process data:\n" + _pxml.getProcessData().toString(true));
     }

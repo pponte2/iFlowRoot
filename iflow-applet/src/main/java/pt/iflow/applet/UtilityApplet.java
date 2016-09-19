@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.AccessController;
 import java.security.PrivilegedActionException;
@@ -32,11 +33,11 @@ import pt.iflow.applet.signer.SignatureType;
 import com.infosistema.crypto.CryptoUtils;
 
 /**
- * Esta é uma applet invisível que disponibiliza um conjunto de métodos para carregamento, actualização e verificação de ficheiros.
- * A api é suficientemente genérica para suportar operações de criptografia como assinaturas digitais e (des)encriptação de ficheiros.
- * Também suporta desencriptação de dados de processo que tenham sido previamente encriptados.
+ * Esta Ã© uma applet invisÃ­vel que disponibiliza um conjunto de mÃ©todos para carregamento, actualizaÃ§Ã£o e verificaÃ§Ã£o de ficheiros.
+ * A api Ã© suficientemente genÃ©rica para suportar operaÃ§Ãµes de criptografia como assinaturas digitais e (des)encriptaÃ§Ã£o de ficheiros.
+ * TambÃ©m suporta desencriptaÃ§Ã£o de dados de processo que tenham sido previamente encriptados.
  * 
- * @author Óscar Lopes
+ * @author Ã“scar Lopes
  *
  */
 public class UtilityApplet extends JApplet implements UtilityConstants {
@@ -56,6 +57,8 @@ public class UtilityApplet extends JApplet implements UtilityConstants {
   protected static final Icon WARN_ICON;
   protected static final Icon ERROR_ICON;
   protected static final Icon LOAD_ICON;
+  
+  private URL BaseURL = null;
   
   protected Map<String,TaskStatus> tasks = new HashMap<String,TaskStatus>();
   
@@ -79,11 +82,11 @@ public class UtilityApplet extends JApplet implements UtilityConstants {
   private String rubricUrl;
   
   /**
-   * Inicialização da applet. Colocar aqui código de activação de scanner, etc.
+   * InicializaÃ§Ã£o da applet. Colocar aqui cÃ³digo de activaÃ§Ã£o de scanner, etc.
    */
   public void init() {
     super.init();
-    String langStr = getParameter(LANG_PARAM);
+    String langStr = null;//getParameter(LANG_PARAM);
     log.debug("Locale str: "+langStr); //$NON-NLS-1$
     if(null != langStr && !"".equals(langStr.trim())) {
       String [] tokens = langStr.split("_");
@@ -117,8 +120,8 @@ public class UtilityApplet extends JApplet implements UtilityConstants {
     }
 
     // Ler como parametro, uma vez que tem que ser codificado pelo tomcat
-    uploadUrl = getParameter(UPLOAD_URL_APPLET_PARAM,DEFAULT_DOCUMENT_URL);
-    downloadUrl = getParameter(DOWNLOAD_URL_APPLET_PARAM,DEFAULT_DOCUMENT_URL);
+    uploadUrl = "DocumentService";//getParameter(UPLOAD_URL_APPLET_PARAM,DEFAULT_DOCUMENT_URL);
+    downloadUrl = "DocumentService";//getParameter(DOWNLOAD_URL_APPLET_PARAM,DEFAULT_DOCUMENT_URL);
     
     signatureUrl = SIGNATURE_SERVICE;
     rubricUrl = RUBRIC_SERVICE;
@@ -127,7 +130,7 @@ public class UtilityApplet extends JApplet implements UtilityConstants {
   }
 
   /**
-   * Arranque da applet. Método chamado quando a applet termina o processo de inicialização e está pronta a ser apresentada ao utilizador.
+   * Arranque da applet. MÃ©todo chamado quando a applet termina o processo de inicializaÃ§Ã£o e estÃ¡ pronta a ser apresentada ao utilizador.
    */
   public void start() {
     super.start();
@@ -145,7 +148,7 @@ public class UtilityApplet extends JApplet implements UtilityConstants {
   }
 
   /**
-   * Término da applet. Chamado quando a página do browser muda ou é fechada. Usado para libertar recursos.
+   * TÃ©rmino da applet. Chamado quando a pÃ¡gina do browser muda ou Ã© fechada. Usado para libertar recursos.
    */
   public void stop() {
     super.stop();
@@ -155,8 +158,8 @@ public class UtilityApplet extends JApplet implements UtilityConstants {
   }
 
   /**
-   * Versão do código da applet
-   * @return String com o número de versão da applet
+   * VersÃ£o do cÃ³digo da applet
+   * @return String com o nÃºmero de versÃ£o da applet
    */
   public String getVersion() {
     log.debug("getVersion called"); //$NON-NLS-1$
@@ -230,7 +233,7 @@ public class UtilityApplet extends JApplet implements UtilityConstants {
   }
 
 
-  // Métodos de processo
+  // MÃ©todos de processo
 
   /**
    * Carregamento de ficheiros para o iFlow
@@ -239,9 +242,9 @@ public class UtilityApplet extends JApplet implements UtilityConstants {
    * @param flowid Identificador do fluxo
    * @param pid Identificador do processo
    * @param subpid Identificador do subprocesso
-   * @param varName Variável onde será guardado o ficheiro
+   * @param varName VariÃ¡vel onde serÃ¡ guardado o ficheiro
    * @param signatureType Tipo de assinatura a efectuar (NONE, XADES, PDF, PKCS7)
-   * @param encrptionType Tipo de encriptação a efectuar (NONE, PKI)
+   * @param encrptionType Tipo de encriptaÃ§Ã£o a efectuar (NONE, PKI)
    * 
    * @return Identificador do ficheiro carregado
    */
@@ -290,15 +293,15 @@ public class UtilityApplet extends JApplet implements UtilityConstants {
   }
 
   /**
-   * Carregamento de ficheiros para o iFlow com pré-visualização
+   * Carregamento de ficheiros para o iFlow com prÃ©-visualizaÃ§Ã£o
    * 
    * @param cookie page cookie
    * @param flowid Identificador do fluxo
    * @param pid Identificador do processo
    * @param subpid Identificador do subprocesso
-   * @param varName Variável onde será guardado o ficheiro
+   * @param varName VariÃ¡vel onde serÃ¡ guardado o ficheiro
    * @param signatureType Tipo de assinatura a efectuar (NONE, XADES, PDF, PKCS7)
-   * @param encrptionType Tipo de encriptação a efectuar (NONE, PKI)
+   * @param encrptionType Tipo de encriptaÃ§Ã£o a efectuar (NONE, PKI)
    * 
    * @return Identificador do ficheiro carregado
    */
@@ -332,7 +335,7 @@ public class UtilityApplet extends JApplet implements UtilityConstants {
    * @param subpid Identificador do subprocesso
    * @param fileId Identificador do ficheiro
    * @param signatureType Tipo de assinatura a efectuar (NONE, XADES, PDF, PKCS7)
-   * @param encrptionType Tipo de encriptação a efectuar (NONE, PKI)
+   * @param encrptionType Tipo de encriptaÃ§Ã£o a efectuar (NONE, PKI)
    * 
    * @return Identificador do ficheiro carregado
    */
@@ -365,7 +368,7 @@ public class UtilityApplet extends JApplet implements UtilityConstants {
    * @param subpid Identificador do subprocesso
    * @param fileId Identificador do ficheiro
    * @param signatureType Tipo de assinatura a efectuar (NONE, XADES, PDF, PKCS7)
-   * @param encrptionType Tipo de encriptação a efectuar (NONE, PKI)
+   * @param encrptionType Tipo de encriptaÃ§Ã£o a efectuar (NONE, PKI)
    * 
    * @return Identificador do ficheiro carregado
    */
@@ -398,7 +401,7 @@ public class UtilityApplet extends JApplet implements UtilityConstants {
    * @param subpid Identificador do subprocesso
    * @param fileId Identificador do ficheiro
    * @param signatureType Tipo de assinatura a efectuar (NONE, XADES, PDF, PKCS7)
-   * @param encrptionType Tipo de encriptação a efectuar (NONE, PKI)
+   * @param encrptionType Tipo de encriptaÃ§Ã£o a efectuar (NONE, PKI)
    * 
    * @return Identificador do ficheiro carregado
    */
@@ -427,7 +430,7 @@ public class UtilityApplet extends JApplet implements UtilityConstants {
    * @param subpid Identificador do subprocesso
    * @param fileId Identificador do ficheiro
    * 
-   * @return Mensagem com resultado da validação
+   * @return Mensagem com resultado da validaÃ§Ã£o
    */
   public String verifiyFile(final String cookie, final String jsonRequest) {
     log.debug("verifiyFile called: "+jsonRequest); //$NON-NLS-1$
@@ -454,7 +457,7 @@ public class UtilityApplet extends JApplet implements UtilityConstants {
    * @param subpid Identificador do subprocesso
    * @param fileId Identificador do ficheiro
    * 
-   * @return Mensagem com resultado da operação
+   * @return Mensagem com resultado da operaÃ§Ã£o
    */
   public String removeFile(final String cookie, final String jsonRequest) {
     log.debug("removeFile called: "+jsonRequest); //$NON-NLS-1$
@@ -479,9 +482,9 @@ public class UtilityApplet extends JApplet implements UtilityConstants {
    * @param flowid Identificador do fluxo
    * @param pid Identificador do processo
    * @param subpid Identificador do subprocesso
-   * @param varName Variável onde será guardado o ficheiro
+   * @param varName VariÃ¡vel onde serÃ¡ guardado o ficheiro
    * @param signatureType Tipo de assinatura a efectuar (NONE, XADES, PDF, PKCS7)
-   * @param encrptionType Tipo de encriptação a efectuar (NONE, PKI)
+   * @param encrptionType Tipo de encriptaÃ§Ã£o a efectuar (NONE, PKI)
    * @param fileFormat Formato do ficheiro (PDF, JPG, TIFF, etc)
    * 
    * @return Identificador do ficheiro carregado
@@ -502,14 +505,14 @@ public class UtilityApplet extends JApplet implements UtilityConstants {
     return result; 
   }
 
-  // Gestão de certificados
+  // GestÃ£o de certificados
 
   /**
-   * Carregamento e/ou substituição de certificados digitais de utilizador
+   * Carregamento e/ou substituiÃ§Ã£o de certificados digitais de utilizador
    * 
    * @param cookie page cookie
    * @param userid Identificador do utilizador
-   * @param certificateType Tipo de certificado (autenticação, encriptação, assinatura)
+   * @param certificateType Tipo de certificado (autenticaÃ§Ã£o, encriptaÃ§Ã£o, assinatura)
    * 
    * @return 
    */
@@ -571,7 +574,7 @@ public class UtilityApplet extends JApplet implements UtilityConstants {
   }
 
 
-  // Métodos de processo
+  // MÃ©todos de processo
 
   private String doUploadFile(final WebClient webClient) {
     FileSigner signer = SignatureType.getFileSigner(webClient);
@@ -673,7 +676,7 @@ public class UtilityApplet extends JApplet implements UtilityConstants {
     return task.getTaskId();
   }
 
-  // Gestão de certificados
+  // GestÃ£o de certificados
 
   private JSONObject doSetCertificate(final WebClient webClient) {
     return null;
@@ -702,8 +705,11 @@ public class UtilityApplet extends JApplet implements UtilityConstants {
 
   
   protected WebClient createWebClient(final String cookie, final String request) {
-    WebClient webClient = new WebClient(cookie, parseJSON(request));
-    webClient.setBaseURL(getDocumentBase());
+    WebClient webClient = new WebClient(cookie, parseJSON(request));    
+    URL auxURL = getBaseURL();
+	if(auxURL==null)
+		auxURL = getDocumentBase();
+    webClient.setBaseURL(auxURL);					    
     webClient.setDownloadLocation(downloadUrl);
     webClient.setUploadLocation(uploadUrl);
     webClient.setSignatureServiceLocation(signatureUrl);
@@ -723,5 +729,13 @@ public class UtilityApplet extends JApplet implements UtilityConstants {
   protected void removeTask(TaskStatus status) {
     this.tasks.remove(status.getTaskId());
   }
+
+public URL getBaseURL() {
+	return BaseURL;
+}
+
+public void setBaseURL(URL baseURL) {
+	BaseURL = baseURL;
+}
 
 }

@@ -413,7 +413,7 @@ public class BlockPesquisaProcesso extends Block implements PesquisaProcesso {
       sqle.printStackTrace();
       outPort = portError;
     }
-    catch (Exception e) {
+    catch (Throwable e) {
       Logger.error(login,this,"after","caught exception: " + e.getMessage(), e);
       e.printStackTrace();
       outPort = portError;

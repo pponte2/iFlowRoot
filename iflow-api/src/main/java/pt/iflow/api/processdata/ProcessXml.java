@@ -83,7 +83,7 @@ public class ProcessXml {
     DateFormatter.setTimeZone(TimeZone.getDefault());
   }
 
-  public ProcessXml(ProcessCatalogue catalogue, Reader xmlCharStream) {
+  public ProcessXml(ProcessCatalogue catalogue, Reader xmlCharStream) throws Throwable {
     long start = System.currentTimeMillis();
     ProcessXmlReader reader = new ProcessXmlReader(catalogue, xmlCharStream);
 

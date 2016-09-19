@@ -67,7 +67,7 @@
 <fieldset class="submit">
     <input class="regular_button_01 btn btn-default" type="button" name="add_flow_schedule"
         value="<if:message string="button.add"/>"
-        onClick="tabber_right(4, '<%=response.encodeURL("Admin/flowSchedule/flow_schedule_add.jsp")%>','ts=<%=ts%>');"/>
+        onClick="tabber_right(4, '<%=response.encodeURL("Admin/flow_schedule_add")%>','ts=<%=ts%>');"/>
     </fieldset>
 </div>
 </form>

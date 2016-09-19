@@ -521,7 +521,7 @@ public class IFlowRemote {
       pm = BeanFactory.getProcessManagerBean();
       pd = pm.getProcessData(ui, new ProcessHeader(flowid, pid, subpid));
       Logger.warning(user, this, "generateXmlForm", "ProcessData obtained");
-    } catch (Exception e) {
+    } catch (Throwable e) {
       Logger.warning(user, this, "generateXmlForm", "Caught an unexpected exception: " + e.getMessage());
     }
     try {
@@ -932,7 +932,7 @@ public class IFlowRemote {
         }
       }
 
-    } catch (Exception e) {
+    } catch (Throwable e) {
       e.printStackTrace();
       Logger.warning(user, this, "getProcessData", "Error: caught exception: " + e.getMessage());
       throw new Exception("Error: caught exception: " + e.getMessage());
@@ -1038,7 +1038,7 @@ public class IFlowRemote {
         flow.saveDataSet(ui, pd, null);
       }
 
-    } catch (Exception e) {
+    } catch (Throwable e) {
       e.printStackTrace();
       Logger.warning(user, this, "setProcessData", "Error: caught exception: " + e.getMessage());
       throw new Exception("Error: caught exception: " + e.getMessage());

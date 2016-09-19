@@ -23,6 +23,7 @@ import org.apache.commons.lang.StringUtils;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 
+import pt.iflow.api.cluster.JobManager;
 import pt.iflow.api.core.BeanFactory;
 import pt.iflow.api.core.Repository;
 import pt.iflow.api.core.ResourceModifiedListener;
@@ -162,6 +163,7 @@ public class EmailManager extends Thread {
 
       this.signalThreadCycle();
 
+   if(JobManager.getInstance().isMyBeatValid())
       try {
         
 

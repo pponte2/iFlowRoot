@@ -19,8 +19,9 @@ public interface Documents {
    * @param adoc
    *          Document to add.
    * @return Document data added to DB.
+ * @throws Exception 
    */
-  public abstract Document addDocument(UserInfoInterface userInfo, ProcessData procData, Document adoc);
+  public abstract Document addDocument(UserInfoInterface userInfo, ProcessData procData, Document adoc) throws Exception;
 
   /**
    * Updates document with new data.
@@ -142,4 +143,6 @@ public interface Documents {
   public Boolean markDocGenerationSuccess(UserInfoInterface userInfo, Document adoc, Boolean success);
   
   public Boolean checkDocGenerationSuccess(UserInfoInterface userInfo, Document adoc);
+  
+  public String writeDocumentDataToExternalRepos(UserInfoInterface userInfo,ProcessData procData, Document doc) throws Exception;
 }

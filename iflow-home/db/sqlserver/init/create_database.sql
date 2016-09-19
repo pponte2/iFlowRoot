@@ -2054,3 +2054,29 @@ CREATE TABLE  `iflow`.`calendar_periods` (
   `period_end` TIME  NOT NULL,
   CONSTRAINT `fk_calendar_periods_calendar` FOREIGN KEY (`calendar_id`) REFERENCES `calendar` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO counter VALUES ('nodekey',0,GETDATE());
+
+CREATE TABLE  dbo.active_node (
+  nodekey varchar(50) NOT NULL,
+  expiration DATETIME NOT NULL,
+  PRIMARY KEY (nodekey)
+);
+
+CREATE PROCEDURE get_next_pid 
+  @retnodekey INT OUT
+AS
+BEGIN
+	DECLARE @tmp INT
+    set @retnodekey = 1
+    select value into @tmp from counter where name='nodekey'
+    update counter set value=(@tmp +1) where  name='nodekey'
+    select value into @retnodekey from counter where name='nodekey'    
+END
+GO
+
+CREATE TABLE  dbo.sharedobjectrefresh (
+  id int NOT NULL IDENTITY,
+  flowid int NOT NULL,
+  PRIMARY KEY (id)
+);

@@ -26,6 +26,7 @@ import org.apache.commons.lang.StringUtils;
 import org.exolab.castor.xml.MarshalException;
 import org.exolab.castor.xml.ValidationException;
 
+import pt.iflow.api.cluster.SharedObjectRefreshManager;
 import pt.iflow.api.core.AdministrationFlowScheduleInterface;
 import pt.iflow.api.core.BeanFactory;
 import pt.iflow.api.core.ProcessCatalogue;
@@ -1716,6 +1717,7 @@ public class FlowHolderBean implements FlowHolder {
             int anFlowId) {
         Integer iId = new Integer(anFlowId);
         String org = userInfo.getOrganization();
+        SharedObjectRefreshManager.getInstance().checkAndRefresh();
         if (!_hmFlowData.containsKey(org))
             return false;
         Map<Integer, FlowData> orgFlowData = _hmFlowData.get(org);
@@ -1727,6 +1729,7 @@ public class FlowHolderBean implements FlowHolder {
     private synchronized void clearCachedFlow(UserInfoInterface userInfo, int flowId) {
         Integer iId = new Integer(flowId);
         String org = userInfo.getOrganization();
+        SharedObjectRefreshManager.getInstance().checkAndRefresh();
         if (_hmFlowData.containsKey(org)) {
             Map<Integer, FlowData> orgFlowData = _hmFlowData.get(org);
             if (null != orgFlowData) {
@@ -1744,6 +1747,7 @@ public class FlowHolderBean implements FlowHolder {
             int flowId) {
         FlowData fd = null;
         String org = userInfo.getOrganization();
+        SharedObjectRefreshManager.getInstance().checkAndRefresh();
         if (_hmFlowData.containsKey(org)) {
             Map<Integer, FlowData> orgFlowData = _hmFlowData.get(org);
             if (null != orgFlowData)
@@ -1755,6 +1759,7 @@ public class FlowHolderBean implements FlowHolder {
     private synchronized void setCachedFlow(UserInfoInterface userInfo,
             FlowData flowData) {
         String org = userInfo.getOrganization();
+        SharedObjectRefreshManager.getInstance().checkAndRefresh();
         if (!_hmFlowData.containsKey(org) || _hmFlowData.get(org) == null) {
             _hmFlowData.put(org, new HashMap<Integer, FlowData>());
         }
@@ -1766,6 +1771,7 @@ public class FlowHolderBean implements FlowHolder {
             UserInfoInterface userInfo) {
         Collection<FlowData> coll = new ArrayList<FlowData>();
         String org = userInfo.getOrganization();
+        SharedObjectRefreshManager.getInstance().checkAndRefresh();
         if (_hmFlowData.containsKey(org)) {
             Map<Integer, FlowData> orgFlowData = _hmFlowData.get(org);
             if (null != orgFlowData)
@@ -2746,5 +2752,30 @@ public class FlowHolderBean implements FlowHolder {
       }
     }
     return result;
+  }
+
+  public synchronized void refreshCacheFlow(UserInfoInterface userInfo, int flowId){
+      FlowData fd=null;
+		try {
+          fd = buildFlowData(userInfo, flowId, false);
+      } catch (FlowSecurityException e) {
+          Logger.error(userInfo.getUtilizador(), this, "getFlow",
+                  "Error building flow id = " + flowId
+                          + " returning customized flowdata");
+          fd = e.getFlowData();
+      } catch (Throwable t) {
+        t.printStackTrace();
+      }
+      if (null == fd) {
+          Logger.error(userInfo.getUtilizador(), this, "getFlow",
+                  "Build a null flow for flow id = " + flowId);
+      } else {
+      	String org = userInfo.getOrganization();            
+          if (!_hmFlowData.containsKey(org) || _hmFlowData.get(org) == null) {
+              _hmFlowData.put(org, new HashMap<Integer, FlowData>());
+          }
+          Map<Integer, FlowData> orgFlowData = _hmFlowData.get(org);            
+          orgFlowData.put(new Integer(fd.getId()), fd);
+      }
   }
 }

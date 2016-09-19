@@ -42,7 +42,12 @@ public class ProcessDataNameSpaceTest extends ProcessTestCase {
         catalogue.setListDataType("lDate", new DateDataType());
         
         this._catalogue = catalogue;
-        _pxml = new ProcessXml(catalogue, new FileReader(_xmlFile));
+        try {
+			_pxml = new ProcessXml(catalogue, new FileReader(_xmlFile));
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         
         _pd = _pxml.getProcessData();
         //_pd.resetEvaluator();

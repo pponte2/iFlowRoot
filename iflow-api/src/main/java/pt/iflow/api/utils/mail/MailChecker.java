@@ -2,6 +2,7 @@ package pt.iflow.api.utils.mail;
 
 import javax.mail.MessagingException;
 
+import pt.iflow.api.cluster.JobManager;
 import pt.iflow.api.utils.Logger;
 import pt.iflow.api.utils.mail.parsers.MessageParser;
 
@@ -76,7 +77,8 @@ public class MailChecker implements Runnable {
     }
     
     while (!stop) {
-      try {      
+      try {
+      if(JobManager.getInstance().isMyBeatValid())
         try {
           if (client.checkNewMail()) {
             Logger.adminInfo("MailChecker", "run", getId() + "found new mail");

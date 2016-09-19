@@ -525,8 +525,8 @@ public class DynamicDialog extends JFrame implements PropertyChangeListener, Act
       
       if(StringUtils.isNotEmpty(task.getResult())){
             String [] temp = task.getResult().split(",");
-          if(StringUtils.isNotEmpty(temp[0])){
-              temp = temp[0].split(":");
+          if(StringUtils.isNotEmpty(temp[1])){
+              temp = temp[1].split(":");
             if(StringUtils.isNotEmpty(temp[1]))
               applet.executeScript("changeFileState("+temp[1].replace("\"", "")+")");
           } 

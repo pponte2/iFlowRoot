@@ -23,7 +23,12 @@ public class ProcessXmlTest extends ProcessTestCase {
     @Before
     public void setUp() throws Exception {
         super.setUp();
-        _pxml = new ProcessXml(_catalogue, new FileReader(_xmlFile));
+        try {
+			_pxml = new ProcessXml(_catalogue, new FileReader(_xmlFile));
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         
         // out("Finished setup:\n - process catalogue:\n" +
         // _catalogue.toString() + "\n - process data:\n" +

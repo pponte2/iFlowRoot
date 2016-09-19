@@ -258,7 +258,7 @@ public class BlockSincronizacao extends Block {
         procData.setSubPid(toKeep.getSubPid());
 
       }
-      catch (Exception e) {
+      catch (Throwable e) {
           errorManager.fire(errorKey);
           Logger.error(login, this, "after", 
               procData.getSignature(this.getId()) + "Exception joining processes", e);
@@ -306,7 +306,10 @@ public class BlockSincronizacao extends Block {
     catch (SQLException sqle) {
         Logger.error(login,this,"getBlockSubpids",
             "caught sql exception: " + sqle.getMessage(), sqle);
-    }
+    }catch (Throwable t) {
+        Logger.error(login,this,"getBlockSubpids",
+                "caught exception: " + t.getMessage(), t);
+        }
     finally {
         DatabaseInterface.closeResources(db,st,rs);
     }

@@ -121,14 +121,17 @@ public class DocumentServlet extends HttpServlet {
     Document doc = getDocument(request, userInfo, procData, logVar);
 
     if (doc == null) {
+      Logger.debug(userInfo.getUtilizador(), this, "service", "doc is null");
       response.sendError(HttpServletResponse.SC_NOT_FOUND, "File not found");
       return;
     }
     
     if(BeanFactory.getDocumentsBean().checkDocGenerationSuccess(userInfo, doc)==Boolean.FALSE){
+    	Logger.debug(userInfo.getUtilizador(), this, "service", "doc not created yet");
     	response.sendError(HttpServletResponse.SC_NO_CONTENT, "File not created");
     	return;
-    }
+    }    
+    Logger.debug(userInfo.getUtilizador(), this, "service", "doc is DocumentDataStream: " + (doc instanceof DocumentDataStream));
     
     response.setHeader("Content-Disposition","attachment;filename=\"" + doc.getFileName().replace(' ', '_')+"\";");
     OutputStream out = response.getOutputStream();

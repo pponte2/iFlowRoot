@@ -384,4 +384,6 @@ public interface FlowHolder {
   public boolean updateFlowType(UserInfoInterface userInfo, int flowid);
 
   public boolean updateFlowShowInMenuRequirement(UserInfoInterface userInfo, int flowid);
+
+public abstract void refreshCacheFlow(UserInfoInterface userInfo, int int1);
 }

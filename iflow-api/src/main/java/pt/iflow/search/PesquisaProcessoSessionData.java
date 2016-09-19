@@ -19,6 +19,7 @@ import pt.iflow.api.processdata.ProcessHeader;
 import pt.iflow.api.processdata.ProcessListVariable;
 import pt.iflow.api.processdata.ProcessVariableValue;
 import pt.iflow.api.utils.Const;
+import pt.iflow.api.utils.Logger;
 import pt.iflow.api.utils.ServletUtils;
 import pt.iflow.api.utils.UserInfoInterface;
 import pt.iknow.utils.html.FormData;
@@ -161,7 +162,12 @@ public class PesquisaProcessoSessionData implements Serializable {
 
     // The return value can have less results than expected...
     //ProcessData[] pd = pm.getProcessesData(userInfo, pha, fields, MODE);
-    ProcessData[] pd = pm.getProcessesData(userInfo, pha, MODE);
+    ProcessData[] pd=null;
+	try {
+		pd = pm.getProcessesData(userInfo, pha, MODE);
+	} catch (Throwable e) {
+		Logger.adminError("PesquisaProcessoSessionData", "preLoad", "ERROR", e);
+	}
 
     ArrayList<PesquisaProcessoRow> pageData = new ArrayList<PesquisaProcessoRow>();
     // get process data like pid, fid, sid, gid, uid

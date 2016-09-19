@@ -68,7 +68,7 @@ public interface ProcessManager extends UserProcsConst {
    */
   public abstract ProcessData initializeProcessData(UserInfoInterface userInfo, ProcessData procData);
 
-  public abstract ProcessData undoProcessData(UserInfoInterface userInfo, int flowid, int pid, int subpid, int newMid, ProcessData process) throws Exception;
+  public abstract ProcessData undoProcessData(UserInfoInterface userInfo, int flowid, int pid, int subpid, int newMid, ProcessData process) throws Exception, Throwable;
   
   public int getNextMid(UserInfoInterface userInfo, ProcessHeader procHeader) throws Exception;
   public int getNextMid(UserInfoInterface userInfo, ProcessData procData) throws Exception;
@@ -92,9 +92,10 @@ public interface ProcessManager extends UserProcsConst {
    * 
    * @param pid
    *          process id
+ * @throws Throwable 
    * @returns process data stored in DataSet object
    */
-  public abstract ProcessData getProcessData(UserInfoInterface userInfo, ProcessHeader procHeader);
+  public abstract ProcessData getProcessData(UserInfoInterface userInfo, ProcessHeader procHeader) throws Throwable;
 
   public abstract ProcessData getProcessData(UserInfoInterface userInfo, ProcessHeader procHeader, int anMode);
 
@@ -103,28 +104,31 @@ public interface ProcessManager extends UserProcsConst {
    * 
    * @param pids
    *          process ids
+ * @throws Throwable 
    * @returns processes data stored in DataSet object for each process
    */
-  public abstract ProcessData[] getProcessesData(UserInfoInterface userInfo, ProcessHeader[] procHeaders);
+  public abstract ProcessData[] getProcessesData(UserInfoInterface userInfo, ProcessHeader[] procHeaders) throws Throwable;
 
   /**
    * retrieves process data for given pids
    * 
    * @param pids
    *          process ids
+ * @throws Throwable 
    * @returns processes data stored in DataSet object for each process
    */
-  public abstract ProcessData[] getProcessesData(UserInfoInterface userInfo, ProcessHeader[] procHeaders, int anMode);
+  public abstract ProcessData[] getProcessesData(UserInfoInterface userInfo, ProcessHeader[] procHeaders, int anMode) throws Throwable;
 
   /**
    * retrieves process data for given pids
    * 
    * @param pids
    *          process ids
+ * @throws Throwable 
    * @returns processes data stored in DataSet object for each process
    * @deprecated
    */
-  public abstract ProcessData[] getProcessesData(UserInfoInterface userInfo, ProcessHeader[] procHeaders, String[] asaFields);
+  public abstract ProcessData[] getProcessesData(UserInfoInterface userInfo, ProcessHeader[] procHeaders, String[] asaFields) throws Throwable;
 
   /**
    * retrieves process data for given ProcessData(s)
@@ -135,10 +139,11 @@ public interface ProcessManager extends UserProcsConst {
    *          required fields. if null or empty, all proc fields are fetched
    * @param anMode
    *          fetch mode: all procs, opened procs or closed procs
+ * @throws Throwable 
    * @returns processes data stored in DataSet object for each process
    * @deprecated
    */
-  public abstract ProcessData[] getProcessesData(UserInfoInterface userInfo, ProcessHeader[] procHeaders, String[] asaFields, int anMode);
+  public abstract ProcessData[] getProcessesData(UserInfoInterface userInfo, ProcessHeader[] procHeaders, String[] asaFields, int anMode) throws Throwable;
 
   /**
    * retrieves process data
@@ -627,7 +632,7 @@ public interface ProcessManager extends UserProcsConst {
   public abstract ListIterator<Activity> getUserAndSubordinatesActivities(UserInfoInterface ui);
 
   public String getProcdataString(UserInfoInterface userInfo, String pidS, String SubpidS);
-  public String setProcdataString(UserInfoInterface userInfo, String pidS, String SubpidS, String procData);
+  public String setProcdataString(UserInfoInterface userInfo, String pidS, String SubpidS, String procData) throws Throwable;
   public String getMinPidNonEncrypted(UserInfoInterface userInfo);
   public String getMaxPidNonEncrypted(UserInfoInterface userInfo);
   public String ProcessEncryptEB(UserInfoInterface userInfo, String pidB, String pidE);

@@ -100,6 +100,7 @@ public class Const {
   public static final String CLICK_TIMEOUT_NAME = "CLICK_TIMEOUT";
 
   public static String DOCS_BASE_URL = null;
+  public static String DOCS_DAO_CLASS = null;
 
   public static final String MISSING_PROC_MID_ERROR_MSG = "Informa&ccedil;&atilde;o sobre estado actual do processo n&atilde;o foi encontrada.<br>Por favor tente novamente.";
   public static final String PROC_CHANGED_ERROR_MSG = "Processo alterado por outro utilizador. Os presentes dados foram actualizados (as altera&ccedil;&otilde;es efectuadas n&atilde;o foram guardadas).";
@@ -407,6 +408,14 @@ public class Const {
   public static final String sDEFAULT_LOCALE_EN_US = "en-US";
   public static final String sDEFAULT_LOCALE_ES_ES = "es-ES";
   
+  //Cluester support enabled
+  public static Boolean CLUSTER_ENABLED;
+  
+  //Job Manager times in seconds for Cluster support
+  public static Long BEAT_ACTIVE_TIME;
+  public static Long BEAT_ACTIVE_CHECK_TIME;
+  public static Long BEAT_INACTIVE_CHECK_TIME;
+  
   private static List<String> ALLOWED_LOCALES = new ArrayList<String>();
 
   public static String sFLOW_INITIALS_DESC = "Iniciais do Fluxo em Tarefas";
@@ -675,6 +684,7 @@ public class Const {
     	nEXCEL_LIBRARY = nEXCEL_LIBRARY_JXL;
 
     DOCS_BASE_URL = Setup.getProperty("DOCS_BASE_URL");
+    DOCS_DAO_CLASS = Setup.getProperty("DOCS_DAO_CLASS");
     
     try {
       sDELEGATION_NOTIFY_REQUEST_MODE = Setup.getProperty("DELEGATION_NOTIFY_REQUEST_MODE").toLowerCase();
@@ -746,7 +756,27 @@ public class Const {
     } catch (Exception e) { 
     	sRUBRIC_UPLOAD=sNO; 
     }
-    
+	try { 
+		CLUSTER_ENABLED = Boolean.parseBoolean(Setup.getProperty("CLUSTER_ENABLED"));
+    } catch (Exception e) { 
+    	CLUSTER_ENABLED=Boolean.FALSE;
+    }
+	try { 
+		BEAT_ACTIVE_TIME=Long.parseLong(Setup.getProperty("BEAT_ACTIVE_TIME"));
+    } catch (Exception e) { 
+    	BEAT_ACTIVE_TIME=new Long(10000); 
+    }
+	try { 
+		BEAT_ACTIVE_CHECK_TIME=Long.parseLong(Setup.getProperty("BEAT_ACTIVE_CHECK_TIME"));
+    } catch (Exception e) { 
+    	BEAT_ACTIVE_CHECK_TIME=new Long(5000); 
+    }
+	try { 
+		BEAT_INACTIVE_CHECK_TIME=Long.parseLong(Setup.getProperty("BEAT_INACTIVE_CHECK_TIME"));
+    } catch (Exception e) { 
+    	BEAT_INACTIVE_CHECK_TIME=new Long(15000); 
+    }
+	
   }
 
   public static void main(String[] args) {
