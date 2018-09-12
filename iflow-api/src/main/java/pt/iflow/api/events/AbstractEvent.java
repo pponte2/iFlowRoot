@@ -4,7 +4,7 @@ package pt.iflow.api.events;
 
 public abstract class AbstractEvent {
 
-  public Boolean processEvent(EventData event) {
+  public Boolean processEvent(EventData event) throws Exception {
     return processEvent(
         event.getUserId(),
         new Integer(event.getId()),
@@ -18,7 +18,7 @@ public abstract class AbstractEvent {
     );
   }
 
-  public abstract Boolean processEvent(String userId, Integer id, Integer pid, Integer subpid, Integer fid, Integer blockid, Long starttime, String type, String properties);
+  public abstract Boolean processEvent(String userId, Integer id, Integer pid, Integer subpid, Integer fid, Integer blockid, Long starttime, String type, String properties) throws Exception;
 
   public abstract Boolean processEvent();
   

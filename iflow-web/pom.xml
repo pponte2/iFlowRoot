@@ -353,7 +353,12 @@
 			<artifactId>reposws_dev</artifactId>
 			<version>1</version>
 		</dependency>
-
+		<dependency>
+			<groupId>P15013</groupId>
+			<artifactId>sdkrepos</artifactId>
+			<version>1</version>
+		</dependency>
+		
 		<!-- TESTS -->
 		<dependency>
 			<groupId>junit</groupId>

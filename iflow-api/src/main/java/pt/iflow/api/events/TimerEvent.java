@@ -24,7 +24,7 @@ public class TimerEvent extends AbstractEvent {
   }
 
   public Boolean processEvent(String userId, Integer id, Integer pid, Integer subpid, Integer fid, Integer blockid, Long starttime,
-      String type, String properties) {
+      String type, String properties) throws Exception {
     Boolean processed = Boolean.FALSE;
     try {
       long duration = 0;
@@ -75,6 +75,7 @@ public class TimerEvent extends AbstractEvent {
       }
     } catch (Exception e) {
       Logger.error(userId, this, "processEvent", "Exception caught: ", e);
+      throw e;
     }
     return processed;
   }

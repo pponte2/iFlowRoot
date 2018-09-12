@@ -43,6 +43,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.infosistema.crypto.Base64;
+import com.infosistema.crypto.jar.JarSigner;
+
 import pt.iflow.api.core.BeanFactory;
 import pt.iflow.api.core.Repository;
 import pt.iflow.api.core.RepositoryFile;
@@ -51,9 +54,6 @@ import pt.iflow.api.utils.Logger;
 import pt.iflow.api.utils.UserInfoInterface;
 import pt.iflow.applet.AbstractAppletServletHelper;
 import pt.iknow.utils.VelocityUtils;
-
-import com.infosistema.crypto.Base64;
-import com.infosistema.crypto.jar.JarSigner;
 
 /**
 * 

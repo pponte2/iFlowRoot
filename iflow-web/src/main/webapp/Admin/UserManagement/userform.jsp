@@ -61,6 +61,7 @@
   String orgadmProcesses = "";
   String orgadmResources = "";
   String orgadmOrg = "";
+  String notify = "";
   String password = "";
   String repeatPass = "";
   String calendId = "";
@@ -84,6 +85,7 @@
   orgadmProcesses = fdFormData.getParameter("orgadmProcesses");
   orgadmResources = fdFormData.getParameter("orgadmResources");
   orgadmOrg = fdFormData.getParameter("orgadmOrg");
+  notify = fdFormData.getParameter("notify");
   password = fdFormData.getParameter("password");
   repeatPass = fdFormData.getParameter("repeatPassword");
   String[] listExtraValues = new String[listExtraProperties.length];
@@ -106,6 +108,7 @@
   if (orgadmProcesses == null) orgadmProcesses = "";
   if (orgadmResources == null) orgadmResources = "";
   if (orgadmOrg == null) orgadmOrg = "";
+  if (notify == null) notify = "";
   if (password == null) password = "";
   if (repeatPass == null) repeatPass = "";
   for (int i = 0; i < listExtraValues.length; i++) {
@@ -163,7 +166,7 @@
     }
     else { 
       errorHandler = manager.modifyUserAsAdmin(ui, userId, gender, unitId, emailAddress, firstName, lastName, phoneNumber,
-          faxNumber, mobileNumber, companyPhone, orgadm, orgadmUsers, orgadmFlows, orgadmProcesses, orgadmResources, orgadmOrg, password, listExtraProperties, listExtraValues, fdFormData.getParameter("calendar"));
+          faxNumber, mobileNumber, companyPhone, orgadm, orgadmUsers, orgadmFlows, orgadmProcesses, orgadmResources, orgadmOrg, notify, password, listExtraProperties, listExtraValues, fdFormData.getParameter("calendar"));
       ErrorCode errCode = (errorHandler != null)?errorHandler.getErrorCode():null;
       
       if (UserErrorCode.SUCCESS.equals(errCode)) {
@@ -233,6 +236,7 @@
     orgadmProcesses = userView.getOrgAdmProcesses().equals("1")?"true":"false";
     orgadmResources = userView.getOrgAdmResources().equals("1")?"true":"false";
     orgadmOrg = userView.getOrgAdmOrg().equals("1")?"true":"false";
+    notify = userView.getNotify().equals("1")?"true":"false";
     for (int i = 0; i < listExtraProperties.length; i++) {
       listExtraValues[i] = userView.get(listExtraProperties[i]);
     }
@@ -326,6 +330,8 @@
       
       <if:formInput name="orgadmOrg" labelkey="userform.field.orgadmorg" type="checkbox" value='<%=orgadmOrg%>' edit="<%=bEdit%>" required="false" />
   </div>
+  
+  <if:formInput name="notify" labelkey="userform.field.notify" type="checkbox" value='<%=notify%>' edit="<%=bEdit%>" required="false" />
   
   <if:formInput name="emailAddress" labelkey="userform.field.emailaddress" type="text" value='<%=emailAddress%>' edit="<%=bEdit%>" required="<%= Const.bUSE_EMAIL %>" maxlength="100" />
 

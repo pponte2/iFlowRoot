@@ -600,6 +600,9 @@ public class FlowBean implements Flow {
 	    
 	    if (block.isForwardBlock()){
 	    	mensagem = block.getAttribute("UserMessage");
+	    	try { 
+	    		mensagem = java.net.URLEncoder.encode(mensagem, "UTF-8"); 
+    		} catch (java.io.UnsupportedEncodingException e) {}
 	      if(StringUtils.isNotEmpty(mensagem))
 	    	  mensagemForward = "&msg="+mensagem;
 	    }

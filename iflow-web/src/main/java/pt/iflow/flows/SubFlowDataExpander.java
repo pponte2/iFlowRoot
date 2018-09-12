@@ -77,7 +77,9 @@ public class SubFlowDataExpander {
     for (XmlAttribute xmlAttribute : subFlowBlock.getXmlAttribute())
       if (SUB_FLOW_NAME_ATTRIBUTE_START.equals("" + xmlAttribute.getName().charAt(0))) {
         byte[] sXml = BeanFactory.getFlowHolderBean().readSubFlowData(userInfo, xmlAttribute.getValue());
-        XmlFlow xmlSubFlow = FlowMarshaller.unmarshal(sXml);
+        XmlFlow xmlSubFlow = null;
+        if(sXml!=null)
+        	xmlSubFlow = FlowMarshaller.unmarshal(sXml);
 
         subFlowData = new SubFlowDataSuportClass();
         subFlowData.setPrimaryBlock(subFlowBlock);
@@ -90,6 +92,9 @@ public class SubFlowDataExpander {
 
   public List<SubFlowMapping> expandSubFlow(UserInfoInterface userInfo) throws Exception {
     List<SubFlowMapping> blockMappings = new ArrayList<SubFlowMapping>();
+    
+    if(userInfo.getUtilizador().startsWith("Manager-"))
+    	return blockMappings;
 
     while (this.containsSubFlow()) {
       List<SubFlowDataSuportClass> subFlowElements = getAllSubFlowsReferencesFromFlow(userInfo);
@@ -103,18 +108,13 @@ public class SubFlowDataExpander {
             subFlowData.getPrimaryBlock().getXmlPort()[1].setName(PORT_OUT_COPY);
             break;
           }
-
-          Logger.debug(userInfo.getUtilizador(), this, "expandSubFlow", "INI - validate Sub Flow");
+          Logger.debug(userInfo.getUtilizador(), this, "expandSubFlow", "starting on Sub Flow: " + subFlow.getName());          
           validateSubFlow(subFlow, userInfo);
-          Logger.debug(userInfo.getUtilizador(), this, "expandSubFlow", "FIM - validate Sub Flow");
-
-          Logger.debug(userInfo.getUtilizador(), this, "expandSubFlow", "INI - add Sub Flow catalog vars to Main flow");
           addSubCatalogVarsToMain(subFlow);
-          Logger.debug(userInfo.getUtilizador(), this, "expandSubFlow", "FIM - add Sub Flow catalog vars to Main flow");
 
-          Logger.debug(userInfo.getUtilizador(), this, "expandSubFlow", "INI - assign new block ids to sub flow blocks");
+          int tempMappings = blockMappings.size();
           blockMappings.addAll(assignNewBlockIds(subFlowData, findMaxblockId()));
-          Logger.debug(userInfo.getUtilizador(), this, "expandSubFlow", "FIM - assign new block ids to sub flow blocks");
+          Logger.debug(userInfo.getUtilizador(), this, "expandSubFlow", "added " + (blockMappings.size() - tempMappings)+ " from Sub Flow: " + subFlow.getName());
 
           Logger.debug(userInfo.getUtilizador(), this, "expandSubFlow", "INI - create copy blocks in sub flow");
           buildCopyBlocksInSubFlow(subFlowData, userInfo);
@@ -216,8 +216,9 @@ public class SubFlowDataExpander {
     // get the var mapping of subflow
 
     XmlBlockType subFlowBlock = subFlowData.getPrimaryBlock();
-    int size = (subFlowBlock .getXmlAttributeCount() - 1) / 4 - 1; // raio de conta
-
+    int size = 1;
+    if(subFlowBlock .getXmlAttributeCount()>8)
+    	size = (subFlowBlock .getXmlAttributeCount() - 1) / 4 - 1; // raio de conta
     if (size < 0){
       size = 0; // FIXME correcção temporaria de subfluxo sem variaveis, 
     }
@@ -339,11 +340,11 @@ public class SubFlowDataExpander {
     if (SubFlowDataSuportClass.SUBFLOW_BLOCK == subFlowData.getTypeOfSubFlowImplementation()){
       // 1.Connect beginning of subflow
       for (XmlBlock block : xmlFlow.getXmlBlock()){
-        if(block.getId()==subFlowBlock.getXmlPort(0).getConnectedBlockId()){ // é bloco que liga ao subFluxo
+        //if(block.getId()==subFlowBlock.getXmlPort(0).getConnectedBlockId()){ // é bloco que liga ao subFluxo
           for (XmlPort port : block.getXmlPort())
             if (port.getConnectedBlockId() == subFlowBlock.getId())
               port.setConnectedBlockId(rawSubFlow[0].getId());
-        }
+        //}
       }
     }
 

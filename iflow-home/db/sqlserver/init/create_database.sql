@@ -1999,7 +1999,7 @@ CREATE TABLE  `iflow`.`calendar` (
   `week_hours` int(11) DEFAULT NULL,
   `month_hours` int(11) DEFAULT NULL,
   `create_date` datetime NOT NULL,
-  PRIMARY KEY (`id`,`version`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `iflow`.`calendar_history`;
@@ -2062,6 +2062,7 @@ CREATE TABLE  dbo.active_node (
   expiration DATETIME NOT NULL,
   PRIMARY KEY (nodekey)
 );
+insert into dbo.active_node(nodekey, expiration) values(1, get_date());
 
 CREATE PROCEDURE get_next_pid 
   @retnodekey INT OUT

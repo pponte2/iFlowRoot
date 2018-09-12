@@ -18,6 +18,28 @@ String scroll = (String) fdFormData.getParameter("scroll");
 if(scroll != null) 
   session.setAttribute("filtro_scroll",scroll);
 %>
+  <script>
+  function calcFrameHeight(frameName) {
+		//find the height of the internal page
+		var the_height = document.getElementById(frameName).contentWindow.document.body.scrollHeight; //pp: martelada dos 10 deveria ser corrigida.
+			var the_width = document.getElementById(frameName).contentWindow.document.body.scrollWidth;
+		//change the height of the iframe
+		document.getElementById(frameName).style.height = the_height.toString() + 'px';
+		//document.getElementById(frameName).style.width = the_width.toString() + 'px';
+		document.getElementById(frameName).style.width = '98%';
+		resizeDelay(2000,frameName);
+	}
+
+	function resizeDelay(delayMillisecs, frameName) {
+		if(frameName == 'iframe_proc_detail') {
+			resizeProcDetail();
+		} else if (frameName == 'iframe_proc_preview'){
+			resizeProcPreview();
+		} else {
+			setTimeout("resizeDelay()", delayMillisecs);
+		}
+	}
+  </script>
 <form name="form_proc_detail" action="#" method="POST">
 <input type="hidden" name="flowid" value="<%=sFlowId%>">
 <input type="hidden" name="pid" value="<%=sPid%>">
@@ -39,6 +61,8 @@ if(scroll != null)
 	onClick="javascript:tabber('inbox','','',inboxJSP);"/>
 
 <%} else if(status.equals("-4")){ %>
+
+<%} else if(status.equals("-5")){ %>
 
 <%} else {%> 
   <input class="regular_button_01 btn btn-default" type="button" name="back" value="<if:message string="button.back"/>" 

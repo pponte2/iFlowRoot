@@ -1,5 +1,6 @@
 package pt.iflow.api.processdata;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ListIterator;
 
@@ -10,8 +11,9 @@ import org.w3c.dom.NodeList;
 import pt.iflow.api.processtype.ProcessDataType;
 
 
-public class ProcessListVariable extends ProcessVariable {
+public class ProcessListVariable extends ProcessVariable implements Serializable{
 
+	private static final long serialVersionUID = 1L;
 	ProcessListItemList _items;
 	
 	public ProcessListVariable(ProcessDataType type, String name) {

@@ -12,7 +12,7 @@ class NoLicenseService implements LicenseService {
   
   static {
     dtLimit = Calendar.getInstance();
-    dtLimit.set(2014, Calendar.SEPTEMBER, 27);
+    dtLimit.set(2017, Calendar.DECEMBER, 27);
   }
   
   NoLicenseService() {

@@ -1,3 +1,4 @@
+<%@page import="java.text.DateFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/core" prefix="c" %>
 <%@ taglib uri="http://www.iknow.pt/jsp/jstl/iflow" prefix="if" %>
@@ -25,6 +26,13 @@ try {
   case 'D': // Delete message
     success = BeanFactory.getNotificationManagerBean().deleteMessage(userInfo, id) == NotificationManager.NOTIFICATION_OK;
     break;
+  case 'S':{ // Suspend message
+		String suspendDateString = fdFormData.getParameter("suspendDate");
+		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm");
+  		Date suspendDate = sdf.parse(suspendDateString);;
+  		success = BeanFactory.getNotificationManagerBean().suspendMessageNew(userInfo, id, suspendDate)  == NotificationManager.NOTIFICATION_OK;
+	    break;
+  }
   default:
     success=false;
     break;

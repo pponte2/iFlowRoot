@@ -2445,10 +2445,8 @@ public ListIterator<Activity> getActivities(UserInfoInterface userInfo, String p
 
     try {
         if(StringUtils.isEmpty(profileName)) throw new Exception("No Profile Name given.");
-        connection = DatabaseInterface.getConnection(userInfo);
-        prepStatement = connection.prepareStatement("SELECT * FROM activity WHERE profilename = ? " +
-              "GROUP BY pid, subpid ORDER BY created ASC");
-        prepStatement.setString(1, profileName);
+        connection = DatabaseInterface.getConnection(userInfo);        
+        prepStatement = connection.prepareStatement(DBQueryManager.processQuery("ProcessManager.getUserActivitiesByProfilename", new Object[] {profileName}));        
         resultSet = prepStatement.executeQuery();
 
         while(resultSet.next()) {
@@ -3326,7 +3324,8 @@ public void deleteOtherActivities(UserInfoInterface userInfo, ProcessHeader proc
 
     historifyActivities(userInfo, db, procHeader, userid);
 
-    stmp = "delete from activity where flowid=" + flowid + " and pid=" + pid + " and subpid=" + subpid + " and userid != '"+userid+"'";
+    stmp = "delete from activity where flowid=" + flowid + " and pid=" + pid + " and subpid=" + subpid + " and userid != '"+userid+"'" +
+    			" and userid not in (select ownerid from activity_delegated where flowid=" + flowid + " and pid=" + pid + " and subpid=" + subpid + ")";
     Logger.debug(userid, this, "deleteOtherActivities", "Query3=" + stmp);
     st.executeUpdate(stmp);
 
@@ -5544,7 +5543,7 @@ public List<Activity> getPreviousActivities(UserInfoInterface userInfo, ProcessD
   List<Activity> acts = null;
   try {
     db = DatabaseInterface.getConnection(userInfo);
-    pst = db.prepareStatement("select max(mid) from activity_history where flowid=? and pid=? and subpid=? and undoflag=0");
+    pst = db.prepareStatement("select max(mid), max(archived) from activity_history where flowid=? and pid=? and subpid=? and undoflag=0");
 
     pst.setInt(1, procData.getFlowId());
     pst.setInt(2, procData.getPid());
@@ -5553,6 +5552,7 @@ public List<Activity> getPreviousActivities(UserInfoInterface userInfo, ProcessD
     rs = pst.executeQuery();
     if (rs.next()) {
       int maxmid = rs.getInt(1);
+      Timestamp maxArchived = rs.getTimestamp(2);
       
       rs.close();
       pst.close();
@@ -5560,11 +5560,12 @@ public List<Activity> getPreviousActivities(UserInfoInterface userInfo, ProcessD
       
       pst = db.prepareStatement("select userid,flowid,pid,subpid,type,priority,created,started,archived,description," +
               "url,status,notify,delegated,profilename,read_flag,mid,previoususerid from activity_history " +
-              "where flowid=? and pid=? and subpid=? and undoflag=0 and mid=?");
+              "where flowid=? and pid=? and subpid=? and undoflag=0 and mid=? and archived=?");
       pst.setInt(1, procData.getFlowId());
       pst.setInt(2, procData.getPid());
       pst.setInt(3, procData.getSubPid());
       pst.setInt(4, maxmid);
+      pst.setTimestamp(5, maxArchived);
       
       rs = pst.executeQuery();
       

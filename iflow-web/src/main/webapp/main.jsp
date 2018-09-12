@@ -5,6 +5,8 @@
 <%@ taglib uri="http://www.iknow.pt/jsp/jstl/iflow" prefix="if"%>
 <%@ include file="inc/defs.jsp"%>
 <%@page import="pt.iflow.api.licensing.LicenseServiceFactory"%>
+<%@ page import="pt.iflow.api.userdata.views.*" %>
+<%@ page import="pt.iflow.userdata.views.*" %>
 
 <%
     if (userInfo.isGuest() || session.getAttribute("login_error") != null) {
@@ -115,6 +117,68 @@
 	hsSubst.put("cancel", messages.getString("main.labels.cancel"));
 	hsSubst.put("new_label", messages.getString("main.label.add.new"));
 
+	 // prepare notification data
+    Collection<Notification> notifications = BeanFactory.getNotificationManagerBean().listAllNotifications(userInfo);
+	Collection<Map<String,String>> notes = new ArrayList<Map<String,String>>();
+	int n = 0;
+	for(Notification notification : notifications) {
+		
+		++n;
+		Map<String,String> note = new HashMap<String,String>();
+		note.put("id", String.valueOf(notification.getId()));
+		note.put("from", notification.getSender());
+		note.put("date", DateUtility.formatTimestamp(userInfo, notification.getCreated()));
+		note.put("message", StringEscapeUtils.escapeHtml(notification.getMessage()));
+		note.put("read", String.valueOf(notification.isRead()));
+		
+		String href = "";
+		
+		String [] dadosproc = notification.getLink().split(",");
+		
+		int procid = -1; 
+		
+		if(dadosproc.length > 1)
+			procid = Integer.parseInt(dadosproc[1]);
+		
+		if(notification.getLink().equals("false") || procid<=0)
+			href =  "false";
+		else
+			href =  "8, \'user_proc_detail.jsp\'," + notification.getLink()+",-3";
+		
+		
+		note.put("link",href);
+		
+		if(StringUtils.isNotBlank(notification.getOpenFlowid())){			
+			note.put("openFlow", "javascript:openProcess(" +notification.getOpenFlowid()+ ",%20'inicio_flow.jsp',%20'flowid=" +notification.getOpenFlowid()+ "&sel=" +notification.getOpenFlowid()+ "',%20false,%203)");
+		}else{
+			note.put("openFlow","-1");
+		}
+		notes.add(note);
+    }
+    
+ 
+    
+    
+    //SET ACTION
+    hsSubst.put("row", 0);
+    hsSubst.put("iconTime", System.currentTimeMillis());
+    hsSubst.put("action_move", messages.getString("actividades.folder.move"));
+    hsSubst.put("action_close", messages.getString("actividades.folder.close"));
+    
+    UserManager manager = BeanFactory.getUserManagerBean();
+    UserViewInterface userView = new UserView(new HashMap<String,String>());
+    userView = manager.getUser(userInfo, userInfo.getUserId());
+    if(userView.getNotify()!= null && "1".equals(userView.getNotify()))
+    	hsSubst.put("notify", "1");
+    else
+    	hsSubst.put("notify", "0");
+    
+    hsSubst.put("notifications", notes);
+   /* hsSubst.put("hasMoreNotifications", notifications.size()>nNOTIFICATION_LIMIT);*/
+    hsSubst.put("notificationsMsg", messages.getString("main_content.notifications.notificationsMsg"));
+       
+    hsSubst.put("notificationtitle", messages.getString("inbox.notificationtitle"));
+    hsSubst.put("notificationitem", messages.getString("inbox.notificationitem"));
     // tutorial and help stuff
     
     boolean helpMode = userInfo.getUserSettings().isHelpMode();
@@ -258,7 +322,7 @@
     hsSubst.put("menuLocation", orgTheme.getMenuLocation());
     hsSubst.put("procMenuVisible", orgTheme.getProcMenuVisible() ? "yes" : "no");
     
-    Collection<Notification> notifications = BeanFactory.getNotificationManagerBean().listNotifications(userInfo);
+    notifications = BeanFactory.getNotificationManagerBean().listNotifications(userInfo);
     Collection<DelegationInfoData> delegations = BeanFactory.getDelegationInfoBean().getDeployedReceivedDelegations(userInfo);
 	Collection<Notification> msgs = BeanFactory.getNotificationManagerBean().listAllNotifications(userInfo);
     

@@ -1289,13 +1289,13 @@ public class Utils {
     }
 
     if (retObj != null && !retObj.equals("")) {
-      retObj = Utils.replaceString(retObj, "'", sPattern);
-      try {
-        retObj = adsDataSet.transform(userInfo, retObj, true);
-      } catch (EvalException e) {
-        Logger.error("", Utils.class, "transformStringAndPrepareForDB", "Unable to transform string: " + Utils.replaceString(retObj, sPattern, "'"), e);
-      }
-    }
+	    retObj = Utils.replaceString(retObj, "'", sPattern);
+	    try {
+	      retObj = adsDataSet.transform(userInfo, retObj, true);
+	    } catch (EvalException e) {
+	      Logger.error("", Utils.class, "transformStringAndPrepareForDB", "Unable to transform string: " + Utils.replaceString(retObj, sPattern, "'"), e);
+	    }
+	}
     if (retObj.equals("")) retObj = null;
 
     if (retObj != null && !retObj.equals("")) {

@@ -1,5 +1,6 @@
 package pt.iflow.api.processdata;
 
+import java.io.Serializable;
 import java.text.Format;
 import java.text.ParseException;
 
@@ -8,7 +9,11 @@ import org.w3c.dom.Element;
 import pt.iflow.api.processtype.ProcessDataType;
 
 
-public class ProcessSimpleVariable extends ProcessVariable implements ProcessVariableValue {
+public class ProcessSimpleVariable extends ProcessVariable implements ProcessVariableValue, Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	InternalValue _value;
 
 	ProcessSimpleVariable(ProcessDataType type, Element xmlElement) throws ParseException {

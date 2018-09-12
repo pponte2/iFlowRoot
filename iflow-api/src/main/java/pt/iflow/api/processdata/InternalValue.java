@@ -1,5 +1,6 @@
 package pt.iflow.api.processdata;
 
+import java.io.Serializable;
 import java.text.Format;
 import java.text.ParseException;
 
@@ -9,8 +10,13 @@ import pt.iflow.api.processtype.DataTypeEnum;
 import pt.iflow.api.processtype.ProcessDataType;
 
 
-class InternalValue implements ProcessVariableValue {
-  private ProcessDataType _type;
+class InternalValue implements ProcessVariableValue, Serializable {
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+private ProcessDataType _type;
 
   private String _rawvalue;
   private Object _value;

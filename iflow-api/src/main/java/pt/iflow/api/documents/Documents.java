@@ -142,7 +142,8 @@ public interface Documents {
   
   public Boolean markDocGenerationSuccess(UserInfoInterface userInfo, Document adoc, Boolean success);
   
-  public Boolean checkDocGenerationSuccess(UserInfoInterface userInfo, Document adoc);
+  public Boolean checkDocGenerationSuccess(UserInfoInterface userInfo, int adocid);
   
   public String writeDocumentDataToExternalRepos(UserInfoInterface userInfo,ProcessData procData, Document doc) throws Exception;
 }
+

@@ -1,5 +1,6 @@
 package pt.iflow.msg;
 
+import java.io.Serializable;
 import java.util.Locale;
 
 import pt.iflow.api.msg.IMessages;
@@ -9,7 +10,7 @@ import pt.iflow.api.utils.IFlowMessages;
  * @author jcosta
  * 
  */
-public class Messages extends IFlowMessages implements IMessages {
+public class Messages extends IFlowMessages implements IMessages, Serializable {
   private static final long serialVersionUID = -1628651474240059506L;
   
   private static final String BUNDLE_NAME = "web"; //$NON-NLS-1$

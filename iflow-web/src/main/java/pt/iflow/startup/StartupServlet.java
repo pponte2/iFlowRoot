@@ -205,8 +205,9 @@ public class StartupServlet extends HttpServlet {
 			UserInfoInterface userInfo = BeanFactory.getUserInfoFactory().newClassManager(this.getClass().getName());
 			Collection<Integer> flowids = BeanFactory.getFlowHolderBean().listFlowIds( userInfo);
 
-	        for (int flowid : flowids) {
+	        for (int flowid : flowids) {	        	
 	            try {
+	            	userInfo = BeanFactory.getUserInfoFactory().newOrganizationGuestUserInfo(BeanFactory.getFlowHolderBean().getFlowOrganizationid(flowid));
 	            	BeanFactory.getFlowSettingsBean().refreshFlowSettings(userInfo, flowid);
 	              Logger.adminInfo("ListenersAutoRefresh", "clustered refreshAll", "Flow " + flowid + " refresheded.");
 	            } 

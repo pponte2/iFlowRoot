@@ -1,5 +1,6 @@
 package pt.iflow.api.processdata;
 
+import java.io.Serializable;
 import java.text.MessageFormat;
 import java.text.ParseException;
 import java.util.Date;
@@ -14,9 +15,10 @@ import org.w3c.dom.Element;
 import pt.iflow.api.transition.ReportTO;
 import pt.iflow.api.utils.Const;
 
-public class ProcessHeader {
+public class ProcessHeader  implements Serializable{
 
-    private static final String SIGNATURE_FORMAT = "[{0}:{1}:{2}] ";
+    private static final long serialVersionUID = 1L;
+	private static final String SIGNATURE_FORMAT = "[{0}:{1}:{2}] ";
     private static final String SIGNATURE_WITH_BLOCKID_FORMAT = "[{0}:{1}:{2}:{3}] ";
     private int _flowid = -1;
 	private int _pid = -1;

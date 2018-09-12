@@ -1,8 +1,9 @@
 package pt.iflow.api.notification;
 
 import java.util.Collection;
+import java.util.Date;
+import java.util.Set;
 
-import pt.iflow.api.notification.Notification;
 import pt.iflow.api.utils.UserInfoInterface;
 
 public interface NotificationManager {
@@ -135,5 +136,22 @@ public interface NotificationManager {
    * @return
    */
   public abstract int deleteMessage(UserInfoInterface userInfo, int messageId);
+  
+	  /**
+	   * Suspend a message from user view.
+	   * 
+	   * @param userInfo
+	   * @param messageId
+	   * @return
+	   */
+	public abstract int suspendMessageNew(UserInfoInterface userInfo, int messageId, Date suspendDate);
 
+	public abstract int notifyUsers(UserInfoInterface userInfo, String from, Set<String> usersToNotify, String message,
+			String linkparams, Boolean pickTask, String externalLink, Date activeDate);
+
+	public abstract void showNotificationDetail(UserInfoInterface ui, String id);
+	
+	public abstract String checkShowNotificationDetail(UserInfoInterface ui);
+	
+	public abstract Boolean updateCreated(UserInfoInterface userInfo, int messageId, Date newDate);
 }

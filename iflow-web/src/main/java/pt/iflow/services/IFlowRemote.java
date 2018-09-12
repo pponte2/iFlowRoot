@@ -8,14 +8,21 @@
 package pt.iflow.services;
 
 import java.io.StringReader;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.sql.DataSource;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
@@ -23,12 +30,13 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
+
+import com.google.gson.Gson;
 
 import pt.iflow.api.blocks.Block;
 import pt.iflow.api.blocks.FormOperations;
@@ -38,6 +46,7 @@ import pt.iflow.api.core.Activity;
 import pt.iflow.api.core.AuthProfile;
 import pt.iflow.api.core.BeanFactory;
 import pt.iflow.api.core.ProcessManager;
+import pt.iflow.api.db.DatabaseInterface;
 import pt.iflow.api.documents.DocumentData;
 import pt.iflow.api.documents.Documents;
 import pt.iflow.api.flows.Flow;
@@ -46,6 +55,7 @@ import pt.iflow.api.flows.FlowSettings;
 import pt.iflow.api.flows.FlowType;
 import pt.iflow.api.flows.IFlowData;
 import pt.iflow.api.msg.IMessages;
+import pt.iflow.api.notification.Notification;
 import pt.iflow.api.presentation.FlowAppMenu;
 import pt.iflow.api.presentation.FlowApplications;
 import pt.iflow.api.presentation.FlowMenu;
@@ -66,8 +76,10 @@ import pt.iflow.api.userdata.UserData;
 import pt.iflow.api.utils.Const;
 import pt.iflow.api.utils.Logger;
 import pt.iflow.api.utils.UserInfoInterface;
+import pt.iflow.api.utils.Utils;
 import pt.iflow.blocks.BlockFormulario;
 import pt.iflow.flows.FlowData;
+import pt.iflow.notification.NotificationImpl;
 import pt.iknow.utils.StringUtilities;
 import pt.iknow.utils.html.FormData;
 
@@ -1046,4 +1058,78 @@ public class IFlowRemote {
     return SUCCESS;
   }
 
+	public String listUnreadNotifications(String user, String password) throws Exception {
+		final String query = "select a.*,b.isread, b.suspend, b.picktask, b.externallink, b.activedate from notifications a, user_notifications b where a.id=b.notificationid and b.userid=? order by a.created desc";
+	    ArrayList<Notification> notifications = new ArrayList<Notification>();
+	    // lista mensagens
+	    Connection db = null;
+	    PreparedStatement st = null;
+	    DataSource ds = null;
+	    ResultSet rs = null;
+	    try {
+	      ds = Utils.getDataSource();
+	      db = ds.getConnection();
+	      st = db.prepareStatement(query);
+	      st.setString(1, user);
+	      
+	      rs = st.executeQuery();
+	      while(rs.next()) {
+	    	Timestamp activeDate = rs.getTimestamp("activedate");
+	    	Timestamp now = new Timestamp((new Date()).getTime());
+	    	if(activeDate==null || now.after(activeDate)){
+		        NotificationImpl notification = new NotificationImpl(rs.getInt("id"), rs.getString("sender"), rs.getTimestamp("created"), rs.getString("message"), rs.getInt("isread")!=0, rs.getTimestamp("suspend"));
+		        notification.setLink(rs.getString("link"));
+		        notification.setPickTask((rs.getInt("picktask")==1)?true:false);
+		        notification.setExternalLink(rs.getString("externallink"));
+		        notifications.add(notification);
+	    	}
+	      }
+	      rs.close();
+	      rs = null;
+
+	      st.close();
+	      st = null;
+	      Logger.debug(user, this, "listAllNotifications", "Found "+notifications.size()+" messages.");
+	    } catch (SQLException e) {
+	      Logger.warning(user, this, "listAllNotifications", "Error retrieving user notifications",e);
+	    } finally {
+	      DatabaseInterface.closeResources(db, st, rs);
+	    }
+		Gson gson = new Gson();
+		ArrayList<Notification> result = new ArrayList<Notification>();
+		for (Notification notification : notifications)
+			if (!notification.isRead()) {
+				result.add(notification);
+			}
+				
+		return gson.toJson(result);       
+	}
+	
+	public String showNotificationDetail(String user, String password, String id) throws Exception {
+	    final String query = "update user_notifications set showdetail=1 where userid=? and notificationid=?";
+	    String userId = user;
+	    
+	    Connection db = null;
+	    PreparedStatement st = null;
+	    DataSource ds = null;
+	    try {
+	      ds = Utils.getDataSource();
+	      db = ds.getConnection();
+	      db.setAutoCommit(true);
+	      st = db.prepareStatement(query);
+	      st.setString(1, userId);
+	      st.setInt(2, Integer.parseInt(id));
+
+	      int n = st.executeUpdate();
+
+	      st.close();
+	      st = null;
+	      Logger.debug(userId, this, "showNotificationDetail", "userid: " +userId+ ", notification id: " + id);
+	    } catch (SQLException e) {
+	      Logger.warning(userId, this, "showNotificationDetail", "userid: " +userId+ ", notification id: " + id, e);
+	    } finally {
+	      DatabaseInterface.closeResources(db, st);
+	    }		
+		return SUCCESS;
+	}
 }

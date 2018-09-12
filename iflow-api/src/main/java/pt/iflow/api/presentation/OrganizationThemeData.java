@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 public class OrganizationThemeData implements Serializable{
 
-  private static final long serialVersionUID = 5810142207530370526L;
+  private static final long serialVersionUID = 1L;
   
   private String _orgID;
   private String _orgName;

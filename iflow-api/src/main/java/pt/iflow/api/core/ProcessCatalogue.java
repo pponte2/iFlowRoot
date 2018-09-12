@@ -1,11 +1,14 @@
 package pt.iflow.api.core;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
 import pt.iflow.api.processtype.ProcessDataType;
 
-public interface ProcessCatalogue {
+public interface ProcessCatalogue  extends Serializable{
+  static final long serialVersionUID = 1L;
+  
   public boolean isList(String var);
 
   public boolean hasVar(String var);

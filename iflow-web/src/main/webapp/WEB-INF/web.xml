@@ -7,7 +7,7 @@ Disabled. Use servlet container defaults
     <session-timeout>30</session-timeout> 
 </session-config> 
 -->
-
+	<distributable/>
     <!--
     To use non XDoclet filters, create a filters.xml file that
     contains the additional filters (eg Sitemesh) and place it in your
@@ -74,8 +74,11 @@ Disabled. Use servlet container defaults
    <listener>
 	 <listener-class>org.apache.axis.transport.http.AxisHTTPSessionListener</listener-class>
    </listener>
-   <listener>
+   <!--  listener>
      <listener-class>pt.iflow.documents.DocumentSessionListener</listener-class>
+   </listener -->
+   <listener>
+	 <listener-class>pt.iflow.utils.SessionAttributeInfoListener</listener-class>
    </listener>
 
    <servlet>
@@ -357,6 +360,16 @@ Disabled. Use servlet container defaults
 	    <servlet-name>AjaxGoBackServlet</servlet-name>
 	    <url-pattern>/AjaxGoBackServlet/*</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+	    <servlet-name>SignProRubric</servlet-name>
+	    <servlet-class>pt.iflow.servlets.SignProRubric</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+	    <servlet-name>SignProRubric</servlet-name>
+	    <url-pattern>/SignProRubric/*</url-pattern>
+	</servlet-mapping>
 
     <!-- Apache Axis -->
   <servlet-mapping>
@@ -619,6 +632,7 @@ Disabled. Use servlet container defaults
    </servlet-mapping>
    
    <!-- REST Servlet -->
+   <!-- 
    <servlet>
     <servlet-name>iFlow REST Service</servlet-name>
     <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
@@ -632,7 +646,7 @@ Disabled. Use servlet container defaults
     <servlet-name>iFlow REST Service</servlet-name>
     <url-pattern>/iFlowRest/*</url-pattern>
   </servlet-mapping>
-  
+  -->
   <servlet>
 	  <display-name>iFlow Applet Webstart</display-name>
 	  <servlet-name>AppletWebstart</servlet-name>

@@ -6,7 +6,7 @@
 
 package pt.iflow.api.userdata;
 
-import pt.iflow.api.userdata.IMappedData;
+import java.io.Serializable;
 
 
 /**
@@ -18,7 +18,7 @@ import pt.iflow.api.userdata.IMappedData;
  * @author iKnow
  */
 
-public interface OrganizationalUnitData extends IMappedData {
+public interface OrganizationalUnitData extends IMappedData , Serializable {
  
   public static final String UNITCODE = "UNITCODE";
   public static final String NAME = "NAME";

@@ -495,6 +495,7 @@ public class WebClient implements UtilityConstants {
       if (null != cookie && cookie.trim().length() > 0)
         conn.setRequestProperty("Cookie", cookie); //$NON-NLS-1$
       conn.setRequestProperty("Cookie", "APPLET" + cookie);
+      log.info("Cookie for connection: " + cookie);
       
       conn.connect();
       if(conn.getResponseCode() != HttpURLConnection.HTTP_OK) {

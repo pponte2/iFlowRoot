@@ -1,6 +1,5 @@
 package pt.iflow.documents;
 
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -26,6 +25,7 @@ import pt.iflow.api.utils.Const;
 import pt.iflow.api.utils.Logger;
 import pt.iflow.api.utils.UserInfoInterface;
 import pt.iflow.connector.document.Document;
+import pt.iflow.api.documents.IFlowDocumentIdentifier;
 
 /**
  *
@@ -126,13 +126,20 @@ public class DocumentServlet extends HttpServlet {
       return;
     }
     
-    if(BeanFactory.getDocumentsBean().checkDocGenerationSuccess(userInfo, doc)==Boolean.FALSE){
-    	Logger.debug(userInfo.getUtilizador(), this, "service", "doc not created yet");
-    	response.sendError(HttpServletResponse.SC_NO_CONTENT, "File not created");
-    	return;
-    }    
-    Logger.debug(userInfo.getUtilizador(), this, "service", "doc is DocumentDataStream: " + (doc instanceof DocumentDataStream));
-    
+    // if(BeanFactory.getDocumentsBean().checkDocGenerationSuccess(userInfo, doc)==Boolean.FALSE){
+	String checkdoc = request.getParameter("checkdoc");
+	if (checkdoc != null && !checkdoc.equals("")) {
+		if(!checkDocGenerationSuccess(request,userInfo).booleanValue()){
+			Logger.debug(userInfo.getUtilizador(), this, "service", "doc not created yet");
+			response.sendError(HttpServletResponse.SC_NO_CONTENT, "File not created");
+		}
+		else {
+			response.getWriter().print("OK");
+		}
+		Logger.debug(userInfo.getUtilizador(), this, "service", "doc is DocumentDataStream: " + (doc instanceof DocumentDataStream));
+		return;
+    }
+	
     response.setHeader("Content-Disposition","attachment;filename=\"" + doc.getFileName().replace(' ', '_')+"\";");
     OutputStream out = response.getOutputStream();
     if (doc instanceof DocumentDataStream){
@@ -146,6 +153,34 @@ public class DocumentServlet extends HttpServlet {
     }   
     out.close();
   }
+  
+  private Boolean checkDocGenerationSuccess (HttpServletRequest request, UserInfoInterface userInfo) {
+	String hdoc = request.getParameter("hdoc");
+	int docid = 0;
+	if(StringUtils.isNotEmpty(hdoc)) {
+	  Logger.debug(userInfo.getUtilizador(), this, "getDocument", "Hashed document id: - proceeding with docid retrieval...");
+	  DocumentHash docHash = new DocumentHash(hdoc);
+
+	  // validate hash
+	  if(docHash.isValid(userInfo)) {
+		docid = ((IFlowDocumentIdentifier)docHash.getDocId()).getIntId();
+		Logger.debug(userInfo.getUtilizador(), this, "getDocument", "Got hashed document");
+	  } else {
+		Logger.warning(userInfo.getUtilizador(), this, "getDocument", "Invalid hash for user: "+userInfo.getUtilizador()+" <> "+docHash.getUsersAsString());
+			return false;
+	  }
+	} else {
+	  try {
+		docid = Integer.parseInt(request.getParameter("docid")); 
+	  }
+	  catch (Exception e) {
+		return Boolean.FALSE;
+	  }
+	  Logger.debug(userInfo.getUtilizador(), this, "getDocument", "Got document");
+	}
+	return BeanFactory.getDocumentsBean().checkDocGenerationSuccess(userInfo, docid);
+  }
+  
   
   private Document getDocument(HttpServletRequest request, UserInfoInterface userInfo, ProcessData procData, String logVar) {
 
@@ -199,4 +234,6 @@ public class DocumentServlet extends HttpServlet {
     return doc;
   }
 }
+
+
 

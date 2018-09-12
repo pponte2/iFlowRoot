@@ -1,5 +1,6 @@
 package pt.iflow.api.core;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -19,9 +20,10 @@ import pt.iflow.api.processtype.TextDataType;
 import pt.iflow.api.utils.Const;
 import pt.iflow.api.utils.DataSetVariables;
 
-public class ProcessCatalogueImpl implements ProcessCatalogue {
+public class ProcessCatalogueImpl implements ProcessCatalogue, Serializable {
 
-  Map<String,ProcessDataType> _map;
+  private static final long serialVersionUID = 1L;
+  transient Map<String,ProcessDataType> _map;
   Set<String> _lists;
   Set<String> _bindables;
   Map<String,String> _publicNames;

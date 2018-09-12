@@ -5,16 +5,17 @@ CREATE TABLE  dbo.active_node (
   expiration DATETIME NOT NULL,
   PRIMARY KEY (nodekey)
 );
+insert into dbo.active_node(nodekey, expiration) values(1, get_date());
 
-CREATE PROCEDURE get_next_pid 
+CREATE PROCEDURE get_next_nodekey 
   @retnodekey INT OUT
 AS
 BEGIN
-	DECLARE @tmp INT
+		DECLARE @tmp INT
     set @retnodekey = 1
-    select value into @tmp from counter where name='nodekey'
+    select @tmp = value from counter where name='nodekey'
     update counter set value=(@tmp +1) where  name='nodekey'
-    select value into @retnodekey from counter where name='nodekey'    
+    select @retnodekey = value from counter where name='nodekey'    
 END
 GO
 

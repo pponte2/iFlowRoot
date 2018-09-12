@@ -3,6 +3,7 @@ package pt.iflow.api.db;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
+import java.io.Serializable;
 import java.io.Writer;
 import java.sql.Array;
 import java.sql.Blob;
@@ -33,7 +34,7 @@ import javax.xml.transform.Source;
  * @author infosistema
  *
  */
-public class DBConnectionWrapper implements Connection {
+public class DBConnectionWrapper implements Connection,Serializable {
 
   private Connection conn;
   

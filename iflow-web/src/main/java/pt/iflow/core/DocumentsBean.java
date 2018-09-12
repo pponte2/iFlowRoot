@@ -98,7 +98,7 @@ public class DocumentsBean implements Documents {
 	              f = new File(docsBaseUrl);
 	              FileUtils.forceMkdir(f);
 	            } catch (Exception ex) {
-	              Logger.error("", "DocumentsBean", "static", "O URL : '" + Const.DOCS_BASE_URL + "' n�o corresponde a uma pasta.");
+	              Logger.error("", "DocumentsBean", "static", "O URL : '" + Const.DOCS_BASE_URL + "' nï¿½o corresponde a uma pasta.");
 	              docDataInDB = true;
 	              docsBaseUrl = null;
 	            }
@@ -1170,14 +1170,14 @@ public Boolean markDocGenerationSuccess(UserInfoInterface userInfo,
 
 @Override
 public Boolean checkDocGenerationSuccess(UserInfoInterface userInfo,
-		Document adoc) {    
+		int adocid) {    
     Logger.trace(this, "checkDocGenerationSuccess", userInfo.getUtilizador() + " call.");
     Boolean result = Boolean.TRUE;
     Connection db = null;
     PreparedStatement st = null;
     ResultSet rs = null;
     LinkedList<Activity> l = new LinkedList<Activity>();
-    final StringBuilder sQuery = new StringBuilder(DBQueryManager.processQuery("Documents.checkDocGenerationSuccess", new Object[]{adoc.getDocId()}));
+    final StringBuilder sQuery = new StringBuilder(DBQueryManager.processQuery("Documents.checkDocGenerationSuccess", new Object[]{adocid}));
     try {
       db = DatabaseInterface.getConnection(userInfo);
       db.setAutoCommit(true);
@@ -1186,11 +1186,11 @@ public Boolean checkDocGenerationSuccess(UserInfoInterface userInfo,
       rs = st.executeQuery();
       
       if(!rs.next())
-    	  return true;
+    	  result = Boolean.FALSE;
       else if(rs.getInt(1)==1)
-    	  return true;
+    	  result = Boolean.TRUE;
       else
-    	  return false;
+    	  result = Boolean.FALSE;
                   
     } catch (SQLException sqle) {
       Logger.error(userInfo.getUtilizador(), this, "checkDocGenerationSuccess", "sql exception: " + sqle.getMessage() + sQuery, sqle);
@@ -1201,7 +1201,7 @@ public Boolean checkDocGenerationSuccess(UserInfoInterface userInfo,
     } finally {
       DatabaseInterface.closeResources(db, st, rs);
     }
-    return null;
+    return result;
   }
 
 @Override
@@ -1211,3 +1211,4 @@ public String writeDocumentDataToExternalRepos(UserInfoInterface userInfo,
 	return null;
 }
 }
+

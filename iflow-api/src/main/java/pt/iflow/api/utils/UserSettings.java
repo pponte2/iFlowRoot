@@ -1,6 +1,8 @@
 package pt.iflow.api.utils;
 
-public interface UserSettings {
+import java.io.Serializable;
+
+public interface UserSettings extends Serializable{
   public static final String TUTORIAL_DEFAULT = "none";
   public static final String TUTORIAL_USERS = "users";
   public static final String TUTORIAL_ORG_UNITS = "org_units";

@@ -1,7 +1,8 @@
 package pt.iflow.api.processtype;
 
+import java.io.Serializable;
 
-public class TextDataType implements ProcessDataType {
+public class TextDataType implements ProcessDataType, Serializable {
 
   public Object convertFrom(String rawvalue) {
     return rawvalue;

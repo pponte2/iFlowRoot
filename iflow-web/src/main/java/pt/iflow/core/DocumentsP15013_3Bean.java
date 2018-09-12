@@ -28,7 +28,7 @@ import pt.iflow.api.utils.Setup;
 import pt.iflow.api.utils.UserInfoInterface;
 import pt.iflow.connector.document.DMSDocument;
 import pt.iflow.connector.document.Document;
-import repocma.MyDocument;
+import sdkrepos.MyDocument;
 import repocma.Repos;
 import repocma.Repos.InvalidCredentialsException;
 
@@ -133,7 +133,7 @@ public class DocumentsP15013_3Bean extends DocumentsBean {
 			while(repeat)
 				try{
 					tries--;
-					filePath = reposDev.insertDocument(adoc.getFileName(), new ByteArrayInputStream(adoc.getContent()), md, userInfo.getUtilizador());
+					filePath = reposDev.insertDocument(adoc.getFileName(), adoc.getContent(), md, userInfo.getUtilizador());
 					repeat = false;
 				}catch (Exception e){
 					repeat=true;
@@ -422,7 +422,7 @@ public class DocumentsP15013_3Bean extends DocumentsBean {
 					else {
 						Logger.warning(login,this,"getDocument", "retrieving file in database, docid: " + retObj.getDocId());
 						dataStream = rs.getBinaryStream("datadoc");
-						dataStream2 = rs.getBinaryStream("datadoc");
+						//dataStream2 = rs.getBinaryStream("datadoc");
 					}
 					try{
 			          if (null != dataStream) {
@@ -437,7 +437,7 @@ public class DocumentsP15013_3Bean extends DocumentsBean {
 			          retObj.setContent(baos.toByteArray());
 			        } catch( OutOfMemoryError e){
 			        	  DocumentDataStream retObjStream = new DocumentDataStream(retObj.getDocId(), retObj.getFileName(), null, retObj.getUpdated(), retObj.getFlowid(), retObj.getPid(), retObj.getSubpid());
-			        	  retObjStream.setContentStream(dataStream2);
+			        	  retObjStream.setContentStream(rs.getBinaryStream("datadoc"));
 			        	  retObj = retObjStream;        	  
 			        } finally {
 			        	dataStream.close();
@@ -510,3 +510,4 @@ public class DocumentsP15013_3Bean extends DocumentsBean {
 	    return docurlResult;
 	}
 }
+

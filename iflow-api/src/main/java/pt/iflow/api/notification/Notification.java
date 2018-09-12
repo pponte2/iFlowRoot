@@ -31,4 +31,16 @@ public interface Notification {
 	public String getOpenFlowid();
 	
 	public void setOpenFlowid(String flowid);
+	
+	public Date getSuspend();
+	
+	public void setSuspend(Date suspend);
+	
+	public Boolean isPickTask();
+	
+	public void setPickTask(Boolean pickTask);
+	
+	public String getExternalLink();
+	
+	public void setExternalLink(String externalLink);
 }

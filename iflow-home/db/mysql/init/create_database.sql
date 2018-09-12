@@ -1988,6 +1988,7 @@ CREATE TABLE  `iflow`.`active_node` (
   `expiration` datetime NOT NULL,
   PRIMARY KEY (`nodekey`)
 );
+insert into active_node(nodekey) values(1, now());
 
 DELIMITER $$
 DROP PROCEDURE IF EXISTS `get_next_nodekey` $$

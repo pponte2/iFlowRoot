@@ -58,7 +58,7 @@ public class JobManager extends Thread {
 		}
 	}
 
-	public static JobManager getInstance() {
+	public static synchronized JobManager getInstance() {
 		if (instance == null)
 			instance = new JobManager();
 		return instance;

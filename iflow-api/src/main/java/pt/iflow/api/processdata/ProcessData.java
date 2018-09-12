@@ -1,6 +1,7 @@
 package pt.iflow.api.processdata;
 
 import java.io.File;
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -40,26 +41,28 @@ import pt.iknow.utils.DataSetImpl;
 import bsh.EvalError;
 import bsh.Interpreter;
 
-public class ProcessData {
+public class ProcessData implements Serializable {
 
-  ProcessCatalogue _catalogue;
+  private static final long serialVersionUID = 1L;
 
-  ProcessHeader _header;
-  Map<String, ProcessSimpleVariable> _simpleVars;
-  Map<String, ProcessListVariable> _listVars;
-  Map<String, ProcessSimpleVariable> _bindableVars;
+  transient ProcessCatalogue _catalogue;
 
-  Map<String,String> _simpleVarsOrigRawVal;
-  Map<String,ListVarOrigValues> _listVarsOrigRawVal;
-  InternalValue _errorOrigRawVal;
+  transient ProcessHeader _header;
+  transient Map<String, ProcessSimpleVariable> _simpleVars;
+  transient Map<String, ProcessListVariable> _listVars;
+  transient Map<String, ProcessSimpleVariable> _bindableVars;
 
-  Map<String,String> _tempData;
-  Map<String,String> _appData;
+  transient Map<String,String> _simpleVarsOrigRawVal;
+  transient Map<String,ListVarOrigValues> _listVarsOrigRawVal;
+  transient InternalValue _errorOrigRawVal;
+
+  transient Map<String,String> _tempData;
+  transient Map<String,String> _appData;
 
   boolean _readOnlyMode = false;
   boolean _inDB = false;
   boolean _appDataChanged = false;
-  InternalValue _error = null;
+  transient InternalValue _error = null;
 
   private boolean _hasChanged = false;
   

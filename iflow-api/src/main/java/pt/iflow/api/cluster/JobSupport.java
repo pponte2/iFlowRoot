@@ -23,7 +23,7 @@ public class JobSupport {
 			Logger.debug("System", "JobSupport", "addBeat", "sql: " + sql);
 			st.executeUpdate(sql);			
 		} catch(Exception e){
-			Logger.error("System", "JobSupport", "addBeat", "nodeKey: " + nodeKey + " , reason: "+ e.getMessage());
+			Logger.error("System", "JobSupport", "addBeat", "nodeKey: " + nodeKey + ", query: " + sql + " , reason: "+ e.getMessage());
 		} finally {
 	        DatabaseInterface.closeResources(db, st, sql, rs);
 	    }				

@@ -1236,8 +1236,8 @@ public class FlowHolderBean implements FlowHolder {
 
                   Logger.debug(userInfo.getUtilizador(), this, "buildFlow", "Settings saved");
                   //saving max blockID and subflow mapping if they exist - useful for auditing subflows
-                  saveSubFlowExpansionResult(subFlowBlockMappings,subFlowDataExpander.findMaxblockId(), flowId, userInfo) ;
-            resyncDeployedFlowWithSubFlow(userInfo, subFlowBlockMappings, flowId, fd);
+                  if (saveSubFlowExpansionResult(subFlowBlockMappings,subFlowDataExpander.findMaxblockId(), flowId, userInfo))
+                	  resyncDeployedFlowWithSubFlow(userInfo, subFlowBlockMappings, flowId, fd);
                 }
                 setBuildDate(userInfo, flowId);
               }
@@ -1265,125 +1265,111 @@ public class FlowHolderBean implements FlowHolder {
    * @param fd
    * @throws Exception
    */
-  private void resyncDeployedFlowWithSubFlow(UserInfoInterface userInfo, List<SubFlowMapping> subFlowBlockMappings, int flowId,
-      FlowData fd) throws Exception {
+    private void resyncDeployedFlowWithSubFlow(UserInfoInterface userInfo, List<SubFlowMapping> subFlowBlockMappings, int flowId,
+    	      FlowData fd) throws Exception {
 
-    if(subFlowBlockMappings.size() == 0) return;
-    
-    Connection db = null;
-    PreparedStatement pst = null;
-    Flow flowBean = BeanFactory.getFlowBean();
+    	    if(subFlowBlockMappings.size() == 0) return;
+    	    
+    	    Connection db = null;
+    	    PreparedStatement pst = null;
+    	    Flow flowBean = BeanFactory.getFlowBean();
 
-    List<Integer> oldOriginalBlockId = new ArrayList<Integer>(), oldMappedBlockId = new ArrayList<Integer>();
-    List<String> subFlowName = new ArrayList<String>();
+    	    try {
+    	      db = Utils.getDataSource().getConnection();
+    	      pst = db.prepareStatement("SELECT created FROM subflow_block_mapping s where flowname=? group by created order by created desc");
+    	      pst.setString(1, subFlowBlockMappings.get(0).getMainFlowName());
+    	      ResultSet rst = pst.executeQuery();
+    	      
+    	      rst.next();
+    	      Timestamp lastMapping =  rst.getTimestamp(1);
+    	      rst.next();
+    	      Timestamp preiousMapping = rst.getTimestamp(1);
+    	      
+    	      pst = db.
+    	    		  prepareStatement("SELECT O.mapped_blockid as oid, N.mapped_blockid as nid FROM " +
+    	    				  			"(SELECT sub_flowname, original_blockid,mapped_blockid FROM subflow_block_mapping s where flowname=? and created=?) O " +
+    	    				  			"left join " +
+    	    				  			"(SELECT sub_flowname, original_blockid,mapped_blockid FROM subflow_block_mapping s where flowname=? and created=?) N " +    				  			
+    	    				  			"on (O.original_blockid=N.original_blockid and O.sub_flowname=N.sub_flowname) order by oid desc"); 
+    	      pst.setString(1, subFlowBlockMappings.get(0).getMainFlowName());
+    	      pst.setTimestamp(2, preiousMapping);
+    	      pst.setString(3, subFlowBlockMappings.get(0).getMainFlowName());
+    	      pst.setTimestamp(4, lastMapping);
+    	      rst = pst.executeQuery();
+    	      
+    	      while(rst.next())
+    	    	  flowBean.resyncFlow(userInfo, flowId, rst.getInt(1), rst.getInt(2), true, fd);
+    	      
+    	    } catch (Exception e) {
+    	      Logger.error(userInfo.getUtilizador(), this, "resyncDeployedFlowWithSubFlow", "exception caught", e);
+    	      e.printStackTrace();
+    	    } finally {
+    	      DatabaseInterface.closeResources(db, pst);
+    	    }
+    	  }
 
-    if (subFlowBlockMappings==null || subFlowBlockMappings.size() <= 0) return;
+    private Boolean saveSubFlowExpansionResult(List<SubFlowMapping> subFlowBlockMappings, Integer maxblockId, int flowId,
+    	      UserInfoInterface userInfo) {
+    		  Boolean mappingsChanged = false;
+    	    if(subFlowBlockMappings==null || subFlowBlockMappings.size() == 0) return mappingsChanged;
+    	    
+    	    Connection db = null;
+    	    PreparedStatement pst = null;
+    	    try {
+    	      db = Utils.getDataSource().getConnection();
+    	      db.setAutoCommit(true);
+    	      pst = db.prepareStatement("UPDATE flow SET max_block_id = ? WHERE flowid=?");
+    	      pst.setInt(1, maxblockId);
+    	      pst.setInt(2, flowId);
+    	      pst.execute();
+    	      pst.close();
 
-    try {
-      db = Utils.getDataSource().getConnection();
-      pst = db
-          .prepareStatement("select original_blockid, sub_flowname, bm.mapped_blockid from iflow.subflow_block_mapping bm, iflow.flow_state fs "
-              + "where bm.flowname=? and fs.flowid = ? and fs.state = bm.mapped_blockid "
-              + "and bm.created=(select max(created) from iflow.subflow_block_mapping where flowname=? and created<(select max(created) from iflow.subflow_block_mapping where flowname=?))");
-      pst.setString(1, subFlowBlockMappings.get(0).getMainFlowName());
-      pst.setInt(2, flowId);
-      pst.setString(3, subFlowBlockMappings.get(0).getMainFlowName());
-      pst.setString(4, subFlowBlockMappings.get(0).getMainFlowName());
+    	      // check if mappings have changed before saving them
+    	      
+    	      pst = db
+    	          .prepareStatement("select flowname, sub_flowname, original_blockid, mapped_blockid from subflow_block_mapping "
+    	              + "bm where bm.flowname=? and bm.created=(select max(created) from subflow_block_mapping where flowname=?) order by id");
+    	      pst.setString(1, subFlowBlockMappings.get(0).getMainFlowName());
+    	      pst.setString(2, subFlowBlockMappings.get(0).getMainFlowName());
+    	      ResultSet rs = pst.executeQuery();
 
-      ResultSet rst = pst.executeQuery();
-      while (rst.next()) {
-        oldOriginalBlockId.add(rst.getInt(1));
-        subFlowName.add(rst.getString(2));
-        oldMappedBlockId.add(rst.getInt(3));
-      }
-    } catch (Exception e) {
-      Logger.error(userInfo.getUtilizador(), this, "resyncDeployedFlowWithSubFlow", "exception caught", e);
-      e.printStackTrace();
-    } finally {
-      DatabaseInterface.closeResources(db, pst);
-    }
-
-      for (int i = 0; i < oldOriginalBlockId.size(); i++) {
-        Integer newOriginalBlockId = null;
-        for (SubFlowMapping mapping : subFlowBlockMappings)
-          if (mapping.getMappedBlockId() == oldMappedBlockId.get(i)) {
-            newOriginalBlockId = mapping.getOriginalBlockId();
-            break;
-          }
-
-        if (newOriginalBlockId != null && oldOriginalBlockId.get(i) != newOriginalBlockId) {
-          Integer newMappedBlockIdState = null;
-          for (SubFlowMapping mapping : subFlowBlockMappings)
-            if (mapping.getOriginalBlockId() == oldOriginalBlockId.get(i) && mapping.getSubFlowName().equals(subFlowName.get(i))) {
-              newMappedBlockIdState = mapping.getMappedBlockId();
-              break;
-            }
-        if (newMappedBlockIdState == null) {
-          Logger.error(userInfo.getUtilizador(), this, "resyncDeployedFlowWithSubFlow", "invalid state to resync");
-          throw new Exception("resyncDeployedFlowWithSubFlow, invalid state to resync");
-        }
-          flowBean.resyncFlow(userInfo, flowId, oldMappedBlockId.get(i), newMappedBlockIdState, true, fd);
-        }
-      }
-  }
-
-  private void saveSubFlowExpansionResult(List<SubFlowMapping> subFlowBlockMappings, Integer maxblockId, int flowId,
-      UserInfoInterface userInfo) {
-    
-    if(subFlowBlockMappings.size() == 0) return;
-    
-    Connection db = null;
-    PreparedStatement pst = null;
-    try {
-      db = Utils.getDataSource().getConnection();
-      pst = db.prepareStatement("UPDATE flow SET max_block_id = ? WHERE flowid=?");
-      pst.setInt(1, maxblockId);
-      pst.setInt(2, flowId);
-      pst.execute();
-
-      if (subFlowBlockMappings==null || subFlowBlockMappings.size() <= 0) return;
-      // check if mappings have changed before saving them
-      Boolean mappingsChanged = false;
-      pst = db
-          .prepareStatement("select flowname, sub_flowname, original_blockid, mapped_blockid from iflow.subflow_block_mapping "
-              + "bm where bm.flowname=? and bm.created=(select max(created) from iflow.subflow_block_mapping where flowname=?) order by id");
-      pst.setString(1, subFlowBlockMappings.get(0).getMainFlowName());
-      pst.setString(2, subFlowBlockMappings.get(0).getMainFlowName());
-      ResultSet rs = pst.executeQuery();
-
-      for (SubFlowMapping subFlowMapping : subFlowBlockMappings) {
-        if (!rs.next()) {
-          mappingsChanged = true;
-          break;
-        }
-        if (!rs.getString(2).equals(subFlowMapping.getSubFlowName())
-            || !rs.getString(3).equals("" + subFlowMapping.getOriginalBlockId())
-            || !rs.getString(4).equals("" + subFlowMapping.getMappedBlockId()))
-          mappingsChanged = true;
-      }
-      if (rs.next())
-        mappingsChanged = true;
-
-      if (mappingsChanged) {
-        Timestamp d = new Timestamp(new Date().getTime());
-        for (SubFlowMapping subFlowMapping : subFlowBlockMappings) {
-          pst = db
-              .prepareStatement("INSERT INTO subflow_block_mapping (created,flowname, sub_flowname, original_blockid, mapped_blockid) VALUES(?,?,?,?,?)");
-          pst.setTimestamp(1, d);
-          pst.setString(2, subFlowMapping.getMainFlowName());
-          pst.setString(3, subFlowMapping.getSubFlowName());
-          pst.setInt(4, subFlowMapping.getOriginalBlockId());
-          pst.setInt(5, subFlowMapping.getMappedBlockId());
-          pst.execute();
-        }
-      }
-    } catch (Exception e) {
-      Logger.error(userInfo.getUtilizador(), this, "readFlow", "exception caught", e);
-      e.printStackTrace();
-    } finally {
-      DatabaseInterface.closeResources(db, pst);
-    }
-  }
+    	      for (SubFlowMapping subFlowMapping : subFlowBlockMappings) {
+    	        if (!rs.next()) {
+    	          mappingsChanged = true;
+    	          break;
+    	        }
+    	        if (!rs.getString(2).equals(subFlowMapping.getSubFlowName())
+    	            || !rs.getString(3).equals("" + subFlowMapping.getOriginalBlockId())
+    	            || !rs.getString(4).equals("" + subFlowMapping.getMappedBlockId()))
+    	          mappingsChanged = true;
+    	      }
+    	      if (rs.next())
+    	        mappingsChanged = true;            
+    	      pst.close();
+    	      
+    	      if (mappingsChanged) {    	    	
+    	        Timestamp d = new Timestamp(new Date().getTime());
+    	        Logger.debug(userInfo.getUtilizador(), this, "saveSubFlowExpansionResult", "saving for Flowid " + flowId  + " mappings" + subFlowBlockMappings.size());
+    	        for (SubFlowMapping subFlowMapping : subFlowBlockMappings) {
+    	          String query = DBQueryManager.getQuery("FlowHolder.SAVE_SUBFLOW_EXPANSION");
+    	          pst = db.prepareStatement(query);
+    	          pst.setTimestamp(1, d);
+    	          pst.setString(2, subFlowMapping.getMainFlowName());
+    	          pst.setString(3, subFlowMapping.getSubFlowName());
+    	          pst.setInt(4, subFlowMapping.getOriginalBlockId());
+    	          pst.setInt(5, subFlowMapping.getMappedBlockId());
+    	          pst.execute();
+    	          pst.close();
+    	        }
+    	      }
+    	      return mappingsChanged;
+    	    } catch (Exception e) {
+    	      Logger.error(userInfo.getUtilizador(), this, "saveSubFlowExpansionResult", "exception caught", e);      
+    	    } finally {
+    	      DatabaseInterface.closeResources(db, pst);
+    	    }
+    		return mappingsChanged;
+    	  }
 
     private DBFlow readFlow(UserInfoInterface userInfo, int flowId) {
         Connection db = null;
@@ -1764,6 +1750,7 @@ public class FlowHolderBean implements FlowHolder {
             _hmFlowData.put(org, new HashMap<Integer, FlowData>());
         }
         Map<Integer, FlowData> orgFlowData = _hmFlowData.get(org);
+		SharedObjectRefreshManager.getInstance().addRefreshToDo(flowData.getId());
         orgFlowData.put(new Integer(flowData.getId()), flowData);
     }
     

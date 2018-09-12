@@ -32,24 +32,7 @@ if (StringUtils.isEmpty(sHtml)) {
 </head>
 
 <body <%=sOnLoad%>>
-<table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0" valign="top">
-  <tr valign="top" width="100%">
-    <td width="100%" height="100%" valign="top">
-      <p>
-       <table width="100%" border="0" cellspacing="0" cellpadding="4" align="center" valign="top">
-         <tr width="100%">
-            <td height="10" width="100%"><img src="../images/transpar.gif"></td>
-         </tr>
-         <tr>
-            <td valign="top"><%=sHtml%></td>
-         </tr>
-         <tr>
-            <td height="10"><img src="../images/transpar.gif" width="1" height="1"></td>
-         </tr>
-       </table>
-    </td>
-  </tr>
-</table>
+<%=sHtml%>
 </body>
 </html>
 

@@ -21,6 +21,7 @@ public interface UserViewInterface {
   public static final String ORGADM_PROCESSES = "ORGADM_PROCESSES";
   public static final String ORGADM_RESOURCES = "ORGADM_RESOURCES";
   public static final String ORGADM_ORG = "ORGADM_ORG";
+  public static final String NOTIFY = "NOTIFY";
 
 	public abstract String getUserId();
 
@@ -59,6 +60,8 @@ public interface UserViewInterface {
   public abstract String getOrgAdmResources();
 
   public abstract String getOrgAdmOrg();
+  
+  public abstract String getNotify();
 
     public abstract String get(String fieldName);
 }

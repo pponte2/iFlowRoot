@@ -832,7 +832,7 @@ public class BlockFormulario extends Block implements FormOperations {
             deps.put(FormProps.HIDDEN_FIELDS, hmHiddenFields);
             deps.put(FormProps.VALUE_MAP ,valueMap);
             //P13064-97 BEGiN II
-            if(extraProps!=null){
+            if(extraProps!=null && ahmHiddenFields!=null){
             	extraProps.put("detailInsideFlowid", ahmHiddenFields.get("flowid"));
       	  		extraProps.put("detailInsidePid", ahmHiddenFields.get("pid"));
           	}

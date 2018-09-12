@@ -117,6 +117,10 @@ public String getOrgAdm() {
   public String getOrgAdmOrg() {
     return get(ORGADM_ORG);
   }
+  
+  public String getNotify() {
+	    return get(NOTIFY);
+	  }
 
   public String getOrgAdmProcesses() {
     return get(ORGADM_PROCESSES);

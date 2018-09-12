@@ -1,5 +1,10 @@
 package pt.iflow.blocks;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.commons.lang.StringUtils;
 
 import pt.iflow.api.blocks.Block;
@@ -97,4 +102,9 @@ public class BlockBeanShell extends Block {
   public String getUrl (UserInfoInterface userInfo, ProcessData procData) {
     return "";
   }
+  
+  public List<Map<String,String>> getPreviewButtons(UserInfoInterface userInfo, ProcessData procData) {
+      List<Map<String,String>> buttons = new ArrayList<Map<String,String>>(0);
+      return buttons;
+    }
 }
