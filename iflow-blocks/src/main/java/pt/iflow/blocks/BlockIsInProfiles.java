@@ -3,6 +3,7 @@ package pt.iflow.blocks;
 import pt.iflow.api.blocks.Block;
 import pt.iflow.api.blocks.Port;
 import pt.iflow.api.processdata.ProcessData;
+import pt.iflow.api.utils.Const;
 import pt.iflow.api.utils.Logger;
 import pt.iflow.api.utils.UserInfoInterface;
 
@@ -162,4 +163,15 @@ public class BlockIsInProfiles extends Block {
   public String getUrl (UserInfoInterface userInfo, ProcessData procData) {
     return "";
   }
+  
+  public Boolean allowsNoSaveFlowState(){
+	  if(!Const.SAVE_FLOW_STATE_IDEMPOTENT_BLOCKS)
+		  return true;
+	  else 
+		  return false;
+  }
+  
+  public Integer saveFlowStateLevel(){
+	  	return 1;
+	  }
 }

@@ -30,5 +30,7 @@ public class BlockGetUserInfo extends BlockGetAuthInfo {
   public String getResult (UserInfoInterface userInfo, ProcessData dataSet) {
     return this.getDesc(userInfo, dataSet, false, "Got User Info");
   }
-
+  public Integer saveFlowStateLevel(){
+    	return 3;
+  }
 }

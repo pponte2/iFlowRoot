@@ -160,5 +160,8 @@ public class BlockGetUserUp extends Block {
   public String getUrl (UserInfoInterface userInfo, ProcessData procData) {
     return "";
   }
-
+  
+  public Integer saveFlowStateLevel(){
+    	return 3;
+  }
 }

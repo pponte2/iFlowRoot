@@ -2200,7 +2200,8 @@ function launchAppNotificationCheckers(){
 
 function checkShowNotificationDetailCallback(response){
 	if(response!=null && response!='' && response.search('false')<1){
-		var splitDetail = response.split(',');
+		var detail = response.substring(response.search('START')+5, response.search('END'));
+		var splitDetail = detail.split(',');
 		if(splitDetail.length>3){
 			window.open('user_proc_detail.jsp?flowid='+splitDetail[2]+'&pid='+splitDetail[3]+'&subpid='+splitDetail[4]+'&procStatus=-5');
 			window.focus();

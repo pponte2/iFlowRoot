@@ -1244,6 +1244,9 @@ public class ProcessManagerBean implements ProcessManager {
 			ret = this.getProcessesData(userInfo, headers, null, anMode);
 			repeat = false;
 		}catch (Throwable e){
+			Logger.error(userInfo.getUtilizador(), this, "getProcessData",
+					procHeader.getSignature()
+							+ "Error getting process data, attempt " + (5-tries), e);
 			repeat=true;			
 		}
     

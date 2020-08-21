@@ -9,6 +9,8 @@
 <%@ page import="pt.iflow.userdata.views.*" %>
 
 <%
+	long entryTime = new Date().getTime();
+
     if (userInfo.isGuest() || session.getAttribute("login_error") != null) {
         session.invalidate();
         ServletUtils.sendEncodeRedirect(response, "login.jsp");
@@ -117,8 +119,15 @@
 	hsSubst.put("cancel", messages.getString("main.labels.cancel"));
 	hsSubst.put("new_label", messages.getString("main.label.add.new"));
 
+	Logger.errorJsp(login, sPage, "PERFORMANCE 1 " + (new Date().getTime() - entryTime) + " ms");
+	entryTime =  new Date().getTime();
+			
 	 // prepare notification data
     Collection<Notification> notifications = BeanFactory.getNotificationManagerBean().listAllNotifications(userInfo);
+    
+	 Logger.errorJsp(login, sPage, "PERFORMANCE 2.1 " + (new Date().getTime() - entryTime) + " ms");
+	entryTime =  new Date().getTime();
+	
 	Collection<Map<String,String>> notes = new ArrayList<Map<String,String>>();
 	int n = 0;
 	for(Notification notification : notifications) {
@@ -156,7 +165,8 @@
 		notes.add(note);
     }
     
- 
+	Logger.errorJsp(login, sPage, "PERFORMANCE 2.2 " + (new Date().getTime() - entryTime) + " ms");
+	entryTime =  new Date().getTime();
     
     
     //SET ACTION
@@ -172,8 +182,11 @@
     	hsSubst.put("notify", "1");
     else
     	hsSubst.put("notify", "0");
+
+	Logger.errorJsp(login, sPage, "PERFORMANCE 2.3 " + (new Date().getTime() - entryTime) + " ms");
+	entryTime =  new Date().getTime();
     
-    hsSubst.put("notifications", notes);
+	hsSubst.put("notifications", notes);
    /* hsSubst.put("hasMoreNotifications", notifications.size()>nNOTIFICATION_LIMIT);*/
     hsSubst.put("notificationsMsg", messages.getString("main_content.notifications.notificationsMsg"));
        
@@ -227,6 +240,9 @@
     hsSubst.put("linkReset", "<img src=\"images/reset.png\"/>");
     hsSubst.put("linkNext", messages.getString("button.next"));
     
+    Logger.errorJsp(login, sPage, "PERFORMANCE 2.4 " + (new Date().getTime() - entryTime) + " ms");
+	entryTime =  new Date().getTime();
+	
     PageLocation pl = new PageLocation(request.getQueryString());
     String sTab = pl.getTab();
     String sNav = pl.getNav();
@@ -316,7 +332,10 @@
         hsSubst.put("user_can_admin", Boolean.FALSE);
     }
     
-    // org theme stuff
+    Logger.errorJsp(login, sPage, "PERFORMANCE 2.6 " + (new Date().getTime() - entryTime) + " ms");
+	entryTime =  new Date().getTime();
+    
+	// org theme stuff
     OrganizationThemeData orgTheme = BeanFactory.getOrganizationThemeBean().getOrganizationTheme(userInfo);
     // menu location
     hsSubst.put("menuLocation", orgTheme.getMenuLocation());
@@ -326,10 +345,19 @@
     Collection<DelegationInfoData> delegations = BeanFactory.getDelegationInfoBean().getDeployedReceivedDelegations(userInfo);
 	Collection<Notification> msgs = BeanFactory.getNotificationManagerBean().listAllNotifications(userInfo);
     
+	Logger.errorJsp(login, sPage, "PERFORMANCE 2.7 " + (new Date().getTime() - entryTime) + " ms");
+	entryTime =  new Date().getTime();
+	
     Integer nAlerts = (notifications == null ? 0 : notifications.size()) + (delegations == null ? 0 : delegations.size());
     Integer nMsgs = (msgs == null ? 0 : msgs.size());
 
     hsSubst.put("nAlerts", nAlerts);
     hsSubst.put("nMsgs", nMsgs);
+    
+    Logger.errorJsp(login, sPage, "PERFORMANCE 2.8 " + (new Date().getTime() - entryTime) + " ms");
+	entryTime =  new Date().getTime();
 %>
 <%=PresentationManager.buildMainPage(response, userInfo, hsSubst)%>
+<%
+Logger.errorJsp(login, sPage, "PERFORMANCE 3 " + (new Date().getTime() - entryTime) + " ms");
+%>

@@ -733,4 +733,12 @@ public abstract class Block {
       forwardButton.put("operation", "disableForm(); document.dados.op.value='3';");
       return buttons;
     }
+    
+    public Boolean allowsNoSaveFlowState(){
+    	return false;
+    }
+    
+    public Integer saveFlowStateLevel(){
+    	return 6;
+    }
 }

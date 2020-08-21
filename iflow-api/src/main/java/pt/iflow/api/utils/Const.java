@@ -422,6 +422,8 @@ public class Const
   public static final String sFLOW_INITIALS = "FLOW_INITIALS";
   public static int iMAX_NOTIFICATIONS = -15;
   
+  public static Boolean SAVE_FLOW_STATE_IDEMPOTENT_BLOCKS = true;
+  public static Integer SAVE_FLOW_STATE_LEVEL = 0;
   static
   {
     ALLOWED_LOCALES.add("pt-PT");
@@ -778,6 +780,20 @@ public class Const
       BEAT_INACTIVE_CHECK_TIME = new Long(15000L);
     }
     iMAX_NOTIFICATIONS = Setup.getPropertyInt("NOTIFICATIONS_KEEP_DAYS");
+    try {
+		SAVE_FLOW_STATE_IDEMPOTENT_BLOCKS = Boolean.valueOf(Boolean.parseBoolean(Setup.getProperty("SAVE_FLOW_STATE_IDEMPOTENT_BLOCKS")));
+	} catch (Exception e) {
+		SAVE_FLOW_STATE_IDEMPOTENT_BLOCKS = Boolean.TRUE;
+	}
+    try {
+    	SAVE_FLOW_STATE_LEVEL = Integer.valueOf(Setup.getProperty("SAVE_FLOW_STATE_LEVEL"));
+    	if(SAVE_FLOW_STATE_LEVEL<0)
+    		SAVE_FLOW_STATE_LEVEL = 0;
+    	else if(SAVE_FLOW_STATE_LEVEL>5)
+    		SAVE_FLOW_STATE_LEVEL = 5;
+	} catch (Exception e) {
+		SAVE_FLOW_STATE_LEVEL = 0;
+	}
   }
   
   public static void main(String[] args) {}

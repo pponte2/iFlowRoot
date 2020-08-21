@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import cmaRepos.ReposWSDEV_PortType;
 import cmaRepos.ReposWSDEV_ServiceLocator;
+//import cmaRepos.ReposWSDEV_PortType;
+//import cmaRepos.ReposWSDEV_ServiceLocator;
 import pt.iflow.api.utils.Const;
 import pt.iflow.api.utils.Logger;
 import pt.iflow.api.utils.UserInfoInterface;
@@ -38,7 +40,7 @@ public class SignProRubric  extends HttpServlet {
 		    out.flush();
 		    out.close(); 
 		} catch (Exception e){
-			Logger.error(userInfo.getUtilizador(), this, "GET", "Error Ocorred.", e);
+			//Logger.error(userInfo.getUtilizador(), this, "GET", "Error Ocorred.", e);
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
 		}
 	}

@@ -1150,11 +1150,28 @@ public Boolean markDocGenerationSuccess(UserInfoInterface userInfo,
     LinkedList<Activity> l = new LinkedList<Activity>();
     final StringBuilder sQuery = new StringBuilder(DBQueryManager.processQuery("Documents.markDocGenerationSuccess", new Object[]{adoc.getDocId(), success, success }));
     try {
-      db = DatabaseInterface.getConnection(userInfo);
-      db.setAutoCommit(true);
-                                         
-      st = db.prepareStatement(sQuery.toString());
-      st.execute();
+    	db = DatabaseInterface.getConnection(userInfo);
+//      db.setAutoCommit(true);
+//                                         
+//      st = db.prepareStatement(sQuery.toString());
+//      st.execute();
+      
+      st = db.prepareStatement("SELECT generation FROM documents_support WHERE docid = ?");
+      st.setString(1, "" + adoc.getDocId());
+      rs = st.executeQuery();
+      if(!rs.next()){
+    	  st.close();
+    	  st = db.prepareStatement("INSERT INTO documents_support(docid, generation) VALUES(?, ?)");
+    	  st.setString(1, "" + adoc.getDocId());
+    	  st.setBoolean(2, success);
+    	  st.execute();
+      } else {
+    	  st.close();
+    	  st = db.prepareStatement("UPDATE documents_support SET generation = 1 WHERE docid = ?");
+    	  st.setString(1, "" + adoc.getDocId());
+    	  st.execute();
+      }
+            
       DatabaseInterface.closeResources(st, rs);            
     } catch (SQLException sqle) {
       Logger.error(userInfo.getUtilizador(), this, "markDocGenerationSuccess", "sql exception: " + sqle.getMessage() + sQuery, sqle);

@@ -27,5 +27,7 @@ public class BlockGetOrganicalUnitParent extends BlockGetAuthInfo {
   public String getResult (UserInfoInterface userInfo, ProcessData procData) {
     return this.getDesc(userInfo, procData, false, "Got Organical Unit Parent");
   }
-
+  public Integer saveFlowStateLevel(){
+    	return 3;
+  }
 }

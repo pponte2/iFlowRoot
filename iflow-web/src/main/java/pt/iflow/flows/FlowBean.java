@@ -10,6 +10,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -199,10 +200,10 @@ public class FlowBean implements Flow {
 
       
       int mid = Const.NO_MID;
-
+      Integer nonSavedFlowState = null;
       do {
 
-        if (procData.isInDB() && !procData.isOnPopup()) {
+        if (procData.isInDB() && !procData.isOnPopup() && nonSavedFlowState==null) {
           mid = pm.getNextMid(userInfo, procData);
           procData.setMid(mid);
 
@@ -213,7 +214,11 @@ public class FlowBean implements Flow {
         nextURL = null;
         saveData = true;
 
-        int blockId = this.getFlowState(userInfo, procData);
+        int blockId = -1;
+        if(nonSavedFlowState!=null)
+        	blockId = nonSavedFlowState;
+        else
+        	blockId = this.getFlowState(userInfo, procData);
         int blockIdOld = blockId;
 
         Logger.info(login, this, "nextBlock", procData.getSignature() + "processing BlockId: " + blockId);
@@ -275,7 +280,8 @@ public class FlowBean implements Flow {
             block = this.getBlockById(userInfo, procData.getProcessHeader(), blockId);
           }
         }
-
+        
+        
         if (block.canProceed(userInfo, procData) == false) {
           Logger.info(login, this, "nextBlock", 
               procData.getSignature() + "canProceed=FALSE for blockId=" + blockId);
@@ -294,16 +300,14 @@ public class FlowBean implements Flow {
 
           break;
         }
-
         procData.setAppData(Const.STAY_IN_PAGE, null);
-
+        
         // Call the after method of the current block
-        outPort = block.after(userInfo, procData);
-
+        outPort = block.after(userInfo, procData);        
         if (block instanceof pt.iflow.blocks.BlockSincronizacao){
           procData = pm.getProcessData(userInfo, new ProcessHeader(procData.getFlowId(), procData.getPid(), procData.getSubPid()));
         }
-
+        
         if (outPort == null) {
           Logger.error(login, this, "nextBlock", 
               procData.getSignature() + "outPort is NULL for blockId=" + blockId + "... aborting.");
@@ -321,7 +325,7 @@ public class FlowBean implements Flow {
         }
 
         // Save the flow state to store state result
-        if (!saveFlowState(userInfo, procData, block, false, mid, outPort)) {
+        if ((block.saveFlowStateLevel()>Const.SAVE_FLOW_STATE_LEVEL) && !saveFlowState(userInfo, procData, block, false, mid, outPort)) {
           Logger.error(login, this, "nextBlock", "Unable to SAVE after FLOW STATE ("
               + blockId + ") for proc " 
               + procData.getFlowId() + "-" 
@@ -330,7 +334,7 @@ public class FlowBean implements Flow {
           throw new Exception(procData.getSignature(blockId) + 
               "unable to save flow state after block " + block.getId() + " after call");
         }
-
+        
         Logger.info(login, this, "nextBlock",
             procData.getSignature() + "Going from: " + block.getId() 
             + " to: " + outPort.getConnectedBlockId() + " (using " + outPort.getName() + ")");
@@ -349,7 +353,8 @@ public class FlowBean implements Flow {
 
           return popupErrorLink.toString();
         }
-
+        
+        
         if (blockNext != null) {
           // block by id returns a valid block..
           // set block var with it
@@ -377,7 +382,7 @@ public class FlowBean implements Flow {
 
           break;
         }
-
+        
         if (block.isProcInDBRequired() && !procData.isInDB() && !procData.isOnPopup()) {
 
           Logger.info(login, this, "nextBlock",procData.getSignature() + "Going to prepare Proc in DB");
@@ -443,13 +448,13 @@ public class FlowBean implements Flow {
         }
 
         // Save the flow state
-        if (!saveFlowState(userInfo, procData, block, true, mid, null)) {
+        if ((block.saveFlowStateLevel()>Const.SAVE_FLOW_STATE_LEVEL) && !saveFlowState(userInfo, procData, block, true, mid, null)) {
           Logger.error(login, this, "nextBlock", procData.getSignature() + "Unable to SAVE before FLOW STATE (" + blockId + ")");
           nextURL = getErrorUrl(saveFlowStateErrorKey);
           throw new Exception(procData.getSignature() + "unable to save flow state after before in block " + block.getId());
         }
 
-        if (procData.isInDB() && !procData.getCachedReports().isEmpty() && !procData.isOnPopup()) {
+        if ((block.saveFlowStateLevel()>Const.SAVE_FLOW_STATE_LEVEL) &&  procData.isInDB() && !procData.getCachedReports().isEmpty() && !procData.isOnPopup()) {
           Logger.debug(login, this, "nextBlock", "Storing cached reports in DB");
           ReportManager rm = BeanFactory.getReportManagerBean();
           for(ReportTO report : procData.getCachedReports().values()) {
@@ -481,7 +486,7 @@ public class FlowBean implements Flow {
         Logger.info(login, this, "nextBlock", procData.getSignature() + ": Block id=" + blockId + " next block's flag: "
             + callNextBlock);
 
-        if (procData.isInDB() && !procData.isOnPopup()) {
+        if ((block.saveFlowStateLevel()>Const.SAVE_FLOW_STATE_LEVEL) && procData.isInDB() && !procData.isOnPopup()) {
           // check if requesting user can continue editing/accessing
           // process
           nextURL = pm.getUserProcessUrl(userInfo, procData, nextURL);
@@ -532,7 +537,7 @@ public class FlowBean implements Flow {
           }
         }
 
-        if (!procData.isOnPopup()){
+        if ((block.saveFlowStateLevel()>Const.SAVE_FLOW_STATE_LEVEL) && !procData.isOnPopup()){
           saveDataSet(userInfo, procData, null, mid);
         }
         saveData = false;
@@ -540,9 +545,17 @@ public class FlowBean implements Flow {
         Logger.debug(login, this, "nextBlock", procData.getSignature() + "going to commit iteration " + blockIdOld + "->" + blockId
             + " (mid: " + mid + ")"); 
 
-        DatabaseInterface.commitConnection(conn);
+        if((block.saveFlowStateLevel()>Const.SAVE_FLOW_STATE_LEVEL))
+        	DatabaseInterface.commitConnection(conn);
         Logger.info(login, this, "nextBlock", procData.getSignature() + 
             "db connection committed for iteration " + blockIdOld + "->" + blockId + " (mid: " + mid + ")"); 
+        
+        if((block.saveFlowStateLevel()<=Const.SAVE_FLOW_STATE_LEVEL))
+        	nonSavedFlowState = blockId;
+        else
+        	nonSavedFlowState = null;
+        
+        
       }
       while (callNextBlock);
 
@@ -1787,7 +1800,9 @@ public class FlowBean implements Flow {
         sql.append(" AND f.organizationid LIKE '" + userInfo.getCompanyID() + "'");
         sql.append(" ORDER BY " + FlowRolesTO.FLOW_ID);
 
+        Long start = new Date().getTime();
         rs = st.executeQuery(sql.toString());
+        Logger.error(userInfo.getUtilizador(),this,"getUserFlowRoles","PERFORMANCE 1 " + (new Date().getTime() - start) + " ms, "+sql.toString());
         altmp = new ArrayList<FlowRolesTO>();
         while (rs.next()) {
           int flowid = rs.getInt(FlowRolesTO.FLOW_ID);

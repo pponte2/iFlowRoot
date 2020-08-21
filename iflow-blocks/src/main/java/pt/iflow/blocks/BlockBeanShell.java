@@ -107,4 +107,8 @@ public class BlockBeanShell extends Block {
       List<Map<String,String>> buttons = new ArrayList<Map<String,String>>(0);
       return buttons;
     }
+  
+  public Integer saveFlowStateLevel(){
+  	return 5;
+}
 }

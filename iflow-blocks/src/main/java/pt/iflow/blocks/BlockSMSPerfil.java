@@ -204,4 +204,7 @@ public class BlockSMSPerfil extends Block {
   public String getUrl (UserInfoInterface userInfo, ProcessData procData) {
     return "";
   }
+  public Integer saveFlowStateLevel(){
+  	return 4;
+}
 }

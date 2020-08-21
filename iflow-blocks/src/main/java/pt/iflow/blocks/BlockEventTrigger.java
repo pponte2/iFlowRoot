@@ -13,6 +13,7 @@ import pt.iflow.api.blocks.Port;
 import pt.iflow.api.db.DatabaseInterface;
 import pt.iflow.api.events.EventManager;
 import pt.iflow.api.processdata.ProcessData;
+import pt.iflow.api.processdata.ProcessListVariable;
 import pt.iflow.api.utils.Logger;
 import pt.iflow.api.utils.UserInfoInterface;
 import pt.iflow.api.utils.Utils;
@@ -36,8 +37,8 @@ import pt.iflow.api.utils.Utils;
  */
 
 public class BlockEventTrigger extends Block {
-  private static final String sQueryNoBlock = "UPDATE event_data SET processed=0 WHERE type='AsyncWait' AND fid=? AND pid=? AND subpid=? ;";
-  private static final String sQueryWithBlock = "UPDATE event_data SET processed=0 WHERE type='AsyncWait' AND fid=? AND pid=? AND subpid=? AND blockid=? ;";
+  private static final String sQueryNoBlock = "UPDATE event_data SET processed=0 WHERE type='AsyncWait' AND fid=? AND subpid=?  AND pid IN (";
+  private static final String sQueryWithBlock = "UPDATE event_data SET processed=0 WHERE type='AsyncWait' AND fid=? AND subpid=? AND blockid=? AND pid IN (";
     public static final String sFLOWID = "flowid";
     public static final String sPID = "pid";
     public static final String sSUBPID = "subPid";
@@ -101,6 +102,7 @@ public class BlockEventTrigger extends Block {
         StringBuffer logMsg = new StringBuffer();
         String login = userInfo.getUtilizador();
         String flowid = "-1", pid = "-1", subpid = "-1", blockid = "-1";
+        ProcessListVariable pidList = null;
     Boolean isAsynchronous = false;
         DataSource ds = null;
         Connection db = null;
@@ -111,12 +113,13 @@ public class BlockEventTrigger extends Block {
         try {
             flowid = "" + procData.eval( userInfo, this.getAttribute(sFLOWID));
             pid = "" + procData.eval( userInfo, this.getAttribute(sPID));
+            pidList = procData.getList(this.getAttribute(sPID));
             subpid= "" + procData.eval( userInfo, this.getAttribute(sSUBPID));
             blockid = "" + procData.eval( userInfo, this.getAttribute(sBLOCKID));
       isAsynchronous = StringUtils.equalsIgnoreCase("true", "" + procData.eval(userInfo, this.getAttribute(sISASYNCHRONOUS)));
 
-            if (flowid == null || pid == null || subpid == null || Integer.parseInt(flowid) < 0
-                    || Integer.parseInt(pid) < 0 || Integer.parseInt(subpid) < 0) {
+            if (flowid == null || (pidList==null && pid == null) || subpid == null || Integer.parseInt(flowid) < 0
+                    || Integer.parseInt(subpid) < 0) {
                 Logger.error(login, this, "after", procData.getSignature(this.getId()) + "Error in flowid, pid, subpid: " + flowid
                         + "," + pid + "," + subpid);
                 outPort = portError;
@@ -136,16 +139,32 @@ public class BlockEventTrigger extends Block {
                 } else {
                     db = ds.getConnection();
                     if (blockid == null || blockid.equals("") || blockid.equals("null")) {
-                        pst = db.prepareStatement(sQueryNoBlock.toString());
+                    	String queryAux = sQueryNoBlock.toString();
+                    	if(pidList!=null && pidList.size()>0){
+                    		for(int i = 0; i<pidList.size(); i++)
+                    			queryAux+= pidList.getItemValue(i) + ", ";
+                    		queryAux+="#";
+                    		queryAux = queryAux.replace(", #", ")");
+                    	} else {
+                    		queryAux+= pid + ")";
+                    	}
+                        pst = db.prepareStatement(queryAux);
                         pst.setInt(1, Integer.parseInt(flowid));
-                        pst.setInt(2, Integer.parseInt(pid));
-                        pst.setInt(3, Integer.parseInt(subpid));
+                        pst.setInt(2, Integer.parseInt(subpid));
                     } else {
-                        pst = db.prepareStatement(sQueryWithBlock.toString());
+                    	String queryAux = sQueryWithBlock.toString();
+                    	if(pidList!=null && pidList.size()>0){
+                    		for(int i = 0; i<pidList.size(); i++)
+                    			queryAux+= pidList.getItemValue(i) + ", ";
+                    		queryAux+="#";
+                    		queryAux = queryAux.replace(", #", ")");
+                    	} else {
+                    		queryAux+= pid + ")";
+                    	}
+                        pst = db.prepareStatement(queryAux.toString());
                         pst.setInt(1, Integer.parseInt(flowid));
-                        pst.setInt(2, Integer.parseInt(pid));
-                        pst.setInt(3, Integer.parseInt(subpid));
-                        pst.setInt(4, Integer.parseInt(blockid));
+                        pst.setInt(2, Integer.parseInt(subpid));
+                        pst.setInt(3, Integer.parseInt(blockid));
                     }
 
                     Logger.debug(login, this, "after", "Going to set event READY_TO_PROCESS flowid, pid, subpid: "
@@ -190,5 +209,9 @@ public class BlockEventTrigger extends Block {
 
     public String getUrl(UserInfoInterface userInfo, ProcessData procData) {
         return "";
+    }
+    
+    public Integer saveFlowStateLevel(){
+      	return 3;
     }
 }

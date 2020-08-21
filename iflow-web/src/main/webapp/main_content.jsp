@@ -45,7 +45,7 @@ function cleanFilter() {
 
 </script>
 <%
-
+long entryTime = new Date().getTime();
 //ASSIGN ACTIVITIES TO FOLDER
 String setfolder = fdFormData.getParameter("setfolder");
 if(setfolder!=null){
@@ -89,6 +89,7 @@ if(pid != null && subpid != null){
  session.setAttribute("filtro_subpid",subpid);
 }
 
+entryTime =  new Date().getTime();
 
 try {
   if (data.equals("procs")) {
@@ -132,7 +133,16 @@ try {
       
           hm.put("appid", appMenu.getAppID());
 
-          List<IFlowData> currAppflows = menuPart.getFlows(); 
+          List<IFlowData> currAppflows = menuPart.getFlows();
+          for(int n = 0; n<(currAppflows.size()-1); n++)
+  	    	for(int m = 0; m<(currAppflows.size()-1); m++){
+  	    		if ( currAppflows.get(m).getName().compareToIgnoreCase(currAppflows.get(m+1).getName()) >0 ){
+  	    			IFlowData aux = currAppflows.get(m);
+  	    			currAppflows.set(m, currAppflows.get(m+1));
+  	    			currAppflows.set(m+1, aux);
+  	    		}
+  	    	}
+  	    
       
           hm.put("selected", false);
           if (StringUtils.isNotEmpty(selectedFlow)) {
@@ -161,7 +171,9 @@ try {
       hsSubstLocal.put("flowid", session.getAttribute("flowid"));
     }
     pageContent = "proc_list";
+    
 
+    entryTime =  new Date().getTime();
   } else if (data.equals("delegs")) {
     // RECEIVED DELEGATIONS
     
@@ -204,6 +216,9 @@ try {
       hsSubstLocal.put("hasMoreSent", Boolean.TRUE);
     }
     pageContent = "deleg_list";
+    
+
+    entryTime =  new Date().getTime();
   } else if (data.equals("tasks") || data.equals("alerts")) {
     // FLOWS, ACTIVITIES AND NOTIFICATIONS
     int nNEWEST_LIMIT = 500;
@@ -295,7 +310,7 @@ try {
 	String showflowidselection = "";
     List<Map<Object,Object>> appFlows = new ArrayList<Map<Object,Object>>();
     FlowType type = (FlowType) request.getAttribute("flow_type");
-	FlowMenu flows = BeanFactory.getFlowApplicationsBean().getAllApplicationOnlineMenu(userInfo, FlowApplications.ORPHAN_GROUP_ID, type, new FlowType[0], FlowRolesTO.READ_PRIV);
+	FlowMenu flows = BeanFactory.getFlowApplicationsBean().getAllApplicationOnlineMenu(userInfo, FlowApplications.ORPHAN_GROUP_ID, type, new FlowType[0], FlowRolesTO.READ_PRIV, true);
 
 	Iterator<FlowAppMenu> iter2 = appMenuList.iterator();
 
@@ -587,6 +602,12 @@ try {
     String allDatesStr = "";
   
     // newest
+    Long entryTimeAux =  new Date().getTime();
+    FolderManager fm = BeanFactory.getFolderManagerBean();    
+    List<Folder> folders = fm.getUserFolders(userInfo);
+    HashMap<Integer,FlowSetting> flowSettingsRunMax = new HashMap<Integer,FlowSetting>();
+    HashMap<Integer,FlowSetting> flowSettingsInitials = new HashMap<Integer,FlowSetting>();
+    HashMap<Integer,FlowSetting[]> flowSettingsAll = new HashMap<Integer,FlowSetting[]>();
     int j=0;
     for (int i=0; i < alAct.size(); i++) {
       a = alAct.get((i));
@@ -627,7 +648,9 @@ try {
         diffDays = 5*diffDays;
         if (diffDays > 100) diffDays = 100;
       
-        String sDuration = Utils.getDuration(createdTimestamp, tsNow, fd.getId(), userInfo);
+        String sDuration = "";
+        if("1".equals(layout))
+        	sDuration = Utils.getDuration(createdTimestamp, tsNow, fd.getId(), userInfo);
         String sUri = "";
         if (a.url != null && StringUtilities.isNotEmpty(a.url)) {
           if (a.url.indexOf("?") > -1) {
@@ -640,7 +663,25 @@ try {
         }
         String pnumber = a.pnumber;
         String sRunMax = String.valueOf(Boolean.FALSE);
-        FlowSetting setting = BeanFactory.getFlowSettingsBean().getFlowSetting(fd.getId(), Const.sRUN_MAXIMIZED);
+        
+        FlowSetting[] settingsAll = flowSettingsAll.get(fd.getId());
+        if(settingsAll==null){
+        	settingsAll = BeanFactory.getFlowSettingsBean().getFlowSettings(userInfo, fd.getId());
+        	flowSettingsAll.put(fd.getId(), settingsAll);
+        }
+        FlowSetting setting=null, fs=null;
+        for(FlowSetting flowSettingAux : settingsAll){
+        	if(flowSettingAux.getName().equals(Const.sRUN_MAXIMIZED))
+        		setting = flowSettingAux;
+        	else if(flowSettingAux.getName().equals(Const.sFLOW_INITIALS))
+        		fs = flowSettingAux;
+        }
+        
+//         FlowSetting setting = flowSettingsRunMax.get(fd.getId());
+//         if(setting==null){
+//        		setting = BeanFactory.getFlowSettingsBean().getFlowSetting(fd.getId(), Const.sRUN_MAXIMIZED);
+//        		flowSettingsRunMax.put(fd.getId(), setting);
+//         }
         if (setting != null && !StringUtils.isEmpty(setting.getValue()) && setting.getValue().equals(Const.sRUN_MAXIMIZED_YES)) {
           sRunMax = String.valueOf(Boolean.TRUE);
         }
@@ -657,9 +698,6 @@ try {
           imgParam = sbAnnotationIcon.toString();
         }
          
-        FolderManager fm = BeanFactory.getFolderManagerBean();
-      
-        List<Folder> folders = fm.getUserFolders(userInfo);
         String colorBackgroundColor = fm.getFolderColor(a.getFolderid(), folders);
         if (colorBackgroundColor == null || colorBackgroundColor.equals("")) colorBackgroundColor = "#666";
         String colorTitle = fm.getFolderName(a.getFolderid(), folders);
@@ -679,7 +717,11 @@ try {
         hm.put("pnumber", pnumber);
         hm.put("previousUserid", sPreviousUserid);
       
-        FlowSetting fs = BeanFactory.getFlowSettingsBean().getFlowSetting(fd.getId(), Const.sFLOW_INITIALS);
+//         FlowSetting fs = flowSettingsInitials.get(fd.getId());
+//         if(fs==null){
+//         	fs = BeanFactory.getFlowSettingsBean().getFlowSetting(fd.getId(), Const.sFLOW_INITIALS);
+//         	flowSettingsInitials.put(fd.getId(), fs);
+//         }
         String pinitials = (fs==null || fs.getValue()==null)?"":(fs.getValue()+"   ").substring(0,3);
         if (sFlow != null && sFlow.length()>2 && (pinitials==null || pinitials.length()==0)) {
           String[] words = sFlow.split(" ");
@@ -689,7 +731,7 @@ try {
             if (words.length == 2 && words[1].length() > 3) {
               pinitials = words[0].substring(0,1) + words[1].substring(0,1);
             } else if (words.length > 2) {
-              pinitials = words[0].substring(0,1) + words[2].substring(0,1);
+              pinitials = (words[0]+"  ").substring(0,1) + (words[2]+"  ").substring(0,1);
             }
           }
         }
@@ -707,6 +749,9 @@ try {
         j++;
       }
     }
+    
+ 
+    
   
     hsSubstLocal.put("allUsers", allUsersStr);
     hsSubstLocal.put("allDates", allDatesStr);
@@ -776,7 +821,7 @@ try {
     }
        
     //SET USER FOLDERS
-    List<Folder> folders = BeanFactory.getFolderManagerBean().getUserFolders(userInfo);
+    //List<Folder> folders = BeanFactory.getFolderManagerBean().getUserFolders(userInfo);
     hsSubstLocal.put("folders", folders);
     hsSubstLocal.put("hasFolder", folders.size());
     hsSubstLocal.put("folder_label", messages.getString("actividades.folder.filterfolders"));
@@ -880,6 +925,9 @@ try {
       pageContent = "alert_list";
     else
       pageContent = "task_list";
+    
+
+    entryTime =  new Date().getTime();
   }
 
   hsSubstLocal.put("data", data);
@@ -897,4 +945,7 @@ hsSubstLocal.put("url_prefix", sURL_PREFIX.substring(0, sURL_PREFIX.length() - 1
 hsSubstLocal.put("css", css);
 hsSubstLocal.put("tabnr", StringUtils.isEmpty(tabnr) ? "" : tabnr);
 out.println(PresentationManager.buildPage(response, userInfo, hsSubstLocal, pageContent));
+
+
+entryTime =  new Date().getTime();
 %>

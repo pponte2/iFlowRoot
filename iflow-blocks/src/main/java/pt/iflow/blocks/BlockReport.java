@@ -18,6 +18,7 @@ import pt.iflow.api.processdata.ProcessData;
 import pt.iflow.api.processdata.ProcessSimpleVariable;
 import pt.iflow.api.processtype.DateDataType;
 import pt.iflow.api.transition.ReportTO;
+import pt.iflow.api.utils.Const;
 import pt.iflow.api.utils.UserInfoInterface;
 
 /**
@@ -275,4 +276,15 @@ public class BlockReport extends Block {
     }
     return time;
   }
+  
+  public Boolean allowsNoSaveFlowState(){
+	  if(!Const.SAVE_FLOW_STATE_IDEMPOTENT_BLOCKS)
+		  return true;
+	  else 
+		  return false;
+  }
+  
+  public Integer saveFlowStateLevel(){
+	  	return 1;
+	  }
 }

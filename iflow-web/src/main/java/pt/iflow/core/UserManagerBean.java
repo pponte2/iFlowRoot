@@ -1952,6 +1952,7 @@ public class UserManagerBean implements UserManager {
 
     if ((rootUnitID != null && rootUnitID.equals(unitID)) || (rootUnitID == null && parentId.equals("-1"))) return (String) h.get("BASE_NAME");
     if (rootUnitID != null && parentId.equals("-1")) return null;
+    Logger.error(null, "UserManagerBean", "lineage", "parentId:" +parentId + " baseUnitID:" +baseUnitID+ " rootUnitID:" +rootUnitID);
     String lineage = lineage(parentId, orgUnits, baseUnitID, rootUnitID);
     return (lineage == null) ? null : lineage+"\n"+h.get("BASE_NAME");    
   }

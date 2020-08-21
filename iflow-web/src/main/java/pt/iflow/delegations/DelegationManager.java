@@ -94,11 +94,11 @@ public class DelegationManager extends Thread {
         // in minutes -> sleepTime x (60000 milisec)
         sleepTime = sleepTime * 60000; 
         
-        if(JobManager.getInstance().isMyBeatValid()){
+        //if(JobManager.getInstance().isMyBeatValid()){
 	        DelegationManager delegationManager = get();
 	        delegationManager.checkTimeOutDelegationsDB();
 	        delegationManager.checkInconsistencesDB();
-        }
+        //}
         Logger.adminInfo("DelegationManager", "run", "NextSleepTime= " + sleepTime + " msec");
         
         sleep(sleepTime);
@@ -357,9 +357,9 @@ public class DelegationManager extends Thread {
       Date now = Calendar.getInstance().getTime();
       st.setTimestamp(1, new Timestamp(now.getTime()));
 
-      Logger.adminDebug("DelegationManager", "checkDelegationsDB", "Query1=" + query + " timestamp=" + now);
+      Logger.adminDebug("DelegationManager", "checkDelegationsDB", "Query1 =" + query + " timestamp=" + now);
       rs = st.executeQuery();
-
+      Logger.adminDebug("DelegationManager", "checkDelegationsDB", "executed: " + st);
       while (rs.next()) {
         DelegationData dd = new DelegationData(
             rs.getInt("hierarchyid"),
@@ -369,9 +369,11 @@ public class DelegationManager extends Thread {
             rs.getString("userid"),
             rs.getString("ownerid"));
         altmp.add(dd);
+        Logger.adminInfo("DelegationManager", "checkTimeOutDelegationsDB", "adding delegation to delete: " + dd.getId());
       }
-
-    } catch (SQLException sqle) {
+      Logger.adminDebug("DelegationManager", "checkDelegationsDB", " total delegations found found: " + altmp.size());
+    } catch (Exception sqle) {
+    	Logger.adminError("DelegationManager", "checkTimeOutDelegationsDB", "ERROR: ", sqle);
       sqle.printStackTrace();
     } finally {
       DatabaseInterface.closeResources(db,st,rs);
@@ -401,6 +403,7 @@ public class DelegationManager extends Thread {
       if (dd.getParentid() == 0) {
 
         // delete the hierarchy
+    	  Logger.adminInfo("DelegationManager", "delegationTimeOut", "processing: " + dd.getId());
         List<Integer> deletedIDS = this.deleteDelegationCascade(null, "", dd.getId(), false);
 
         if(deletedIDS.size() > 0) {
@@ -469,7 +472,8 @@ public class DelegationManager extends Thread {
 
       }
 
-    } catch (SQLException sqle) {
+    } catch (Exception sqle) {
+    	Logger.adminError("DelegationManager", "delegationTimeOut", "ERROR: " , sqle);
       sqle.printStackTrace();
     } finally {
       DatabaseInterface.closeResources(db,st,rs);
@@ -692,15 +696,17 @@ public class DelegationManager extends Thread {
       pst = null;
       if(stmp.length() > 0) {
         String query = "delete from activity_hierarchy where hierarchyid in (" + stmp + ")";        
-
+        Logger.adminInfo("DelegationManager", "deleteDelegationCascade", "executing query: " + query);
         db.createStatement().executeUpdate(query);
       }
       db.commit();
 
     } catch (Exception e) {
-      try {
+    	 Logger.adminError("DelegationManager", "deleteDelegationCascade", "ERROR: ", e);
+      try {    	 
         db.rollback();
-      } catch (SQLException e1) {
+      } catch (Exception e1) {
+    	  Logger.adminError("DelegationManager", "deleteDelegationCascade", "ERROR: ", e1);
         // TODO Auto-generated catch block
         e1.printStackTrace();
       }

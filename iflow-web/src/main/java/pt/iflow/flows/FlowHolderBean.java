@@ -264,7 +264,7 @@ public class FlowHolderBean implements FlowHolder {
      * @return
      */
     public IFlowData[] listFlows(UserInfoInterface userInfo) {
-        return listFlows(userInfo, nLIST_ALL, null, null, false);
+        return listFlows(userInfo, nLIST_ALL, null, null, false, null);
     }
     
     /**
@@ -275,7 +275,7 @@ public class FlowHolderBean implements FlowHolder {
      * @return
      */
     public IFlowData[] listFlows(UserInfoInterface userInfo, FlowType type) {
-        return listFlows(userInfo, nLIST_ALL, type, null, false);
+        return listFlows(userInfo, nLIST_ALL, type, null, false, null);
     }
     
     /**
@@ -286,7 +286,7 @@ public class FlowHolderBean implements FlowHolder {
      * @return
      */
     public FlowData[] listFlowsOnline(UserInfoInterface userInfo) {
-        return listFlows(userInfo, nLIST_ONLINE, null, null, false);
+        return listFlows(userInfo, nLIST_ONLINE, null, null, false, null);
     }
     
     /**
@@ -297,20 +297,25 @@ public class FlowHolderBean implements FlowHolder {
      * @return
      */
     public FlowData[] listFlowsOnline(UserInfoInterface userInfo, FlowType type) {
-        return listFlows(userInfo, nLIST_ONLINE, type, null, false);
+        return listFlows(userInfo, nLIST_ONLINE, type, null, false, null);
     }
 
     public FlowData[] listFlowsOnline(UserInfoInterface userInfo, FlowType type, boolean showOnlyFlowsToBePresentInMenu) {
-      return listFlows(userInfo, nLIST_ONLINE, type, null, showOnlyFlowsToBePresentInMenu);
+      return listFlows(userInfo, nLIST_ONLINE, type, null, showOnlyFlowsToBePresentInMenu, null);
     }
 
     public IFlowData[] listFlowsOnline(UserInfoInterface userInfo, FlowType type, FlowType[] typeExcluded) {
-      return listFlows(userInfo, nLIST_ONLINE, type, typeExcluded, false);
+      return listFlows(userInfo, nLIST_ONLINE, type, typeExcluded, false, null);
     }
 
     public IFlowData[] listFlowsOnline(UserInfoInterface userInfo, FlowType type, FlowType[] typeExcluded,
         boolean showOnlyFlowsToBePresentInMenu) {
-      return listFlows(userInfo, nLIST_ONLINE, type, typeExcluded, showOnlyFlowsToBePresentInMenu);
+      return listFlows(userInfo, nLIST_ONLINE, type, typeExcluded, showOnlyFlowsToBePresentInMenu, null);
+    }
+    
+    public IFlowData[] listFlowsOnline(UserInfoInterface userInfo, FlowType type, FlowType[] typeExcluded, 
+    		boolean showOnlyFlowsToBePresentInMenu, String withPermissions){
+    	return listFlows(userInfo, nLIST_ONLINE, type, typeExcluded, showOnlyFlowsToBePresentInMenu, withPermissions);
     }
 
     /**
@@ -321,7 +326,7 @@ public class FlowHolderBean implements FlowHolder {
      * @return
      */
     public IFlowData[] listFlowsOffline(UserInfoInterface userInfo) {
-        return listFlows(userInfo, nLIST_OFFLINE, null, null, false);
+        return listFlows(userInfo, nLIST_OFFLINE, null, null, false, null);
     }
     
     /**
@@ -332,15 +337,15 @@ public class FlowHolderBean implements FlowHolder {
      * @return
      */
     public IFlowData[] listFlowsOffline(UserInfoInterface userInfo, FlowType type) {
-        return listFlows(userInfo, nLIST_OFFLINE, type, null, false);
+        return listFlows(userInfo, nLIST_OFFLINE, type, null, false, null);
     }
     
     public IFlowData[] listFlowsOffline(UserInfoInterface userInfo, FlowType type, FlowType[] typeExcluded) {
-      return listFlows(userInfo, nLIST_OFFLINE, type, typeExcluded, false);
+      return listFlows(userInfo, nLIST_OFFLINE, type, typeExcluded, false, null);
   }
   
     private synchronized FlowData[] listFlows(UserInfoInterface userInfo,
-            int anSelection, FlowType type, FlowType[] typeExcluded, boolean showOnlyFlowsToBePresentInMenu) {
+            int anSelection, FlowType type, FlowType[] typeExcluded, boolean showOnlyFlowsToBePresentInMenu, String withPermissions) {
         FlowData[] retObj = new FlowData[] {};
 
         ArrayList<FlowScheduleDataInterface> listOfFlowJobs =  new ArrayList<FlowScheduleDataInterface>();
@@ -397,14 +402,36 @@ public class FlowHolderBean implements FlowHolder {
               sQuery.append(" FS.value like '").append(Const.sFLOW_MENU_ACCESSIBLE_YES).append("'");
               sQuery.append(" )");
             }
+            if(withPermissions!=null){
+            	sQuery.append(
+        			"AND ( " +
+					"	F.flowid IN ( " +
+					"		SELECT flow.flowid " +
+					"		FROM flow, flow_roles, profiles, userprofiles, users " +
+					"		WHERE flow_roles.flowid = flow.flowid AND flow_roles.profileid = profiles.profileid " +
+					"		AND userprofiles.profileid = profiles.profileid AND userprofiles.userid = users.userid " +
+					"		AND flow_roles.permissions like '%" +withPermissions+ "%' " +
+					"		AND users.username = '"+userInfo.getUtilizador()+"' " +
+					"		)  " +
+					"	OR " +
+					"	F.flowid IN ( " +
+					"		SELECT flowid " +
+					"		FROM activity_hierarchy " +
+					"		WHERE pending = 0 " +
+					"		AND permissions like '%" +withPermissions+ "%' " +
+					"		AND userid = '"+userInfo.getUtilizador()+"' " +
+					"		) " +
+					") ");
+            }
             sQuery.append(" order by F.flowid");
 
+            Long start = new Date().getTime();
             rs = st.executeQuery(sQuery.toString());
-
+            Logger.error(userInfo.getUtilizador(),this,"listFlows","PERFORMANCE 1 " + (new Date().getTime() - start) + " ms, " + sQuery.toString());
             ArrayList<FlowData> altmp = new ArrayList<FlowData>();
             while (rs.next()) {
                 int flowId = rs.getInt("flowid");
-                if (hasCachedFlow(userInfo, flowId)) {
+                if (false && hasCachedFlow(userInfo, flowId)) {
                     fd = getCachedFlow(userInfo, flowId);
                 } else {
                     fd = new FlowData(flowId, 
@@ -676,6 +703,7 @@ public class FlowHolderBean implements FlowHolder {
                 notifyVersion(userInfo, result.flowid);
             }
         }
+        SharedObjectRefreshManager.getInstance().addRefreshToDo(result.flowid);
         
         return result.flowid;
     }
@@ -1703,7 +1731,7 @@ public class FlowHolderBean implements FlowHolder {
             int anFlowId) {
         Integer iId = new Integer(anFlowId);
         String org = userInfo.getOrganization();
-        SharedObjectRefreshManager.getInstance().checkAndRefresh();
+        SharedObjectRefreshManager.getInstance().checkAndRefresh(userInfo);
         if (!_hmFlowData.containsKey(org))
             return false;
         Map<Integer, FlowData> orgFlowData = _hmFlowData.get(org);
@@ -1715,7 +1743,7 @@ public class FlowHolderBean implements FlowHolder {
     private synchronized void clearCachedFlow(UserInfoInterface userInfo, int flowId) {
         Integer iId = new Integer(flowId);
         String org = userInfo.getOrganization();
-        SharedObjectRefreshManager.getInstance().checkAndRefresh();
+        SharedObjectRefreshManager.getInstance().checkAndRefresh(userInfo);
         if (_hmFlowData.containsKey(org)) {
             Map<Integer, FlowData> orgFlowData = _hmFlowData.get(org);
             if (null != orgFlowData) {
@@ -1733,7 +1761,7 @@ public class FlowHolderBean implements FlowHolder {
             int flowId) {
         FlowData fd = null;
         String org = userInfo.getOrganization();
-        SharedObjectRefreshManager.getInstance().checkAndRefresh();
+        SharedObjectRefreshManager.getInstance().checkAndRefresh(userInfo);
         if (_hmFlowData.containsKey(org)) {
             Map<Integer, FlowData> orgFlowData = _hmFlowData.get(org);
             if (null != orgFlowData)
@@ -1745,20 +1773,23 @@ public class FlowHolderBean implements FlowHolder {
     private synchronized void setCachedFlow(UserInfoInterface userInfo,
             FlowData flowData) {
         String org = userInfo.getOrganization();
-        SharedObjectRefreshManager.getInstance().checkAndRefresh();
+        SharedObjectRefreshManager.getInstance().checkAndRefresh(userInfo);
         if (!_hmFlowData.containsKey(org) || _hmFlowData.get(org) == null) {
             _hmFlowData.put(org, new HashMap<Integer, FlowData>());
         }
         Map<Integer, FlowData> orgFlowData = _hmFlowData.get(org);
-		SharedObjectRefreshManager.getInstance().addRefreshToDo(flowData.getId());
-        orgFlowData.put(new Integer(flowData.getId()), flowData);
+//        FlowData oldFlow = orgFlowData.get(flowData.getId());
+//        if((oldFlow!=null && flowData.getLastModified()>oldFlow.getLastModified()) || oldFlow==null)
+//        	SharedObjectRefreshManager.getInstance().addRefreshToDo(flowData.getId());
+	    orgFlowData.put(new Integer(flowData.getId()), flowData);
+        
     }
     
     private synchronized Collection<FlowData> getCachedFlows(
             UserInfoInterface userInfo) {
         Collection<FlowData> coll = new ArrayList<FlowData>();
         String org = userInfo.getOrganization();
-        SharedObjectRefreshManager.getInstance().checkAndRefresh();
+        SharedObjectRefreshManager.getInstance().checkAndRefresh(userInfo);
         if (_hmFlowData.containsKey(org)) {
             Map<Integer, FlowData> orgFlowData = _hmFlowData.get(org);
             if (null != orgFlowData)

@@ -6,6 +6,7 @@
 %><%@ page import="pt.iflow.api.presentation.DateUtility"
 %><%@ include file = "inc/defs.jsp" 
 %><%
+long entryTime = new Date().getTime();
 int ITEMS_PAGE = 20;
 
 String stmp = null;
@@ -80,7 +81,8 @@ catch (Exception e) {
 	Logger.errorJsp(login,"flows"," checking admin profile exception: " + e.getMessage());
 	e.printStackTrace();
 }
-
+Logger.errorJsp(login, "user_procs_filtro", "PERFORMANCE_UPF 1 " + (new Date().getTime() - entryTime) + " ms");
+entryTime =  new Date().getTime();
 %>
 <%
 String sTargetUpdate = "";
@@ -152,7 +154,8 @@ else
 // 	filterAction = "javascript:if ($('showflowid').value != -1) tabber_right(8, '" + response.encodeURL("user_procs.jsp") + "', get_params(document.user_procs_filter)+'&clearsearch=true');";
 
 request.setAttribute("flow_type", FlowType.WORKFLOW);
-
+Logger.errorJsp(login, "user_procs_filtro", "PERFORMANCE_UPF 2 " + (new Date().getTime() - entryTime) + " ms");
+entryTime =  new Date().getTime();
 //check if it's simple search
 %>
 <style type="text/css">
@@ -318,6 +321,8 @@ request.setAttribute("flow_type", FlowType.WORKFLOW);
 
 	<form id="search_advanced_form" name="advanced_user_procs_filter" method="post" style="display:<%= (StringUtils.equals(searchType,"as") || StringUtils.equals(searchType,"nf"))?"block":"none" %>">
 	<% //load flows
+	Logger.errorJsp(login, "user_procs_filtro", "PERFORMANCE_UPF 3 " + (new Date().getTime() - entryTime) + " ms");
+	entryTime =  new Date().getTime();
 	FlowApplications appInfo = BeanFactory.getFlowApplicationsBean();
 	//only loads search flows
 	boolean showOnlyFlowsToBePresentInMenu = true;
@@ -369,6 +374,7 @@ request.setAttribute("flow_type", FlowType.WORKFLOW);
 	
 	String html = PresentationManager.buildPage(response, userInfo, hsSubstLocal, pageContent);
 	out.println(html);
-
+	Logger.errorJsp(login, "user_procs_filtro", "PERFORMANCE_UPF 4 " + (new Date().getTime() - entryTime) + " ms");
+	entryTime =  new Date().getTime();
 %>
 </form>

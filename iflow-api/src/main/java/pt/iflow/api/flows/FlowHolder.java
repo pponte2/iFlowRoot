@@ -77,6 +77,8 @@ public interface FlowHolder {
   public abstract IFlowData[] listFlowsOnline(UserInfoInterface userInfo, FlowType type, FlowType[] typeExcluded);
   
   public abstract IFlowData[] listFlowsOnline(UserInfoInterface userInfo, FlowType type, FlowType[] typeExcluded, boolean showOnlyFlowsToBePresentInMenu);
+  
+  public abstract IFlowData[] listFlowsOnline(UserInfoInterface userInfo, FlowType type, FlowType[] typeExcluded, boolean showOnlyFlowsToBePresentInMenu, String withPermissions);
 
   /**
    * Return a list of offline flows available to the user organization.

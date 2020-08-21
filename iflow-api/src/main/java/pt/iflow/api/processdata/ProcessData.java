@@ -487,7 +487,7 @@ public class ProcessData implements Serializable {
     assertReadOnly();
     setListOrigRawValue(variable);
     ProcessListVariable ret = _listVars.put(variable.getName(), variable);
-    
+    try{
     if(variable.getType().toString() == "Document"){
     	for (int i = 0; i < variable.size(); i++){
 	    	try{
@@ -498,7 +498,11 @@ public class ProcessData implements Serializable {
 	    	}
     	}
     }
-    
+    } catch(Exception e){
+    	Logger.error("", "ProcessData", "setList", "Erro em variavel, procdata corrompido? "+variable.getName()+".");
+    	int i = 0;
+    	i++;
+    }
     if (checkChanges)
       _hasChanged = _hasChanged || variableListsChanged(variable, ret);
     return ret;

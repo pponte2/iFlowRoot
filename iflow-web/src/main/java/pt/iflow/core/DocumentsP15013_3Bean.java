@@ -136,6 +136,9 @@ public class DocumentsP15013_3Bean extends DocumentsBean {
 					filePath = reposDev.insertDocument(adoc.getFileName(), adoc.getContent(), md, userInfo.getUtilizador());
 					repeat = false;
 				}catch (Exception e){
+					Logger.error(userInfo.getUtilizador(), this, "addDocument",
+							procData.getSignature()
+									+ "Error inserting new document into database, attempt " + (5-tries), e);
 					repeat=true;
 					if(tries<0) throw e; 
 				}			
@@ -240,7 +243,10 @@ public class DocumentsP15013_3Bean extends DocumentsBean {
 							tries--;
 							reposDev.updateDocument(dbDoc.getDocurl(), adoc.getFileName(), adoc.getContent(), md, userInfo.getUtilizador());
 							repeat = false;
-						}catch (Exception e){
+						}catch (Exception e){							
+							Logger.error(userInfo.getUtilizador(), this, "updateDocument",
+									procData.getSignature()
+											+ "Error inserting updating document into database, attempt " + (5-tries), e);
 							repeat=true;
 							if(tries<0) throw e;
 						}
@@ -413,6 +419,9 @@ public class DocumentsP15013_3Bean extends DocumentsBean {
 								dataStream2 = reposDev.downloadDocumentInputStream(adoc.getDocurl(),userInfo.getUtilizador());
 								repeat = false;
 							}catch (Exception e){
+								Logger.error(userInfo.getUtilizador(), this, "getDocumentData",
+										procData.getSignature()
+												+ "Error inserting getting document from database, attempt " + (5-tries), e);
 								repeat=true;
 								if(tries<0) throw e;
 							}

@@ -192,10 +192,10 @@ public class StartupServlet extends HttpServlet {
     JobManager.startManager();
     Logger.warning("", this, "", "StartupServlet: JobManager started");
 
-    if(Const.CLUSTER_ENABLED){
-      Timer timer = new Timer();
-	  timer.schedule(new ListenersAutoRefresh(), Const.BEAT_ACTIVE_TIME*1000, Const.BEAT_ACTIVE_TIME*1000);    	  
-    }
+//    if(Const.CLUSTER_ENABLED){
+//      Timer timer = new Timer();
+//	  timer.schedule(new ListenersAutoRefresh(), Const.BEAT_ACTIVE_TIME*1000, Const.BEAT_ACTIVE_TIME*1000);    	  
+//    }
 
   }
   

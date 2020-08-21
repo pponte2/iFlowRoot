@@ -387,4 +387,15 @@ public class BlockProcDetail extends BlockFormulario {
 
     return result;
   }
+  
+  public Boolean allowsNoSaveFlowState(){
+	  if(!Const.SAVE_FLOW_STATE_IDEMPOTENT_BLOCKS)
+		  return true;
+	  else 
+		  return false;
+  }
+  
+  public Integer saveFlowStateLevel(){
+	  	return 1;
+	  }
 }

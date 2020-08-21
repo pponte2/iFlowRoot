@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -174,7 +175,9 @@ public class FlowApplicationsBean implements FlowApplications {
 
    try {
      // first get all online flows
+	   Long start = new Date().getTime();
      IFlowData[] fdOnlineFlows = BeanFactory.getFlowHolderBean().listFlowsOnline(userInfo, type, typeExclude);
+     Logger.error(userInfo.getUtilizador(),this,"getAllApplicationOnlineFlows","PERFORMANCE 1 " + (new Date().getTime() - start) + " ms");
 
      // put them in an hashmap for fast index
      HashMap<String,IFlowData> hmFlows = new HashMap<String,IFlowData>();
@@ -186,10 +189,14 @@ public class FlowApplicationsBean implements FlowApplications {
      // now get applications' info and update flow data
      Collection<ApplicationItem> colApplications = null;
      if (anAppID == ORPHAN_GROUP_ID) {
-       colApplications = this.getApplicationList(userInfo);       
+    	 start = new Date().getTime();
+       colApplications = this.getApplicationList(userInfo);   
+       Logger.error(userInfo.getUtilizador(),this,"getAllApplicationOnlineFlows","PERFORMANCE 2.1 " + (new Date().getTime() - start) + " ms");
      }
      else {
+    	 start = new Date().getTime();
        colApplications = this.getApplicationByID(userInfo, anAppID);
+       Logger.error(userInfo.getUtilizador(),this,"getAllApplicationOnlineFlows","PERFORMANCE 2.2 " + (new Date().getTime() - start) + " ms");
      }
      // now get application flows
      db = ds.getConnection();
@@ -207,8 +214,9 @@ public class FlowApplicationsBean implements FlowApplications {
 
     	 pst.setLong(1, item.getLinkid());
     	 pst.setString(2, userInfo.getCompanyID());
+    	 start = new Date().getTime();
     	 rs = pst.executeQuery();
-
+    	 Logger.error(userInfo.getUtilizador(),this,"getAllApplicationOnlineFlows","PERFORMANCE 3 " + (new Date().getTime() - start) + " ms");
     	 while (rs.next()) {
     		 String sFlowId = rs.getString("FLOWID");
 
@@ -305,7 +313,7 @@ public class FlowApplicationsBean implements FlowApplications {
         FlowType[] typeExclude, char flowRolesTOPriv){
       return getAllApplicationOnlineMenu(userInfo, anAppID, type, typeExclude, flowRolesTOPriv, false);
     }
-        
+
     public FlowMenu getAllApplicationOnlineMenu(UserInfoInterface userInfo, int anAppID, FlowType type, 
         FlowType[] typeExclude, char flowRolesTOPriv, boolean showOnlyFlowsToBePresentInMenu) {
 
@@ -319,23 +327,30 @@ public class FlowApplicationsBean implements FlowApplications {
 	  try {
 		  // first get all online flows
 	    IFlowData[] fdOnlineFlows = null;
-	    fdOnlineFlows = BeanFactory.getFlowHolderBean().listFlowsOnline(userInfo, type, typeExclude, showOnlyFlowsToBePresentInMenu);
-
+	    Long start = new Date().getTime();
+	    fdOnlineFlows = BeanFactory.getFlowHolderBean().listFlowsOnline(userInfo, type, typeExclude, showOnlyFlowsToBePresentInMenu, String.valueOf(flowRolesTOPriv));
+	    Logger.error(userInfo.getUtilizador(),this,"getAllApplicationOnlineMenu","PERFORMANCE 1 " + (new Date().getTime() - start) + " ms");
+	    
+	    start = new Date().getTime();
 		  // put them in an hashmap for fast index
 		  OrderedMap<Integer,IFlowData> hmFlows = new ListOrderedMap<Integer,IFlowData>();
 		  for (int i=0; i < fdOnlineFlows.length; i++) {
-			  if(BeanFactory.getFlowBean().checkUserFlowRoles(userInfo, fdOnlineFlows[i].getId(), "" + flowRolesTOPriv))
+//			  if(BeanFactory.getFlowBean().checkUserFlowRoles(userInfo, fdOnlineFlows[i].getId(), "" + flowRolesTOPriv))
 				  hmFlows.put(fdOnlineFlows[i].getId(), fdOnlineFlows[i]);
 		  }
 		  fdOnlineFlows = null;
-
+		  Logger.error(userInfo.getUtilizador(),this,"getAllApplicationOnlineMenu","PERFORMANCE 2 " + (new Date().getTime() - start) + " ms");
       // now get applications' info and update flow data
       Collection<ApplicationItem> colApplications = null;
 	     if (anAppID == ORPHAN_GROUP_ID) {
+	    	 start = new Date().getTime();
 	       colApplications = this.getApplicationList(userInfo);       
+	       Logger.error(userInfo.getUtilizador(),this,"getAllApplicationOnlineMenu","PERFORMANCE 3.1 " + (new Date().getTime() - start) + " ms");
 	     }
 	     else {
+	    	 start = new Date().getTime();
 	       colApplications = this.getApplicationByID(userInfo, anAppID);
+	       Logger.error(userInfo.getUtilizador(),this,"getAllApplicationOnlineMenu","PERFORMANCE 3.2 " + (new Date().getTime() - start) + " ms");
 	     }
 
 		  // now get application flows/URLs
@@ -355,8 +370,9 @@ public class FlowApplicationsBean implements FlowApplications {
 
 			  pst.setLong(1, item.getLinkid());
 			  pst.setString(2, userInfo.getCompanyID());
+			  start = new Date().getTime();
 			  rs = pst.executeQuery();
-
+			  Logger.error(userInfo.getUtilizador(),this,"getAllApplicationOnlineMenu","PERFORMANCE 4 " + (new Date().getTime() - start) + " ms");
 			  while (rs.next()) {
 				  int flowId = rs.getInt("FLOWID");
 

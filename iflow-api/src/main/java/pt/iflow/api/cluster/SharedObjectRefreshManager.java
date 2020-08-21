@@ -30,32 +30,39 @@ public class SharedObjectRefreshManager {
 		return instance;
 	}
 
-	public void checkAndRefresh(){
+	public void checkAndRefresh(UserInfoInterface userInfo){
 		if (!Const.CLUSTER_ENABLED)
 			return;
 		Connection db = null;
 	    PreparedStatement st = null;
 	    ResultSet rs = null;
 	    String sql = null;
-	    UserInfoInterface userInfo = BeanFactory.getUserInfoFactory().newClassManager(this.getClass().getName());
-	    
+	   
 		try{
 			db = Utils.getDataSource().getConnection();			
 			sql = DBQueryManager.processQuery("SharedObjectRefresh.SELECT");			
 			st = db.prepareStatement(sql);			
-			Logger.debug("System", "SharedObjectRefreshManager", "stopManager", "sql: " + sql);
+			Logger.debug("System", "SharedObjectRefreshManager", "checkAndRefresh", "sql: " + sql);
+			Logger.debug("System", "SharedObjectRefreshManager", "checkAndRefresh", "doneRefreshes: " + doneRefreshes);
 			st.execute();
 			rs = st.getResultSet();
 			
-			while(rs.next())
+			while(rs.next()){
+				Logger.debug("System", "SharedObjectRefreshManager", "checkAndRefresh", "refresh id: " + rs.getInt(1));
 				if(!doneRefreshes.contains(rs.getInt(1))){
-					doneRefreshes.add(rs.getInt(1));					
-					BeanFactory.getFlowHolderBean().refreshCacheFlow(userInfo, rs.getInt(2));  
+					doneRefreshes.add(rs.getInt(1));
+					//BeanFactory.getFlowHolderBean().refreshCacheFlow(userInfo, rs.getInt(2));
+					BeanFactory.getFlowHolderBean().deployFlow(userInfo, BeanFactory.getFlowBean().getFlow(userInfo, rs.getInt(2)).getFileName());
+					
+					
+					//deployFlow(userInfo, BeanFactory.getFlowBean().getFlow(userInfo, rs.getInt(2)).getFileName());
+					//getInt(2)).getFileName()); //refreshCacheFlow(userInfo, rs.getInt(2));  					
+					//BeanFactory.getFlowSettingsBean().refreshFlowSettings(userInfo, rs.getInt(2));
 				}
-			
+			}
 			
 		} catch(Exception e){
-			Logger.error("System", "SharedObjectRefreshManager", "stopManager", " reason: "+ e.getMessage());
+			Logger.error("System", "SharedObjectRefreshManager", "checkAndRefresh", " reason: "+ e.getMessage());
 		} finally {
 	        DatabaseInterface.closeResources(db, st, sql, rs);
 	    }				

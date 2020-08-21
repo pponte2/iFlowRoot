@@ -5,6 +5,7 @@ import org.apache.commons.lang.StringUtils;
 import pt.iflow.api.blocks.Block;
 import pt.iflow.api.blocks.Port;
 import pt.iflow.api.processdata.ProcessData;
+import pt.iflow.api.utils.Const;
 import pt.iflow.api.utils.Logger;
 import pt.iflow.api.utils.UserInfoInterface;
 
@@ -127,7 +128,8 @@ public class BlockMultiCondition extends Block {
     }
 
     this.addToLog("Using '" + outPort.getName() + "';");
-    this.saveLogs(userInfo, procData, this);
+    if(saveFlowStateLevel() > Const.SAVE_FLOW_STATE_LEVEL)
+    	this.saveLogs(userInfo, procData, this);
 
     return outPort;
   }
@@ -142,5 +144,16 @@ public class BlockMultiCondition extends Block {
 
   public String getUrl (UserInfoInterface userInfo, ProcessData procData) {
     return "";
+  }
+  
+  public Boolean allowsNoSaveFlowState(){
+	  if(!Const.SAVE_FLOW_STATE_IDEMPOTENT_BLOCKS)
+		  return true;
+	  else 
+		  return false;
+  }
+  
+  public Integer saveFlowStateLevel(){
+  	return 1;
   }
 }
