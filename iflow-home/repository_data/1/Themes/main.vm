@@ -150,7 +150,7 @@
 
 				getCtrlFill(taskLabelsJSP, '', containerLabels);
 				tabber_right(1, mainContentJSP, 'cleanFilter=1');
-				getCtrlFill(mainContentJSP, 'data=alerts', delegationsForm);
+				//getCtrlFill(mainContentJSP, 'data=alerts', delegationsForm);
 				getCtrlFill(mainContentJSP, 'data=procs', containerFlowList);
 				#if("$Tab8" != "no")
 				getCtrlFill(userProcsFiltroJSP, 'searchtype=as', containerSearch);
